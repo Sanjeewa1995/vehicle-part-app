@@ -13,7 +13,6 @@ class LoginUseCase {
     if (password.isEmpty) {
       throw Exception('Password is required');
     }
-    print('Login use case called');
     return await repository.login(email, password);
   }
 }

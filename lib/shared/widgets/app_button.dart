@@ -40,7 +40,7 @@ class AppButton extends StatelessWidget {
     this.fullWidth = false,
     this.padding,
     this.width,
-    this.height,
+    this.height = 53,
   });
 
   Color _getBackgroundColor() {

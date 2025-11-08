@@ -6,6 +6,9 @@ import '../datasources/remote/auth_remote_datasource.dart';
 import '../datasources/local/auth_local_datasource.dart';
 import '../models/login_request.dart';
 import '../models/register_request.dart';
+import '../models/password_reset_request.dart';
+import '../models/verify_otp_request.dart';
+import '../models/reset_password_request.dart';
 import '../models/user_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -78,6 +81,58 @@ class AuthRepositoryImpl implements AuthRepository {
         rethrow;
       }
       throw Exception('Registration failed: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<bool> forgotPassword(String email) async {
+    try {
+      final request = PasswordResetRequest(email: email);
+      final response = await remoteDataSource.forgotPassword(request);
+      return response.success;
+    } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
+      throw Exception('Password reset failed: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<bool> verifyOTP(String email, String otp) async {
+    try {
+      final request = VerifyOTPRequest(email: email, otp: otp);
+      final response = await remoteDataSource.verifyOTP(request);
+      return response.success;
+    } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
+      throw Exception('OTP verification failed: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<bool> resetPassword({
+    required String email,
+    required String otp,
+    required String newPassword,
+    required String newPasswordConfirm,
+  }) async {
+    try {
+      final request = ResetPasswordRequest(
+        email: email,
+        otp: otp,
+        newPassword: newPassword,
+        newPasswordConfirm: newPasswordConfirm,
+      );
+      final response = await remoteDataSource.resetPassword(request);
+      return response.success;
+    } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
+      throw Exception('Password reset failed: ${e.toString()}');
     }
   }
 

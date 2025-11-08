@@ -6,6 +6,9 @@ import '../../features/onboarding/presentation/pages/welcome_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/signup_page.dart';
+import '../../features/auth/presentation/pages/forgot_password_page.dart';
+import '../../features/auth/presentation/pages/otp_verification_page.dart';
+import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/parts/presentation/pages/parts_list_page.dart';
 import '../../features/cart/presentation/pages/cart_page.dart';
 import '../../features/requets/presentation/pages/my_request_list_page.dart';
@@ -45,6 +48,9 @@ class AppRouter {
       final isOnProtectedRoute = state.matchedLocation != '/welcome' &&
           state.matchedLocation != '/login' &&
           state.matchedLocation != '/signup' &&
+          state.matchedLocation != '/forgot-password' &&
+          state.matchedLocation != '/otp-verification' &&
+          state.matchedLocation != '/reset-password' &&
           state.matchedLocation != '/splash' &&
           state.matchedLocation != '/';
 
@@ -86,6 +92,42 @@ class AppRouter {
         path: '/signup',
         name: 'signup',
         builder: (context, state) => const SignUpPage(),
+      ),
+      GoRoute(
+        path: '/forgot-password',
+        name: 'forgot-password',
+        builder: (context, state) => const ForgotPasswordPage(),
+      ),
+      GoRoute(
+        path: '/otp-verification',
+        name: 'otp-verification',
+        builder: (context, state) {
+          final email = state.extra is Map
+              ? (state.extra as Map)['email'] as String?
+              : state.uri.queryParameters['email'];
+          if (email == null || email.isEmpty) {
+            // If no email provided, redirect back to forgot password
+            return const ForgotPasswordPage();
+          }
+          return OTPVerificationPage(email: email);
+        },
+      ),
+      GoRoute(
+        path: '/reset-password',
+        name: 'reset-password',
+        builder: (context, state) {
+          final email = state.extra is Map
+              ? (state.extra as Map)['email'] as String?
+              : state.uri.queryParameters['email'];
+          final otp = state.extra is Map
+              ? (state.extra as Map)['otp'] as String?
+              : state.uri.queryParameters['otp'];
+          if (email == null || email.isEmpty || otp == null || otp.isEmpty) {
+            // If no email or OTP provided, redirect back to forgot password
+            return const ForgotPasswordPage();
+          }
+          return ResetPasswordPage(email: email, otp: otp);
+        },
       ),
       GoRoute(
         path: '/home',

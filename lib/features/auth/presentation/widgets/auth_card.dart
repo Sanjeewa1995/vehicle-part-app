@@ -108,7 +108,7 @@ class AuthCard extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: () {
-                            // TODO: Navigate to forgot password
+                            context.go('/forgot-password');
                           },
                           child: Text(
                             'Forgot Password?',

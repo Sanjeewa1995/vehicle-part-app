@@ -5,10 +5,19 @@ import 'package:vehicle_part_app/core/error/exceptions.dart';
 import 'package:vehicle_part_app/features/auth/data/models/login_request.dart';
 import 'package:vehicle_part_app/features/auth/data/models/login_response.dart';
 import 'package:vehicle_part_app/features/auth/data/models/register_request.dart';
+import 'package:vehicle_part_app/features/auth/data/models/password_reset_request.dart';
+import 'package:vehicle_part_app/features/auth/data/models/password_reset_response.dart';
+import 'package:vehicle_part_app/features/auth/data/models/verify_otp_request.dart';
+import 'package:vehicle_part_app/features/auth/data/models/verify_otp_response.dart';
+import 'package:vehicle_part_app/features/auth/data/models/reset_password_request.dart';
+import 'package:vehicle_part_app/features/auth/data/models/reset_password_response.dart';
 
 abstract class AuthRemoteDataSource {
   Future<LoginResponse> login(LoginRequest request);
   Future<LoginResponse> register(RegisterRequest request);
+  Future<PasswordResetResponse> forgotPassword(PasswordResetRequest request);
+  Future<VerifyOTPResponse> verifyOTP(VerifyOTPRequest request);
+  Future<ResetPasswordResponse> resetPassword(ResetPasswordRequest request);
   Future<void> logout();
 }
 
@@ -40,6 +49,51 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         data: request.toJson(),
       );
       return LoginResponse.fromJson(response.data);
+    } on AppException {
+      rethrow;
+    } on DioException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  @override
+  Future<PasswordResetResponse> forgotPassword(PasswordResetRequest request) async {
+    try {
+      final response = await apiClient.post(
+        ApiConstants.passwordReset,
+        data: request.toJson(),
+      );
+      return PasswordResetResponse.fromJson(response.data);
+    } on AppException {
+      rethrow;
+    } on DioException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  @override
+  Future<VerifyOTPResponse> verifyOTP(VerifyOTPRequest request) async {
+    try {
+      final response = await apiClient.post(
+        ApiConstants.verifyOTP,
+        data: request.toJson(),
+      );
+      return VerifyOTPResponse.fromJson(response.data);
+    } on AppException {
+      rethrow;
+    } on DioException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  @override
+  Future<ResetPasswordResponse> resetPassword(ResetPasswordRequest request) async {
+    try {
+      final response = await apiClient.post(
+        ApiConstants.passwordResetConfirm,
+        data: request.toJson(),
+      );
+      return ResetPasswordResponse.fromJson(response.data);
     } on AppException {
       rethrow;
     } on DioException catch (e) {
