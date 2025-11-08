@@ -3,6 +3,7 @@ import '../../config/env.dart';
 import '../constants/api_constants.dart';
 import '../constants/app_constants.dart';
 import '../error/exceptions.dart';
+import '../services/refresh_token_service.dart';
 
 class ApiClient {
   late final Dio _dio;
@@ -31,6 +32,11 @@ class ApiClient {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
+          // Remove Content-Type header for FormData - Dio will set it automatically with boundary
+          if (options.data is FormData) {
+            options.headers.remove('Content-Type');
+          }
+
           // Add auth token if available
           if (getAccessToken != null) {
             final token = await getAccessToken!();
@@ -44,7 +50,45 @@ class ApiClient {
         onResponse: (response, handler) {
           return handler.next(response);
         },
-        onError: (error, handler) {
+        onError: (error, handler) async {
+          // Handle 401 Unauthorized - try to refresh token
+          if (error.response?.statusCode == 401) {
+            // Skip refresh for login/refresh endpoints to avoid infinite loops
+            final requestPath = error.requestOptions.path;
+            if (requestPath.contains('/auth/login') ||
+                requestPath.contains('/auth/register') ||
+                requestPath.contains('/token/refresh')) {
+              return handler.next(_handleError(error));
+            }
+
+            try {
+              // Refresh the token
+              final newAccessToken = await RefreshTokenService.refreshTokenWithQueue();
+
+              // Update the request with new token
+              error.requestOptions.headers[ApiConstants.authorization] =
+                  '${ApiConstants.bearer} $newAccessToken';
+
+              // Retry the original request
+              final opts = Options(
+                method: error.requestOptions.method,
+                headers: error.requestOptions.headers,
+              );
+
+              final response = await _dio.request(
+                error.requestOptions.path,
+                options: opts,
+                data: error.requestOptions.data,
+                queryParameters: error.requestOptions.queryParameters,
+              );
+
+              return handler.resolve(response);
+            } catch (e) {
+              // Refresh failed - clear tokens and return original error
+              return handler.next(_handleError(error));
+            }
+          }
+
           return handler.next(_handleError(error));
         },
       ),

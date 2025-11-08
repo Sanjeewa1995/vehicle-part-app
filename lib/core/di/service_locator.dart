@@ -6,6 +6,15 @@ import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
 import '../../features/auth/domain/usecases/login_usecase.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
+import '../../features/requets/data/datasources/remote/request_remote_datasource.dart';
+import '../../features/requets/data/repositories/request_repository_impl.dart';
+import '../../features/requets/domain/repositories/request_repository.dart';
+import '../../features/requets/domain/usecases/get_requests_usecase.dart';
+import '../../features/requets/domain/usecases/get_request_by_id_usecase.dart';
+import '../../features/requets/domain/usecases/create_request_usecase.dart';
+import '../../features/requets/presentation/providers/request_list_provider.dart';
+import '../../features/requets/presentation/providers/request_detail_provider.dart';
+import '../../features/requets/presentation/providers/create_request_provider.dart';
 import '../network/api_client.dart';
 import '../services/token_service.dart';
 
@@ -51,11 +60,56 @@ class ServiceLocator {
     // Use Cases
     getIt.registerLazySingleton(() => LoginUseCase(getIt<AuthRepository>()));
 
+    // Request Data Sources
+    getIt.registerLazySingleton<RequestRemoteDataSource>(
+      () => RequestRemoteDataSourceImpl(
+        apiClient: getIt<ApiClient>(),
+      ),
+    );
+
+    // Request Repositories
+    getIt.registerLazySingleton<RequestRepository>(
+      () => RequestRepositoryImpl(
+        remoteDataSource: getIt<RequestRemoteDataSource>(),
+      ),
+    );
+
+    // Request Use Cases
+    getIt.registerLazySingleton(
+      () => GetRequestsUseCase(getIt<RequestRepository>()),
+    );
+
+    getIt.registerLazySingleton(
+      () => GetRequestByIdUseCase(getIt<RequestRepository>()),
+    );
+
+    getIt.registerLazySingleton(
+      () => CreateRequestUseCase(getIt<RequestRepository>()),
+    );
+
     // Providers
     getIt.registerFactory<AuthProvider>(
       () => AuthProvider(
         loginUseCase: getIt<LoginUseCase>(),
         authRepository: getIt<AuthRepository>(),
+      ),
+    );
+
+    getIt.registerFactory<RequestListProvider>(
+      () => RequestListProvider(
+        getRequestsUseCase: getIt<GetRequestsUseCase>(),
+      ),
+    );
+
+    getIt.registerFactory<RequestDetailProvider>(
+      () => RequestDetailProvider(
+        getRequestByIdUseCase: getIt<GetRequestByIdUseCase>(),
+      ),
+    );
+
+    getIt.registerFactory<CreateRequestProvider>(
+      () => CreateRequestProvider(
+        createRequestUseCase: getIt<CreateRequestUseCase>(),
       ),
     );
   }

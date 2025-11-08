@@ -7,7 +7,9 @@ import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/parts/presentation/pages/parts_list_page.dart';
 import '../../features/cart/presentation/pages/cart_page.dart';
-import '../../features/orders/presentation/pages/orders_page.dart';
+import '../../features/requets/presentation/pages/my_request_list_page.dart';
+import '../../features/requets/presentation/pages/request_detail_page.dart';
+import '../../features/requets/presentation/pages/add_request_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/payment/presentation/pages/payment_page.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
@@ -94,7 +96,21 @@ class AppRouter {
       GoRoute(
         path: '/orders',
         name: 'orders',
-        builder: (context, state) => const OrdersPage(),
+        builder: (context, state) => const MyRequestList(),
+      ),
+      // More specific route must come before parameterized route
+      GoRoute(
+        path: '/requests/add',
+        name: 'add-request',
+        builder: (context, state) => const AddRequestPage(),
+      ),
+      GoRoute(
+        path: '/requests/:id',
+        name: 'request-detail',
+        builder: (context, state) {
+          final id = int.parse(state.pathParameters['id']!);
+          return RequestDetailPage(requestId: id);
+        },
       ),
       GoRoute(
         path: '/profile',

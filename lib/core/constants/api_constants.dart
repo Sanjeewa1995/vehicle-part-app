@@ -28,6 +28,9 @@ class ApiConstants {
   static const String profile = '/profile';
   static const String profileUpdate = '/profile/update';
   
+  static const String vehiclePartRequests = '/api/v1/requests/vehicle-part-requests/';
+  static String vehiclePartRequestDetail(int id) => '/api/v1/requests/vehicle-part-requests/$id/';
+  
   // Headers
   static const String contentType = 'application/json';
   static const String authorization = 'Authorization';

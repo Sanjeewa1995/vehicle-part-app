@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vehicle_part_app/shared/widgets/bottom_app_bar.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -15,6 +16,7 @@ class ProfilePage extends StatelessWidget {
           style: TextStyle(fontSize: 24),
         ),
       ),
+      bottomNavigationBar: const AppBottomNavigationBar(),
     );
   }
 }
