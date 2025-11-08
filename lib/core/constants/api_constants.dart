@@ -1,13 +1,17 @@
+import '../../config/env.dart';
+
 class ApiConstants {
   // Base URLs
-  static const String baseUrl = 'https://api.example.com';
+  // Note: Use Env.apiBaseUrl for the actual base URL from .env file
+  // This is kept for backward compatibility and as a fallback
+  static String get baseUrl => Env.apiBaseUrl;
   static const String apiVersion = '/v1';
   
   // Endpoints
-  static const String login = '/auth/login';
-  static const String register = '/auth/register';
-  static const String logout = '/auth/logout';
-  static const String refreshToken = '/auth/refresh';
+  static const String login = '/api/v1/auth/login/';
+  static const String register = '/api/v1/auth/register/';
+  static const String logout = '/api/v1/auth/logout/';
+  static const String refreshToken = '/api/v1/token/refresh/';
   
   static const String parts = '/parts';
   static const String partsSearch = '/parts/search';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'app/app.dart';
+import 'core/di/service_locator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +14,9 @@ void main() async {
     // App will use default values from env.dart
     debugPrint('Warning: .env file not found. Using default configuration.');
   }
+  
+  // Setup dependency injection
+  await ServiceLocator.setup();
   
   runApp(const App());
 }
