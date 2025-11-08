@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import '../providers/auth_provider.dart';
@@ -156,7 +157,7 @@ class AuthCard extends StatelessWidget {
                       const SizedBox(height: 48),
 
                       // Footer
-                      _buildFooter(),
+                      _buildFooter(context),
                     ],
                   ),
                 ),
@@ -168,7 +169,7 @@ class AuthCard extends StatelessWidget {
     );
   }
 
-  Widget _buildFooter() {
+  Widget _buildFooter(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -188,7 +189,7 @@ class AuthCard extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            // TODO: Navigate to sign up
+            context.go('/signup');
           },
           child: Text(
             'Sign Up',

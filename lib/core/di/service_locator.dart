@@ -5,6 +5,7 @@ import '../../features/auth/data/datasources/local/auth_local_datasource.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
 import '../../features/auth/domain/usecases/login_usecase.dart';
+import '../../features/auth/domain/usecases/register_usecase.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/requets/data/datasources/remote/request_remote_datasource.dart';
 import '../../features/requets/data/repositories/request_repository_impl.dart';
@@ -59,6 +60,9 @@ class ServiceLocator {
 
     // Use Cases
     getIt.registerLazySingleton(() => LoginUseCase(getIt<AuthRepository>()));
+    getIt.registerLazySingleton(
+      () => RegisterUseCase(authRepository: getIt<AuthRepository>()),
+    );
 
     // Request Data Sources
     getIt.registerLazySingleton<RequestRemoteDataSource>(
@@ -91,6 +95,7 @@ class ServiceLocator {
     getIt.registerFactory<AuthProvider>(
       () => AuthProvider(
         loginUseCase: getIt<LoginUseCase>(),
+        registerUseCase: getIt<RegisterUseCase>(),
         authRepository: getIt<AuthRepository>(),
       ),
     );

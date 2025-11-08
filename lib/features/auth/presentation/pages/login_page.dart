@@ -12,8 +12,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with TickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -71,9 +70,10 @@ class _LoginPageState extends State<LoginPage>
     );
 
     // Setup animations
-    _fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _fadeController, curve: Curves.easeOut),
-    );
+    _fadeAnim = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _fadeController, curve: Curves.easeOut));
     _slideAnim = Tween<double>(begin: 30.0, end: 0.0).animate(
       CurvedAnimation(parent: _slideController, curve: Curves.easeOutCubic),
     );
@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage>
   Future<void> _handleLogin() async {
     if (_formKey.currentState!.validate()) {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      
+
       setState(() {
         _isLoading = true;
         _apiError = null;
@@ -191,7 +191,6 @@ class _LoginPageState extends State<LoginPage>
 
               // Header with back button
               // _buildHeader(),
-
               const SizedBox(height: 48),
 
               // Brand section
@@ -222,50 +221,6 @@ class _LoginPageState extends State<LoginPage>
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return AnimatedBuilder(
-      animation: _fadeAnim,
-      builder: (context, child) {
-        return Opacity(
-          opacity: _fadeAnim.value,
-          child: Transform.translate(
-            offset: Offset(0, _slideAnim.value),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: GestureDetector(
-                onTap: () => context.pop(),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.background,
-                    border: Border.all(
-                      color: AppColors.borderLight,
-                      width: 1,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.shadow.withValues(alpha: 0.1),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.chevron_left,
-                    size: 24,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 
@@ -370,5 +325,4 @@ class _LoginPageState extends State<LoginPage>
       },
     );
   }
-
 }

@@ -1,15 +1,21 @@
 import 'package:flutter/foundation.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/usecases/login_usecase.dart';
+import '../../domain/usecases/register_usecase.dart';
 import '../../domain/repositories/auth_repository.dart';
 
 enum AuthStatus { initial, loading, authenticated, unauthenticated, error }
 
 class AuthProvider extends ChangeNotifier {
   final LoginUseCase loginUseCase;
+  final RegisterUseCase registerUseCase;
   final AuthRepository authRepository;
 
-  AuthProvider({required this.loginUseCase, required this.authRepository}) {
+  AuthProvider({
+    required this.loginUseCase,
+    required this.registerUseCase,
+    required this.authRepository,
+  }) {
     _checkAuthStatus();
   }
 
@@ -43,9 +49,39 @@ class AuthProvider extends ChangeNotifier {
       _status = AuthStatus.loading;
       _errorMessage = null;
       notifyListeners();
-      print('Login button pressed');
       _user = await loginUseCase(email, password);
-      print('Login successful');
+      _status = AuthStatus.authenticated;
+      _errorMessage = null;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _status = AuthStatus.error;
+      _errorMessage = e.toString().replaceAll('Exception: ', '');
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> register({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String phone,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    try {
+      _status = AuthStatus.loading;
+      _errorMessage = null;
+      notifyListeners();
+      _user = await registerUseCase(
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+        password: password,
+        confirmPassword: confirmPassword,
+      );
       _status = AuthStatus.authenticated;
       _errorMessage = null;
       notifyListeners();
@@ -66,6 +102,7 @@ class AuthProvider extends ChangeNotifier {
       _errorMessage = null;
       notifyListeners();
     } catch (e) {
+      print(e);
       _errorMessage = e.toString();
       notifyListeners();
     }

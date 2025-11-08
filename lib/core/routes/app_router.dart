@@ -5,12 +5,14 @@ import '../../features/onboarding/presentation/pages/splash_page.dart';
 import '../../features/onboarding/presentation/pages/welcome_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
+import '../../features/auth/presentation/pages/signup_page.dart';
 import '../../features/parts/presentation/pages/parts_list_page.dart';
 import '../../features/cart/presentation/pages/cart_page.dart';
 import '../../features/requets/presentation/pages/my_request_list_page.dart';
 import '../../features/requets/presentation/pages/request_detail_page.dart';
 import '../../features/requets/presentation/pages/add_request_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/profile/presentation/pages/settings_page.dart';
 import '../../features/payment/presentation/pages/payment_page.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../core/di/service_locator.dart';
@@ -39,13 +41,15 @@ class AppRouter {
       final isAuthenticated = authProvider.isAuthenticated;
       final isOnWelcomePage = state.matchedLocation == '/welcome';
       final isOnLoginPage = state.matchedLocation == '/login';
+      final isOnSignupPage = state.matchedLocation == '/signup';
       final isOnProtectedRoute = state.matchedLocation != '/welcome' &&
           state.matchedLocation != '/login' &&
+          state.matchedLocation != '/signup' &&
           state.matchedLocation != '/splash' &&
           state.matchedLocation != '/';
 
-      // If user is authenticated and trying to access welcome/login, redirect to home
-      if (isAuthenticated && (isOnWelcomePage || isOnLoginPage)) {
+      // If user is authenticated and trying to access welcome/login/signup, redirect to home
+      if (isAuthenticated && (isOnWelcomePage || isOnLoginPage || isOnSignupPage)) {
         return '/home';
       }
 
@@ -77,6 +81,11 @@ class AppRouter {
         path: '/login',
         name: 'login',
         builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: '/signup',
+        name: 'signup',
+        builder: (context, state) => const SignUpPage(),
       ),
       GoRoute(
         path: '/home',
@@ -116,6 +125,11 @@ class AppRouter {
         path: '/profile',
         name: 'profile',
         builder: (context, state) => const ProfilePage(),
+      ),
+      GoRoute(
+        path: '/settings',
+        name: 'settings',
+        builder: (context, state) => const SettingsPage(),
       ),
       GoRoute(
         path: '/payment',

@@ -5,6 +5,7 @@ import '../../domain/repositories/auth_repository.dart';
 import '../datasources/remote/auth_remote_datasource.dart';
 import '../datasources/local/auth_local_datasource.dart';
 import '../models/login_request.dart';
+import '../models/register_request.dart';
 import '../models/user_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -34,7 +35,49 @@ class AuthRepositoryImpl implements AuthRepository {
         throw Exception(response.message);
       }
     } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
       throw Exception('Login failed: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<User> register({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String phone,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    try {
+      final request = RegisterRequest(
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        password: password,
+        passwordConfirm: confirmPassword,
+      );
+      final response = await remoteDataSource.register(request);
+      if (response.success) {
+        // Save tokens
+        await localDataSource.saveTokens(response.data.tokens);
+
+        // Save user
+        final userJson = jsonEncode(response.data.user.toJson());
+        await localDataSource.saveUser(userJson);
+
+        return response.data.user;
+      } else {
+        throw Exception(response.message);
+      }
+    } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
+      throw Exception('Registration failed: ${e.toString()}');
     }
   }
 
@@ -43,6 +86,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await remoteDataSource.logout();
     } catch (e) {
+      print(e);
       // Even if API call fails, clear local data
     } finally {
       await localDataSource.clearTokens();
