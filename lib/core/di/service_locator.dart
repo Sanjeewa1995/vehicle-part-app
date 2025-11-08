@@ -63,5 +63,9 @@ class ServiceLocator {
   static AuthProvider getAuthProvider() {
     return getIt<AuthProvider>();
   }
+
+  static T get<T extends Object>() {
+    return getIt<T>();
+  }
 }
 
