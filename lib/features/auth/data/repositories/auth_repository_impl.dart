@@ -9,7 +9,9 @@ import '../models/register_request.dart';
 import '../models/password_reset_request.dart';
 import '../models/verify_otp_request.dart';
 import '../models/reset_password_request.dart';
+import '../models/logout_request.dart';
 import '../models/user_model.dart';
+import '../../../../core/services/token_service.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
@@ -139,9 +141,13 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> logout() async {
     try {
-      await remoteDataSource.logout();
+      // Get refresh token before clearing
+      final refreshToken = await TokenService.getRefreshToken();
+      if (refreshToken != null) {
+        final request = LogoutRequest(refresh: refreshToken);
+        await remoteDataSource.logout(request);
+      }
     } catch (e) {
-      print(e);
       // Even if API call fails, clear local data
     } finally {
       await localDataSource.clearTokens();

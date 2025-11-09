@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import '../../../auth/domain/entities/user.dart';
+import 'product.dart';
 
 class VehiclePartRequest extends Equatable {
   final int id;
@@ -14,7 +15,7 @@ class VehiclePartRequest extends Equatable {
   final String description;
   final String status;
   final User user;
-  final List<dynamic> products;
+  final List<Product> products;
   final DateTime createdAt;
   final DateTime updatedAt;
 

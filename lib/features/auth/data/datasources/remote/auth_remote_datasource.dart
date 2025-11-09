@@ -11,6 +11,7 @@ import 'package:vehicle_part_app/features/auth/data/models/verify_otp_request.da
 import 'package:vehicle_part_app/features/auth/data/models/verify_otp_response.dart';
 import 'package:vehicle_part_app/features/auth/data/models/reset_password_request.dart';
 import 'package:vehicle_part_app/features/auth/data/models/reset_password_response.dart';
+import 'package:vehicle_part_app/features/auth/data/models/logout_request.dart';
 
 abstract class AuthRemoteDataSource {
   Future<LoginResponse> login(LoginRequest request);
@@ -18,7 +19,7 @@ abstract class AuthRemoteDataSource {
   Future<PasswordResetResponse> forgotPassword(PasswordResetRequest request);
   Future<VerifyOTPResponse> verifyOTP(VerifyOTPRequest request);
   Future<ResetPasswordResponse> resetPassword(ResetPasswordRequest request);
-  Future<void> logout();
+  Future<void> logout(LogoutRequest request);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -102,9 +103,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> logout() async {
+  Future<void> logout(LogoutRequest request) async {
     try {
-      await apiClient.post(ApiConstants.logout);
+      await apiClient.post(
+        ApiConstants.logout,
+        data: request.toJson(),
+      );
+    } on AppException {
+      rethrow;
     } on DioException catch (e) {
       throw Exception(e.message);
     }

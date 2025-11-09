@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import '../../domain/entities/vehicle_part_request.dart';
 import '../../../auth/data/models/user_model.dart';
+import 'product_model.dart';
 
 part 'vehicle_part_request_model.g.dart';
 
@@ -42,8 +43,14 @@ class VehiclePartRequestModel extends VehiclePartRequest {
   @JsonKey(name: 'user')
   final UserModel requestUser;
 
-  @JsonKey(name: 'products')
-  final List<dynamic> requestProducts;
+  @JsonKey(name: 'products', fromJson: _productsFromJson)
+  final List<ProductModel> requestProducts;
+  
+  static List<ProductModel> _productsFromJson(List<dynamic> json) {
+    return json
+        .map((productJson) => ProductModel.fromJson(productJson as Map<String, dynamic>))
+        .toList();
+  }
 
   @JsonKey(name: 'created_at')
   final String requestCreatedAt;

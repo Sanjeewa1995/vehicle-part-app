@@ -166,7 +166,6 @@ class AuthProvider extends ChangeNotifier {
       _errorMessage = null;
       notifyListeners();
     } catch (e) {
-      print(e);
       _errorMessage = e.toString();
       notifyListeners();
     }

@@ -21,7 +21,9 @@ VehiclePartRequestModel _$VehiclePartRequestModelFromJson(
   requestDescription: json['description'] as String,
   requestStatus: json['status'] as String,
   requestUser: UserModel.fromJson(json['user'] as Map<String, dynamic>),
-  requestProducts: json['products'] as List<dynamic>,
+  requestProducts: VehiclePartRequestModel._productsFromJson(
+    json['products'] as List,
+  ),
   requestCreatedAt: json['created_at'] as String,
   requestUpdatedAt: json['updated_at'] as String,
 );

@@ -441,22 +441,32 @@ class SettingsPage extends StatelessWidget {
   }
 
   void _showLogoutDialog(BuildContext context, AuthProvider authProvider) {
+    final router = GoRouter.of(context);
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: const Text('Logout'),
         content: const Text('Are you sure you want to logout?'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.pop(dialogContext),
             child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () async {
-              Navigator.pop(context);
+              // Close dialog first
+              Navigator.pop(dialogContext);
+              
+              // Perform logout
               await authProvider.logout();
+              
+              // Navigate to splash screen
+              // Use a small delay to ensure state updates are processed
+              await Future.delayed(const Duration(milliseconds: 200));
+              
+              // Use the router directly to ensure navigation works
               if (context.mounted) {
-                context.go('/splash');
+                router.go('/splash');
               }
             },
             style: TextButton.styleFrom(
