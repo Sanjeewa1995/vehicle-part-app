@@ -212,7 +212,16 @@ class CartProvider extends ChangeNotifier {
           _items[index] = updatedItem;
           notifyListeners();
         } catch (e) {
+          final errorMessage = e.toString();
           debugPrint('Error updating via API: $e');
+          
+          // Handle case where update succeeds but API returns no response body
+          if (errorMessage.contains('UPDATE_SUCCESS_NO_RESPONSE')) {
+            debugPrint('Update succeeded but no response body, refreshing cart');
+            await refreshCart();
+            return;
+          }
+          
           // If update fails, reload cart to get latest state
           await refreshCart();
           // Try to find the item again after refresh
@@ -229,7 +238,16 @@ class CartProvider extends ChangeNotifier {
                 _items[refreshedIndex] = updatedItem;
                 notifyListeners();
               } catch (e2) {
+                final errorMessage2 = e2.toString();
                 debugPrint('Error updating after refresh: $e2');
+                
+                // Handle case where update succeeds but API returns no response body
+                if (errorMessage2.contains('UPDATE_SUCCESS_NO_RESPONSE')) {
+                  debugPrint('Update succeeded but no response body after refresh, refreshing cart');
+                  await refreshCart();
+                  return;
+                }
+                
                 throw Exception('Failed to update quantity: ${e2.toString()}');
               }
             } else {

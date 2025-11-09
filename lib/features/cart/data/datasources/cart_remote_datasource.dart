@@ -242,14 +242,57 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
       );
 
       final responseData = response.data;
-      if (responseData is Map<String, dynamic>) {
-        final success = responseData['success'] as bool?;
-        if (success == false) {
-          String? errorMessage = responseData['message'] as String?;
-          throw Exception(errorMessage ?? 'Failed to add item to cart');
+      
+      // Handle null response
+      if (responseData == null) {
+        throw Exception('Failed to add item to cart: Empty response from server');
+      }
+      
+      // Check if responseData is a Map
+      if (responseData is! Map<String, dynamic>) {
+        throw Exception('Failed to add item to cart: Invalid response format');
+      }
+      
+      final success = responseData['success'] as bool?;
+      if (success == false) {
+        String? errorMessage = responseData['message'] as String?;
+        throw Exception(errorMessage ?? 'Failed to add item to cart');
+      }
+      
+      // Handle nested data structure (data.data contains the actual item)
+      final data = responseData['data'];
+      if (data != null) {
+        if (data is Map<String, dynamic>) {
+          final nestedData = data['data'];
+          if (nestedData is Map<String, dynamic>) {
+            // Extract the actual item from nested structure
+            debugPrint('Found nested data structure in add response, extracting item from data.data');
+            return CartItemResponse(
+              success: success ?? true,
+              message: responseData['message'] as String? ?? 'Cart item added successfully',
+              data: CartItemModel.fromJson(nestedData),
+              statusCode: (responseData['status_code'] as num?)?.toInt() ?? 200,
+            );
+          } else if (data['id'] != null) {
+            // Data is directly the cart item (not nested)
+            debugPrint('Found direct cart item data in add response');
+            return CartItemResponse(
+              success: success ?? true,
+              message: responseData['message'] as String? ?? 'Cart item added successfully',
+              data: CartItemModel.fromJson(data),
+              statusCode: (responseData['status_code'] as num?)?.toInt() ?? 200,
+            );
+          }
         }
       }
 
+      // Check if data field exists and is not null before parsing
+      final responseDataField = responseData['data'];
+      if (responseDataField == null || responseDataField is! Map<String, dynamic>) {
+        throw Exception('Failed to add item to cart: Invalid or missing data in response');
+      }
+
+      // Try to parse as CartItemResponse directly
       return CartItemResponse.fromJson(responseData);
     } on AppException catch (e) {
       throw Exception(e.message);
@@ -272,21 +315,69 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
       );
 
       final responseData = response.data;
+      final statusCode = response.statusCode ?? 200;
       
-      // Handle null response
+      // Handle 204 No Content or null response (some APIs return null on successful update)
       if (responseData == null) {
+        if (statusCode == 204 || statusCode == 200) {
+          // Update was successful but no response body, throw special exception
+          // The caller should refresh the cart to get updated data
+          throw Exception('UPDATE_SUCCESS_NO_RESPONSE');
+        }
         throw Exception('Failed to update cart item: Empty response from server');
       }
       
-      if (responseData is Map<String, dynamic>) {
-        final success = responseData['success'] as bool?;
-        if (success == false) {
-          String? errorMessage = responseData['message'] as String?;
-          throw Exception(errorMessage ?? 'Failed to update cart item');
+      // Check if responseData is a Map
+      if (responseData is! Map<String, dynamic>) {
+        throw Exception('Failed to update cart item: Invalid response format');
+      }
+      
+      final success = responseData['success'] as bool?;
+      if (success == false) {
+        String? errorMessage = responseData['message'] as String?;
+        throw Exception(errorMessage ?? 'Failed to update cart item');
+      }
+      
+      // Handle nested data structure (data.data contains the actual item)
+      final data = responseData['data'];
+      if (data != null) {
+        if (data is Map<String, dynamic>) {
+          final nestedData = data['data'];
+          if (nestedData is Map<String, dynamic>) {
+            // Extract the actual item from nested structure
+            debugPrint('Found nested data structure in update response, extracting item from data.data');
+            return CartItemResponse(
+              success: success ?? true,
+              message: responseData['message'] as String? ?? 'Cart item updated successfully',
+              data: CartItemModel.fromJson(nestedData),
+              statusCode: (responseData['status_code'] as num?)?.toInt() ?? statusCode,
+            );
+          } else if (data['id'] != null) {
+            // Data is directly the cart item (not nested)
+            debugPrint('Found direct cart item data in update response');
+            return CartItemResponse(
+              success: success ?? true,
+              message: responseData['message'] as String? ?? 'Cart item updated successfully',
+              data: CartItemModel.fromJson(data),
+              statusCode: (responseData['status_code'] as num?)?.toInt() ?? statusCode,
+            );
+          }
         }
       }
 
-      return CartItemResponse.fromJson(responseData as Map<String, dynamic>);
+      // Check if data field exists and is not null before parsing
+      final responseDataField = responseData['data'];
+      if (responseDataField == null || responseDataField is! Map<String, dynamic>) {
+        // If update was successful but no valid data, refresh cart
+        if (success == true || statusCode == 200 || statusCode == 204) {
+          debugPrint('Update successful but no valid data in response, will refresh cart');
+          throw Exception('UPDATE_SUCCESS_NO_RESPONSE');
+        }
+        throw Exception('Failed to update cart item: Invalid or missing data in response');
+      }
+
+      // Try to parse as CartItemResponse directly
+      return CartItemResponse.fromJson(responseData);
     } on AppException catch (e) {
       throw Exception(e.message);
     } catch (e) {
