@@ -39,33 +39,33 @@ class RequestDetailPage extends StatelessWidget {
             ),
           ),
           centerTitle: true,
-          actions: [
-            Consumer<RequestDetailProvider>(
-              builder: (context, provider, child) {
-                if (provider.isLoading || provider.isDeleting) {
-                  return const Padding(
-                    padding: EdgeInsets.all(16),
-                    child: SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(AppColors.error),
-                      ),
-                    ),
-                  );
-                }
-                return IconButton(
-                  icon: const Icon(Icons.delete_outline, color: AppColors.error),
-                  onPressed: provider.isDeleting
-                      ? null
-                      : () {
-                          _showDeleteDialog(context, provider);
-                        },
-                );
-              },
-            ),
-          ],
+          // actions: [
+          //   Consumer<RequestDetailProvider>(
+          //     builder: (context, provider, child) {
+          //       if (provider.isLoading || provider.isDeleting) {
+          //         return const Padding(
+          //           padding: EdgeInsets.all(16),
+          //           child: SizedBox(
+          //             width: 20,
+          //             height: 20,
+          //             child: CircularProgressIndicator(
+          //               strokeWidth: 2,
+          //               valueColor: AlwaysStoppedAnimation<Color>(AppColors.error),
+          //             ),
+          //           ),
+          //         );
+          //       }
+          //       return IconButton(
+          //         icon: const Icon(Icons.delete_outline, color: AppColors.error),
+          //         onPressed: provider.isDeleting
+          //             ? null
+          //             : () {
+          //                 _showDeleteDialog(context, provider);
+          //               },
+          //       );
+          //     },
+          //   ),
+          // ],
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(1),
             child: Container(
