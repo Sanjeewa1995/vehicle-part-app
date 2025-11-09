@@ -16,6 +16,7 @@ import '../../features/requets/presentation/pages/request_detail_page.dart';
 import '../../features/requets/presentation/pages/add_request_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/profile/presentation/pages/settings_page.dart';
+import '../../features/profile/presentation/pages/edit_profile_page.dart';
 import '../../features/payment/presentation/pages/payment_page.dart';
 import '../../features/payment/presentation/pages/checkout_page.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
@@ -163,6 +164,12 @@ class AppRouter {
           final id = int.parse(state.pathParameters['id']!);
           return RequestDetailPage(requestId: id);
         },
+      ),
+      // More specific route must come before parameterized route
+      GoRoute(
+        path: '/profile/edit',
+        name: 'edit-profile',
+        builder: (context, state) => const EditProfilePage(),
       ),
       GoRoute(
         path: '/profile',

@@ -142,8 +142,7 @@ class SettingsPage extends StatelessWidget {
                 // Edit Button
                 GestureDetector(
                   onTap: () {
-                    // TODO: Navigate to edit profile
-                    _showComingSoonDialog(context, 'Edit Profile');
+                    context.push('/profile/edit');
                   },
                   child: Container(
                     width: 32,
@@ -207,7 +206,7 @@ class SettingsPage extends StatelessWidget {
                   title: 'Edit Profile',
                   subtitle: 'Update your personal information',
                   onTap: () {
-                    _showComingSoonDialog(context, 'Edit Profile');
+                    context.push('/profile/edit');
                   },
                 ),
                 _buildDivider(),

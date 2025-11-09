@@ -139,6 +139,33 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<User> updateProfile({
+    required String firstName,
+    required String lastName,
+    required String phone,
+  }) async {
+    try {
+      final request = UpdateProfileRequest(
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+      );
+      final response = await remoteDataSource.updateProfile(request);
+      
+      // Update stored user
+      final userJson = jsonEncode(response.user.toJson());
+      await localDataSource.saveUser(userJson);
+
+      return response.user;
+    } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
+      throw Exception('Profile update failed: ${e.toString()}');
+    }
+  }
+
+  @override
   Future<void> logout() async {
     try {
       // Get refresh token before clearing
