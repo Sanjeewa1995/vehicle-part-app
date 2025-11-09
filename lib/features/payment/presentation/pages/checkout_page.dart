@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/utils/currency_formatter.dart';
-import '../../../../shared/widgets/app_button.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../domain/entities/billing_address.dart';
-import '../widgets/billing_address_form.dart';
+import '../widgets/checkout_header_widget.dart';
+import '../widgets/checkout_empty_widget.dart';
+import '../widgets/checkout_summary_widget.dart';
 import '../widgets/order_summary_card.dart';
+import '../widgets/billing_address_form.dart';
+
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
 
@@ -24,191 +26,89 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left, color: AppColors.textPrimary),
-          onPressed: () => context.pop(),
-        ),
-        title: const Text(
-          'Checkout',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
-          ),
-        ),
-        centerTitle: true,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(
-            height: 1,
-            color: AppColors.borderLight,
-          ),
-        ),
-      ),
-      body: Consumer2<CartProvider, AuthProvider>(
-        builder: (context, cartProvider, authProvider, child) {
-          if (cartProvider.isEmpty) {
-            return Center(
+      backgroundColor: AppColors.backgroundSecondary,
+      body: SafeArea(
+        child: Consumer2<CartProvider, AuthProvider>(
+          builder: (context, cartProvider, authProvider, child) {
+            // Empty State
+            if (cartProvider.isEmpty) {
+              return const CheckoutEmptyWidget();
+            }
+
+            // Initialize billing address from user profile if available
+            final user = authProvider.user;
+            if (_billingAddress == null && user != null) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                setState(() {
+                  _billingAddress = BillingAddress(
+                    firstName: user.firstName ?? '',
+                    lastName: user.lastName ?? '',
+                    email: user.email,
+                    phone: user.phone ?? '',
+                    address: '',
+                    city: '',
+                    postalCode: '',
+                    country: 'Sri Lanka',
+                  );
+                });
+              });
+            }
+
+            return Form(
+              key: _formKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
-                    Icons.shopping_cart_outlined,
-                    size: 64,
-                    color: AppColors.textTertiary,
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Your cart is empty',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textSecondary,
+                  // Header
+                  const CheckoutHeaderWidget(),
+
+                  // Content
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Order Summary
+                          OrderSummaryCard(
+                            cartProvider: cartProvider,
+                          ),
+                          const SizedBox(height: 24),
+
+                          // Billing Address Section
+                          Text(
+                            'Billing Address',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          BillingAddressForm(
+                            initialAddress: _billingAddress,
+                            onChanged: (address) {
+                              setState(() {
+                                _billingAddress = address;
+                              });
+                            },
+                          ),
+                          const SizedBox(height: 24),
+                        ],
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Add items to your cart to proceed',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.textTertiary,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  AppButton(
-                    text: 'Browse Products',
-                    onPressed: () => context.go('/orders'),
-                    type: AppButtonType.primary,
+
+                  // Summary and Checkout Button
+                  CheckoutSummaryWidget(
+                    cartProvider: cartProvider,
+                    isLoading: _isLoading,
+                    onCheckout: () => _handleCheckout(context, cartProvider),
                   ),
                 ],
               ),
             );
-          }
-
-          // Initialize billing address from user profile if available
-          final user = authProvider.user;
-          if (_billingAddress == null && user != null) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              setState(() {
-                _billingAddress = BillingAddress(
-                  firstName: user.firstName ?? '',
-                  lastName: user.lastName ?? '',
-                  email: user.email,
-                  phone: user.phone ?? '',
-                  address: '',
-                  city: '',
-                  postalCode: '',
-                  country: 'Sri Lanka',
-                );
-              });
-            });
-          }
-
-          return Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Order Summary
-                        OrderSummaryCard(
-                          cartProvider: cartProvider,
-                        ),
-                        const SizedBox(height: 32),
-
-                        // Billing Address Section
-                        const Text(
-                          'Billing Address',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        BillingAddressForm(
-                          initialAddress: _billingAddress,
-                          onChanged: (address) {
-                            setState(() {
-                              _billingAddress = address;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                // Checkout Button
-                Container(
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: AppColors.background,
-                    border: Border(
-                      top: BorderSide(
-                        color: AppColors.borderLight,
-                        width: 1,
-                      ),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.shadow.withValues(alpha: 0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, -2),
-                      ),
-                    ],
-                  ),
-                  child: SafeArea(
-                    top: false,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Total',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textPrimary,
-                              ),
-                            ),
-                            Text(
-                              CurrencyFormatter.formatLKR(cartProvider.totalPrice),
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.primary,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        AppButton(
-                          text: 'Proceed to Payment',
-                          onPressed: _isLoading
-                              ? null
-                              : () => _handleCheckout(context, cartProvider),
-                          type: AppButtonType.primary,
-                          size: AppButtonSize.large,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
+          },
+        ),
       ),
     );
   }
@@ -223,9 +123,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
     if (_billingAddress == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please fill in all billing address fields'),
+        SnackBar(
+          content: const Text('Please fill in all billing address fields'),
           backgroundColor: AppColors.error,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       );
       return;
@@ -253,6 +157,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
           SnackBar(
             content: Text('Error: ${e.toString()}'),
             backgroundColor: AppColors.error,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
         );
       }
@@ -265,4 +173,3 @@ class _CheckoutPageState extends State<CheckoutPage> {
     }
   }
 }
-
