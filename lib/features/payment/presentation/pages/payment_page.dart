@@ -1,100 +1,530 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vehicle_part_app/core/theme/app_colors.dart';
-import 'package:vehicle_part_app/core/utils/validators.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../shared/widgets/app_button.dart';
+import '../../../cart/domain/entities/cart_item.dart';
+import '../../../cart/presentation/providers/cart_provider.dart';
+import '../../domain/entities/billing_address.dart';
 import '../../data/repositories/payhere_service.dart';
 import '../../data/models/payment_request.dart';
 
 class PaymentPage extends StatefulWidget {
-  const PaymentPage({super.key});
+  final BillingAddress? billingAddress;
+  final String paymentMethod;
+  final List<CartItem> cartItems;
+  final double totalAmount;
+
+  const PaymentPage({
+    super.key,
+    required this.billingAddress,
+    this.paymentMethod = 'payhere',
+    required this.cartItems,
+    required this.totalAmount,
+  });
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _cardNumberController = TextEditingController();
-  final _cardHolderController = TextEditingController();
-  final _expiryDateController = TextEditingController();
-  final _cvvController = TextEditingController();
-  
-  String _selectedPaymentMethod = 'card';
   bool _isProcessing = false;
 
   @override
-  void dispose() {
-    _cardNumberController.dispose();
-    _cardHolderController.dispose();
-    _expiryDateController.dispose();
-    _cvvController.dispose();
-    super.dispose();
+  Widget build(BuildContext context) {
+    final priceFormat = NumberFormat.currency(symbol: '\$', decimalDigits: 2);
+    final shipping = 0.0;
+    final tax = widget.totalAmount * 0.15; // 15% tax
+    final total = widget.totalAmount + shipping + tax;
+
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left, color: AppColors.textPrimary),
+          onPressed: () => context.pop(),
+        ),
+        title: const Text(
+          'Payment',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: AppColors.textPrimary,
+          ),
+        ),
+        centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(
+            height: 1,
+            color: AppColors.borderLight,
+          ),
+        ),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Billing Address Summary
+                  if (widget.billingAddress != null) ...[
+                    const Text(
+                      'Billing Address',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        side: BorderSide(color: AppColors.borderLight, width: 1),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.billingAddress!.fullName,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              widget.billingAddress!.fullAddress,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Phone: ${widget.billingAddress!.phone}',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Email: ${widget.billingAddress!.email}',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                  ],
+
+                  // Payment Method Display
+                  const Text(
+                    'Payment Method',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Card(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(color: AppColors.borderLight, width: 1),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 48,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: widget.paymentMethod == 'payhere'
+                                  ? const Color(0xFF00A651).withValues(alpha: 0.1)
+                                  : AppColors.backgroundSecondary,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Icon(
+                              widget.paymentMethod == 'payhere'
+                                  ? Icons.payment
+                                  : Icons.money,
+                              color: widget.paymentMethod == 'payhere'
+                                  ? const Color(0xFF00A651)
+                                  : AppColors.primary,
+                              size: 24,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.paymentMethod == 'payhere'
+                                      ? 'PayHere'
+                                      : 'Cash on Delivery',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  widget.paymentMethod == 'payhere'
+                                      ? 'Secure payment gateway'
+                                      : 'Pay when you receive',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.textSecondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+
+                  // Order Summary
+                  const Text(
+                    'Order Summary',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Card(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(color: AppColors.borderLight, width: 1),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        children: [
+                          // Items List
+                          ...widget.cartItems.map((item) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: item.product.image != null &&
+                                            item.product.image!.isNotEmpty
+                                        ? Image.network(
+                                            item.product.image!,
+                                            width: 60,
+                                            height: 60,
+                                            fit: BoxFit.cover,
+                                            errorBuilder: (context, error, stackTrace) {
+                                              return Container(
+                                                width: 60,
+                                                height: 60,
+                                                color: AppColors.backgroundSecondary,
+                                                child: const Icon(
+                                                  Icons.image_not_supported,
+                                                  size: 24,
+                                                  color: AppColors.textTertiary,
+                                                ),
+                                              );
+                                            },
+                                          )
+                                        : Container(
+                                            width: 60,
+                                            height: 60,
+                                            color: AppColors.backgroundSecondary,
+                                            child: const Icon(
+                                              Icons.shopping_bag_outlined,
+                                              size: 24,
+                                              color: AppColors.textTertiary,
+                                            ),
+                                          ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          item.product.name,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.textPrimary,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'Qty: ${item.quantity} × ${priceFormat.format(item.product.price)}',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: AppColors.textSecondary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Text(
+                                    priceFormat.format(item.totalPrice),
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.textPrimary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                          const SizedBox(height: 16),
+                          const Divider(),
+                          _buildSummaryRow('Subtotal', priceFormat.format(widget.totalAmount)),
+                          const SizedBox(height: 8),
+                          _buildSummaryRow('Shipping', priceFormat.format(shipping)),
+                          const SizedBox(height: 8),
+                          _buildSummaryRow('Tax (15%)', priceFormat.format(tax)),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Total',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.textPrimary,
+                                ),
+                              ),
+                              Text(
+                                priceFormat.format(total),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Payment Button
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: AppColors.background,
+              border: Border(
+                top: BorderSide(
+                  color: AppColors.borderLight,
+                  width: 1,
+                ),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.shadow.withValues(alpha: 0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, -2),
+                ),
+              ],
+            ),
+            child: SafeArea(
+              top: false,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Total',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      Text(
+                        priceFormat.format(total),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  AppButton(
+                    text: widget.paymentMethod == 'payhere'
+                        ? 'Pay with PayHere'
+                        : 'Place Order (Cash on Delivery)',
+                    onPressed: _isProcessing ? null : () => _handlePayment(context, total),
+                    type: AppButtonType.primary,
+                    size: AppButtonSize.large,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
-  void _handlePayment() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isProcessing = true;
-      });
-      
-      // TODO: Implement payment processing logic
-      Future.delayed(const Duration(seconds: 2), () {
-        if (!mounted) return;
-        
+  Widget _buildSummaryRow(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 14,
+            color: AppColors.textSecondary,
+          ),
+        ),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimary,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _handlePayment(BuildContext context, double total) async {
+    if (widget.billingAddress == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Billing address is required'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      _isProcessing = true;
+    });
+
+    try {
+      if (widget.paymentMethod == 'payhere') {
+        await _handlePayHerePayment(context, total);
+      } else if (widget.paymentMethod == 'cod') {
+        await _handleCashOnDelivery(context, total);
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: ${e.toString()}'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+    } finally {
+      if (mounted) {
         setState(() {
           _isProcessing = false;
         });
-        
-        // Show success dialog
-        showDialog(
-          context: context,
-          builder: (dialogContext) => AlertDialog(
-            title: const Text('Payment Successful'),
-            content: const Text('Your payment has been processed successfully.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(dialogContext).pop();
-                  if (mounted) {
-                    context.go('/orders');
-                  }
-                },
-                child: const Text('View Orders'),
-              ),
-            ],
-          ),
-        );
-      });
+      }
     }
   }
 
-  void _handlePayHerePayment() {
+  Future<void> _handlePayHerePayment(BuildContext context, double total) async {
+    // Create payment items list
+    final paymentItems = widget.cartItems.map((item) {
+      return PaymentItem(
+        itemNumber: item.product.id.toString(),
+        itemName: item.product.name,
+        amount: item.product.price,
+        quantity: item.quantity,
+      );
+    }).toList();
+
     // Create payment request
-    // TODO: Replace with actual order data from your cart/state management
     final paymentRequest = PaymentRequest(
       orderId: DateTime.now().millisecondsSinceEpoch.toString(),
-      items: 'Vehicle Parts Order',
-      amount: 100.00, // TODO: Get from cart total
-      firstName: 'John', // TODO: Get from user profile
-      lastName: 'Doe', // TODO: Get from user profile
-      email: 'john.doe@example.com', // TODO: Get from user profile
-      phone: '0771234567', // TODO: Get from user profile
-      address: 'No. 1, Galle Road', // TODO: Get from user profile
-      city: 'Colombo', // TODO: Get from user profile
-      country: 'Sri Lanka',
+      items: widget.cartItems.length == 1
+          ? widget.cartItems.first.product.name
+          : '${widget.cartItems.length} Vehicle Parts',
+      amount: total,
+      firstName: widget.billingAddress!.firstName,
+      lastName: widget.billingAddress!.lastName,
+      email: widget.billingAddress!.email,
+      phone: widget.billingAddress!.phone,
+      address: widget.billingAddress!.address,
+      city: widget.billingAddress!.city,
+      country: widget.billingAddress!.country,
+      deliveryAddress: widget.billingAddress!.address,
+      deliveryCity: widget.billingAddress!.city,
+      deliveryCountry: widget.billingAddress!.country,
+      paymentItems: paymentItems,
     );
 
     PayHereService.startPayment(
       paymentRequest: paymentRequest,
-      onSuccess: (paymentId) {
+      onSuccess: (paymentId) async {
         if (!mounted) return;
-        
+
+        // Clear cart after successful payment
+        final cartProvider = Provider.of<CartProvider>(context, listen: false);
+        await cartProvider.clearCart();
+
+        if (!mounted) return;
+
         // Show success dialog
         showDialog(
           context: context,
+          barrierDismissible: false,
           builder: (dialogContext) => AlertDialog(
-            title: const Text('Payment Successful'),
-            content: Text('Your payment has been processed successfully.\nPayment ID: $paymentId'),
+            title: const Row(
+              children: [
+                Icon(Icons.check_circle, color: AppColors.success, size: 32),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Text('Payment Successful'),
+                ),
+              ],
+            ),
+            content: Text(
+              'Your payment has been processed successfully.\n\nPayment ID: $paymentId\n\nYour order will be processed shortly.',
+            ),
             actions: [
               TextButton(
                 onPressed: () {
@@ -111,13 +541,21 @@ class _PaymentPageState extends State<PaymentPage> {
       },
       onError: (error) {
         if (!mounted) return;
-        
+
         // Show error dialog
         showDialog(
           context: context,
           builder: (dialogContext) => AlertDialog(
-            title: const Text('Payment Failed'),
-            content: Text('Payment could not be processed.\nError: $error'),
+            title: const Row(
+              children: [
+                Icon(Icons.error_outline, color: AppColors.error, size: 32),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Text('Payment Failed'),
+                ),
+              ],
+            ),
+            content: Text('Payment could not be processed.\n\nError: $error\n\nPlease try again.'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -131,8 +569,7 @@ class _PaymentPageState extends State<PaymentPage> {
       },
       onDismissed: () {
         if (!mounted) return;
-        
-        // Show dismissed dialog
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Payment was cancelled'),
@@ -143,273 +580,75 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Payment'),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Payment Method Selection
-              const Text(
-                'Select Payment Method',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
-              RadioListTile<String>(
-                title: const Text('Credit/Debit Card'),
-                value: 'card',
-                groupValue: _selectedPaymentMethod,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedPaymentMethod = value!;
-                  });
-                },
-              ),
-              RadioListTile<String>(
-                title: const Text('PayPal'),
-                value: 'paypal',
-                groupValue: _selectedPaymentMethod,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedPaymentMethod = value!;
-                  });
-                },
-              ),
-              RadioListTile<String>(
-                title: const Text('Cash on Delivery'),
-                value: 'cod',
-                groupValue: _selectedPaymentMethod,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedPaymentMethod = value!;
-                  });
-                },
-              ),
-              const SizedBox(height: 32),
-              
-              // Card Details (only show if card is selected)
-              if (_selectedPaymentMethod == 'card') ...[
-                const Text(
-                  'Card Details',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _cardNumberController,
-                  decoration: const InputDecoration(
-                    labelText: 'Card Number',
-                    hintText: '1234 5678 9012 3456',
-                    prefixIcon: Icon(Icons.credit_card),
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Card number is required';
-                    }
-                    if (value.replaceAll(' ', '').length < 16) {
-                      return 'Please enter a valid card number';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _cardHolderController,
-                  decoration: const InputDecoration(
-                    labelText: 'Card Holder Name',
-                    prefixIcon: Icon(Icons.person),
-                  ),
-                  validator: Validators.validateRequired,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _expiryDateController,
-                        decoration: const InputDecoration(
-                          labelText: 'Expiry Date',
-                          hintText: 'MM/YY',
-                          prefixIcon: Icon(Icons.calendar_today),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Required';
-                          }
-                          final regex = RegExp(r'^\d{2}/\d{2}$');
-                          if (!regex.hasMatch(value)) {
-                            return 'MM/YY format';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: TextFormField(
-                        controller: _cvvController,
-                        decoration: const InputDecoration(
-                          labelText: 'CVV',
-                          hintText: '123',
-                          prefixIcon: Icon(Icons.lock),
-                        ),
-                        keyboardType: TextInputType.number,
-                        obscureText: true,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Required';
-                          }
-                          if (value.length < 3) {
-                            return 'Invalid CVV';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 32),
-              ],
-              
-              // Order Summary
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Order Summary',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Subtotal'),
-                          Text('\$0.00'),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Shipping'),
-                          Text('\$0.00'),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Tax'),
-                          Text('\$0.00'),
-                        ],
-                      ),
-                      const Divider(),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Total',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            '\$0.00',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
-              
-              // PayHere Button
-              ElevatedButton.icon(
-                onPressed: _isProcessing ? null : _handlePayHerePayment,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: const Color(0xFF00A651), // PayHere green color
-                  foregroundColor: Colors.white,
-                ),
-                icon: const Icon(Icons.payment),
-                label: const Text(
-                  'Pay from PayHere',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              
-              // Divider
-              const Row(
-                children: [
-                  Expanded(child: Divider()),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text('OR'),
-                  ),
-                  Expanded(child: Divider()),
-                ],
-              ),
-              const SizedBox(height: 16),
-              
-              // Regular Pay Button
-              ElevatedButton(
-                onPressed: _isProcessing ? null : _handlePayment,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: AppColors.primary,
-                ),
-                child: _isProcessing
-                    ? const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                        ),
-                      )
-                    : const Text(
-                        'Complete Payment',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-              ),
-            ],
-          ),
+  Future<void> _handleCashOnDelivery(BuildContext context, double total) async {
+    final priceFormat = NumberFormat.currency(symbol: '\$', decimalDigits: 2);
+    
+    // Show confirmation dialog for COD
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Confirm Order'),
+        content: Text(
+          'You are placing an order for ${priceFormat.format(total)}.\n\nYou will pay when you receive the items.\n\nDo you want to continue?',
         ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: const Text('Confirm'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) {
+      return;
+    }
+
+    // Process COD order
+    // TODO: Create order in backend
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (!mounted) return;
+
+    // Clear cart after successful order
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    await cartProvider.clearCart();
+
+    if (!mounted) return;
+
+    // Show success dialog
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => AlertDialog(
+        title: const Row(
+          children: [
+            Icon(Icons.check_circle, color: AppColors.success, size: 32),
+            SizedBox(width: 12),
+            Expanded(
+              child: Text('Order Placed'),
+            ),
+          ],
+        ),
+        content: const Text(
+          'Your order has been placed successfully.\n\nYou will pay when you receive the items.\n\nYour order will be processed shortly.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              if (mounted) {
+                context.go('/orders');
+              }
+            },
+            child: const Text('View Orders'),
+          ),
+        ],
       ),
     );
   }
 }
-

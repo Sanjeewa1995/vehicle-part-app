@@ -17,6 +17,7 @@ import '../../features/requets/presentation/pages/add_request_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/profile/presentation/pages/settings_page.dart';
 import '../../features/payment/presentation/pages/payment_page.dart';
+import '../../features/payment/presentation/pages/checkout_page.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../core/di/service_locator.dart';
 
@@ -174,9 +175,22 @@ class AppRouter {
         builder: (context, state) => const SettingsPage(),
       ),
       GoRoute(
+        path: '/checkout',
+        name: 'checkout',
+        builder: (context, state) => const CheckoutPage(),
+      ),
+      GoRoute(
         path: '/payment',
         name: 'payment',
-        builder: (context, state) => const PaymentPage(),
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          return PaymentPage(
+            billingAddress: extra?['billingAddress'],
+            paymentMethod: extra?['paymentMethod'] ?? 'payhere',
+            cartItems: extra?['cartItems'] ?? [],
+            totalAmount: extra?['totalAmount'] ?? 0.0,
+          );
+        },
       ),
     ],
     refreshListenable: ServiceLocator.getAuthProvider(),

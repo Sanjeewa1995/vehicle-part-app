@@ -209,12 +209,12 @@ class CartPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Proceed to Payment Button
+            // Proceed to Checkout Button
             AppButton(
-              text: 'Proceed to Payment',
+              text: 'Proceed to Checkout',
               onPressed: () {
                 if (cartProvider.isNotEmpty) {
-                  context.go('/payment');
+                  context.push('/checkout');
                 }
               },
               type: AppButtonType.primary,
