@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../features/onboarding/presentation/pages/splash_page.dart';
 import '../../features/onboarding/presentation/pages/welcome_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/home/presentation/pages/help_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/signup_page.dart';
 import '../../features/auth/presentation/pages/forgot_password_page.dart';
@@ -55,6 +56,7 @@ class AppRouter {
           state.matchedLocation != '/otp-verification' &&
           state.matchedLocation != '/reset-password' &&
           state.matchedLocation != '/splash' &&
+          state.matchedLocation != '/help' &&
           state.matchedLocation != '/';
 
       // If user is authenticated and trying to access welcome/login/signup, redirect to home
@@ -186,6 +188,11 @@ class AppRouter {
         path: '/settings',
         name: 'settings',
         builder: (context, state) => const SettingsPage(),
+      ),
+      GoRoute(
+        path: '/help',
+        name: 'help',
+        builder: (context, state) => const HelpPage(),
       ),
       GoRoute(
         path: '/checkout',
