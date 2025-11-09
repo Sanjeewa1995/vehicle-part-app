@@ -1,13 +1,18 @@
 import 'package:flutter/foundation.dart';
 import '../../domain/entities/vehicle_part_request.dart';
 import '../../domain/usecases/get_request_by_id_usecase.dart';
+import '../../domain/usecases/delete_request_usecase.dart';
 
-enum RequestDetailStatus { initial, loading, loaded, error }
+enum RequestDetailStatus { initial, loading, loaded, error, deleting, deleted }
 
 class RequestDetailProvider extends ChangeNotifier {
   final GetRequestByIdUseCase getRequestByIdUseCase;
+  final DeleteRequestUseCase deleteRequestUseCase;
 
-  RequestDetailProvider({required this.getRequestByIdUseCase});
+  RequestDetailProvider({
+    required this.getRequestByIdUseCase,
+    required this.deleteRequestUseCase,
+  });
 
   RequestDetailStatus _status = RequestDetailStatus.initial;
   VehiclePartRequest? _request;
@@ -17,6 +22,8 @@ class RequestDetailProvider extends ChangeNotifier {
   VehiclePartRequest? get request => _request;
   String? get errorMessage => _errorMessage;
   bool get isLoading => _status == RequestDetailStatus.loading;
+  bool get isDeleting => _status == RequestDetailStatus.deleting;
+  bool get isDeleted => _status == RequestDetailStatus.deleted;
 
   Future<void> loadRequest(int id) async {
     try {
@@ -42,6 +49,35 @@ class RequestDetailProvider extends ChangeNotifier {
           .trim();
 
       _errorMessage = errorMsg.isEmpty ? 'Failed to load request' : errorMsg;
+      notifyListeners();
+    }
+  }
+
+  Future<void> deleteRequest(int id) async {
+    try {
+      _status = RequestDetailStatus.deleting;
+      _errorMessage = null;
+      notifyListeners();
+
+      await deleteRequestUseCase(id);
+
+      _status = RequestDetailStatus.deleted;
+      _errorMessage = null;
+      _request = null;
+      notifyListeners();
+    } catch (e) {
+      _status = RequestDetailStatus.error;
+      String errorMsg = e.toString();
+
+      // Remove common prefixes
+      errorMsg = errorMsg
+          .replaceAll('Exception: ', '')
+          .replaceAll('ServerException: ', '')
+          .replaceAll('AuthenticationException: ', '')
+          .replaceAll('NetworkException: ', '')
+          .trim();
+
+      _errorMessage = errorMsg.isEmpty ? 'Failed to delete request' : errorMsg;
       notifyListeners();
     }
   }

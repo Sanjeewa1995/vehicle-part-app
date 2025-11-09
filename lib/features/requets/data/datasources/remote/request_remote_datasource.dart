@@ -15,6 +15,8 @@ abstract class RequestRemoteDataSource {
   Future<RequestDetailResponse> getRequestById(int id);
 
   Future<RequestDetailResponse> createRequest(CreateRequestData data);
+
+  Future<void> deleteRequest(int id);
 }
 
 class RequestRemoteDataSourceImpl implements RequestRemoteDataSource {
@@ -180,6 +182,45 @@ class RequestRemoteDataSourceImpl implements RequestRemoteDataSource {
       }
 
       return RequestDetailResponse.fromJson(responseData);
+    } on AppException catch (e) {
+      throw Exception(e.message);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<void> deleteRequest(int id) async {
+    try {
+      final response = await apiClient.delete(
+        ApiConstants.vehiclePartRequestDetail(id),
+      );
+
+      final responseData = response.data;
+      if (responseData is Map<String, dynamic>) {
+        final success = responseData['success'] as bool?;
+        if (success == false) {
+          // Extract error message from common API error format
+          String? errorMessage = responseData['message'] as String?;
+
+          if (errorMessage == null || errorMessage.isEmpty) {
+            final errors = responseData['errors'] as Map<String, dynamic>?;
+            if (errors != null) {
+              final nonFieldErrors = errors['non_field_errors'] as List?;
+              if (nonFieldErrors != null && nonFieldErrors.isNotEmpty) {
+                final firstError = nonFieldErrors.first;
+                errorMessage = firstError is String ? firstError : firstError.toString();
+              }
+            }
+          }
+
+          if (errorMessage == null || errorMessage.isEmpty) {
+            errorMessage = responseData['error'] as String?;
+          }
+
+          throw Exception(errorMessage ?? 'Failed to delete request');
+        }
+      }
     } on AppException catch (e) {
       throw Exception(e.message);
     } catch (e) {

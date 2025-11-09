@@ -10,5 +10,7 @@ abstract class RequestRepository {
   Future<VehiclePartRequest> getRequestById(int id);
 
   Future<VehiclePartRequest> createRequest(CreateRequestData data);
+
+  Future<void> deleteRequest(int id);
 }
 

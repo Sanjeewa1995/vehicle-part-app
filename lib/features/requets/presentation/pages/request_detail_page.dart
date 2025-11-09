@@ -42,7 +42,7 @@ class RequestDetailPage extends StatelessWidget {
           actions: [
             Consumer<RequestDetailProvider>(
               builder: (context, provider, child) {
-                if (provider.isLoading) {
+                if (provider.isLoading || provider.isDeleting) {
                   return const Padding(
                     padding: EdgeInsets.all(16),
                     child: SizedBox(
@@ -57,9 +57,11 @@ class RequestDetailPage extends StatelessWidget {
                 }
                 return IconButton(
                   icon: const Icon(Icons.delete_outline, color: AppColors.error),
-                  onPressed: () {
-                    _showDeleteDialog(context, provider);
-                  },
+                  onPressed: provider.isDeleting
+                      ? null
+                      : () {
+                          _showDeleteDialog(context, provider);
+                        },
                 );
               },
             ),
@@ -564,36 +566,15 @@ class RequestDetailPage extends StatelessWidget {
   ) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Delete Request'),
-        content: const Text(
-          'Are you sure you want to delete this request? This action cannot be undone.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(
-              'Cancel',
-              style: TextStyle(color: AppColors.textSecondary),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              // TODO: Implement delete functionality
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Delete functionality not yet implemented'),
-                ),
-              );
-            },
-            child: const Text(
-              'Delete',
-              style: TextStyle(color: AppColors.error),
-            ),
-          ),
-        ],
-      ),
+      barrierDismissible: true,
+      builder: (dialogContext) {
+        return _DeleteDialogContent(
+          dialogContext: dialogContext,
+          parentContext: context,
+          provider: provider,
+          requestId: requestId,
+        );
+      },
     );
   }
 
@@ -642,6 +623,121 @@ class RequestDetailPage extends StatelessWidget {
   String _capitalizeFirst(String text) {
     if (text.isEmpty) return text;
     return text[0].toUpperCase() + text.substring(1).toLowerCase();
+  }
+}
+
+class _DeleteDialogContent extends StatefulWidget {
+  final BuildContext dialogContext;
+  final BuildContext parentContext;
+  final RequestDetailProvider provider;
+  final int requestId;
+
+  const _DeleteDialogContent({
+    required this.dialogContext,
+    required this.parentContext,
+    required this.provider,
+    required this.requestId,
+  });
+
+  @override
+  State<_DeleteDialogContent> createState() => _DeleteDialogContentState();
+}
+
+class _DeleteDialogContentState extends State<_DeleteDialogContent> {
+  bool _isDeleting = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Delete Request'),
+      content: _isDeleting
+          ? const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 16),
+                Text('Deleting request...'),
+              ],
+            )
+          : const Text(
+              'Are you sure you want to delete this request? This action cannot be undone.',
+            ),
+      actions: [
+        TextButton(
+          onPressed: _isDeleting
+              ? null
+              : () => Navigator.of(widget.dialogContext).pop(),
+          child: Text(
+            'Cancel',
+            style: TextStyle(color: AppColors.textSecondary),
+          ),
+        ),
+        TextButton(
+          onPressed: _isDeleting
+              ? null
+              : () async {
+                  setState(() {
+                    _isDeleting = true;
+                  });
+                  
+                  try {
+                    await widget.provider.deleteRequest(widget.requestId);
+                    
+                    // Close dialog first
+                    if (widget.dialogContext.mounted) {
+                      Navigator.of(widget.dialogContext).pop();
+                    }
+                    
+                    // Check result and navigate/show message
+                    if (widget.provider.isDeleted) {
+                      // Navigate back to requests list after successful deletion
+                      if (widget.parentContext.mounted) {
+                        ScaffoldMessenger.of(widget.parentContext).showSnackBar(
+                          const SnackBar(
+                            content: Text('Request deleted successfully'),
+                            backgroundColor: AppColors.success,
+                          ),
+                        );
+                        GoRouter.of(widget.parentContext).go('/orders');
+                      }
+                    } else if (widget.provider.status == RequestDetailStatus.error) {
+                      // Show error message
+                      if (widget.parentContext.mounted) {
+                        ScaffoldMessenger.of(widget.parentContext).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              widget.provider.errorMessage ?? 'Failed to delete request',
+                            ),
+                            backgroundColor: AppColors.error,
+                          ),
+                        );
+                      }
+                    }
+                  } catch (e) {
+                    // Close dialog on error
+                    if (widget.dialogContext.mounted) {
+                      Navigator.of(widget.dialogContext).pop();
+                    }
+                    // Show error message
+                    if (widget.parentContext.mounted) {
+                      ScaffoldMessenger.of(widget.parentContext).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Failed to delete request: ${e.toString()}',
+                          ),
+                          backgroundColor: AppColors.error,
+                        ),
+                      );
+                    }
+                  }
+                },
+          child: const Text(
+            'Delete',
+            style: TextStyle(color: AppColors.error),
+          ),
+        ),
+      ],
+    );
   }
 }
 

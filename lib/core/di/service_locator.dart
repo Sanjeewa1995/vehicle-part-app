@@ -13,6 +13,7 @@ import '../../features/requets/domain/repositories/request_repository.dart';
 import '../../features/requets/domain/usecases/get_requests_usecase.dart';
 import '../../features/requets/domain/usecases/get_request_by_id_usecase.dart';
 import '../../features/requets/domain/usecases/create_request_usecase.dart';
+import '../../features/requets/domain/usecases/delete_request_usecase.dart';
 import '../../features/requets/presentation/providers/request_list_provider.dart';
 import '../../features/requets/presentation/providers/request_detail_provider.dart';
 import '../../features/requets/presentation/providers/create_request_provider.dart';
@@ -91,6 +92,10 @@ class ServiceLocator {
       () => CreateRequestUseCase(getIt<RequestRepository>()),
     );
 
+    getIt.registerLazySingleton(
+      () => DeleteRequestUseCase(getIt<RequestRepository>()),
+    );
+
     // Providers
     getIt.registerFactory<AuthProvider>(
       () => AuthProvider(
@@ -109,6 +114,7 @@ class ServiceLocator {
     getIt.registerFactory<RequestDetailProvider>(
       () => RequestDetailProvider(
         getRequestByIdUseCase: getIt<GetRequestByIdUseCase>(),
+        deleteRequestUseCase: getIt<DeleteRequestUseCase>(),
       ),
     );
 

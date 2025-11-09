@@ -100,5 +100,28 @@ class RequestRepositoryImpl implements RequestRepository {
       throw Exception(errorMessage.isEmpty ? 'Failed to create request' : errorMessage);
     }
   }
+
+  @override
+  Future<void> deleteRequest(int id) async {
+    try {
+      await remoteDataSource.deleteRequest(id);
+    } catch (e) {
+      // Extract clean error message
+      String errorMessage;
+
+      if (e is Exception) {
+        errorMessage = e.toString()
+            .replaceAll('Exception: ', '')
+            .replaceAll('ServerException: ', '')
+            .replaceAll('AuthenticationException: ', '')
+            .replaceAll('NetworkException: ', '')
+            .trim();
+      } else {
+        errorMessage = e.toString();
+      }
+
+      throw Exception(errorMessage.isEmpty ? 'Failed to delete request' : errorMessage);
+    }
+  }
 }
 
