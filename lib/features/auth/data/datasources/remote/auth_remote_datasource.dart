@@ -11,6 +11,10 @@ import 'package:vehicle_part_app/features/auth/data/models/verify_otp_request.da
 import 'package:vehicle_part_app/features/auth/data/models/verify_otp_response.dart';
 import 'package:vehicle_part_app/features/auth/data/models/reset_password_request.dart';
 import 'package:vehicle_part_app/features/auth/data/models/reset_password_response.dart';
+import 'package:vehicle_part_app/features/auth/data/models/update_profile_request.dart';
+import 'package:vehicle_part_app/features/auth/data/models/update_profile_response.dart';
+import 'package:vehicle_part_app/features/auth/data/models/change_password_request.dart';
+import 'package:vehicle_part_app/features/auth/data/models/change_password_response.dart';
 import 'package:vehicle_part_app/features/auth/data/models/logout_request.dart';
 
 abstract class AuthRemoteDataSource {
@@ -19,6 +23,8 @@ abstract class AuthRemoteDataSource {
   Future<PasswordResetResponse> forgotPassword(PasswordResetRequest request);
   Future<VerifyOTPResponse> verifyOTP(VerifyOTPRequest request);
   Future<ResetPasswordResponse> resetPassword(ResetPasswordRequest request);
+  Future<UpdateProfileResponse> updateProfile(UpdateProfileRequest request);
+  Future<ChangePasswordResponse> changePassword(ChangePasswordRequest request);
   Future<void> logout(LogoutRequest request);
 }
 
@@ -95,6 +101,36 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         data: request.toJson(),
       );
       return ResetPasswordResponse.fromJson(response.data);
+    } on AppException {
+      rethrow;
+    } on DioException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  @override
+  Future<UpdateProfileResponse> updateProfile(UpdateProfileRequest request) async {
+    try {
+      final response = await apiClient.put(
+        ApiConstants.updateProfile,
+        data: request.toJson(),
+      );
+      return UpdateProfileResponse.fromJson(response.data);
+    } on AppException {
+      rethrow;
+    } on DioException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  @override
+  Future<ChangePasswordResponse> changePassword(ChangePasswordRequest request) async {
+    try {
+      final response = await apiClient.post(
+        ApiConstants.changePassword,
+        data: request.toJson(),
+      );
+      return ChangePasswordResponse.fromJson(response.data);
     } on AppException {
       rethrow;
     } on DioException catch (e) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../../domain/entities/product.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -100,7 +99,7 @@ class ProductCard extends StatelessWidget {
                   children: [
                     // Price
                     Text(
-                      CurrencyFormatter.formatLKR(product.price),
+                          CurrencyFormatter.formatLKR(double.tryParse(product.price) ?? 0.0),
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

@@ -282,7 +282,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          'Qty: ${item.quantity} × ${CurrencyFormatter.formatLKR(item.product.price)}',
+                                          'Qty: ${item.quantity} × ${CurrencyFormatter.formatLKR(double.tryParse(item.product.price) ?? 0.0)}',
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: AppColors.textSecondary,
@@ -471,7 +471,7 @@ class _PaymentPageState extends State<PaymentPage> {
       return PaymentItem(
         itemNumber: item.product.id.toString(),
         itemName: item.product.name,
-        amount: item.product.price,
+        amount: double.tryParse(item.product.price) ?? 0.0,
         quantity: item.quantity,
       );
     }).toList();

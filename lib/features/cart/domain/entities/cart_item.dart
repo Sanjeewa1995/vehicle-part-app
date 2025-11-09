@@ -14,7 +14,7 @@ class CartItem extends Equatable {
     required this.addedAt,
   });
 
-  double get totalPrice => product.price * quantity;
+  double get totalPrice => (double.tryParse(product.price) ?? 0.0) * quantity;
 
   CartItem copyWith({
     int? cartItemId,

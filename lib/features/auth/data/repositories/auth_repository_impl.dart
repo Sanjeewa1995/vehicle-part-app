@@ -9,6 +9,8 @@ import '../models/register_request.dart';
 import '../models/password_reset_request.dart';
 import '../models/verify_otp_request.dart';
 import '../models/reset_password_request.dart';
+import '../models/update_profile_request.dart';
+import '../models/change_password_request.dart';
 import '../models/logout_request.dart';
 import '../models/user_model.dart';
 import '../../../../core/services/token_service.dart';

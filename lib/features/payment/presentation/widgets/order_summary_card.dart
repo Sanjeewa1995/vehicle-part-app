@@ -146,7 +146,7 @@ class OrderSummaryCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Qty: ${item.quantity} × ${CurrencyFormatter.formatLKR(item.product.price)}',
+                  'Qty: ${item.quantity} × ${CurrencyFormatter.formatLKR(double.tryParse(item.product.price) ?? 0.0)}',
                   style: TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,
