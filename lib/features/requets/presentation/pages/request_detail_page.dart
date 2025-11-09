@@ -6,6 +6,8 @@ import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import 'package:vehicle_part_app/core/di/service_locator.dart';
 import '../providers/request_detail_provider.dart';
 import '../../domain/entities/vehicle_part_request.dart';
+import '../widgets/product_card.dart';
+import '../../domain/entities/product.dart';
 import 'package:intl/intl.dart';
 
 class RequestDetailPage extends StatelessWidget {
@@ -271,6 +273,10 @@ class RequestDetailPage extends StatelessWidget {
               request.partVideo != null)
             _buildMediaSection(context, request),
 
+          // Products Section (Admin's suggested products)
+          if (request.products.isNotEmpty)
+            _buildProductsSection(context, request),
+
           // Request Information
           _buildSection(
             title: 'Request Information',
@@ -511,6 +517,102 @@ class RequestDetailPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildProductsSection(
+    BuildContext context,
+    VehiclePartRequest request,
+  ) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundSecondary,
+        border: Border(
+          top: BorderSide(
+            color: AppColors.borderLight,
+            width: 1,
+          ),
+          bottom: BorderSide(
+            color: AppColors.borderLight,
+            width: 1,
+          ),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.shopping_bag_outlined,
+                color: AppColors.primary,
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              const Text(
+                'Suggested Products',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  '${request.products.length}',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Admin has suggested the following products for your request',
+            style: TextStyle(
+              fontSize: 14,
+              color: AppColors.textSecondary,
+            ),
+          ),
+          const SizedBox(height: 16),
+          ...request.products.map((product) {
+            return ProductCard(
+              product: product,
+              onAddToCart: () {
+                _handleAddToCart(context, product);
+              },
+            );
+          }).toList(),
+        ],
+      ),
+    );
+  }
+
+  void _handleAddToCart(BuildContext context, Product product) {
+    // TODO: Implement add to cart functionality
+    // For now, show a success message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${product.name} added to cart'),
+        backgroundColor: AppColors.success,
+        action: SnackBarAction(
+          label: 'View Cart',
+          textColor: AppColors.textWhite,
+          onPressed: () {
+            context.go('/cart');
+          },
+        ),
       ),
     );
   }
