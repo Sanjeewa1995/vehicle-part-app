@@ -34,6 +34,24 @@ migrate_working_dir/
 .pub/
 /build/
 
+# iOS/macOS generated files
+**/ios/Flutter/AppFrameworkInfo.plist
+**/ios/Podfile.lock
+**/macos/Podfile.lock
+**/macos/Runner.xcworkspace/**/contents.xcworkspacedata
+**/ios/Runner.xcworkspace/**/contents.xcworkspacedata
+**/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+**/ios/Flutter/ephemeral/
+**/macos/Flutter/ephemeral/
+**/ios/Pods/
+**/macos/Pods/
+**/ios/.symlinks/
+**/macos/.symlinks/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/macos/Flutter/Flutter.framework
+**/macos/Flutter/Flutter.podspec
+
 # Symbolication related
 app.*.symbols
 
