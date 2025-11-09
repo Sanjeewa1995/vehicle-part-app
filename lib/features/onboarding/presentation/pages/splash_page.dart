@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
 import '../../../../core/di/service_locator.dart';
+import '../../../../core/services/onboarding_service.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -30,24 +31,12 @@ class _SplashPageState extends State<SplashPage>
       vsync: this,
     );
 
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeIn,
-      ),
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
 
-    _scaleAnimation = Tween<double>(
-      begin: 0.5,
-      end: 1.0,
-    ).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeOutBack,
-      ),
+    _scaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOutBack),
     );
 
     _animationController.forward();
@@ -57,25 +46,39 @@ class _SplashPageState extends State<SplashPage>
     try {
       // Get auth repository from service locator
       final authRepository = ServiceLocator.get<AuthRepository>();
-      
+
       // Check if user is authenticated using SharedPreferences (via repository)
       final isAuthenticated = await authRepository.isAuthenticated();
+
+      // Check if user has seen welcome page
+      final hasSeenWelcome = await OnboardingService.hasSeenWelcome();
 
       // Wait for minimum splash duration (2 seconds)
       await Future.delayed(const Duration(seconds: 2));
 
       if (!mounted) return;
 
-      // Navigate based on authentication status
+      // Navigate based on authentication status and onboarding status
       if (isAuthenticated) {
         context.go('/home');
-      } else {
+      } else if (!hasSeenWelcome) {
+        // First time user - show welcome page
         context.go('/welcome');
+      } else {
+        // Returning user - skip welcome and go to login
+        context.go('/login');
       }
     } catch (e) {
-      // On error, navigate to welcome page
+      // On error, check if user has seen welcome
       if (!mounted) return;
-      context.go('/welcome');
+      final hasSeenWelcome = await OnboardingService.hasSeenWelcome();
+      if (!hasSeenWelcome) {
+        if (!mounted) return;
+        context.go('/welcome');
+      } else {
+        if (!mounted) return;
+        context.go('/login');
+      }
     }
   }
 
@@ -120,10 +123,7 @@ class _SplashPageState extends State<SplashPage>
                           gradient: const LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
-                            colors: [
-                              AppColors.primary,
-                              AppColors.primaryLight,
-                            ],
+                            colors: [AppColors.primary, AppColors.primaryLight],
                           ),
                           boxShadow: [
                             BoxShadow(
@@ -140,7 +140,7 @@ class _SplashPageState extends State<SplashPage>
                         ),
                       ),
                       const SizedBox(height: 32),
-                      
+
                       // Brand Name
                       Text(
                         'M AUTO-ZONE',
@@ -159,7 +159,7 @@ class _SplashPageState extends State<SplashPage>
                         ),
                       ),
                       const SizedBox(height: 16),
-                      
+
                       // Loading Indicator
                       const SizedBox(
                         width: 40,
@@ -182,4 +182,3 @@ class _SplashPageState extends State<SplashPage>
     );
   }
 }
-

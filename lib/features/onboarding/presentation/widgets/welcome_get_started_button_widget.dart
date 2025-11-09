@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/services/onboarding_service.dart';
 
 class WelcomeGetStartedButtonWidget extends StatelessWidget {
   const WelcomeGetStartedButtonWidget({super.key});
+
+  Future<void> _handleGetStarted(BuildContext context) async {
+    // Mark that user has seen the welcome page
+    await OnboardingService.markWelcomeAsSeen();
+    
+    // Navigate to login page
+    if (context.mounted) {
+      context.go('/login');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +41,7 @@ class WelcomeGetStartedButtonWidget extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {
-            context.go('/login');
-          },
+          onTap: () => _handleGetStarted(context),
           borderRadius: BorderRadius.circular(16),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 32),
