@@ -389,7 +389,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   const SizedBox(height: 16),
                   AppButton(
                     text: widget.paymentMethod == 'payhere'
-                        ? 'Pay with PayHere'
+                        ? 'Pay'
                         : 'Place Order (Cash on Delivery)',
                     onPressed: _isProcessing ? null : () => _handlePayment(context, total),
                     type: AppButtonType.primary,

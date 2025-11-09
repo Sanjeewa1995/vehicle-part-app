@@ -218,7 +218,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         const SizedBox(height: 16),
                         AppButton(
                           text: _selectedPaymentMethod == 'payhere'
-                              ? 'Pay with PayHere'
+                              ? 'Checkout'
                               : _selectedPaymentMethod == 'cod'
                                   ? 'Place Order (Cash on Delivery)'
                                   : 'Proceed to Payment',
