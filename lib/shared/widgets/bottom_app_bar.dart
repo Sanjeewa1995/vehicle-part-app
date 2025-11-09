@@ -84,14 +84,6 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
               ),
               _buildNavItem(
                 context: context,
-                icon: Icons.build_outlined,
-                activeIcon: Icons.build,
-                label: 'Request',
-                route: '/requests/add',
-                isActive: _currentRoute == '/requests/add',
-              ),
-              _buildNavItem(
-                context: context,
                 icon: Icons.list_outlined,
                 activeIcon: Icons.list,
                 label: 'My Requests',
