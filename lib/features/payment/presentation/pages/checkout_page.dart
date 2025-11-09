@@ -9,8 +9,6 @@ import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../domain/entities/billing_address.dart';
 import '../widgets/billing_address_form.dart';
 import '../widgets/order_summary_card.dart';
-import '../widgets/payment_method_selector.dart';
-
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
 
@@ -21,7 +19,6 @@ class CheckoutPage extends StatefulWidget {
 class _CheckoutPageState extends State<CheckoutPage> {
   final _formKey = GlobalKey<FormState>();
   BillingAddress? _billingAddress;
-  String _selectedPaymentMethod = 'payhere';
   bool _isLoading = false;
 
   @override
@@ -141,26 +138,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         ),
                         const SizedBox(height: 32),
 
-                        // Payment Method Section
-                        const Text(
-                          'Payment Method',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        PaymentMethodSelector(
-                          selectedMethod: _selectedPaymentMethod,
-                          onChanged: (method) {
-                            setState(() {
-                              _selectedPaymentMethod = method;
-                            });
-                          },
-                        ),
-                        const SizedBox(height: 32),
-
                         // Order Summary
                         OrderSummaryCard(
                           cartProvider: cartProvider,
@@ -217,11 +194,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         ),
                         const SizedBox(height: 16),
                         AppButton(
-                          text: _selectedPaymentMethod == 'payhere'
-                              ? 'Checkout'
-                              : _selectedPaymentMethod == 'cod'
-                                  ? 'Place Order (Cash on Delivery)'
-                                  : 'Proceed to Payment',
+                          text: 'Proceed to Payment',
                           onPressed: _isLoading
                               ? null
                               : () => _handleCheckout(context, cartProvider),
@@ -269,7 +242,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
           '/payment',
           extra: {
             'billingAddress': _billingAddress,
-            'paymentMethod': _selectedPaymentMethod,
             'cartItems': cartProvider.items,
             'totalAmount': cartProvider.totalPrice,
           },

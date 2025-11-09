@@ -199,7 +199,6 @@ class AppRouter {
           final extra = state.extra as Map<String, dynamic>?;
           return PaymentPage(
             billingAddress: extra?['billingAddress'],
-            paymentMethod: extra?['paymentMethod'] ?? 'payhere',
             cartItems: extra?['cartItems'] ?? [],
             totalAmount: extra?['totalAmount'] ?? 0.0,
           );

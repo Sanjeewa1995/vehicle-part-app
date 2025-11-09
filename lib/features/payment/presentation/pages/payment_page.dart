@@ -12,14 +12,12 @@ import '../../data/models/payment_request.dart';
 
 class PaymentPage extends StatefulWidget {
   final BillingAddress? billingAddress;
-  final String paymentMethod;
   final List<CartItem> cartItems;
   final double totalAmount;
 
   const PaymentPage({
     super.key,
-    required this.billingAddress,
-    this.paymentMethod = 'payhere',
+    this.billingAddress,
     required this.cartItems,
     required this.totalAmount,
   });
@@ -129,79 +127,6 @@ class _PaymentPageState extends State<PaymentPage> {
                     ),
                     const SizedBox(height: 32),
                   ],
-
-                  // Payment Method Display
-                  const Text(
-                    'Payment Method',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      side: BorderSide(color: AppColors.borderLight, width: 1),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 48,
-                            height: 48,
-                            decoration: BoxDecoration(
-                              color: widget.paymentMethod == 'payhere'
-                                  ? const Color(0xFF00A651).withValues(alpha: 0.1)
-                                  : AppColors.backgroundSecondary,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(
-                              widget.paymentMethod == 'payhere'
-                                  ? Icons.payment
-                                  : Icons.money,
-                              color: widget.paymentMethod == 'payhere'
-                                  ? const Color(0xFF00A651)
-                                  : AppColors.primary,
-                              size: 24,
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.paymentMethod == 'payhere'
-                                      ? 'PayHere'
-                                      : 'Cash on Delivery',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.textPrimary,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  widget.paymentMethod == 'payhere'
-                                      ? 'Secure payment gateway'
-                                      : 'Pay when you receive',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: AppColors.textSecondary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 32),
 
                   // Order Summary
                   const Text(
@@ -359,9 +284,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   ),
                   const SizedBox(height: 16),
                   AppButton(
-                    text: widget.paymentMethod == 'payhere'
-                        ? 'Pay'
-                        : 'Place Order (Cash on Delivery)',
+                    text: 'Pay',
                     onPressed: _isProcessing ? null : () => _handlePayment(context, total),
                     type: AppButtonType.primary,
                     size: AppButtonSize.large,
@@ -414,11 +337,7 @@ class _PaymentPageState extends State<PaymentPage> {
     });
 
     try {
-      if (widget.paymentMethod == 'payhere') {
-        await _handlePayHerePayment(context, total);
-      } else if (widget.paymentMethod == 'cod') {
-        await _handleCashOnDelivery(context, total);
-      }
+      await _handlePayHerePayment(context, total);
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -550,73 +469,4 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 
-  Future<void> _handleCashOnDelivery(BuildContext context, double total) async {
-    // Show confirmation dialog for COD
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Confirm Order'),
-        content: Text(
-          'You are placing an order for ${CurrencyFormatter.formatLKR(total)}.\n\nYou will pay when you receive the items.\n\nDo you want to continue?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('Confirm'),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmed != true) {
-      return;
-    }
-
-    // Process COD order
-    // TODO: Create order in backend
-    await Future.delayed(const Duration(seconds: 1));
-
-    if (!mounted) return;
-
-    // Clear cart after successful order
-    final cartProvider = Provider.of<CartProvider>(context, listen: false);
-    await cartProvider.clearCart();
-
-    if (!mounted) return;
-
-    // Show success dialog
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (dialogContext) => AlertDialog(
-        title: const Row(
-          children: [
-            Icon(Icons.check_circle, color: AppColors.success, size: 32),
-            SizedBox(width: 12),
-            Expanded(
-              child: Text('Order Placed'),
-            ),
-          ],
-        ),
-        content: const Text(
-          'Your order has been placed successfully.\n\nYou will pay when you receive the items.\n\nYour order will be processed shortly.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(dialogContext).pop();
-              if (mounted) {
-                context.go('/orders');
-              }
-            },
-            child: const Text('View Orders'),
-          ),
-        ],
-      ),
-    );
-  }
 }
