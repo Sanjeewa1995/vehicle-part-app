@@ -118,6 +118,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Order Summary
+                        OrderSummaryCard(
+                          cartProvider: cartProvider,
+                        ),
+                        const SizedBox(height: 32),
+
                         // Billing Address Section
                         const Text(
                           'Billing Address',
@@ -135,12 +141,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               _billingAddress = address;
                             });
                           },
-                        ),
-                        const SizedBox(height: 32),
-
-                        // Order Summary
-                        OrderSummaryCard(
-                          cartProvider: cartProvider,
                         ),
                       ],
                     ),
