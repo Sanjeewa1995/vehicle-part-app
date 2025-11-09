@@ -16,6 +16,7 @@ class ApiConstants {
   static const String passwordResetConfirm = '/api/v1/auth/password-reset/confirm/';
   static const String verifyOTP = '/api/v1/auth/verify-otp/';
   static const String updateProfile = '/api/v1/auth/profile/';
+  static const String changePassword = '/api/v1/auth/change-password/';
   
   static const String parts = '/parts';
   static const String partsSearch = '/parts/search';

@@ -166,6 +166,28 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<bool> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String newPasswordConfirm,
+  }) async {
+    try {
+      final request = ChangePasswordRequest(
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+        newPasswordConfirm: newPasswordConfirm,
+      );
+      final response = await remoteDataSource.changePassword(request);
+      return response.message.isNotEmpty;
+    } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
+      throw Exception('Password change failed: ${e.toString()}');
+    }
+  }
+
+  @override
   Future<void> logout() async {
     try {
       // Get refresh token before clearing

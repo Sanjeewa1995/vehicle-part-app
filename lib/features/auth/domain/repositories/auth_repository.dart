@@ -24,6 +24,11 @@ abstract class AuthRepository {
     required String lastName,
     required String phone,
   });
+  Future<bool> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String newPasswordConfirm,
+  });
   Future<void> logout();
   Future<AuthTokens?> getStoredTokens();
   Future<User?> getStoredUser();

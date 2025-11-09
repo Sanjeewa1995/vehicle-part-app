@@ -17,6 +17,7 @@ import '../../features/requets/presentation/pages/add_request_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/profile/presentation/pages/settings_page.dart';
 import '../../features/profile/presentation/pages/edit_profile_page.dart';
+import '../../features/profile/presentation/pages/change_password_page.dart';
 import '../../features/payment/presentation/pages/payment_page.dart';
 import '../../features/payment/presentation/pages/checkout_page.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
@@ -165,11 +166,16 @@ class AppRouter {
           return RequestDetailPage(requestId: id);
         },
       ),
-      // More specific route must come before parameterized route
+      // More specific routes must come before parameterized routes
       GoRoute(
         path: '/profile/edit',
         name: 'edit-profile',
         builder: (context, state) => const EditProfilePage(),
+      ),
+      GoRoute(
+        path: '/profile/change-password',
+        name: 'change-password',
+        builder: (context, state) => const ChangePasswordPage(),
       ),
       GoRoute(
         path: '/profile',

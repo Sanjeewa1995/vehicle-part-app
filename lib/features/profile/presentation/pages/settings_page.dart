@@ -215,7 +215,7 @@ class SettingsPage extends StatelessWidget {
                   title: 'Change Password',
                   subtitle: 'Update your password',
                   onTap: () {
-                    _showComingSoonDialog(context, 'Change Password');
+                    context.push('/profile/change-password');
                   },
                 ),
                 _buildDivider(),
