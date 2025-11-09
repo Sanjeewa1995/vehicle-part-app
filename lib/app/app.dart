@@ -17,7 +17,7 @@ class App extends StatelessWidget {
         ),
       ],
       child: MaterialApp.router(
-        title: 'Vehicle Parts App',
+        title: 'Vehicle Parts App 🚗',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
