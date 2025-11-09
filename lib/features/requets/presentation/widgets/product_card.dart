@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../../../../core/utils/currency_formatter.dart';
 import '../../domain/entities/product.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../shared/widgets/app_button.dart';
@@ -16,8 +17,6 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final priceFormat = NumberFormat.currency(symbol: '\$', decimalDigits: 2);
-    
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -101,7 +100,7 @@ class ProductCard extends StatelessWidget {
                   children: [
                     // Price
                     Text(
-                      priceFormat.format(product.price),
+                      CurrencyFormatter.formatLKR(product.price),
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

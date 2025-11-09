@@ -166,7 +166,7 @@ class AppButton extends StatelessWidget {
       case AppButtonSize.medium:
         return const EdgeInsets.symmetric(horizontal: 24, vertical: 16);
       case AppButtonSize.large:
-        return const EdgeInsets.symmetric(horizontal: 32, vertical: 24);
+        return const EdgeInsets.symmetric(horizontal: 24, vertical: 16);
     }
   }
 
@@ -197,33 +197,30 @@ class AppButton extends StatelessWidget {
     return SizedBox(
       width: fullWidth ? double.infinity : width,
       height: buttonHeight,
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: gradient,
-          color: gradient == null ? backgroundColor : null,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed == null || isLoading ? null : onPressed,
           borderRadius: BorderRadius.circular(16),
-          border: type == AppButtonType.outline
-              ? Border.all(
-                  color: borderColor,
-                  width: 1,
-                )
-              : null,
-          boxShadow: boxShadow,
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: onPressed == null || isLoading ? null : onPressed,
-            borderRadius: BorderRadius.circular(16),
-            child: Container(
-              padding: buttonPadding,
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisSize: fullWidth ? MainAxisSize.max : MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (isLoading)
-                    SizedBox(
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              gradient: gradient,
+              color: gradient == null ? backgroundColor : null,
+              borderRadius: BorderRadius.circular(16),
+              border: type == AppButtonType.outline
+                  ? Border.all(
+                      color: borderColor,
+                      width: 1,
+                    )
+                  : null,
+              boxShadow: boxShadow,
+            ),
+            padding: buttonPadding,
+            child: Center(
+              child: isLoading
+                  ? SizedBox(
                       width: 20,
                       height: 20,
                       child: CircularProgressIndicator(
@@ -231,46 +228,37 @@ class AppButton extends StatelessWidget {
                         valueColor: AlwaysStoppedAnimation<Color>(textColor),
                       ),
                     )
-                  else ...[
-                    if (icon != null) ...[
-                      Icon(
-                        icon,
-                        size: fontSize,
-                        color: textColor,
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                    Text(
-                      text,
-                      style: TextStyle(
-                        fontSize: fontSize,
-                        fontWeight: FontWeight.bold,
-                        color: textColor,
-                        letterSpacing: 0.5,
-                        shadows: type == AppButtonType.primary ||
-                                type == AppButtonType.secondary ||
-                                type == AppButtonType.danger
-                            ? [
-                                Shadow(
-                                  color: AppColors.shadowDark,
-                                  offset: const Offset(0, 1),
-                                  blurRadius: 2,
-                                ),
-                              ]
-                            : null,
-                      ),
+                  : Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (icon != null) ...[
+                          Icon(
+                            icon,
+                            size: fontSize,
+                            color: textColor,
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                        Text(
+                          text,
+                          style: TextStyle(
+                            fontSize: fontSize,
+                            fontWeight: FontWeight.bold,
+                            color: textColor,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                        if (trailingIcon != null) ...[
+                          const SizedBox(width: 8),
+                          Icon(
+                            trailingIcon,
+                            size: fontSize,
+                            color: textColor,
+                          ),
+                        ],
+                      ],
                     ),
-                    if (trailingIcon != null) ...[
-                      const SizedBox(width: 8),
-                      Icon(
-                        trailingIcon,
-                        size: fontSize,
-                        color: textColor,
-                      ),
-                    ],
-                  ],
-                ],
-              ),
             ),
           ),
         ),

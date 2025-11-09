@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/currency_formatter.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../../../../shared/widgets/bottom_app_bar.dart';
 import '../providers/cart_provider.dart';
@@ -160,7 +160,6 @@ class CartPage extends StatelessWidget {
   }
 
   Widget _buildCartSummary(BuildContext context, CartProvider cartProvider) {
-    final priceFormat = NumberFormat.currency(symbol: '\$', decimalDigits: 2);
 
     return Container(
       padding: const EdgeInsets.all(24),
@@ -198,7 +197,7 @@ class CartPage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  priceFormat.format(cartProvider.totalPrice),
+                  CurrencyFormatter.formatLKR(cartProvider.totalPrice),
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -212,13 +211,14 @@ class CartPage extends StatelessWidget {
             // Proceed to Checkout Button
             AppButton(
               text: 'Proceed to Checkout',
-              onPressed: () {
-                if (cartProvider.isNotEmpty) {
-                  context.push('/checkout');
-                }
-              },
+              onPressed: cartProvider.isNotEmpty
+                  ? () {
+                      context.push('/checkout');
+                    }
+                  : null,
               type: AppButtonType.primary,
               size: AppButtonSize.large,
+              fullWidth: true,
             ),
           ],
         ),

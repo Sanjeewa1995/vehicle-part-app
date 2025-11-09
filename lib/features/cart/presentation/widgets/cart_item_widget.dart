@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 import '../../domain/entities/cart_item.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/currency_formatter.dart';
 import '../providers/cart_provider.dart';
 
 class CartItemWidget extends StatelessWidget {
@@ -15,7 +15,6 @@ class CartItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final priceFormat = NumberFormat.currency(symbol: '\$', decimalDigits: 2);
     final product = cartItem.product;
 
     return Container(
@@ -109,7 +108,7 @@ class CartItemWidget extends StatelessWidget {
                     Flexible(
                       flex: 2,
                       child: Text(
-                        priceFormat.format(cartItem.totalPrice),
+                        CurrencyFormatter.formatLKR(cartItem.totalPrice),
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/currency_formatter.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
 import '../../../cart/domain/entities/cart_item.dart';
 
@@ -14,7 +14,6 @@ class OrderSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final priceFormat = NumberFormat.currency(symbol: '\$', decimalDigits: 2);
     final subtotal = cartProvider.totalPrice;
     final shipping = 0.0; // You can calculate shipping based on address
     final tax = subtotal * 0.15; // 15% tax (adjust as needed)
@@ -43,22 +42,22 @@ class OrderSummaryCard extends StatelessWidget {
 
             // Items List
             ...cartProvider.items.map((item) {
-              return _buildOrderItem(item, priceFormat);
+              return _buildOrderItem(item);
             }),
 
             const SizedBox(height: 16),
             const Divider(),
 
             // Subtotal
-            _buildSummaryRow('Subtotal', priceFormat.format(subtotal)),
+            _buildSummaryRow('Subtotal', CurrencyFormatter.formatLKR(subtotal)),
             const SizedBox(height: 8),
 
             // Shipping
-            _buildSummaryRow('Shipping', priceFormat.format(shipping)),
+            _buildSummaryRow('Shipping', CurrencyFormatter.formatLKR(shipping)),
             const SizedBox(height: 8),
 
             // Tax
-            _buildSummaryRow('Tax (15%)', priceFormat.format(tax)),
+            _buildSummaryRow('Tax (15%)', CurrencyFormatter.formatLKR(tax)),
             const SizedBox(height: 16),
 
             // Total
@@ -74,7 +73,7 @@ class OrderSummaryCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  priceFormat.format(total),
+                  CurrencyFormatter.formatLKR(total),
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -89,7 +88,7 @@ class OrderSummaryCard extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderItem(CartItem item, NumberFormat priceFormat) {
+  Widget _buildOrderItem(CartItem item) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -147,7 +146,7 @@ class OrderSummaryCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Qty: ${item.quantity} × ${priceFormat.format(item.product.price)}',
+                  'Qty: ${item.quantity} × ${CurrencyFormatter.formatLKR(item.product.price)}',
                   style: TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,
@@ -159,7 +158,7 @@ class OrderSummaryCard extends StatelessWidget {
 
           // Item Total
           Text(
-            priceFormat.format(item.totalPrice),
+            CurrencyFormatter.formatLKR(item.totalPrice),
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,

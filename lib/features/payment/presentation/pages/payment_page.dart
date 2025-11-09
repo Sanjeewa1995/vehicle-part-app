@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/currency_formatter.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../../../cart/domain/entities/cart_item.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
@@ -33,7 +33,6 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   Widget build(BuildContext context) {
-    final priceFormat = NumberFormat.currency(symbol: '\$', decimalDigits: 2);
     final shipping = 0.0;
     final tax = widget.totalAmount * 0.15; // 15% tax
     final total = widget.totalAmount + shipping + tax;
@@ -283,7 +282,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          'Qty: ${item.quantity} × ${priceFormat.format(item.product.price)}',
+                                          'Qty: ${item.quantity} × ${CurrencyFormatter.formatLKR(item.product.price)}',
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: AppColors.textSecondary,
@@ -293,7 +292,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                     ),
                                   ),
                                   Text(
-                                    priceFormat.format(item.totalPrice),
+                                    CurrencyFormatter.formatLKR(item.totalPrice),
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
@@ -306,11 +305,11 @@ class _PaymentPageState extends State<PaymentPage> {
                           }),
                           const SizedBox(height: 16),
                           const Divider(),
-                          _buildSummaryRow('Subtotal', priceFormat.format(widget.totalAmount)),
+                          _buildSummaryRow('Subtotal', CurrencyFormatter.formatLKR(widget.totalAmount)),
                           const SizedBox(height: 8),
-                          _buildSummaryRow('Shipping', priceFormat.format(shipping)),
+                          _buildSummaryRow('Shipping', CurrencyFormatter.formatLKR(shipping)),
                           const SizedBox(height: 8),
-                          _buildSummaryRow('Tax (15%)', priceFormat.format(tax)),
+                          _buildSummaryRow('Tax (15%)', CurrencyFormatter.formatLKR(tax)),
                           const SizedBox(height: 16),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -324,7 +323,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                 ),
                               ),
                               Text(
-                                priceFormat.format(total),
+                                CurrencyFormatter.formatLKR(total),
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -378,7 +377,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         ),
                       ),
                       Text(
-                        priceFormat.format(total),
+                        CurrencyFormatter.formatLKR(total),
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -581,15 +580,13 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   Future<void> _handleCashOnDelivery(BuildContext context, double total) async {
-    final priceFormat = NumberFormat.currency(symbol: '\$', decimalDigits: 2);
-    
     // Show confirmation dialog for COD
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: const Text('Confirm Order'),
         content: Text(
-          'You are placing an order for ${priceFormat.format(total)}.\n\nYou will pay when you receive the items.\n\nDo you want to continue?',
+          'You are placing an order for ${CurrencyFormatter.formatLKR(total)}.\n\nYou will pay when you receive the items.\n\nDo you want to continue?',
         ),
         actions: [
           TextButton(

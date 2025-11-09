@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/utils/validators.dart';
+import '../../../../core/utils/currency_formatter.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
@@ -11,7 +10,6 @@ import '../../domain/entities/billing_address.dart';
 import '../widgets/billing_address_form.dart';
 import '../widgets/order_summary_card.dart';
 import '../widgets/payment_method_selector.dart';
-import 'payment_page.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
@@ -208,8 +206,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               ),
                             ),
                             Text(
-                              NumberFormat.currency(symbol: '\$', decimalDigits: 2)
-                                  .format(cartProvider.totalPrice),
+                              CurrencyFormatter.formatLKR(cartProvider.totalPrice),
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
