@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../core/theme/app_theme.dart';
 import '../core/routes/app_router.dart';
 import '../features/auth/presentation/providers/auth_provider.dart';
+import '../features/cart/presentation/providers/cart_provider.dart';
 import '../core/di/service_locator.dart';
 
 class App extends StatelessWidget {
@@ -14,6 +15,9 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => ServiceLocator.getAuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ServiceLocator.get<CartProvider>(),
         ),
       ],
       child: MaterialApp.router(

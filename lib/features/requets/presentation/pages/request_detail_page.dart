@@ -8,6 +8,7 @@ import '../providers/request_detail_provider.dart';
 import '../../domain/entities/vehicle_part_request.dart';
 import '../widgets/product_card.dart';
 import '../../domain/entities/product.dart';
+import '../../../cart/presentation/providers/cart_provider.dart';
 import 'package:intl/intl.dart';
 
 class RequestDetailPage extends StatelessWidget {
@@ -599,22 +600,39 @@ class RequestDetailPage extends StatelessWidget {
     );
   }
 
-  void _handleAddToCart(BuildContext context, Product product) {
-    // TODO: Implement add to cart functionality
-    // For now, show a success message
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('${product.name} added to cart'),
-        backgroundColor: AppColors.success,
-        action: SnackBarAction(
-          label: 'View Cart',
-          textColor: AppColors.textWhite,
-          onPressed: () {
-            context.go('/cart');
-          },
-        ),
-      ),
-    );
+  Future<void> _handleAddToCart(BuildContext context, Product product) async {
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    
+    try {
+      await cartProvider.addToCart(product);
+      
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${product.name} added to cart'),
+            backgroundColor: AppColors.success,
+            duration: const Duration(seconds: 2),
+            action: SnackBarAction(
+              label: 'View Cart',
+              textColor: AppColors.textWhite,
+              onPressed: () {
+                context.go('/cart');
+              },
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to add to cart: ${e.toString()}'),
+            backgroundColor: AppColors.error,
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
+    }
   }
 
   void _showImageModal(BuildContext context, String imageUrl) {

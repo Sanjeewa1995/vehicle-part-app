@@ -190,6 +190,24 @@ class ApiClient {
     }
   }
 
+  Future<Response> patch(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
+    try {
+      return await _dio.patch(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      );
+    } on DioException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
   Future<Response> delete(
     String path, {
     dynamic data,

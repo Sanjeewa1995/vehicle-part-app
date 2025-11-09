@@ -20,9 +20,11 @@ class ApiConstants {
   static const String partsSearch = '/parts/search';
   static const String partDetails = '/parts/{id}';
   
-  static const String cart = '/cart';
-  static const String cartAdd = '/cart/add';
-  static const String cartRemove = '/cart/remove';
+  // Cart endpoints
+  static const String carts = '/api/v1/store/carts/';
+  static String cartDetail(int id) => '/api/v1/store/carts/$id/';
+  static const String cartItems = '/api/v1/store/cart-items/';
+  static String cartItemDetail(int id) => '/api/v1/store/cart-items/$id/';
   
   static const String orders = '/orders';
   static const String orderCreate = '/orders/create';

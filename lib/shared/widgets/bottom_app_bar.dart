@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
+import '../../features/cart/presentation/providers/cart_provider.dart';
 
 class AppBottomNavigationBar extends StatefulWidget {
   const AppBottomNavigationBar({super.key});
@@ -96,6 +98,19 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                 route: '/orders',
                 isActive: _currentRoute == '/orders',
               ),
+              Consumer<CartProvider>(
+                builder: (context, cartProvider, child) {
+                  return _buildNavItem(
+                    context: context,
+                    icon: Icons.shopping_cart_outlined,
+                    activeIcon: Icons.shopping_cart,
+                    label: 'Cart',
+                    route: '/cart',
+                    isActive: _currentRoute == '/cart',
+                    badgeCount: cartProvider.itemCount > 0 ? cartProvider.itemCount : null,
+                  );
+                },
+              ),
               _buildNavItem(
                 context: context,
                 icon: Icons.settings_outlined,
@@ -118,6 +133,7 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
     required String label,
     required String route,
     required bool isActive,
+    int? badgeCount,
   }) {
     final iconColor = isActive ? AppColors.primary : AppColors.textSecondary;
     final textColor = isActive ? AppColors.primary : AppColors.textSecondary;
@@ -136,10 +152,40 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                isActive ? activeIcon : icon,
-                size: 20,
-                color: iconColor,
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Icon(
+                    isActive ? activeIcon : icon,
+                    size: 20,
+                    color: iconColor,
+                  ),
+                  if (badgeCount != null && badgeCount > 0)
+                    Positioned(
+                      right: -8,
+                      top: -8,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: AppColors.error,
+                          shape: BoxShape.circle,
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: Text(
+                          badgeCount > 99 ? '99+' : '$badgeCount',
+                          style: const TextStyle(
+                            color: AppColors.textWhite,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
               ),
               const SizedBox(height: 2),
               Flexible(
