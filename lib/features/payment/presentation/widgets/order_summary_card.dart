@@ -14,11 +14,6 @@ class OrderSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final subtotal = cartProvider.totalPrice;
-    final shipping = 0.0; // You can calculate shipping based on address
-    final tax = subtotal * 0.15; // 15% tax (adjust as needed)
-    final total = subtotal + shipping + tax;
-
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -47,41 +42,6 @@ class OrderSummaryCard extends StatelessWidget {
 
             const SizedBox(height: 16),
             const Divider(),
-
-            // Subtotal
-            _buildSummaryRow('Subtotal', CurrencyFormatter.formatLKR(subtotal)),
-            const SizedBox(height: 8),
-
-            // Shipping
-            _buildSummaryRow('Shipping', CurrencyFormatter.formatLKR(shipping)),
-            const SizedBox(height: 8),
-
-            // Tax
-            _buildSummaryRow('Tax (15%)', CurrencyFormatter.formatLKR(tax)),
-            const SizedBox(height: 16),
-
-            // Total
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Total',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                Text(
-                  CurrencyFormatter.formatLKR(total),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),

@@ -33,9 +33,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   Widget build(BuildContext context) {
-    final shipping = 0.0;
-    final tax = widget.totalAmount * 0.15; // 15% tax
-    final total = widget.totalAmount + shipping + tax;
+    final total = widget.totalAmount;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -305,33 +303,6 @@ class _PaymentPageState extends State<PaymentPage> {
                           }),
                           const SizedBox(height: 16),
                           const Divider(),
-                          _buildSummaryRow('Subtotal', CurrencyFormatter.formatLKR(widget.totalAmount)),
-                          const SizedBox(height: 8),
-                          _buildSummaryRow('Shipping', CurrencyFormatter.formatLKR(shipping)),
-                          const SizedBox(height: 8),
-                          _buildSummaryRow('Tax (15%)', CurrencyFormatter.formatLKR(tax)),
-                          const SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Total',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.textPrimary,
-                                ),
-                              ),
-                              Text(
-                                CurrencyFormatter.formatLKR(total),
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.primary,
-                                ),
-                              ),
-                            ],
-                          ),
                         ],
                       ),
                     ),
