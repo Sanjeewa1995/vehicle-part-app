@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:vehicle_part_app/core/network/api_client.dart';
 import 'package:vehicle_part_app/core/constants/api_constants.dart';
 import 'package:vehicle_part_app/core/error/exceptions.dart';
@@ -109,10 +108,6 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
 
       final responseData = response.data;
       
-      // Debug: Print response structure
-      debugPrint('Cart items response type: ${responseData.runtimeType}');
-      debugPrint('Cart items response: $responseData');
-      
       // Handle null response
       if (responseData == null) {
         return CartItemListResponse(
@@ -129,7 +124,7 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
         return CartItemListResponse(
           success: true,
           message: 'Cart items retrieved successfully',
-          data: (responseData as List<dynamic>)
+          data: responseData
               .map((e) => CartItemModel.fromJson(e as Map<String, dynamic>))
               .toList(),
           statusCode: 200,
@@ -159,7 +154,6 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
           final nestedData = data['data'];
           if (nestedData is List) {
             // Extract the actual list from nested structure
-            debugPrint('Found nested data structure, extracting list from data.data');
             return CartItemListResponse(
               success: success ?? true,
               message: responseData['message'] as String? ?? 'Cart items retrieved successfully',
@@ -170,7 +164,6 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
             );
           } else if (nestedData is Map<String, dynamic>) {
             // Single item in nested structure
-            debugPrint('Found single item in nested structure');
             return CartItemListResponse(
               success: success ?? true,
               message: responseData['message'] as String? ?? 'Cart items retrieved successfully',
@@ -185,7 +178,6 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
           return CartItemListResponse.fromJson(responseData);
         } else if (data is Map<String, dynamic>) {
           // If data is a single Map (single item), wrap it in a List
-          debugPrint('Warning: data is a Map, wrapping in List');
           return CartItemListResponse(
             success: success ?? true,
             message: responseData['message'] as String? ?? 'Cart items retrieved successfully',
@@ -194,7 +186,6 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
           );
         } else {
           // If data is not a list or map, return empty
-          debugPrint('Warning: data is not a List or Map, it is: ${data.runtimeType}');
           return CartItemListResponse(
             success: success ?? true,
             message: responseData['message'] as String? ?? 'Cart items retrieved successfully',
@@ -208,7 +199,6 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
       try {
         return CartItemListResponse.fromJson(responseData as Map<String, dynamic>);
       } catch (e) {
-        debugPrint('Error parsing cart items response: $e');
         // Return empty cart on parse error
         return CartItemListResponse(
           success: true,
@@ -220,7 +210,6 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
     } on AppException catch (e) {
       throw Exception(e.message);
     } catch (e) {
-      debugPrint('Error getting cart items: $e');
       throw Exception(e.toString());
     }
   }
@@ -266,7 +255,6 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
           final nestedData = data['data'];
           if (nestedData is Map<String, dynamic>) {
             // Extract the actual item from nested structure
-            debugPrint('Found nested data structure in add response, extracting item from data.data');
             return CartItemResponse(
               success: success ?? true,
               message: responseData['message'] as String? ?? 'Cart item added successfully',
@@ -275,7 +263,6 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
             );
           } else if (data['id'] != null) {
             // Data is directly the cart item (not nested)
-            debugPrint('Found direct cart item data in add response');
             return CartItemResponse(
               success: success ?? true,
               message: responseData['message'] as String? ?? 'Cart item added successfully',
@@ -345,7 +332,6 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
           final nestedData = data['data'];
           if (nestedData is Map<String, dynamic>) {
             // Extract the actual item from nested structure
-            debugPrint('Found nested data structure in update response, extracting item from data.data');
             return CartItemResponse(
               success: success ?? true,
               message: responseData['message'] as String? ?? 'Cart item updated successfully',
@@ -354,7 +340,6 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
             );
           } else if (data['id'] != null) {
             // Data is directly the cart item (not nested)
-            debugPrint('Found direct cart item data in update response');
             return CartItemResponse(
               success: success ?? true,
               message: responseData['message'] as String? ?? 'Cart item updated successfully',
@@ -370,7 +355,6 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
       if (responseDataField == null || responseDataField is! Map<String, dynamic>) {
         // If update was successful but no valid data, refresh cart
         if (success == true || statusCode == 200 || statusCode == 204) {
-          debugPrint('Update successful but no valid data in response, will refresh cart');
           throw Exception('UPDATE_SUCCESS_NO_RESPONSE');
         }
         throw Exception('Failed to update cart item: Invalid or missing data in response');

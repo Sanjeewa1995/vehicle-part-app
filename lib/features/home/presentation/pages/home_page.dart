@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../shared/widgets/bottom_app_bar.dart';
+import '../../../../shared/widgets/bottom_app_bar_v2_floating.dart';
 import '../widgets/home_header_widget.dart';
 import '../widgets/home_quick_actions_widget.dart';
 import '../widgets/home_stats_widget.dart';
@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const AppBottomNavigationBar(),
+      bottomNavigationBar: const AppBottomNavigationBarV2Floating(),
     );
   }
 }

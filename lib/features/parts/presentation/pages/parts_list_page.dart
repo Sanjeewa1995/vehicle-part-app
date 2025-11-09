@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vehicle_part_app/shared/widgets/bottom_app_bar.dart';
+import 'package:vehicle_part_app/shared/widgets/bottom_app_bar_v2_floating.dart';
 
 class PartsListPage extends StatelessWidget {
   const PartsListPage({super.key});
@@ -24,7 +24,7 @@ class PartsListPage extends StatelessWidget {
           style: TextStyle(fontSize: 24),
         ),
       ),
-      bottomNavigationBar: const AppBottomNavigationBar(),
+      bottomNavigationBar: const AppBottomNavigationBarV2Floating(),
     );
   }
 }

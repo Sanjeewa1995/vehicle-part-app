@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import 'package:vehicle_part_app/core/di/service_locator.dart';
-import 'package:vehicle_part_app/shared/widgets/bottom_app_bar.dart';
+import 'package:vehicle_part_app/shared/widgets/bottom_app_bar_v2_floating.dart';
 import '../providers/request_list_provider.dart';
 import '../widgets/loading_state_widget.dart';
 import '../widgets/error_state_widget.dart';
@@ -101,7 +101,7 @@ class _MyRequestListState extends State<MyRequestList> {
             );
           },
         ),
-        bottomNavigationBar: const AppBottomNavigationBar(),
+        bottomNavigationBar: const AppBottomNavigationBarV2Floating(),
         );
       },
     );

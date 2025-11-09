@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vehicle_part_app/shared/widgets/bottom_app_bar.dart';
+import 'package:vehicle_part_app/shared/widgets/bottom_app_bar_v2_floating.dart';
 import 'settings_page.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -30,7 +30,7 @@ class ProfilePage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const AppBottomNavigationBar(),
+      bottomNavigationBar: const AppBottomNavigationBarV2Floating(),
     );
   }
 }
