@@ -188,5 +188,104 @@
   "stateProvinceOptional": "පළාත/ප්‍රාන්තය (විකල්ප)",
   "country": "රට",
   "phoneNumberRequired": "දුරකථන අංකය අවශ්‍යයි",
-  "pleaseEnterValidPhoneNumber": "කරුණාකර වලංගු දුරකථන අංකයක් ඇතුළත් කරන්න"
+  "pleaseEnterValidPhoneNumber": "කරුණාකර වලංගු දුරකථන අංකයක් ඇතුළත් කරන්න",
+  "requestSparePartTitle": "උපකරණ කොටසක් ඉල්ලන්න",
+  "fillInDetailsBelow": "පහත විස්තර පුරවන්න",
+  "stepXOfY": "පියවර {current} / {total}",
+  "@stepXOfY": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "tellUsAboutYourVehicle": "ඔබේ වාහනය ගැන අපට කියන්න",
+  "vehicleTypeLabel": "වාහන වර්ගය",
+  "pleaseSelectVehicleType": "කරුණාකර වාහන වර්ගයක් තෝරන්න",
+  "vehicleModelLabel": "වාහන ආකෘතිය",
+  "vehicleModelHint": "උදා: ටොයෝටා කැම්රි",
+  "pleaseEnterVehicleModel": "කරුණාකර වාහන ආකෘතිය ඇතුළත් කරන්න",
+  "vehicleYearLabel": "වාහන වසර",
+  "vehicleYearHint": "උදා: 2020",
+  "pleaseEnterVehicleYear": "කරුණාකර වාහන වසර ඇතුළත් කරන්න",
+  "pleaseEnterValidVehicleYear": "කරුණාකර වලංගු වාහන වසරක් ඇතුළත් කරන්න",
+  "selectCountry": "රට තෝරන්න",
+  "pleaseSelectCountry": "කරුණාකර රටක් තෝරන්න",
+  "provinceStateLabel": "පළාත/ප්‍රාන්තය",
+  "provinceStateHint": "උදා: කැලිෆෝනියා, ඔන්ටාරියෝ, ලන්ඩන්",
+  "pleaseEnterProvinceState": "කරුණාකර පළාත/ප්‍රාන්තය ඇතුළත් කරන්න",
+  "vehicleImageOptional": "වාහන රූපය (විකල්ප)",
+  "tapToAddVehicleImage": "වාහන රූපය එක් කිරීමට තට්ටු කරන්න",
+  "sparePartDetails": "උපකරණ කොටස් තොරතුරු",
+  "describePartYouNeed": "ඔබට අවශ්‍ය කොටස විස්තර කරන්න",
+  "partNameLabel": "කොටස් නම",
+  "partNameHint": "උදා: බ්‍රේක් පෑඩ්, එන්ජින් තෙල් පෙරහන",
+  "pleaseEnterPartName": "කරුණාකර කොටස් නම ඇතුළත් කරන්න",
+  "partNumberLabel": "කොටස් අංකය",
+  "partNumberHint": "උදා: BP-001 (විකල්ප)",
+  "descriptionLabel": "විස්තරය",
+  "descriptionHint": "ඔබට අවශ්‍ය කොටසේ සවිස්තරාත්මක විස්තරය",
+  "pleaseEnterDescription": "කරුණාකර විස්තරය ඇතුළත් කරන්න",
+  "partImageOptional": "කොටස් රූපය (විකල්ප)",
+  "tapToAddPartImage": "කොටස් රූපය එක් කිරීමට තට්ටු කරන්න",
+  "partVideoOptional": "කොටස් වීඩියෝව (විකල්ප)",
+  "videoSelected": "වීඩියෝව තෝරාගෙන ඇත",
+  "remove": "ඉවත් කරන්න",
+  "tapToAddPartVideo": "කොටස් වීඩියෝව එක් කිරීමට තට්ටු කරන්න",
+  "next": "ඊළඟ",
+  "cancelRequest": "ඉල්ලීම අවලංගු කරන්න",
+  "cancelRequestMessage": "ඔබට ඇත්තටම අවලංගු කිරීමට අවශ්‍යද? ඇතුළත් කළ සියලුම දත්ත අහිමි වනු ඇත.",
+  "keepEditing": "සංස්කරණය දිගටම කරන්න",
+  "requestSubmitted": "ඉල්ලීම ඉදිරිපත් කරන ලදී!",
+  "requestSubmittedMessage": "ඔබේ උපකරණ කොටස් ඉල්ලීම සාර්ථකව ඉදිරිපත් කරන ලදී. ඔබට ඉක්මනින් සැපයුම්කරුවන්ගෙන් මිල ඇස්තමේන්තු ලැබෙනු ඇත.",
+  "submitAnother": "තවත් එකක් ඉදිරිපත් කරන්න",
+  "viewRequests": "ඉල්ලීම් බලන්න",
+  "submittingRequest": "ඔබේ ඉල්ලීම ඉදිරිපත් කරමින්...",
+  "uploadingVideoFile": "වීඩියෝ ගොනුව උඩුගත කරමින්... මෙය මිනිත්තු කිහිපයක් ගත විය හැකිය",
+  "pleaseWait": "කරුණාකර රැඳී සිටින්න, මෙය මොහොතක් ගත විය හැකිය",
+  "takePhoto": "ඡායාරූපයක් ගන්න",
+  "chooseFromGallery": "ගැලරියෙන් තෝරන්න",
+  "errorPickingImage": "රූපය තෝරාගැනීමේ දෝෂය: {error}",
+  "@errorPickingImage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorPickingVideo": "වීඩියෝ තෝරාගැනීමේ දෝෂය: {error}",
+  "@errorPickingVideo": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "currentPassword": "වර්තමාන මුරපදය",
+  "enterCurrentPassword": "ඔබේ වර්තමාන මුරපදය ඇතුළත් කරන්න",
+  "currentPasswordRequired": "වර්තමාන මුරපදය අවශ්‍යයි",
+  "newPassword": "නව මුරපදය",
+  "enterNewPassword": "ඔබේ නව මුරපදය ඇතුළත් කරන්න",
+  "newPasswordRequired": "නව මුරපදය අවශ්‍යයි",
+  "confirmNewPassword": "නව මුරපදය තහවුරු කරන්න",
+  "confirmNewPasswordHint": "ඔබේ නව මුරපදය තහවුරු කරන්න",
+  "pleaseConfirmPassword": "කරුණාකර ඔබේ මුරපදය තහවුරු කරන්න",
+  "passwordsDoNotMatch": "මුරපද නොගැලපේ",
+  "passwordMustBeAtLeast8Characters": "මුරපදය අවම වශයෙන් අක්ෂර 8 ක් විය යුතුය",
+  "passwordMustBeAtLeast8CharactersLong": "ඔබේ මුරපදය අවම වශයෙන් අක්ෂර 8 ක් විය යුතුය.",
+  "passwordChangedSuccessfully": "මුරපදය සාර්ථකව වෙනස් කරන ලදී",
+  "failedToChangePassword": "මුරපදය වෙනස් කිරීමට අසමත් විය",
+  "enterFirstName": "ඔබේ මුල් නම ඇතුළත් කරන්න",
+  "firstNameRequired": "මුල් නම අවශ්‍යයි",
+  "firstNameMustBeAtLeast2Characters": "මුල් නම අවම වශයෙන් අක්ෂර 2 ක් විය යුතුය",
+  "enterLastName": "ඔබේ අවසන් නම ඇතුළත් කරන්න",
+  "lastNameRequired": "අවසන් නම අවශ්‍යයි",
+  "lastNameMustBeAtLeast2Characters": "අවසන් නම අවම වශයෙන් අක්ෂර 2 ක් විය යුතුය",
+  "enterPhoneNumber": "ඔබේ දුරකථන අංකය ඇතුළත් කරන්න",
+  "profileUpdatedSuccessfully": "පැතිකඩ සාර්ථකව යාවත්කාලීන කරන ලදී",
+  "failedToUpdateProfile": "පැතිකඩ යාවත්කාලීන කිරීමට අසමත් විය",
+  "updateProfile": "පැතිකඩ යාවත්කාලීන කරන්න"
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import 'package:vehicle_part_app/shared/widgets/app_text_field.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 
@@ -28,22 +29,24 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     super.dispose();
   }
 
-  String? _validatePassword(String? value, String fieldName) {
+  String? _validatePassword(String? value, BuildContext context, bool isCurrent) {
+    final l10n = AppLocalizations.of(context)!;
     if (value == null || value.trim().isEmpty) {
-      return '$fieldName is required';
+      return isCurrent ? l10n.currentPasswordRequired : l10n.newPasswordRequired;
     }
     if (value.length < 8) {
-      return 'Password must be at least 8 characters';
+      return l10n.passwordMustBeAtLeast8Characters;
     }
     return null;
   }
 
-  String? _validateConfirmPassword(String? value) {
+  String? _validateConfirmPassword(String? value, BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (value == null || value.trim().isEmpty) {
-      return 'Please confirm your password';
+      return l10n.pleaseConfirmPassword;
     }
     if (value != _newPasswordController.text) {
-      return 'Passwords do not match';
+      return l10n.passwordsDoNotMatch;
     }
     return null;
   }
@@ -72,17 +75,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
     if (!mounted) return;
 
+    final l10n = AppLocalizations.of(context)!;
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Password changed successfully'),
+        SnackBar(
+          content: Text(l10n.passwordChangedSuccessfully),
           backgroundColor: AppColors.success,
         ),
       );
       context.pop();
     } else {
       setState(() {
-        _errorMessage = authProvider.errorMessage ?? 'Failed to change password';
+        _errorMessage = authProvider.errorMessage ?? l10n.failedToChangePassword;
       });
     }
   }
@@ -92,13 +96,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text(
-          'Change Password',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
-          ),
+        title: Builder(
+          builder: (context) {
+            final l10n = AppLocalizations.of(context)!;
+            return Text(
+              l10n.changePassword,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
+            );
+          },
         ),
         backgroundColor: AppColors.backgroundSecondary,
         elevation: 0,
@@ -121,35 +130,40 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 const SizedBox(height: 24),
                 
                 // Info message
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: AppColors.infoLight,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: AppColors.info,
-                      width: 1,
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.info_outline,
-                        color: AppColors.info,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          'Your password must be at least 8 characters long.',
-                          style: TextStyle(
-                            color: AppColors.textPrimary,
-                            fontSize: 14,
-                          ),
+                Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    return Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: AppColors.infoLight,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: AppColors.info,
+                          width: 1,
                         ),
                       ),
-                    ],
-                  ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.info_outline,
+                            color: AppColors.info,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              l10n.passwordMustBeAtLeast8CharactersLong,
+                              style: TextStyle(
+                                color: AppColors.textPrimary,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 24),
 
@@ -189,96 +203,121 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 ],
 
                 // Current Password
-                AppTextField(
-                  controller: _currentPasswordController,
-                  label: 'Current Password',
-                  hint: 'Enter your current password',
-                  type: AppTextFieldType.password,
-                  validator: (value) => _validatePassword(value, 'Current password'),
-                  textInputAction: TextInputAction.next,
-                  enabled: !_isLoading,
+                Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    return AppTextField(
+                      controller: _currentPasswordController,
+                      label: l10n.currentPassword,
+                      hint: l10n.enterCurrentPassword,
+                      type: AppTextFieldType.password,
+                      validator: (value) => _validatePassword(value, context, true),
+                      textInputAction: TextInputAction.next,
+                      enabled: !_isLoading,
+                    );
+                  },
                 ),
                 const SizedBox(height: 16),
 
                 // New Password
-                AppTextField(
-                  controller: _newPasswordController,
-                  label: 'New Password',
-                  hint: 'Enter your new password',
-                  type: AppTextFieldType.password,
-                  validator: (value) => _validatePassword(value, 'New password'),
-                  textInputAction: TextInputAction.next,
-                  enabled: !_isLoading,
+                Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    return AppTextField(
+                      controller: _newPasswordController,
+                      label: l10n.newPassword,
+                      hint: l10n.enterNewPassword,
+                      type: AppTextFieldType.password,
+                      validator: (value) => _validatePassword(value, context, false),
+                      textInputAction: TextInputAction.next,
+                      enabled: !_isLoading,
+                    );
+                  },
                 ),
                 const SizedBox(height: 16),
 
                 // Confirm Password
-                AppTextField(
-                  controller: _confirmPasswordController,
-                  label: 'Confirm New Password',
-                  hint: 'Confirm your new password',
-                  type: AppTextFieldType.password,
-                  validator: _validateConfirmPassword,
-                  textInputAction: TextInputAction.done,
-                  enabled: !_isLoading,
-                  onSubmitted: (_) => _handleChangePassword(),
+                Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    return AppTextField(
+                      controller: _confirmPasswordController,
+                      label: l10n.confirmNewPassword,
+                      hint: l10n.confirmNewPasswordHint,
+                      type: AppTextFieldType.password,
+                      validator: (value) => _validateConfirmPassword(value, context),
+                      textInputAction: TextInputAction.done,
+                      enabled: !_isLoading,
+                      onSubmitted: (_) => _handleChangePassword(),
+                    );
+                  },
                 ),
                 const SizedBox(height: 32),
 
                 // Change Password Button
-                ElevatedButton(
-                  onPressed: _isLoading ? null : _handleChangePassword,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.textWhite,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: _isLoading
-                      ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              AppColors.textWhite,
-                            ),
-                          ),
-                        )
-                      : const Text(
-                          'Change Password',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
+                Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    return ElevatedButton(
+                      onPressed: _isLoading ? null : _handleChangePassword,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: AppColors.textWhite,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
                         ),
+                        elevation: 0,
+                      ),
+                      child: _isLoading
+                          ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  AppColors.textWhite,
+                                ),
+                              ),
+                            )
+                          : Text(
+                              l10n.changePassword,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 16),
 
                 // Cancel Button
-                OutlinedButton(
-                  onPressed: _isLoading ? null : () => context.pop(),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.textPrimary,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    side: const BorderSide(
-                      color: AppColors.border,
-                      width: 2,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    return OutlinedButton(
+                      onPressed: _isLoading ? null : () => context.pop(),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.textPrimary,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        side: const BorderSide(
+                          color: AppColors.border,
+                          width: 2,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: Text(
+                        l10n.cancel,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

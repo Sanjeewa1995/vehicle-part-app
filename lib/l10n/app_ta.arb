@@ -188,5 +188,104 @@
   "stateProvinceOptional": "மாநிலம்/மாகாணம் (விருப்பமானது)",
   "country": "நாடு",
   "phoneNumberRequired": "தொலைபேசி எண் தேவை",
-  "pleaseEnterValidPhoneNumber": "சரியான தொலைபேசி எண்ணை உள்ளிடவும்"
+  "pleaseEnterValidPhoneNumber": "சரியான தொலைபேசி எண்ணை உள்ளிடவும்",
+  "requestSparePartTitle": "ஸ்பேர் பாகத்தை கோரவும்",
+  "fillInDetailsBelow": "கீழே உள்ள விவரங்களை நிரப்பவும்",
+  "stepXOfY": "படி {current} / {total}",
+  "@stepXOfY": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "tellUsAboutYourVehicle": "உங்கள் வாகனத்தைப் பற்றி எங்களுக்குச் சொல்லுங்கள்",
+  "vehicleTypeLabel": "வாகன வகை",
+  "pleaseSelectVehicleType": "தயவுசெய்து வாகன வகையைத் தேர்ந்தெடுக்கவும்",
+  "vehicleModelLabel": "வாகன மாதிரி",
+  "vehicleModelHint": "எ.கா: டொயோட்டா கேம்ரி",
+  "pleaseEnterVehicleModel": "தயவுசெய்து வாகன மாதிரியை உள்ளிடவும்",
+  "vehicleYearLabel": "வாகன ஆண்டு",
+  "vehicleYearHint": "எ.கா: 2020",
+  "pleaseEnterVehicleYear": "தயவுசெய்து வாகன ஆண்டை உள்ளிடவும்",
+  "pleaseEnterValidVehicleYear": "தயவுசெய்து சரியான வாகன ஆண்டை உள்ளிடவும்",
+  "selectCountry": "நாட்டைத் தேர்ந்தெடுக்கவும்",
+  "pleaseSelectCountry": "தயவுசெய்து ஒரு நாட்டைத் தேர்ந்தெடுக்கவும்",
+  "provinceStateLabel": "மாநிலம்/மாகாணம்",
+  "provinceStateHint": "எ.கா: கலிபோர்னியா, ஒன்டாரியோ, லண்டன்",
+  "pleaseEnterProvinceState": "தயவுசெய்து மாநிலம்/மாகாணத்தை உள்ளிடவும்",
+  "vehicleImageOptional": "வாகன படம் (விருப்பமானது)",
+  "tapToAddVehicleImage": "வாகன படத்தைச் சேர்க்க தட்டவும்",
+  "sparePartDetails": "ஸ்பேர் பாக விவரங்கள்",
+  "describePartYouNeed": "உங்களுக்குத் தேவையான பகுதியை விவரிக்கவும்",
+  "partNameLabel": "பாக பெயர்",
+  "partNameHint": "எ.கா: பிரேக் பேட், எஞ்சின் ஆயில் வடிகட்டி",
+  "pleaseEnterPartName": "தயவுசெய்து பாக பெயரை உள்ளிடவும்",
+  "partNumberLabel": "பாக எண்",
+  "partNumberHint": "எ.கா: BP-001 (விருப்பமானது)",
+  "descriptionLabel": "விளக்கம்",
+  "descriptionHint": "உங்களுக்குத் தேவையான பாகத்தின் விரிவான விளக்கம்",
+  "pleaseEnterDescription": "தயவுசெய்து விளக்கத்தை உள்ளிடவும்",
+  "partImageOptional": "பாக படம் (விருப்பமானது)",
+  "tapToAddPartImage": "பாக படத்தைச் சேர்க்க தட்டவும்",
+  "partVideoOptional": "பாக வீடியோ (விருப்பமானது)",
+  "videoSelected": "வீடியோ தேர்ந்தெடுக்கப்பட்டது",
+  "remove": "நீக்க",
+  "tapToAddPartVideo": "பாக வீடியோவைச் சேர்க்க தட்டவும்",
+  "next": "அடுத்து",
+  "cancelRequest": "கோரிக்கையை ரத்துசெய்",
+  "cancelRequestMessage": "நீங்கள் உண்மையில் ரத்துசெய்ய விரும்புகிறீர்களா? உள்ளிடப்பட்ட அனைத்து தரவும் இழக்கப்படும்.",
+  "keepEditing": "திருத்துதலைத் தொடரவும்",
+  "requestSubmitted": "கோரிக்கை சமர்ப்பிக்கப்பட்டது!",
+  "requestSubmittedMessage": "உங்கள் ஸ்பேர் பாக கோரிக்கை வெற்றிகரமாக சமர்ப்பிக்கப்பட்டது. விரைவில் சப்ளையர்களிடமிருந்து விலை மதிப்பீடுகள் பெறுவீர்கள்.",
+  "submitAnother": "மற்றொன்றை சமர்ப்பிக்கவும்",
+  "viewRequests": "கோரிக்கைகளைப் பார்க்க",
+  "submittingRequest": "உங்கள் கோரிக்கையை சமர்ப்பிக்கிறது...",
+  "uploadingVideoFile": "வீடியோ கோப்பை பதிவேற்றுகிறது... இது சில நிமிடங்கள் ஆகலாம்",
+  "pleaseWait": "தயவுசெய்து காத்திருக்கவும், இது ஒரு கணம் ஆகலாம்",
+  "takePhoto": "புகைப்படம் எடுக்க",
+  "chooseFromGallery": "கேலரியிலிருந்து தேர்ந்தெடுக்க",
+  "errorPickingImage": "படத்தைத் தேர்ந்தெடுப்பதில் பிழை: {error}",
+  "@errorPickingImage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorPickingVideo": "வீடியோவைத் தேர்ந்தெடுப்பதில் பிழை: {error}",
+  "@errorPickingVideo": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "currentPassword": "தற்போதைய கடவுச்சொல்",
+  "enterCurrentPassword": "உங்கள் தற்போதைய கடவுச்சொல்லை உள்ளிடவும்",
+  "currentPasswordRequired": "தற்போதைய கடவுச்சொல் தேவை",
+  "newPassword": "புதிய கடவுச்சொல்",
+  "enterNewPassword": "உங்கள் புதிய கடவுச்சொல்லை உள்ளிடவும்",
+  "newPasswordRequired": "புதிய கடவுச்சொல் தேவை",
+  "confirmNewPassword": "புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்",
+  "confirmNewPasswordHint": "உங்கள் புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்",
+  "pleaseConfirmPassword": "தயவுசெய்து உங்கள் கடவுச்சொல்லை உறுதிப்படுத்தவும்",
+  "passwordsDoNotMatch": "கடவுச்சொற்கள் பொருந்தவில்லை",
+  "passwordMustBeAtLeast8Characters": "கடவுச்சொல் குறைந்தது 8 எழுத்துகள் இருக்க வேண்டும்",
+  "passwordMustBeAtLeast8CharactersLong": "உங்கள் கடவுச்சொல் குறைந்தது 8 எழுத்துகள் இருக்க வேண்டும்.",
+  "passwordChangedSuccessfully": "கடவுச்சொல் வெற்றிகரமாக மாற்றப்பட்டது",
+  "failedToChangePassword": "கடவுச்சொல்லை மாற்ற முடியவில்லை",
+  "enterFirstName": "உங்கள் முதல் பெயரை உள்ளிடவும்",
+  "firstNameRequired": "முதல் பெயர் தேவை",
+  "firstNameMustBeAtLeast2Characters": "முதல் பெயர் குறைந்தது 2 எழுத்துகள் இருக்க வேண்டும்",
+  "enterLastName": "உங்கள் கடைசி பெயரை உள்ளிடவும்",
+  "lastNameRequired": "கடைசி பெயர் தேவை",
+  "lastNameMustBeAtLeast2Characters": "கடைசி பெயர் குறைந்தது 2 எழுத்துகள் இருக்க வேண்டும்",
+  "enterPhoneNumber": "உங்கள் தொலைபேசி எண்ணை உள்ளிடவும்",
+  "profileUpdatedSuccessfully": "சுயவிவரம் வெற்றிகரமாக புதுப்பிக்கப்பட்டது",
+  "failedToUpdateProfile": "சுயவிவரத்தை புதுப்பிக்க முடியவில்லை",
+  "updateProfile": "சுயவிவரத்தை புதுப்பிக்க"
 }
