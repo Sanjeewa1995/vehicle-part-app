@@ -541,4 +541,251 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get pleaseEnterValidPhoneNumber => 'சரியான தொலைபேசி எண்ணை உள்ளிடவும்';
+
+  @override
+  String get requestSparePartTitle => 'ஸ்பேர் பாகத்தை கோரவும்';
+
+  @override
+  String get fillInDetailsBelow => 'கீழே உள்ள விவரங்களை நிரப்பவும்';
+
+  @override
+  String stepXOfY(int current, int total) {
+    return 'படி $current / $total';
+  }
+
+  @override
+  String get tellUsAboutYourVehicle =>
+      'உங்கள் வாகனத்தைப் பற்றி எங்களுக்குச் சொல்லுங்கள்';
+
+  @override
+  String get vehicleTypeLabel => 'வாகன வகை';
+
+  @override
+  String get pleaseSelectVehicleType =>
+      'தயவுசெய்து வாகன வகையைத் தேர்ந்தெடுக்கவும்';
+
+  @override
+  String get vehicleModelLabel => 'வாகன மாதிரி';
+
+  @override
+  String get vehicleModelHint => 'எ.கா: டொயோட்டா கேம்ரி';
+
+  @override
+  String get pleaseEnterVehicleModel => 'தயவுசெய்து வாகன மாதிரியை உள்ளிடவும்';
+
+  @override
+  String get vehicleYearLabel => 'வாகன ஆண்டு';
+
+  @override
+  String get vehicleYearHint => 'எ.கா: 2020';
+
+  @override
+  String get pleaseEnterVehicleYear => 'தயவுசெய்து வாகன ஆண்டை உள்ளிடவும்';
+
+  @override
+  String get pleaseEnterValidVehicleYear =>
+      'தயவுசெய்து சரியான வாகன ஆண்டை உள்ளிடவும்';
+
+  @override
+  String get selectCountry => 'நாட்டைத் தேர்ந்தெடுக்கவும்';
+
+  @override
+  String get pleaseSelectCountry => 'தயவுசெய்து ஒரு நாட்டைத் தேர்ந்தெடுக்கவும்';
+
+  @override
+  String get provinceStateLabel => 'மாநிலம்/மாகாணம்';
+
+  @override
+  String get provinceStateHint => 'எ.கா: கலிபோர்னியா, ஒன்டாரியோ, லண்டன்';
+
+  @override
+  String get pleaseEnterProvinceState =>
+      'தயவுசெய்து மாநிலம்/மாகாணத்தை உள்ளிடவும்';
+
+  @override
+  String get vehicleImageOptional => 'வாகன படம் (விருப்பமானது)';
+
+  @override
+  String get tapToAddVehicleImage => 'வாகன படத்தைச் சேர்க்க தட்டவும்';
+
+  @override
+  String get sparePartDetails => 'ஸ்பேர் பாக விவரங்கள்';
+
+  @override
+  String get describePartYouNeed => 'உங்களுக்குத் தேவையான பகுதியை விவரிக்கவும்';
+
+  @override
+  String get partNameLabel => 'பாக பெயர்';
+
+  @override
+  String get partNameHint => 'எ.கா: பிரேக் பேட், எஞ்சின் ஆயில் வடிகட்டி';
+
+  @override
+  String get pleaseEnterPartName => 'தயவுசெய்து பாக பெயரை உள்ளிடவும்';
+
+  @override
+  String get partNumberLabel => 'பாக எண்';
+
+  @override
+  String get partNumberHint => 'எ.கா: BP-001 (விருப்பமானது)';
+
+  @override
+  String get descriptionLabel => 'விளக்கம்';
+
+  @override
+  String get descriptionHint =>
+      'உங்களுக்குத் தேவையான பாகத்தின் விரிவான விளக்கம்';
+
+  @override
+  String get pleaseEnterDescription => 'தயவுசெய்து விளக்கத்தை உள்ளிடவும்';
+
+  @override
+  String get partImageOptional => 'பாக படம் (விருப்பமானது)';
+
+  @override
+  String get tapToAddPartImage => 'பாக படத்தைச் சேர்க்க தட்டவும்';
+
+  @override
+  String get partVideoOptional => 'பாக வீடியோ (விருப்பமானது)';
+
+  @override
+  String get videoSelected => 'வீடியோ தேர்ந்தெடுக்கப்பட்டது';
+
+  @override
+  String get remove => 'நீக்க';
+
+  @override
+  String get tapToAddPartVideo => 'பாக வீடியோவைச் சேர்க்க தட்டவும்';
+
+  @override
+  String get next => 'அடுத்து';
+
+  @override
+  String get cancelRequest => 'கோரிக்கையை ரத்துசெய்';
+
+  @override
+  String get cancelRequestMessage =>
+      'நீங்கள் உண்மையில் ரத்துசெய்ய விரும்புகிறீர்களா? உள்ளிடப்பட்ட அனைத்து தரவும் இழக்கப்படும்.';
+
+  @override
+  String get keepEditing => 'திருத்துதலைத் தொடரவும்';
+
+  @override
+  String get requestSubmitted => 'கோரிக்கை சமர்ப்பிக்கப்பட்டது!';
+
+  @override
+  String get requestSubmittedMessage =>
+      'உங்கள் ஸ்பேர் பாக கோரிக்கை வெற்றிகரமாக சமர்ப்பிக்கப்பட்டது. விரைவில் சப்ளையர்களிடமிருந்து விலை மதிப்பீடுகள் பெறுவீர்கள்.';
+
+  @override
+  String get submitAnother => 'மற்றொன்றை சமர்ப்பிக்கவும்';
+
+  @override
+  String get viewRequests => 'கோரிக்கைகளைப் பார்க்க';
+
+  @override
+  String get submittingRequest => 'உங்கள் கோரிக்கையை சமர்ப்பிக்கிறது...';
+
+  @override
+  String get uploadingVideoFile =>
+      'வீடியோ கோப்பை பதிவேற்றுகிறது... இது சில நிமிடங்கள் ஆகலாம்';
+
+  @override
+  String get pleaseWait => 'தயவுசெய்து காத்திருக்கவும், இது ஒரு கணம் ஆகலாம்';
+
+  @override
+  String get takePhoto => 'புகைப்படம் எடுக்க';
+
+  @override
+  String get chooseFromGallery => 'கேலரியிலிருந்து தேர்ந்தெடுக்க';
+
+  @override
+  String errorPickingImage(String error) {
+    return 'படத்தைத் தேர்ந்தெடுப்பதில் பிழை: $error';
+  }
+
+  @override
+  String errorPickingVideo(String error) {
+    return 'வீடியோவைத் தேர்ந்தெடுப்பதில் பிழை: $error';
+  }
+
+  @override
+  String get currentPassword => 'தற்போதைய கடவுச்சொல்';
+
+  @override
+  String get enterCurrentPassword => 'உங்கள் தற்போதைய கடவுச்சொல்லை உள்ளிடவும்';
+
+  @override
+  String get currentPasswordRequired => 'தற்போதைய கடவுச்சொல் தேவை';
+
+  @override
+  String get newPassword => 'புதிய கடவுச்சொல்';
+
+  @override
+  String get enterNewPassword => 'உங்கள் புதிய கடவுச்சொல்லை உள்ளிடவும்';
+
+  @override
+  String get newPasswordRequired => 'புதிய கடவுச்சொல் தேவை';
+
+  @override
+  String get confirmNewPassword => 'புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்';
+
+  @override
+  String get confirmNewPasswordHint =>
+      'உங்கள் புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்';
+
+  @override
+  String get pleaseConfirmPassword =>
+      'தயவுசெய்து உங்கள் கடவுச்சொல்லை உறுதிப்படுத்தவும்';
+
+  @override
+  String get passwordsDoNotMatch => 'கடவுச்சொற்கள் பொருந்தவில்லை';
+
+  @override
+  String get passwordMustBeAtLeast8Characters =>
+      'கடவுச்சொல் குறைந்தது 8 எழுத்துகள் இருக்க வேண்டும்';
+
+  @override
+  String get passwordMustBeAtLeast8CharactersLong =>
+      'உங்கள் கடவுச்சொல் குறைந்தது 8 எழுத்துகள் இருக்க வேண்டும்.';
+
+  @override
+  String get passwordChangedSuccessfully =>
+      'கடவுச்சொல் வெற்றிகரமாக மாற்றப்பட்டது';
+
+  @override
+  String get failedToChangePassword => 'கடவுச்சொல்லை மாற்ற முடியவில்லை';
+
+  @override
+  String get enterFirstName => 'உங்கள் முதல் பெயரை உள்ளிடவும்';
+
+  @override
+  String get firstNameRequired => 'முதல் பெயர் தேவை';
+
+  @override
+  String get firstNameMustBeAtLeast2Characters =>
+      'முதல் பெயர் குறைந்தது 2 எழுத்துகள் இருக்க வேண்டும்';
+
+  @override
+  String get enterLastName => 'உங்கள் கடைசி பெயரை உள்ளிடவும்';
+
+  @override
+  String get lastNameRequired => 'கடைசி பெயர் தேவை';
+
+  @override
+  String get lastNameMustBeAtLeast2Characters =>
+      'கடைசி பெயர் குறைந்தது 2 எழுத்துகள் இருக்க வேண்டும்';
+
+  @override
+  String get enterPhoneNumber => 'உங்கள் தொலைபேசி எண்ணை உள்ளிடவும்';
+
+  @override
+  String get profileUpdatedSuccessfully =>
+      'சுயவிவரம் வெற்றிகரமாக புதுப்பிக்கப்பட்டது';
+
+  @override
+  String get failedToUpdateProfile => 'சுயவிவரத்தை புதுப்பிக்க முடியவில்லை';
+
+  @override
+  String get updateProfile => 'சுயவிவரத்தை புதுப்பிக்க';
 }

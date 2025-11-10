@@ -535,4 +535,243 @@ class AppLocalizationsSi extends AppLocalizations {
   @override
   String get pleaseEnterValidPhoneNumber =>
       'කරුණාකර වලංගු දුරකථන අංකයක් ඇතුළත් කරන්න';
+
+  @override
+  String get requestSparePartTitle => 'උපකරණ කොටසක් ඉල්ලන්න';
+
+  @override
+  String get fillInDetailsBelow => 'පහත විස්තර පුරවන්න';
+
+  @override
+  String stepXOfY(int current, int total) {
+    return 'පියවර $current / $total';
+  }
+
+  @override
+  String get tellUsAboutYourVehicle => 'ඔබේ වාහනය ගැන අපට කියන්න';
+
+  @override
+  String get vehicleTypeLabel => 'වාහන වර්ගය';
+
+  @override
+  String get pleaseSelectVehicleType => 'කරුණාකර වාහන වර්ගයක් තෝරන්න';
+
+  @override
+  String get vehicleModelLabel => 'වාහන ආකෘතිය';
+
+  @override
+  String get vehicleModelHint => 'උදා: ටොයෝටා කැම්රි';
+
+  @override
+  String get pleaseEnterVehicleModel => 'කරුණාකර වාහන ආකෘතිය ඇතුළත් කරන්න';
+
+  @override
+  String get vehicleYearLabel => 'වාහන වසර';
+
+  @override
+  String get vehicleYearHint => 'උදා: 2020';
+
+  @override
+  String get pleaseEnterVehicleYear => 'කරුණාකර වාහන වසර ඇතුළත් කරන්න';
+
+  @override
+  String get pleaseEnterValidVehicleYear =>
+      'කරුණාකර වලංගු වාහන වසරක් ඇතුළත් කරන්න';
+
+  @override
+  String get selectCountry => 'රට තෝරන්න';
+
+  @override
+  String get pleaseSelectCountry => 'කරුණාකර රටක් තෝරන්න';
+
+  @override
+  String get provinceStateLabel => 'පළාත/ප්‍රාන්තය';
+
+  @override
+  String get provinceStateHint => 'උදා: කැලිෆෝනියා, ඔන්ටාරියෝ, ලන්ඩන්';
+
+  @override
+  String get pleaseEnterProvinceState => 'කරුණාකර පළාත/ප්‍රාන්තය ඇතුළත් කරන්න';
+
+  @override
+  String get vehicleImageOptional => 'වාහන රූපය (විකල්ප)';
+
+  @override
+  String get tapToAddVehicleImage => 'වාහන රූපය එක් කිරීමට තට්ටු කරන්න';
+
+  @override
+  String get sparePartDetails => 'උපකරණ කොටස් තොරතුරු';
+
+  @override
+  String get describePartYouNeed => 'ඔබට අවශ්‍ය කොටස විස්තර කරන්න';
+
+  @override
+  String get partNameLabel => 'කොටස් නම';
+
+  @override
+  String get partNameHint => 'උදා: බ්‍රේක් පෑඩ්, එන්ජින් තෙල් පෙරහන';
+
+  @override
+  String get pleaseEnterPartName => 'කරුණාකර කොටස් නම ඇතුළත් කරන්න';
+
+  @override
+  String get partNumberLabel => 'කොටස් අංකය';
+
+  @override
+  String get partNumberHint => 'උදා: BP-001 (විකල්ප)';
+
+  @override
+  String get descriptionLabel => 'විස්තරය';
+
+  @override
+  String get descriptionHint => 'ඔබට අවශ්‍ය කොටසේ සවිස්තරාත්මක විස්තරය';
+
+  @override
+  String get pleaseEnterDescription => 'කරුණාකර විස්තරය ඇතුළත් කරන්න';
+
+  @override
+  String get partImageOptional => 'කොටස් රූපය (විකල්ප)';
+
+  @override
+  String get tapToAddPartImage => 'කොටස් රූපය එක් කිරීමට තට්ටු කරන්න';
+
+  @override
+  String get partVideoOptional => 'කොටස් වීඩියෝව (විකල්ප)';
+
+  @override
+  String get videoSelected => 'වීඩියෝව තෝරාගෙන ඇත';
+
+  @override
+  String get remove => 'ඉවත් කරන්න';
+
+  @override
+  String get tapToAddPartVideo => 'කොටස් වීඩියෝව එක් කිරීමට තට්ටු කරන්න';
+
+  @override
+  String get next => 'ඊළඟ';
+
+  @override
+  String get cancelRequest => 'ඉල්ලීම අවලංගු කරන්න';
+
+  @override
+  String get cancelRequestMessage =>
+      'ඔබට ඇත්තටම අවලංගු කිරීමට අවශ්‍යද? ඇතුළත් කළ සියලුම දත්ත අහිමි වනු ඇත.';
+
+  @override
+  String get keepEditing => 'සංස්කරණය දිගටම කරන්න';
+
+  @override
+  String get requestSubmitted => 'ඉල්ලීම ඉදිරිපත් කරන ලදී!';
+
+  @override
+  String get requestSubmittedMessage =>
+      'ඔබේ උපකරණ කොටස් ඉල්ලීම සාර්ථකව ඉදිරිපත් කරන ලදී. ඔබට ඉක්මනින් සැපයුම්කරුවන්ගෙන් මිල ඇස්තමේන්තු ලැබෙනු ඇත.';
+
+  @override
+  String get submitAnother => 'තවත් එකක් ඉදිරිපත් කරන්න';
+
+  @override
+  String get viewRequests => 'ඉල්ලීම් බලන්න';
+
+  @override
+  String get submittingRequest => 'ඔබේ ඉල්ලීම ඉදිරිපත් කරමින්...';
+
+  @override
+  String get uploadingVideoFile =>
+      'වීඩියෝ ගොනුව උඩුගත කරමින්... මෙය මිනිත්තු කිහිපයක් ගත විය හැකිය';
+
+  @override
+  String get pleaseWait => 'කරුණාකර රැඳී සිටින්න, මෙය මොහොතක් ගත විය හැකිය';
+
+  @override
+  String get takePhoto => 'ඡායාරූපයක් ගන්න';
+
+  @override
+  String get chooseFromGallery => 'ගැලරියෙන් තෝරන්න';
+
+  @override
+  String errorPickingImage(String error) {
+    return 'රූපය තෝරාගැනීමේ දෝෂය: $error';
+  }
+
+  @override
+  String errorPickingVideo(String error) {
+    return 'වීඩියෝ තෝරාගැනීමේ දෝෂය: $error';
+  }
+
+  @override
+  String get currentPassword => 'වර්තමාන මුරපදය';
+
+  @override
+  String get enterCurrentPassword => 'ඔබේ වර්තමාන මුරපදය ඇතුළත් කරන්න';
+
+  @override
+  String get currentPasswordRequired => 'වර්තමාන මුරපදය අවශ්‍යයි';
+
+  @override
+  String get newPassword => 'නව මුරපදය';
+
+  @override
+  String get enterNewPassword => 'ඔබේ නව මුරපදය ඇතුළත් කරන්න';
+
+  @override
+  String get newPasswordRequired => 'නව මුරපදය අවශ්‍යයි';
+
+  @override
+  String get confirmNewPassword => 'නව මුරපදය තහවුරු කරන්න';
+
+  @override
+  String get confirmNewPasswordHint => 'ඔබේ නව මුරපදය තහවුරු කරන්න';
+
+  @override
+  String get pleaseConfirmPassword => 'කරුණාකර ඔබේ මුරපදය තහවුරු කරන්න';
+
+  @override
+  String get passwordsDoNotMatch => 'මුරපද නොගැලපේ';
+
+  @override
+  String get passwordMustBeAtLeast8Characters =>
+      'මුරපදය අවම වශයෙන් අක්ෂර 8 ක් විය යුතුය';
+
+  @override
+  String get passwordMustBeAtLeast8CharactersLong =>
+      'ඔබේ මුරපදය අවම වශයෙන් අක්ෂර 8 ක් විය යුතුය.';
+
+  @override
+  String get passwordChangedSuccessfully => 'මුරපදය සාර්ථකව වෙනස් කරන ලදී';
+
+  @override
+  String get failedToChangePassword => 'මුරපදය වෙනස් කිරීමට අසමත් විය';
+
+  @override
+  String get enterFirstName => 'ඔබේ මුල් නම ඇතුළත් කරන්න';
+
+  @override
+  String get firstNameRequired => 'මුල් නම අවශ්‍යයි';
+
+  @override
+  String get firstNameMustBeAtLeast2Characters =>
+      'මුල් නම අවම වශයෙන් අක්ෂර 2 ක් විය යුතුය';
+
+  @override
+  String get enterLastName => 'ඔබේ අවසන් නම ඇතුළත් කරන්න';
+
+  @override
+  String get lastNameRequired => 'අවසන් නම අවශ්‍යයි';
+
+  @override
+  String get lastNameMustBeAtLeast2Characters =>
+      'අවසන් නම අවම වශයෙන් අක්ෂර 2 ක් විය යුතුය';
+
+  @override
+  String get enterPhoneNumber => 'ඔබේ දුරකථන අංකය ඇතුළත් කරන්න';
+
+  @override
+  String get profileUpdatedSuccessfully => 'පැතිකඩ සාර්ථකව යාවත්කාලීන කරන ලදී';
+
+  @override
+  String get failedToUpdateProfile => 'පැතිකඩ යාවත්කාලීන කිරීමට අසමත් විය';
+
+  @override
+  String get updateProfile => 'පැතිකඩ යාවත්කාලීන කරන්න';
 }

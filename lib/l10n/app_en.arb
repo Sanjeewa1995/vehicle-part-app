@@ -686,5 +686,323 @@
   "pleaseEnterValidPhoneNumber": "Please enter a valid phone number",
   "@pleaseEnterValidPhoneNumber": {
     "description": "Phone number format validation error"
+  },
+  "requestSparePartTitle": "Request Spare Part",
+  "@requestSparePartTitle": {
+    "description": "Add request page title"
+  },
+  "fillInDetailsBelow": "Fill in the details below",
+  "@fillInDetailsBelow": {
+    "description": "Add request page subtitle"
+  },
+  "stepXOfY": "Step {current} of {total}",
+  "@stepXOfY": {
+    "description": "Step indicator",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "tellUsAboutYourVehicle": "Tell us about your vehicle",
+  "@tellUsAboutYourVehicle": {
+    "description": "Vehicle information subtitle"
+  },
+  "vehicleTypeLabel": "Vehicle Type",
+  "@vehicleTypeLabel": {
+    "description": "Vehicle type field label"
+  },
+  "pleaseSelectVehicleType": "Please select a vehicle type",
+  "@pleaseSelectVehicleType": {
+    "description": "Vehicle type validation error"
+  },
+  "vehicleModelLabel": "Vehicle Model",
+  "@vehicleModelLabel": {
+    "description": "Vehicle model field label"
+  },
+  "vehicleModelHint": "e.g., Toyota Camry",
+  "@vehicleModelHint": {
+    "description": "Vehicle model hint"
+  },
+  "pleaseEnterVehicleModel": "Please enter vehicle model",
+  "@pleaseEnterVehicleModel": {
+    "description": "Vehicle model validation error"
+  },
+  "vehicleYearLabel": "Vehicle Year",
+  "@vehicleYearLabel": {
+    "description": "Vehicle year field label"
+  },
+  "vehicleYearHint": "e.g., 2020",
+  "@vehicleYearHint": {
+    "description": "Vehicle year hint"
+  },
+  "pleaseEnterVehicleYear": "Please enter vehicle year",
+  "@pleaseEnterVehicleYear": {
+    "description": "Vehicle year validation error"
+  },
+  "pleaseEnterValidVehicleYear": "Please enter a valid vehicle year",
+  "@pleaseEnterValidVehicleYear": {
+    "description": "Vehicle year format validation error"
+  },
+  "selectCountry": "Select Country",
+  "@selectCountry": {
+    "description": "Country selector placeholder"
+  },
+  "pleaseSelectCountry": "Please select a country",
+  "@pleaseSelectCountry": {
+    "description": "Country validation error"
+  },
+  "provinceStateLabel": "Province/State",
+  "@provinceStateLabel": {
+    "description": "Province/State field label"
+  },
+  "provinceStateHint": "e.g., California, Ontario, London",
+  "@provinceStateHint": {
+    "description": "Province/State hint"
+  },
+  "pleaseEnterProvinceState": "Please enter province/state",
+  "@pleaseEnterProvinceState": {
+    "description": "Province/State validation error"
+  },
+  "vehicleImageOptional": "Vehicle Image (Optional)",
+  "@vehicleImageOptional": {
+    "description": "Vehicle image label"
+  },
+  "tapToAddVehicleImage": "Tap to add vehicle image",
+  "@tapToAddVehicleImage": {
+    "description": "Vehicle image placeholder"
+  },
+  "sparePartDetails": "Spare Part Details",
+  "@sparePartDetails": {
+    "description": "Spare part details section title"
+  },
+  "describePartYouNeed": "Describe the part you need",
+  "@describePartYouNeed": {
+    "description": "Spare part details subtitle"
+  },
+  "partNameLabel": "Part Name",
+  "@partNameLabel": {
+    "description": "Part name field label"
+  },
+  "partNameHint": "e.g., Brake Pad, Engine Oil Filter",
+  "@partNameHint": {
+    "description": "Part name hint"
+  },
+  "pleaseEnterPartName": "Please enter part name",
+  "@pleaseEnterPartName": {
+    "description": "Part name validation error"
+  },
+  "partNumberLabel": "Part Number",
+  "@partNumberLabel": {
+    "description": "Part number field label"
+  },
+  "partNumberHint": "e.g., BP-001 (Optional)",
+  "@partNumberHint": {
+    "description": "Part number hint"
+  },
+  "descriptionLabel": "Description",
+  "@descriptionLabel": {
+    "description": "Description field label"
+  },
+  "descriptionHint": "Detailed description of the part you need",
+  "@descriptionHint": {
+    "description": "Description hint"
+  },
+  "pleaseEnterDescription": "Please enter description",
+  "@pleaseEnterDescription": {
+    "description": "Description validation error"
+  },
+  "partImageOptional": "Part Image (Optional)",
+  "@partImageOptional": {
+    "description": "Part image label"
+  },
+  "tapToAddPartImage": "Tap to add part image",
+  "@tapToAddPartImage": {
+    "description": "Part image placeholder"
+  },
+  "partVideoOptional": "Part Video (Optional)",
+  "@partVideoOptional": {
+    "description": "Part video label"
+  },
+  "videoSelected": "Video selected",
+  "@videoSelected": {
+    "description": "Video selected message"
+  },
+  "remove": "Remove",
+  "@remove": {
+    "description": "Remove button"
+  },
+  "tapToAddPartVideo": "Tap to add part video",
+  "@tapToAddPartVideo": {
+    "description": "Part video placeholder"
+  },
+  "next": "Next",
+  "@next": {
+    "description": "Next button"
+  },
+  "cancelRequest": "Cancel Request",
+  "@cancelRequest": {
+    "description": "Cancel request dialog title"
+  },
+  "cancelRequestMessage": "Are you sure you want to cancel? All entered data will be lost.",
+  "@cancelRequestMessage": {
+    "description": "Cancel request dialog message"
+  },
+  "keepEditing": "Keep Editing",
+  "@keepEditing": {
+    "description": "Keep editing button"
+  },
+  "requestSubmitted": "Request Submitted!",
+  "@requestSubmitted": {
+    "description": "Request submitted dialog title"
+  },
+  "requestSubmittedMessage": "Your spare part request has been submitted successfully. You will receive quotes from suppliers soon.",
+  "@requestSubmittedMessage": {
+    "description": "Request submitted dialog message"
+  },
+  "submitAnother": "Submit Another",
+  "@submitAnother": {
+    "description": "Submit another button"
+  },
+  "viewRequests": "View Requests",
+  "@viewRequests": {
+    "description": "View requests button"
+  },
+  "submittingRequest": "Submitting your request...",
+  "@submittingRequest": {
+    "description": "Submitting request message"
+  },
+  "uploadingVideoFile": "Uploading video file... This may take a few minutes",
+  "@uploadingVideoFile": {
+    "description": "Uploading video message"
+  },
+  "pleaseWait": "Please wait, this may take a moment",
+  "@pleaseWait": {
+    "description": "Please wait message"
+  },
+  "takePhoto": "Take Photo",
+  "@takePhoto": {
+    "description": "Take photo option"
+  },
+  "chooseFromGallery": "Choose from Gallery",
+  "@chooseFromGallery": {
+    "description": "Choose from gallery option"
+  },
+  "errorPickingImage": "Error picking image: {error}",
+  "@errorPickingImage": {
+    "description": "Error picking image message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorPickingVideo": "Error picking video: {error}",
+  "@errorPickingVideo": {
+    "description": "Error picking video message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "currentPassword": "Current Password",
+  "@currentPassword": {
+    "description": "Current password field label"
+  },
+  "enterCurrentPassword": "Enter your current password",
+  "@enterCurrentPassword": {
+    "description": "Current password hint"
+  },
+  "currentPasswordRequired": "Current password is required",
+  "@currentPasswordRequired": {
+    "description": "Current password validation error"
+  },
+  "newPassword": "New Password",
+  "@newPassword": {
+    "description": "New password field label"
+  },
+  "enterNewPassword": "Enter your new password",
+  "@enterNewPassword": {
+    "description": "New password hint"
+  },
+  "newPasswordRequired": "New password is required",
+  "@newPasswordRequired": {
+    "description": "New password validation error"
+  },
+  "confirmNewPassword": "Confirm New Password",
+  "@confirmNewPassword": {
+    "description": "Confirm password field label"
+  },
+  "confirmNewPasswordHint": "Confirm your new password",
+  "@confirmNewPasswordHint": {
+    "description": "Confirm password hint"
+  },
+  "pleaseConfirmPassword": "Please confirm your password",
+  "@pleaseConfirmPassword": {
+    "description": "Confirm password validation error"
+  },
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {
+    "description": "Password mismatch error"
+  },
+  "passwordMustBeAtLeast8Characters": "Password must be at least 8 characters",
+  "@passwordMustBeAtLeast8Characters": {
+    "description": "Password length validation error"
+  },
+  "passwordMustBeAtLeast8CharactersLong": "Your password must be at least 8 characters long.",
+  "@passwordMustBeAtLeast8CharactersLong": {
+    "description": "Password info message"
+  },
+  "passwordChangedSuccessfully": "Password changed successfully",
+  "@passwordChangedSuccessfully": {
+    "description": "Password changed success message"
+  },
+  "failedToChangePassword": "Failed to change password",
+  "@failedToChangePassword": {
+    "description": "Failed to change password error"
+  },
+  "enterFirstName": "Enter your first name",
+  "@enterFirstName": {
+    "description": "First name hint"
+  },
+  "firstNameRequired": "First name is required",
+  "@firstNameRequired": {
+    "description": "First name validation error"
+  },
+  "firstNameMustBeAtLeast2Characters": "First name must be at least 2 characters",
+  "@firstNameMustBeAtLeast2Characters": {
+    "description": "First name length validation error"
+  },
+  "enterLastName": "Enter your last name",
+  "@enterLastName": {
+    "description": "Last name hint"
+  },
+  "lastNameRequired": "Last name is required",
+  "@lastNameRequired": {
+    "description": "Last name validation error"
+  },
+  "lastNameMustBeAtLeast2Characters": "Last name must be at least 2 characters",
+  "@lastNameMustBeAtLeast2Characters": {
+    "description": "Last name length validation error"
+  },
+  "enterPhoneNumber": "Enter your phone number",
+  "@enterPhoneNumber": {
+    "description": "Phone number hint"
+  },
+  "profileUpdatedSuccessfully": "Profile updated successfully",
+  "@profileUpdatedSuccessfully": {
+    "description": "Profile updated success message"
+  },
+  "failedToUpdateProfile": "Failed to update profile",
+  "@failedToUpdateProfile": {
+    "description": "Failed to update profile error"
+  },
+  "updateProfile": "Update Profile",
+  "@updateProfile": {
+    "description": "Update profile button"
   }
 }

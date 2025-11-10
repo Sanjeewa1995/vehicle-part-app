@@ -1101,6 +1101,456 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter a valid phone number'**
   String get pleaseEnterValidPhoneNumber;
+
+  /// Add request page title
+  ///
+  /// In en, this message translates to:
+  /// **'Request Spare Part'**
+  String get requestSparePartTitle;
+
+  /// Add request page subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in the details below'**
+  String get fillInDetailsBelow;
+
+  /// Step indicator
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String stepXOfY(int current, int total);
+
+  /// Vehicle information subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about your vehicle'**
+  String get tellUsAboutYourVehicle;
+
+  /// Vehicle type field label
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle Type'**
+  String get vehicleTypeLabel;
+
+  /// Vehicle type validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a vehicle type'**
+  String get pleaseSelectVehicleType;
+
+  /// Vehicle model field label
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle Model'**
+  String get vehicleModelLabel;
+
+  /// Vehicle model hint
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Toyota Camry'**
+  String get vehicleModelHint;
+
+  /// Vehicle model validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter vehicle model'**
+  String get pleaseEnterVehicleModel;
+
+  /// Vehicle year field label
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle Year'**
+  String get vehicleYearLabel;
+
+  /// Vehicle year hint
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 2020'**
+  String get vehicleYearHint;
+
+  /// Vehicle year validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter vehicle year'**
+  String get pleaseEnterVehicleYear;
+
+  /// Vehicle year format validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid vehicle year'**
+  String get pleaseEnterValidVehicleYear;
+
+  /// Country selector placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Select Country'**
+  String get selectCountry;
+
+  /// Country validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a country'**
+  String get pleaseSelectCountry;
+
+  /// Province/State field label
+  ///
+  /// In en, this message translates to:
+  /// **'Province/State'**
+  String get provinceStateLabel;
+
+  /// Province/State hint
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., California, Ontario, London'**
+  String get provinceStateHint;
+
+  /// Province/State validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter province/state'**
+  String get pleaseEnterProvinceState;
+
+  /// Vehicle image label
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle Image (Optional)'**
+  String get vehicleImageOptional;
+
+  /// Vehicle image placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to add vehicle image'**
+  String get tapToAddVehicleImage;
+
+  /// Spare part details section title
+  ///
+  /// In en, this message translates to:
+  /// **'Spare Part Details'**
+  String get sparePartDetails;
+
+  /// Spare part details subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the part you need'**
+  String get describePartYouNeed;
+
+  /// Part name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Part Name'**
+  String get partNameLabel;
+
+  /// Part name hint
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Brake Pad, Engine Oil Filter'**
+  String get partNameHint;
+
+  /// Part name validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter part name'**
+  String get pleaseEnterPartName;
+
+  /// Part number field label
+  ///
+  /// In en, this message translates to:
+  /// **'Part Number'**
+  String get partNumberLabel;
+
+  /// Part number hint
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., BP-001 (Optional)'**
+  String get partNumberHint;
+
+  /// Description field label
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get descriptionLabel;
+
+  /// Description hint
+  ///
+  /// In en, this message translates to:
+  /// **'Detailed description of the part you need'**
+  String get descriptionHint;
+
+  /// Description validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter description'**
+  String get pleaseEnterDescription;
+
+  /// Part image label
+  ///
+  /// In en, this message translates to:
+  /// **'Part Image (Optional)'**
+  String get partImageOptional;
+
+  /// Part image placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to add part image'**
+  String get tapToAddPartImage;
+
+  /// Part video label
+  ///
+  /// In en, this message translates to:
+  /// **'Part Video (Optional)'**
+  String get partVideoOptional;
+
+  /// Video selected message
+  ///
+  /// In en, this message translates to:
+  /// **'Video selected'**
+  String get videoSelected;
+
+  /// Remove button
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// Part video placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to add part video'**
+  String get tapToAddPartVideo;
+
+  /// Next button
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// Cancel request dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Request'**
+  String get cancelRequest;
+
+  /// Cancel request dialog message
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to cancel? All entered data will be lost.'**
+  String get cancelRequestMessage;
+
+  /// Keep editing button
+  ///
+  /// In en, this message translates to:
+  /// **'Keep Editing'**
+  String get keepEditing;
+
+  /// Request submitted dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Request Submitted!'**
+  String get requestSubmitted;
+
+  /// Request submitted dialog message
+  ///
+  /// In en, this message translates to:
+  /// **'Your spare part request has been submitted successfully. You will receive quotes from suppliers soon.'**
+  String get requestSubmittedMessage;
+
+  /// Submit another button
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Another'**
+  String get submitAnother;
+
+  /// View requests button
+  ///
+  /// In en, this message translates to:
+  /// **'View Requests'**
+  String get viewRequests;
+
+  /// Submitting request message
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting your request...'**
+  String get submittingRequest;
+
+  /// Uploading video message
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading video file... This may take a few minutes'**
+  String get uploadingVideoFile;
+
+  /// Please wait message
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait, this may take a moment'**
+  String get pleaseWait;
+
+  /// Take photo option
+  ///
+  /// In en, this message translates to:
+  /// **'Take Photo'**
+  String get takePhoto;
+
+  /// Choose from gallery option
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from Gallery'**
+  String get chooseFromGallery;
+
+  /// Error picking image message
+  ///
+  /// In en, this message translates to:
+  /// **'Error picking image: {error}'**
+  String errorPickingImage(String error);
+
+  /// Error picking video message
+  ///
+  /// In en, this message translates to:
+  /// **'Error picking video: {error}'**
+  String errorPickingVideo(String error);
+
+  /// Current password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Current Password'**
+  String get currentPassword;
+
+  /// Current password hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your current password'**
+  String get enterCurrentPassword;
+
+  /// Current password validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Current password is required'**
+  String get currentPasswordRequired;
+
+  /// New password field label
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// New password hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your new password'**
+  String get enterNewPassword;
+
+  /// New password validation error
+  ///
+  /// In en, this message translates to:
+  /// **'New password is required'**
+  String get newPasswordRequired;
+
+  /// Confirm password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm New Password'**
+  String get confirmNewPassword;
+
+  /// Confirm password hint
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your new password'**
+  String get confirmNewPasswordHint;
+
+  /// Confirm password validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get pleaseConfirmPassword;
+
+  /// Password mismatch error
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// Password length validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get passwordMustBeAtLeast8Characters;
+
+  /// Password info message
+  ///
+  /// In en, this message translates to:
+  /// **'Your password must be at least 8 characters long.'**
+  String get passwordMustBeAtLeast8CharactersLong;
+
+  /// Password changed success message
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed successfully'**
+  String get passwordChangedSuccessfully;
+
+  /// Failed to change password error
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to change password'**
+  String get failedToChangePassword;
+
+  /// First name hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your first name'**
+  String get enterFirstName;
+
+  /// First name validation error
+  ///
+  /// In en, this message translates to:
+  /// **'First name is required'**
+  String get firstNameRequired;
+
+  /// First name length validation error
+  ///
+  /// In en, this message translates to:
+  /// **'First name must be at least 2 characters'**
+  String get firstNameMustBeAtLeast2Characters;
+
+  /// Last name hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your last name'**
+  String get enterLastName;
+
+  /// Last name validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Last name is required'**
+  String get lastNameRequired;
+
+  /// Last name length validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Last name must be at least 2 characters'**
+  String get lastNameMustBeAtLeast2Characters;
+
+  /// Phone number hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your phone number'**
+  String get enterPhoneNumber;
+
+  /// Profile updated success message
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get profileUpdatedSuccessfully;
+
+  /// Failed to update profile error
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update profile'**
+  String get failedToUpdateProfile;
+
+  /// Update profile button
+  ///
+  /// In en, this message translates to:
+  /// **'Update Profile'**
+  String get updateProfile;
 }
 
 class _AppLocalizationsDelegate

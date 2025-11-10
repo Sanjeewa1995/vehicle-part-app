@@ -534,4 +534,242 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pleaseEnterValidPhoneNumber => 'Please enter a valid phone number';
+
+  @override
+  String get requestSparePartTitle => 'Request Spare Part';
+
+  @override
+  String get fillInDetailsBelow => 'Fill in the details below';
+
+  @override
+  String stepXOfY(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get tellUsAboutYourVehicle => 'Tell us about your vehicle';
+
+  @override
+  String get vehicleTypeLabel => 'Vehicle Type';
+
+  @override
+  String get pleaseSelectVehicleType => 'Please select a vehicle type';
+
+  @override
+  String get vehicleModelLabel => 'Vehicle Model';
+
+  @override
+  String get vehicleModelHint => 'e.g., Toyota Camry';
+
+  @override
+  String get pleaseEnterVehicleModel => 'Please enter vehicle model';
+
+  @override
+  String get vehicleYearLabel => 'Vehicle Year';
+
+  @override
+  String get vehicleYearHint => 'e.g., 2020';
+
+  @override
+  String get pleaseEnterVehicleYear => 'Please enter vehicle year';
+
+  @override
+  String get pleaseEnterValidVehicleYear => 'Please enter a valid vehicle year';
+
+  @override
+  String get selectCountry => 'Select Country';
+
+  @override
+  String get pleaseSelectCountry => 'Please select a country';
+
+  @override
+  String get provinceStateLabel => 'Province/State';
+
+  @override
+  String get provinceStateHint => 'e.g., California, Ontario, London';
+
+  @override
+  String get pleaseEnterProvinceState => 'Please enter province/state';
+
+  @override
+  String get vehicleImageOptional => 'Vehicle Image (Optional)';
+
+  @override
+  String get tapToAddVehicleImage => 'Tap to add vehicle image';
+
+  @override
+  String get sparePartDetails => 'Spare Part Details';
+
+  @override
+  String get describePartYouNeed => 'Describe the part you need';
+
+  @override
+  String get partNameLabel => 'Part Name';
+
+  @override
+  String get partNameHint => 'e.g., Brake Pad, Engine Oil Filter';
+
+  @override
+  String get pleaseEnterPartName => 'Please enter part name';
+
+  @override
+  String get partNumberLabel => 'Part Number';
+
+  @override
+  String get partNumberHint => 'e.g., BP-001 (Optional)';
+
+  @override
+  String get descriptionLabel => 'Description';
+
+  @override
+  String get descriptionHint => 'Detailed description of the part you need';
+
+  @override
+  String get pleaseEnterDescription => 'Please enter description';
+
+  @override
+  String get partImageOptional => 'Part Image (Optional)';
+
+  @override
+  String get tapToAddPartImage => 'Tap to add part image';
+
+  @override
+  String get partVideoOptional => 'Part Video (Optional)';
+
+  @override
+  String get videoSelected => 'Video selected';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get tapToAddPartVideo => 'Tap to add part video';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get cancelRequest => 'Cancel Request';
+
+  @override
+  String get cancelRequestMessage =>
+      'Are you sure you want to cancel? All entered data will be lost.';
+
+  @override
+  String get keepEditing => 'Keep Editing';
+
+  @override
+  String get requestSubmitted => 'Request Submitted!';
+
+  @override
+  String get requestSubmittedMessage =>
+      'Your spare part request has been submitted successfully. You will receive quotes from suppliers soon.';
+
+  @override
+  String get submitAnother => 'Submit Another';
+
+  @override
+  String get viewRequests => 'View Requests';
+
+  @override
+  String get submittingRequest => 'Submitting your request...';
+
+  @override
+  String get uploadingVideoFile =>
+      'Uploading video file... This may take a few minutes';
+
+  @override
+  String get pleaseWait => 'Please wait, this may take a moment';
+
+  @override
+  String get takePhoto => 'Take Photo';
+
+  @override
+  String get chooseFromGallery => 'Choose from Gallery';
+
+  @override
+  String errorPickingImage(String error) {
+    return 'Error picking image: $error';
+  }
+
+  @override
+  String errorPickingVideo(String error) {
+    return 'Error picking video: $error';
+  }
+
+  @override
+  String get currentPassword => 'Current Password';
+
+  @override
+  String get enterCurrentPassword => 'Enter your current password';
+
+  @override
+  String get currentPasswordRequired => 'Current password is required';
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get enterNewPassword => 'Enter your new password';
+
+  @override
+  String get newPasswordRequired => 'New password is required';
+
+  @override
+  String get confirmNewPassword => 'Confirm New Password';
+
+  @override
+  String get confirmNewPasswordHint => 'Confirm your new password';
+
+  @override
+  String get pleaseConfirmPassword => 'Please confirm your password';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get passwordMustBeAtLeast8Characters =>
+      'Password must be at least 8 characters';
+
+  @override
+  String get passwordMustBeAtLeast8CharactersLong =>
+      'Your password must be at least 8 characters long.';
+
+  @override
+  String get passwordChangedSuccessfully => 'Password changed successfully';
+
+  @override
+  String get failedToChangePassword => 'Failed to change password';
+
+  @override
+  String get enterFirstName => 'Enter your first name';
+
+  @override
+  String get firstNameRequired => 'First name is required';
+
+  @override
+  String get firstNameMustBeAtLeast2Characters =>
+      'First name must be at least 2 characters';
+
+  @override
+  String get enterLastName => 'Enter your last name';
+
+  @override
+  String get lastNameRequired => 'Last name is required';
+
+  @override
+  String get lastNameMustBeAtLeast2Characters =>
+      'Last name must be at least 2 characters';
+
+  @override
+  String get enterPhoneNumber => 'Enter your phone number';
+
+  @override
+  String get profileUpdatedSuccessfully => 'Profile updated successfully';
+
+  @override
+  String get failedToUpdateProfile => 'Failed to update profile';
+
+  @override
+  String get updateProfile => 'Update Profile';
 }

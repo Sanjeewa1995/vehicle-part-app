@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import 'package:vehicle_part_app/shared/widgets/app_text_field.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 
@@ -39,24 +40,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.dispose();
   }
 
-  String? _validateName(String? value, String fieldName) {
+  String? _validateName(String? value, BuildContext context, bool isFirstName) {
+    final l10n = AppLocalizations.of(context)!;
     if (value == null || value.trim().isEmpty) {
-      return '$fieldName is required';
+      return isFirstName ? l10n.firstNameRequired : l10n.lastNameRequired;
     }
     if (value.trim().length < 2) {
-      return '$fieldName must be at least 2 characters';
+      return isFirstName ? l10n.firstNameMustBeAtLeast2Characters : l10n.lastNameMustBeAtLeast2Characters;
     }
     return null;
   }
 
-  String? _validatePhone(String? value) {
+  String? _validatePhone(String? value, BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (value == null || value.trim().isEmpty) {
-      return 'Phone number is required';
+      return l10n.phoneNumberRequired;
     }
     // Basic phone validation - can be enhanced
     final phoneRegex = RegExp(r'^\+?[1-9]\d{1,14}$');
     if (!phoneRegex.hasMatch(value.trim())) {
-      return 'Please enter a valid phone number';
+      return l10n.pleaseEnterValidPhoneNumber;
     }
     return null;
   }
@@ -85,17 +88,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     if (!mounted) return;
 
+    final l10n = AppLocalizations.of(context)!;
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Profile updated successfully'),
+        SnackBar(
+          content: Text(l10n.profileUpdatedSuccessfully),
           backgroundColor: AppColors.success,
         ),
       );
       context.pop();
     } else {
       setState(() {
-        _errorMessage = authProvider.errorMessage ?? 'Failed to update profile';
+        _errorMessage = authProvider.errorMessage ?? l10n.failedToUpdateProfile;
       });
     }
   }
@@ -105,13 +109,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text(
-          'Edit Profile',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
-          ),
+        title: Builder(
+          builder: (context) {
+            final l10n = AppLocalizations.of(context)!;
+            return Text(
+              l10n.editProfile,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
+            );
+          },
         ),
         backgroundColor: AppColors.backgroundSecondary,
         elevation: 0,
@@ -169,99 +178,124 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ],
 
                 // First Name
-                AppTextField(
-                  controller: _firstNameController,
-                  label: 'First Name',
-                  hint: 'Enter your first name',
-                  type: AppTextFieldType.text,
-                  prefixIcon: Icons.person_outline,
-                  validator: (value) => _validateName(value, 'First name'),
-                  textInputAction: TextInputAction.next,
-                  enabled: !_isLoading,
+                Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    return AppTextField(
+                      controller: _firstNameController,
+                      label: l10n.firstName,
+                      hint: l10n.enterFirstName,
+                      type: AppTextFieldType.text,
+                      prefixIcon: Icons.person_outline,
+                      validator: (value) => _validateName(value, context, true),
+                      textInputAction: TextInputAction.next,
+                      enabled: !_isLoading,
+                    );
+                  },
                 ),
                 const SizedBox(height: 16),
 
                 // Last Name
-                AppTextField(
-                  controller: _lastNameController,
-                  label: 'Last Name',
-                  hint: 'Enter your last name',
-                  type: AppTextFieldType.text,
-                  prefixIcon: Icons.person_outline,
-                  validator: (value) => _validateName(value, 'Last name'),
-                  textInputAction: TextInputAction.next,
-                  enabled: !_isLoading,
+                Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    return AppTextField(
+                      controller: _lastNameController,
+                      label: l10n.lastName,
+                      hint: l10n.enterLastName,
+                      type: AppTextFieldType.text,
+                      prefixIcon: Icons.person_outline,
+                      validator: (value) => _validateName(value, context, false),
+                      textInputAction: TextInputAction.next,
+                      enabled: !_isLoading,
+                    );
+                  },
                 ),
                 const SizedBox(height: 16),
 
                 // Phone
-                AppTextField(
-                  controller: _phoneController,
-                  label: 'Phone Number',
-                  hint: 'Enter your phone number',
-                  type: AppTextFieldType.phone,
-                  prefixIcon: Icons.phone_outlined,
-                  validator: _validatePhone,
-                  textInputAction: TextInputAction.done,
-                  enabled: !_isLoading,
-                  onSubmitted: (_) => _handleUpdate(),
+                Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    return AppTextField(
+                      controller: _phoneController,
+                      label: l10n.phoneNumber,
+                      hint: l10n.enterPhoneNumber,
+                      type: AppTextFieldType.phone,
+                      prefixIcon: Icons.phone_outlined,
+                      validator: (value) => _validatePhone(value, context),
+                      textInputAction: TextInputAction.done,
+                      enabled: !_isLoading,
+                      onSubmitted: (_) => _handleUpdate(),
+                    );
+                  },
                 ),
                 const SizedBox(height: 32),
 
                 // Update Button
-                ElevatedButton(
-                  onPressed: _isLoading ? null : _handleUpdate,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.textWhite,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: _isLoading
-                      ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              AppColors.textWhite,
-                            ),
-                          ),
-                        )
-                      : const Text(
-                          'Update Profile',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
+                Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    return ElevatedButton(
+                      onPressed: _isLoading ? null : _handleUpdate,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: AppColors.textWhite,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
                         ),
+                        elevation: 0,
+                      ),
+                      child: _isLoading
+                          ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  AppColors.textWhite,
+                                ),
+                              ),
+                            )
+                          : Text(
+                              l10n.updateProfile,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 16),
 
                 // Cancel Button
-                OutlinedButton(
-                  onPressed: _isLoading ? null : () => context.pop(),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.textPrimary,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    side: const BorderSide(
-                      color: AppColors.border,
-                      width: 2,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    return OutlinedButton(
+                      onPressed: _isLoading ? null : () => context.pop(),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.textPrimary,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        side: const BorderSide(
+                          color: AppColors.border,
+                          width: 2,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: Text(
+                        l10n.cancel,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
