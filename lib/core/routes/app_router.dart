@@ -21,6 +21,7 @@ import '../../features/profile/presentation/pages/edit_profile_page.dart';
 import '../../features/profile/presentation/pages/change_password_page.dart';
 import '../../features/payment/presentation/pages/payment_page.dart';
 import '../../features/payment/presentation/pages/checkout_page.dart';
+import '../../features/payment/presentation/pages/billing_address_page.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../core/di/service_locator.dart';
 
@@ -198,6 +199,16 @@ class AppRouter {
         path: '/checkout',
         name: 'checkout',
         builder: (context, state) => const CheckoutPage(),
+      ),
+      GoRoute(
+        path: '/billing-address',
+        name: 'billing-address',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          return BillingAddressPage(
+            initialAddress: extra?['billingAddress'],
+          );
+        },
       ),
       GoRoute(
         path: '/payment',

@@ -1,11 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.vehiclepart.vehicle_part_app">
+    <!-- Internet permission for network requests -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    
     <application
         android:label="vehicle_part_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        tools:replace="android:label">
+        android:usesCleartextTraffic="true"
+        tools:replace="android:label,android:usesCleartextTraffic">
         <activity
             android:name=".MainActivity"
             android:exported="true"

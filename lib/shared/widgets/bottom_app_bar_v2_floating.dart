@@ -49,9 +49,11 @@ class _AppBottomNavigationBarV2FloatingState
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Container(
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Container(
         height: 64,
         decoration: BoxDecoration(
           color: AppColors.background,
@@ -111,6 +113,7 @@ class _AppBottomNavigationBarV2FloatingState
             ),
           ],
         ),
+      ),
       ),
     );
   }

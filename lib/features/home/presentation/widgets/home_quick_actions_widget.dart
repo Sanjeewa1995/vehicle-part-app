@@ -7,94 +7,53 @@ class HomeQuickActionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final quickActions = [
-      {
-        'id': 'request-part',
-        'title': 'Request Spare Part',
-        'subtitle': 'Find the part you need',
-        'icon': Icons.search_outlined,
-        'gradient': [
-          AppColors.primary,
-          AppColors.primaryLight,
-        ],
-        'route': '/parts',
-      },
-      {
-        'id': 'my-requests',
-        'title': 'My Requests',
-        'subtitle': 'View your requests',
-        'icon': Icons.list_alt_outlined,
-        'gradient': [
-          AppColors.primaryLight,
-          const Color(0xFF5BA3D6), // Light blue
-        ],
-        'route': '/orders',
-      },
-      {
-        'id': 'add-request',
-        'title': 'Add Request',
-        'subtitle': 'Create new request',
-        'icon': Icons.add_circle_outline,
-        'gradient': [
-          AppColors.primary,
-          AppColors.primaryLight,
-        ],
-        'route': '/requests/add',
-      },
-    ];
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          'Quick Actions',
+          style: TextStyle(
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+            color: const Color(0xFF1F2937), // Dark gray
+            letterSpacing: -0.5,
+          ),
+        ),
+        const SizedBox(height: 16),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Quick Actions',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xFF1F2937), // Dark gray
-                letterSpacing: -0.5,
+            Expanded(
+              child: _buildActionCard(
+                context: context,
+                title: 'Add Request',
+                subtitle: 'Create new request',
+                icon: Icons.add_circle_outline,
+                gradient: [
+                  AppColors.primary,
+                  AppColors.primaryLight,
+                ],
+                onTap: () {
+                  context.go('/requests/add');
+                },
               ),
             ),
-            TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-              ),
-              child: Text(
-                'View All',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primary,
-                ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: _buildActionCard(
+                context: context,
+                title: 'My Requests',
+                subtitle: 'View your requests',
+                icon: Icons.list_alt_outlined,
+                gradient: [
+                  AppColors.primaryLight,
+                  const Color(0xFF5BA3D6), // Light blue
+                ],
+                onTap: () {
+                  context.go('/orders');
+                },
               ),
             ),
           ],
-        ),
-        const SizedBox(height: 16),
-        SizedBox(
-          height: 140,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: quickActions.length,
-            separatorBuilder: (context, index) => const SizedBox(width: 16),
-            itemBuilder: (context, index) {
-              final action = quickActions[index];
-              return _buildActionCard(
-                context: context,
-                title: action['title'] as String,
-                subtitle: action['subtitle'] as String,
-                icon: action['icon'] as IconData,
-                gradient: action['gradient'] as List<Color>,
-                onTap: () {
-                  context.go(action['route'] as String);
-                },
-              );
-            },
-          ),
         ),
       ],
     );
@@ -111,7 +70,7 @@ class HomeQuickActionsWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 160,
+        height: 140,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -133,7 +92,6 @@ class HomeQuickActionsWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 width: 44,
@@ -148,33 +106,30 @@ class HomeQuickActionsWidget extends StatelessWidget {
                   size: 22,
                 ),
               ),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textWhite,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textWhite,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: AppColors.textWhite.withValues(alpha: 0.9),
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: AppColors.textWhite.withValues(alpha: 0.9),
                     ),
-                  ],
-                ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
             ],
           ),

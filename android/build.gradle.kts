@@ -1,10 +1,16 @@
 allprojects {
     repositories {
-        google()
-        mavenCentral()
+        mavenLocal()
+        // JitPack repository for PayHere Android SDK
+        maven {
+            url = uri("https://jitpack.io")
+        }
+        // PayHere repository (if needed for other dependencies)
         maven {
             url = uri("https://repo.repsy.io/mvn/payhere/payhere-mobilesdk-android/")
         }
+        google()
+        mavenCentral()
     }
 }
 

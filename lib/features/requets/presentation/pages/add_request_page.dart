@@ -5,9 +5,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/di/service_locator.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
-import 'package:vehicle_part_app/shared/widgets/app_text_field.dart';
-import 'package:vehicle_part_app/shared/widgets/app_button.dart';
+import 'package:vehicle_part_app/shared/widgets/loading_indicator.dart';
 import '../providers/create_request_provider.dart';
+import '../widgets/beautiful_stepper_widget.dart';
+import '../widgets/step1_form_widget.dart';
+import '../widgets/step2_form_widget.dart';
 import '../../data/models/create_request_data.dart';
 
 class AddRequestPage extends StatefulWidget {
@@ -234,32 +236,6 @@ class _AddRequestPageState extends State<AddRequestPage> {
     }
   }
 
-  void _handleCancel() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Cancel Request'),
-        content: const Text(
-          'Are you sure you want to cancel? All entered data will be lost.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Keep Editing'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              context.go('/orders');
-            },
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Cancel'),
-          ),
-        ],
-      ),
-    );
-  }
-
   Future<void> _submitRequest(CreateRequestProvider provider) async {
     final data = CreateRequestData(
       vehicleType: _selectedVehicleType,
@@ -301,9 +277,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
                   Navigator.pop(context);
                   context.go('/orders');
                 },
-                style: TextButton.styleFrom(
-                  foregroundColor: AppColors.primary,
-                ),
+                style: TextButton.styleFrom(foregroundColor: AppColors.primary),
                 child: const Text('View Requests'),
               ),
             ],
@@ -314,9 +288,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-              provider.errorMessage ?? 'Failed to submit request',
-            ),
+            content: Text(provider.errorMessage ?? 'Failed to submit request'),
             backgroundColor: AppColors.error,
           ),
         );
@@ -350,81 +322,91 @@ class _AddRequestPageState extends State<AddRequestPage> {
       child: Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
-          backgroundColor: AppColors.background,
+          backgroundColor: Colors.transparent,
           elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.chevron_left, color: AppColors.textPrimary),
-            onPressed: () => context.go('/orders'),
+          leading: Container(
+            margin: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: AppColors.background,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.shadow,
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios_new,
+                color: AppColors.textPrimary,
+                size: 18,
+              ),
+              onPressed: () => context.go('/orders'),
+            ),
           ),
           title: Column(
             children: [
-              const Text(
-                'Request Spare Part',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+              ShaderMask(
+                shaderCallback: (bounds) => LinearGradient(
+                  colors: [AppColors.primary, AppColors.primaryLight],
+                ).createShader(bounds),
+                child: const Text(
+                  'Request Spare Part',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              Text(
-                'Fill in the details below',
-                style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
               ),
             ],
           ),
           centerTitle: true,
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(1),
-            child: Container(height: 1, color: AppColors.borderLight),
-          ),
         ),
-        body: Consumer<CreateRequestProvider>(
-          builder: (context, provider, child) {
-            return Stack(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    // Dismiss keyboard when tapping outside (only when not loading)
-                    if (!provider.isLoading) {
-                      FocusScope.of(context).unfocus();
-                    }
-                  },
-                  behavior: HitTestBehavior.opaque,
-                  child: ListView(
+        body: SafeArea(
+          child: Consumer<CreateRequestProvider>(
+            builder: (context, provider, child) {
+              // Show loading dialog when provider is loading
+              if (provider.isLoading) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (provider.isLoading && mounted) {
+                    LoadingIndicator.show(
+                      context,
+                      message: 'Submitting your request...',
+                      subMessage: provider.hasVideo
+                          ? 'Uploading video file... This may take a few minutes'
+                          : 'Please wait, this may take a moment',
+                      barrierDismissible: false,
+                    );
+                  }
+                });
+              } else {
+                // Close dialog when not loading
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  LoadingIndicator.hide(context);
+                });
+              }
+
+              return GestureDetector(
+                onTap: () {
+                  // Dismiss keyboard when tapping outside (only when not loading)
+                  if (!provider.isLoading) {
+                    FocusScope.of(context).unfocus();
+                  }
+                },
+                behavior: HitTestBehavior.opaque,
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).padding.bottom + 16,
+                  ),
+                  child: Column(
                     children: [
-                      // Progress Bar
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        color: AppColors.backgroundSecondary,
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 4,
-                              decoration: BoxDecoration(
-                                color: AppColors.border,
-                                borderRadius: BorderRadius.circular(2),
-                              ),
-                              child: FractionallySizedBox(
-                                alignment: Alignment.centerLeft,
-                                widthFactor: (_currentStep + 1) / _totalSteps,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primary,
-                                    borderRadius: BorderRadius.circular(2),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Step ${_currentStep + 1} of $_totalSteps',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: AppColors.textSecondary,
-                              ),
-                            ),
-                          ],
-                        ),
+                      BeautifulStepperWidget(
+                        currentStep: _currentStep,
+                        totalSteps: _totalSteps,
+                        stepLabels: const ['Vehicle Info', 'Part Details'],
                       ),
 
                       // Form Content
@@ -432,611 +414,70 @@ class _AddRequestPageState extends State<AddRequestPage> {
                         height:
                             MediaQuery.of(context).size.height -
                             MediaQuery.of(context).padding.top -
+                            MediaQuery.of(context).padding.bottom -
                             kToolbarHeight -
-                            100, // Approximate height for progress bar and buttons
+                            100, // Approximate height for progress bar
                         child: PageView(
                           controller: _pageController,
                           physics: const NeverScrollableScrollPhysics(),
-                          children: [_buildStep1(), _buildStep2()],
-                        ),
-                      ),
-
-                      // Navigation Buttons
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: AppColors.background,
-                          border: Border(
-                            top: BorderSide(
-                              color: AppColors.borderLight,
-                              width: 1,
-                            ),
-                          ),
-                        ),
-                        child: Row(
                           children: [
-                            Expanded(
-                              flex: _currentStep == 0 ? 1 : 2,
-                              child: AppButton(
-                                height: 53,
-                                text: _currentStep == 0
-                                    ? 'Next'
-                                    : 'Submit Request',
-                                onPressed: provider.isLoading
-                                    ? null
-                                    : () => _handleNext(provider),
-                                isLoading: provider.isLoading,
-                                trailingIcon: _currentStep == 0
-                                    ? Icons.chevron_right
-                                    : null,
-                              ),
+                            Step1FormWidget(
+                              provider: provider,
+                              formKey: _formKeyStep1,
+                              vehicleModelController: _vehicleModelController,
+                              vehicleYearController: _vehicleYearController,
+                              provinceController: _provinceController,
+                              selectedVehicleType: _selectedVehicleType,
+                              selectedCountry: _selectedCountry,
+                              vehicleImage: _vehicleImage,
+                              vehicleTypeError: _vehicleTypeError,
+                              countryError: _countryError,
+                              vehicleTypes: _vehicleTypes,
+                              countries: _countries,
+                              onVehicleTypeSelected: (type) {
+                                setState(() {
+                                  _selectedVehicleType = type;
+                                  _vehicleTypeError = null;
+                                });
+                              },
+                              onCountryTap: () {
+                                _showCountrySelector();
+                                setState(() {
+                                  _countryError = null;
+                                });
+                              },
+                              onImagePickerTap: () =>
+                                  _showImagePickerOptions(true),
+                              onRemoveImage: () =>
+                                  setState(() => _vehicleImage = null),
+                              onNext: _handleNext,
                             ),
-                            if (_currentStep == 0) ...[
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: AppButton(
-                                  height: 53,
-                                  text: 'Cancel',
-                                  onPressed: _handleCancel,
-                                  type: AppButtonType.outline,
-                                ),
-                              ),
-                            ],
+                            Step2FormWidget(
+                              provider: provider,
+                              formKey: _formKeyStep2,
+                              partNameController: _partNameController,
+                              partNumberController: _partNumberController,
+                              descriptionController: _descriptionController,
+                              partImage: _partImage,
+                              partVideo: _partVideo,
+                              onImagePickerTap: (isVehicle) =>
+                                  _showImagePickerOptions(isVehicle),
+                              onRemoveImage: () =>
+                                  setState(() => _partImage = null),
+                              onPickVideo: _pickVideo,
+                              onRemoveVideo: () =>
+                                  setState(() => _partVideo = null),
+                              onSubmit: _handleNext,
+                            ),
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                // Loading Overlay
-                if (provider.isLoading)
-                  AbsorbPointer(
-                    child: Container(
-                      color: Colors.black.withValues(alpha: 0.5),
-                      child: Center(
-                        child: Container(
-                          padding: const EdgeInsets.all(24),
-                          decoration: BoxDecoration(
-                            color: AppColors.background,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  AppColors.primary,
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              Text(
-                                'Submitting your request...',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.textPrimary,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                provider.hasVideo
-                                    ? 'Uploading video file... This may take a few minutes'
-                                    : 'Please wait, this may take a moment',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.textSecondary,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStep1() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
-      child: Form(
-        key: _formKeyStep1,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Vehicle Information',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              'Tell us about your vehicle',
-              style: TextStyle(fontSize: 16, color: AppColors.textSecondary),
-            ),
-            const SizedBox(height: 24),
-
-            // Vehicle Type
-            Text(
-              'Vehicle Type *',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: _vehicleTypes.map((type) {
-                final isSelected = _selectedVehicleType == type;
-                return GestureDetector(
-                  onTap: () => setState(() {
-                    _selectedVehicleType = type;
-                    _vehicleTypeError = null;
-                  }),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? AppColors.primary
-                          : AppColors.background,
-                      border: Border.all(
-                        color: _vehicleTypeError != null
-                            ? AppColors.error
-                            : (isSelected
-                                  ? AppColors.primary
-                                  : AppColors.border),
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      type.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: isSelected
-                            ? AppColors.textWhite
-                            : AppColors.textSecondary,
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-            if (_vehicleTypeError != null) ...[
-              const SizedBox(height: 8),
-              Text(
-                _vehicleTypeError!,
-                style: TextStyle(fontSize: 12, color: AppColors.error),
-              ),
-            ],
-            const SizedBox(height: 24),
-
-            // Vehicle Model
-            AppTextField(
-              controller: _vehicleModelController,
-              label: 'Vehicle Model *',
-              hint: 'e.g., Toyota Camry',
-              type: AppTextFieldType.text,
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Please enter vehicle model';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-
-            // Vehicle Year
-            AppTextField(
-              controller: _vehicleYearController,
-              label: 'Vehicle Year *',
-              hint: 'e.g., 2020',
-              type: AppTextFieldType.number,
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Please enter vehicle year';
-                }
-                final year = int.tryParse(value.trim());
-                if (year == null ||
-                    year < 1900 ||
-                    year > DateTime.now().year + 1) {
-                  return 'Please enter a valid vehicle year';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-
-            // Country
-            Text(
-              'Country *',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            GestureDetector(
-              onTap: () {
-                _showCountrySelector();
-                setState(() {
-                  _countryError = null;
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.background,
-                  border: Border.all(
-                    color: _countryError != null
-                        ? AppColors.error
-                        : AppColors.border,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _selectedCountry.isEmpty
-                          ? 'Select Country'
-                          : _countries[_selectedCountry] ?? 'Select Country',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: _selectedCountry.isEmpty
-                            ? AppColors.textLight
-                            : AppColors.textPrimary,
-                      ),
-                    ),
-                    const Icon(
-                      Icons.expand_more,
-                      color: AppColors.textSecondary,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            if (_countryError != null) ...[
-              const SizedBox(height: 8),
-              Text(
-                _countryError!,
-                style: TextStyle(fontSize: 12, color: AppColors.error),
-              ),
-            ],
-            const SizedBox(height: 16),
-
-            // Province/State
-            AppTextField(
-              controller: _provinceController,
-              label: 'Province/State *',
-              hint: 'e.g., California, Ontario, London',
-              type: AppTextFieldType.text,
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Please enter province/state';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 24),
-
-            // Vehicle Image
-            Text(
-              'Vehicle Image (Optional)',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            GestureDetector(
-              onTap: () => _showImagePickerOptions(true),
-              child: Container(
-                height: 150,
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundSecondary,
-                  border: Border.all(
-                    color: AppColors.border,
-                    style: BorderStyle.solid,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: _vehicleImage != null
-                    ? Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.file(
-                              _vehicleImage!,
-                              width: double.infinity,
-                              height: 150,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Positioned(
-                            top: 8,
-                            right: 8,
-                            child: GestureDetector(
-                              onTap: () => setState(() => _vehicleImage = null),
-                              child: Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: const BoxDecoration(
-                                  color: AppColors.error,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.close,
-                                  color: AppColors.textWhite,
-                                  size: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.camera_alt_outlined,
-                            size: 32,
-                            color: AppColors.textSecondary,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Tap to add vehicle image',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                        ],
-                      ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStep2() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24),
-      child: Form(
-        key: _formKeyStep2,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Spare Part Details',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              'Describe the part you need',
-              style: TextStyle(fontSize: 16, color: AppColors.textSecondary),
-            ),
-            const SizedBox(height: 24),
-
-            // Part Name
-            AppTextField(
-              controller: _partNameController,
-              label: 'Part Name *',
-              hint: 'e.g., Brake Pad, Engine Oil Filter',
-              type: AppTextFieldType.text,
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Please enter part name';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-
-            // Part Number
-            AppTextField(
-              controller: _partNumberController,
-              label: 'Part Number',
-              hint: 'e.g., BP-001 (Optional)',
-              type: AppTextFieldType.text,
-            ),
-            const SizedBox(height: 16),
-
-            // Description
-            AppTextField(
-              controller: _descriptionController,
-              label: 'Description *',
-              hint: 'Detailed description of the part you need',
-              type: AppTextFieldType.multiline,
-              maxLines: 4,
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Please enter description';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 24),
-
-            // Part Image
-            Text(
-              'Part Image (Optional)',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            GestureDetector(
-              onTap: () => _showImagePickerOptions(false),
-              child: Container(
-                height: 150,
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundSecondary,
-                  border: Border.all(
-                    color: AppColors.border,
-                    style: BorderStyle.solid,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: _partImage != null
-                    ? Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.file(
-                              _partImage!,
-                              width: double.infinity,
-                              height: 150,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Positioned(
-                            top: 8,
-                            right: 8,
-                            child: GestureDetector(
-                              onTap: () => setState(() => _partImage = null),
-                              child: Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: const BoxDecoration(
-                                  color: AppColors.error,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.close,
-                                  color: AppColors.textWhite,
-                                  size: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.image_outlined,
-                            size: 32,
-                            color: AppColors.textSecondary,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Tap to add part image',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                        ],
-                      ),
-              ),
-            ),
-            const SizedBox(height: 24),
-
-            // Part Video
-            Text(
-              'Part Video (Optional)',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            GestureDetector(
-              onTap: _pickVideo,
-              child: Container(
-                height: 150,
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundSecondary,
-                  border: Border.all(
-                    color: _partVideo != null
-                        ? AppColors.primary
-                        : AppColors.border,
-                    style: BorderStyle.solid,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: _partVideo != null
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.videocam,
-                            size: 32,
-                            color: AppColors.primary,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Video selected',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          GestureDetector(
-                            onTap: () => setState(() => _partVideo = null),
-                            child: Text(
-                              'Remove',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: AppColors.error,
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.videocam_outlined,
-                            size: 32,
-                            color: AppColors.textSecondary,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Tap to add part video',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                        ],
-                      ),
-              ),
-            ),
-          ],
+              );
+            },
+          ),
         ),
       ),
     );

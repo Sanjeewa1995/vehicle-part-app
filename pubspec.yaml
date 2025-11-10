@@ -43,6 +43,9 @@ dependencies:
   url_launcher: ^6.3.1
   image_picker: ^1.1.2
   
+  # Loading Indicators
+  flutter_spinkit: ^5.2.2
+  
   # Payment Gateway
   payhere_mobilesdk_flutter: ^3.2.0
 

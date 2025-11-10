@@ -9,7 +9,6 @@ import '../widgets/checkout_header_widget.dart';
 import '../widgets/checkout_empty_widget.dart';
 import '../widgets/checkout_summary_widget.dart';
 import '../widgets/order_summary_card.dart';
-import '../widgets/billing_address_form.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
@@ -19,7 +18,6 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
-  final _formKey = GlobalKey<FormState>();
   BillingAddress? _billingAddress;
   bool _isLoading = false;
 
@@ -54,58 +52,126 @@ class _CheckoutPageState extends State<CheckoutPage> {
               });
             }
 
-            return Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  // Header
-                  const CheckoutHeaderWidget(),
+            return Column(
+              children: [
+                // Header
+                const CheckoutHeaderWidget(),
 
-                  // Content
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Order Summary
-                          OrderSummaryCard(
-                            cartProvider: cartProvider,
-                          ),
-                          const SizedBox(height: 24),
+                // Content
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Order Summary
+                        OrderSummaryCard(
+                          cartProvider: cartProvider,
+                        ),
+                        const SizedBox(height: 24),
 
-                          // Billing Address Section
-                          Text(
-                            'Billing Address',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.textPrimary,
+                        // Billing Address Card
+                        GestureDetector(
+                          onTap: () => _navigateToBillingAddress(context),
+                          child: Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: AppColors.background,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: _billingAddress != null &&
+                                        _billingAddress!.address.isNotEmpty
+                                    ? AppColors.primary
+                                    : AppColors.border,
+                                width: _billingAddress != null &&
+                                        _billingAddress!.address.isNotEmpty
+                                    ? 2
+                                    : 1,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.shadowLight,
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.primaryUltraLight,
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                          child: Icon(
+                                            Icons.location_on,
+                                            color: AppColors.primary,
+                                            size: 20,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Billing Address',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColors.textPrimary,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              _billingAddress != null &&
+                                                      _billingAddress!.address.isNotEmpty
+                                                  ? _billingAddress!.fullAddress
+                                                  : 'Tap to add billing address',
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                color: _billingAddress != null &&
+                                                        _billingAddress!.address.isNotEmpty
+                                                    ? AppColors.textSecondary
+                                                    : AppColors.textLight,
+                                              ),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 16,
+                                      color: AppColors.textSecondary,
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 16),
-                          BillingAddressForm(
-                            initialAddress: _billingAddress,
-                            onChanged: (address) {
-                              setState(() {
-                                _billingAddress = address;
-                              });
-                            },
-                          ),
-                          const SizedBox(height: 24),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(height: 24),
+                      ],
                     ),
                   ),
+                ),
 
-                  // Summary and Checkout Button
-                  CheckoutSummaryWidget(
-                    cartProvider: cartProvider,
-                    isLoading: _isLoading,
-                    onCheckout: () => _handleCheckout(context, cartProvider),
-                  ),
-                ],
-              ),
+                // Summary and Checkout Button
+                CheckoutSummaryWidget(
+                  cartProvider: cartProvider,
+                  isLoading: _isLoading,
+                  onCheckout: () => _handleCheckout(context, cartProvider),
+                ),
+              ],
             );
           },
         ),
@@ -113,18 +179,29 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
+  Future<void> _navigateToBillingAddress(BuildContext context) async {
+    final result = await context.push<BillingAddress>(
+      '/billing-address',
+      extra: {
+        'billingAddress': _billingAddress,
+      },
+    );
+
+    if (result != null && mounted) {
+      setState(() {
+        _billingAddress = result;
+      });
+    }
+  }
+
   Future<void> _handleCheckout(
     BuildContext context,
     CartProvider cartProvider,
   ) async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
-    if (_billingAddress == null) {
+    if (_billingAddress == null || _billingAddress!.address.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Please fill in all billing address fields'),
+          content: const Text('Please add your billing address'),
           backgroundColor: AppColors.error,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(

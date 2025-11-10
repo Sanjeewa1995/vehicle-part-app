@@ -55,21 +55,15 @@ class CartPage extends StatelessWidget {
 
                 // Cart Items List
                 Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: () async {
-                      await cartProvider.refreshCart();
+                  child: ListView.separated(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: cartProvider.items.length,
+                    separatorBuilder: (context, index) => const SizedBox(height: 0),
+                    itemBuilder: (context, index) {
+                      return CartItemCardWidget(
+                        cartItem: cartProvider.items[index],
+                      );
                     },
-                    color: AppColors.primary,
-                    child: ListView.separated(
-                      padding: const EdgeInsets.all(16),
-                      itemCount: cartProvider.items.length,
-                      separatorBuilder: (context, index) => const SizedBox(height: 0),
-                      itemBuilder: (context, index) {
-                        return CartItemCardWidget(
-                          cartItem: cartProvider.items[index],
-                        );
-                      },
-                    ),
                   ),
                 ),
 
