@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class HelpPage extends StatelessWidget {
@@ -7,6 +8,7 @@ class HelpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.backgroundSecondary,
       appBar: AppBar(
@@ -17,7 +19,7 @@ class HelpPage extends StatelessWidget {
           onPressed: () => context.pop(),
         ),
         title: Text(
-          'Help & Support',
+          l10n.helpSupportTitle,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -30,49 +32,49 @@ class HelpPage extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         children: [
           // Header Section
-          _buildHeaderSection(),
+          _buildHeaderSection(context),
 
           const SizedBox(height: 32),
 
           // How to Request Section
-          _buildSectionTitle('How to Request a Spare Part'),
+          _buildSectionTitle(l10n.howToRequestSparePart),
           const SizedBox(height: 16),
           _buildStepCard(
             stepNumber: 1,
-            title: 'Tap "Add Request"',
-            description: 'From the home screen, tap the "Add Request" button or navigate to the Requests section.',
+            title: l10n.tapAddRequest,
+            description: l10n.tapAddRequestDesc,
             icon: Icons.add_circle_outline,
             color: AppColors.primary,
           ),
           const SizedBox(height: 12),
           _buildStepCard(
             stepNumber: 2,
-            title: 'Fill Vehicle Information',
-            description: 'Enter your vehicle type, model, and year. Upload a photo of your vehicle if available.',
+            title: l10n.fillVehicleInformation,
+            description: l10n.fillVehicleInformationDesc,
             icon: Icons.directions_car_outlined,
             color: AppColors.accent,
           ),
           const SizedBox(height: 12),
           _buildStepCard(
             stepNumber: 3,
-            title: 'Add Part Details',
-            description: 'Specify the part name, part number (if known), and provide a detailed description.',
+            title: l10n.addPartDetails,
+            description: l10n.addPartDetailsDesc,
             icon: Icons.description_outlined,
             color: AppColors.success,
           ),
           const SizedBox(height: 12),
           _buildStepCard(
             stepNumber: 4,
-            title: 'Upload Images/Video',
-            description: 'Add photos of the part or vehicle area where the part is needed. You can also upload a video.',
+            title: l10n.uploadImagesVideo,
+            description: l10n.uploadImagesVideoDesc,
             icon: Icons.camera_alt_outlined,
             color: AppColors.warning,
           ),
           const SizedBox(height: 12),
           _buildStepCard(
             stepNumber: 5,
-            title: 'Submit Request',
-            description: 'Review your information and submit the request. You\'ll receive updates on your request status.',
+            title: l10n.submitRequest,
+            description: l10n.submitRequestDesc,
             icon: Icons.send_outlined,
             color: AppColors.primary,
           ),
@@ -80,25 +82,25 @@ class HelpPage extends StatelessWidget {
           const SizedBox(height: 32),
 
           // Managing Requests Section
-          _buildSectionTitle('Managing Your Requests'),
+          _buildSectionTitle(l10n.managingYourRequests),
           const SizedBox(height: 16),
           _buildInfoCard(
-            title: 'View All Requests',
-            description: 'Go to "My Requests" from the home screen to see all your submitted requests and their current status.',
+            title: l10n.viewAllRequests,
+            description: l10n.viewAllRequestsDesc,
             icon: Icons.list_alt_outlined,
             color: AppColors.primary,
           ),
           const SizedBox(height: 12),
           _buildInfoCard(
-            title: 'Request Status',
-            description: 'Track your requests with status indicators: Pending, In Progress, Completed, or Cancelled.',
+            title: l10n.requestStatus,
+            description: l10n.requestStatusDesc,
             icon: Icons.track_changes_outlined,
             color: AppColors.accent,
           ),
           const SizedBox(height: 12),
           _buildInfoCard(
-            title: 'View Request Details',
-            description: 'Tap on any request card to see full details, including vehicle information, part details, and attached media.',
+            title: l10n.viewRequestDetails,
+            description: l10n.viewRequestDetailsDesc,
             icon: Icons.info_outline,
             color: AppColors.success,
           ),
@@ -106,34 +108,34 @@ class HelpPage extends StatelessWidget {
           const SizedBox(height: 32),
 
           // FAQ Section
-          _buildSectionTitle('Frequently Asked Questions'),
+          _buildSectionTitle(l10n.frequentlyAskedQuestions),
           const SizedBox(height: 16),
           _buildFAQCard(
-            question: 'How long does it take to process a request?',
-            answer: 'Request processing time varies depending on part availability. Typically, you\'ll receive a response within 24-48 hours.',
+            question: l10n.faqProcessingTime,
+            answer: l10n.faqProcessingTimeAnswer,
           ),
           const SizedBox(height: 12),
           _buildFAQCard(
-            question: 'Can I edit or cancel my request?',
-            answer: 'You can view your request details, but editing and cancellation features are currently being developed.',
+            question: l10n.faqEditCancel,
+            answer: l10n.faqEditCancelAnswer,
           ),
           const SizedBox(height: 12),
           _buildFAQCard(
-            question: 'What information should I include?',
-            answer: 'Provide as much detail as possible: vehicle make, model, year, part name/number, and clear photos or videos.',
+            question: l10n.faqWhatInformation,
+            answer: l10n.faqWhatInformationAnswer,
           ),
           const SizedBox(height: 12),
           _buildFAQCard(
-            question: 'How do I track my request status?',
-            answer: 'Navigate to "My Requests" to see all your requests with their current status. Tap on any request for detailed information.',
+            question: l10n.faqTrackStatus,
+            answer: l10n.faqTrackStatusAnswer,
           ),
 
           const SizedBox(height: 32),
 
           // Contact Section
-          _buildSectionTitle('Need More Help?'),
+          _buildSectionTitle(l10n.needMoreHelp),
           const SizedBox(height: 16),
-          _buildContactCard(),
+          _buildContactCard(context),
 
           const SizedBox(height: 32),
         ],
@@ -141,7 +143,8 @@ class HelpPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaderSection() {
+  Widget _buildHeaderSection(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -182,9 +185,9 @@ class HelpPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Welcome to Help Center',
-                  style: TextStyle(
+                Text(
+                  l10n.welcomeToHelpCenter,
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textWhite,
@@ -192,7 +195,7 @@ class HelpPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Find answers and learn how to use AUTO-ZONE',
+                  l10n.findAnswersAndLearn,
                   style: TextStyle(
                     fontSize: 14,
                     color: AppColors.textWhite.withValues(alpha: 0.9),
@@ -214,6 +217,8 @@ class HelpPage extends StatelessWidget {
         fontWeight: FontWeight.bold,
         color: AppColors.textPrimary,
       ),
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
     );
   }
 
@@ -284,12 +289,16 @@ class HelpPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    Text(
-                      title,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
@@ -416,6 +425,8 @@ class HelpPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
                   ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
@@ -434,7 +445,8 @@ class HelpPage extends StatelessWidget {
     );
   }
 
-  Widget _buildContactCard() {
+  Widget _buildContactCard(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -476,7 +488,7 @@ class HelpPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Still Need Help?',
+            l10n.stillNeedHelp,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -485,7 +497,7 @@ class HelpPage extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Contact our support team for assistance',
+            l10n.contactSupportTeam,
             style: TextStyle(
               fontSize: 14,
               color: AppColors.textSecondary,
@@ -498,7 +510,7 @@ class HelpPage extends StatelessWidget {
             children: [
               _buildContactButton(
                 icon: Icons.email_outlined,
-                label: 'Email',
+                label: l10n.email,
                 onTap: () {
                   // TODO: Open email
                 },
@@ -506,7 +518,7 @@ class HelpPage extends StatelessWidget {
               const SizedBox(width: 12),
               _buildContactButton(
                 icon: Icons.phone_outlined,
-                label: 'Call',
+                label: l10n.call,
                 onTap: () {
                   // TODO: Make phone call
                 },

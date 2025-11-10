@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/currency_formatter.dart';
 
@@ -17,6 +18,7 @@ class CartSummaryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.background,
@@ -46,22 +48,22 @@ class CartSummaryWidget extends StatelessWidget {
                   children: [
                     // Items
                     _buildSummaryRow(
-                      'Items',
+                      l10n.items,
                       CurrencyFormatter.formatLKR(totalPrice),
                     ),
                     const SizedBox(height: 12),
 
                     // Delivery
                     _buildSummaryRow(
-                      'Delivery',
-                      'Free',
+                      l10n.delivery,
+                      l10n.free,
                       valueColor: AppColors.success,
                     ),
                     const SizedBox(height: 12),
 
                     // Total
                     _buildSummaryRow(
-                      'Total',
+                      l10n.total,
                       CurrencyFormatter.formatLKR(totalPrice),
                     ),
                     const SizedBox(height: 12),
@@ -79,7 +81,7 @@ class CartSummaryWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Order Total',
+                          l10n.orderTotal,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -135,7 +137,7 @@ class CartSummaryWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Proceed to Buy',
+                              l10n.proceedToBuy,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,

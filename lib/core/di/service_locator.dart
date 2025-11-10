@@ -35,6 +35,7 @@ import '../../features/cart/domain/usecases/clear_cart_usecase.dart';
 import '../network/api_client.dart';
 import '../services/token_service.dart';
 import '../services/image_compression_service.dart';
+import '../providers/locale_provider.dart';
 
 final getIt = GetIt.instance;
 
@@ -215,6 +216,10 @@ class ServiceLocator {
         getIt<DeleteCartItemUseCase>(),
         getIt<ClearCartUseCase>(),
       ),
+    );
+
+    getIt.registerFactory<LocaleProvider>(
+      () => LocaleProvider(getIt<SharedPreferences>()),
     );
   }
 

@@ -1,0 +1,690 @@
+{
+  "@@locale": "en",
+  "appTitle": "Vehicle Parts App",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings page title"
+  },
+  "profile": "PROFILE",
+  "@profile": {
+    "description": "Profile section header"
+  },
+  "account": "ACCOUNT",
+  "@account": {
+    "description": "Account section header"
+  },
+  "support": "SUPPORT",
+  "@support": {
+    "description": "Support section header"
+  },
+  "editProfile": "Edit Profile",
+  "@editProfile": {
+    "description": "Edit profile menu item"
+  },
+  "editProfileSubtitle": "Update your personal information",
+  "@editProfileSubtitle": {
+    "description": "Edit profile subtitle"
+  },
+  "changePassword": "Change Password",
+  "@changePassword": {
+    "description": "Change password menu item"
+  },
+  "changePasswordSubtitle": "Update your password",
+  "@changePasswordSubtitle": {
+    "description": "Change password subtitle"
+  },
+  "privacySecurity": "Privacy & Security",
+  "@privacySecurity": {
+    "description": "Privacy and security menu item"
+  },
+  "privacySecuritySubtitle": "Manage your privacy settings",
+  "@privacySecuritySubtitle": {
+    "description": "Privacy and security subtitle"
+  },
+  "helpSupport": "Help & Support",
+  "@helpSupport": {
+    "description": "Help and support menu item"
+  },
+  "helpSupportSubtitle": "Get help and contact support",
+  "@helpSupportSubtitle": {
+    "description": "Help and support subtitle"
+  },
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Privacy policy menu item"
+  },
+  "privacyPolicySubtitle": "Read our privacy policy",
+  "@privacyPolicySubtitle": {
+    "description": "Privacy policy subtitle"
+  },
+  "termsOfService": "Terms of Service",
+  "@termsOfService": {
+    "description": "Terms of service menu item"
+  },
+  "termsOfServiceSubtitle": "Read our terms of service",
+  "@termsOfServiceSubtitle": {
+    "description": "Terms of service subtitle"
+  },
+  "about": "About",
+  "@about": {
+    "description": "About menu item"
+  },
+  "aboutSubtitle": "App version and information",
+  "@aboutSubtitle": {
+    "description": "About subtitle"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout menu item"
+  },
+  "logoutSubtitle": "Sign out of your account",
+  "@logoutSubtitle": {
+    "description": "Logout subtitle"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language menu item"
+  },
+  "languageSubtitle": "Choose your preferred language",
+  "@languageSubtitle": {
+    "description": "Language subtitle"
+  },
+  "comingSoon": "Coming Soon",
+  "@comingSoon": {
+    "description": "Coming soon dialog title"
+  },
+  "comingSoonMessage": "{feature} will be available soon.",
+  "@comingSoonMessage": {
+    "description": "Coming soon dialog message",
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "OK button text"
+  },
+  "aboutTitle": "About M AUTO-ZONE",
+  "@aboutTitle": {
+    "description": "About dialog title"
+  },
+  "aboutMessage": "Version 1.0.0\n\nYour trusted partner for quality auto parts.\n\n© 2025 M AUTO-ZONE. All rights reserved.",
+  "@aboutMessage": {
+    "description": "About dialog message"
+  },
+  "logoutTitle": "Logout",
+  "@logoutTitle": {
+    "description": "Logout dialog title"
+  },
+  "logoutMessage": "Are you sure you want to logout?",
+  "@logoutMessage": {
+    "description": "Logout confirmation message"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "selectLanguage": "Select Language",
+  "@selectLanguage": {
+    "description": "Language selection dialog title"
+  },
+  "english": "English",
+  "@english": {
+    "description": "English language name"
+  },
+  "sinhala": "සිංහල",
+  "@sinhala": {
+    "description": "Sinhala language name"
+  },
+  "tamil": "தமிழ்",
+  "@tamil": {
+    "description": "Tamil language name"
+  },
+  "welcomeBack": "Welcome Back",
+  "@welcomeBack": {
+    "description": "Login page welcome text"
+  },
+  "signInToContinue": "Sign in to continue to your account",
+  "@signInToContinue": {
+    "description": "Login page subtitle"
+  },
+  "emailAddress": "Email Address",
+  "@emailAddress": {
+    "description": "Email field label"
+  },
+  "enterYourEmail": "Enter your email",
+  "@enterYourEmail": {
+    "description": "Email field hint"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+  "enterYourPassword": "Enter your password",
+  "@enterYourPassword": {
+    "description": "Password field hint"
+  },
+  "forgotPassword": "Forgot Password?",
+  "@forgotPassword": {
+    "description": "Forgot password link"
+  },
+  "signIn": "Sign In",
+  "@signIn": {
+    "description": "Sign in button"
+  },
+  "emailRequired": "Email is required",
+  "@emailRequired": {
+    "description": "Email validation error"
+  },
+  "validEmailRequired": "Please enter a valid email",
+  "@validEmailRequired": {
+    "description": "Email format validation error"
+  },
+  "passwordRequired": "Password is required",
+  "@passwordRequired": {
+    "description": "Password validation error"
+  },
+  "passwordMinLength": "Password must be at least 6 characters",
+  "@passwordMinLength": {
+    "description": "Password length validation error"
+  },
+  "goodMorning": "Good Morning",
+  "@goodMorning": {
+    "description": "Morning greeting"
+  },
+  "goodAfternoon": "Good Afternoon",
+  "@goodAfternoon": {
+    "description": "Afternoon greeting"
+  },
+  "goodEvening": "Good Evening",
+  "@goodEvening": {
+    "description": "Evening greeting"
+  },
+  "quickActions": "Quick Actions",
+  "@quickActions": {
+    "description": "Quick actions section title"
+  },
+  "viewAll": "View All",
+  "@viewAll": {
+    "description": "View all button"
+  },
+  "requestSparePart": "Request Spare Part",
+  "@requestSparePart": {
+    "description": "Request spare part action"
+  },
+  "findPartYouNeed": "Find the part you need",
+  "@findPartYouNeed": {
+    "description": "Request spare part subtitle"
+  },
+  "myRequests": "My Requests",
+  "@myRequests": {
+    "description": "My requests action"
+  },
+  "viewYourRequests": "View your requests",
+  "@viewYourRequests": {
+    "description": "My requests subtitle"
+  },
+  "addRequest": "Add Request",
+  "@addRequest": {
+    "description": "Add request action"
+  },
+  "createNewRequest": "Create new request",
+  "@createNewRequest": {
+    "description": "Add request subtitle"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Home navigation label"
+  },
+  "requests": "Requests",
+  "@requests": {
+    "description": "Requests navigation label"
+  },
+  "products": "Products",
+  "@products": {
+    "description": "Products navigation label"
+  },
+  "cart": "Cart",
+  "@cart": {
+    "description": "Cart navigation label"
+  },
+  "loadingCart": "Loading cart...",
+  "@loadingCart": {
+    "description": "Cart loading message"
+  },
+  "emptyCart": "Your cart is empty",
+  "@emptyCart": {
+    "description": "Empty cart message"
+  },
+  "startShopping": "Start Shopping",
+  "@startShopping": {
+    "description": "Start shopping button"
+  },
+  "total": "Total",
+  "@total": {
+    "description": "Total label"
+  },
+  "checkout": "Checkout",
+  "@checkout": {
+    "description": "Checkout button"
+  },
+  "items": "items",
+  "@items": {
+    "description": "Items label"
+  },
+  "item": "item",
+  "@item": {
+    "description": "Single item label"
+  },
+  "yourCartIsEmpty": "Your Cart is Empty",
+  "@yourCartIsEmpty": {
+    "description": "Empty cart title"
+  },
+  "cartEmptyMessage": "Looks like you haven't added anything\nto your cart yet",
+  "@cartEmptyMessage": {
+    "description": "Empty cart message"
+  },
+  "browseRequests": "Browse Requests",
+  "@browseRequests": {
+    "description": "Browse requests button"
+  },
+  "delivery": "Delivery",
+  "@delivery": {
+    "description": "Delivery label"
+  },
+  "free": "Free",
+  "@free": {
+    "description": "Free delivery text"
+  },
+  "orderTotal": "Order Total",
+  "@orderTotal": {
+    "description": "Order total label"
+  },
+  "proceedToBuy": "Proceed to Buy",
+  "@proceedToBuy": {
+    "description": "Proceed to buy button"
+  },
+  "helpSupportTitle": "Help & Support",
+  "@helpSupportTitle": {
+    "description": "Help page title"
+  },
+  "welcomeToHelpCenter": "Welcome to Help Center",
+  "@welcomeToHelpCenter": {
+    "description": "Help center welcome"
+  },
+  "findAnswersAndLearn": "Find answers and learn how to use AUTO-ZONE",
+  "@findAnswersAndLearn": {
+    "description": "Help center subtitle"
+  },
+  "howToRequestSparePart": "How to Request a Spare Part",
+  "@howToRequestSparePart": {
+    "description": "How to request section title"
+  },
+  "tapAddRequest": "Tap \"Add Request\"",
+  "@tapAddRequest": {
+    "description": "Step 1 title"
+  },
+  "tapAddRequestDesc": "From the home screen, tap the \"Add Request\" button or navigate to the Requests section.",
+  "@tapAddRequestDesc": {
+    "description": "Step 1 description"
+  },
+  "fillVehicleInformation": "Fill Vehicle Information",
+  "@fillVehicleInformation": {
+    "description": "Step 2 title"
+  },
+  "fillVehicleInformationDesc": "Enter your vehicle type, model, and year. Upload a photo of your vehicle if available.",
+  "@fillVehicleInformationDesc": {
+    "description": "Step 2 description"
+  },
+  "addPartDetails": "Add Part Details",
+  "@addPartDetails": {
+    "description": "Step 3 title"
+  },
+  "addPartDetailsDesc": "Specify the part name, part number (if known), and provide a detailed description.",
+  "@addPartDetailsDesc": {
+    "description": "Step 3 description"
+  },
+  "uploadImagesVideo": "Upload Images/Video",
+  "@uploadImagesVideo": {
+    "description": "Step 4 title"
+  },
+  "uploadImagesVideoDesc": "Add photos of the part or vehicle area where the part is needed. You can also upload a video.",
+  "@uploadImagesVideoDesc": {
+    "description": "Step 4 description"
+  },
+  "submitRequest": "Submit Request",
+  "@submitRequest": {
+    "description": "Step 5 title"
+  },
+  "submitRequestDesc": "Review your information and submit the request. You'll receive updates on your request status.",
+  "@submitRequestDesc": {
+    "description": "Step 5 description"
+  },
+  "managingYourRequests": "Managing Your Requests",
+  "@managingYourRequests": {
+    "description": "Managing requests section title"
+  },
+  "viewAllRequests": "View All Requests",
+  "@viewAllRequests": {
+    "description": "View all requests title"
+  },
+  "viewAllRequestsDesc": "Go to \"My Requests\" from the home screen to see all your submitted requests and their current status.",
+  "@viewAllRequestsDesc": {
+    "description": "View all requests description"
+  },
+  "requestStatus": "Request Status",
+  "@requestStatus": {
+    "description": "Request status title"
+  },
+  "requestStatusDesc": "Track your requests with status indicators: Pending, In Progress, Completed, or Cancelled.",
+  "@requestStatusDesc": {
+    "description": "Request status description"
+  },
+  "viewRequestDetails": "View Request Details",
+  "@viewRequestDetails": {
+    "description": "View request details title"
+  },
+  "viewRequestDetailsDesc": "Tap on any request card to see full details, including vehicle information, part details, and attached media.",
+  "@viewRequestDetailsDesc": {
+    "description": "View request details description"
+  },
+  "frequentlyAskedQuestions": "Frequently Asked Questions",
+  "@frequentlyAskedQuestions": {
+    "description": "FAQ section title"
+  },
+  "faqProcessingTime": "How long does it take to process a request?",
+  "@faqProcessingTime": {
+    "description": "FAQ question 1"
+  },
+  "faqProcessingTimeAnswer": "Request processing time varies depending on part availability. Typically, you'll receive a response within 24-48 hours.",
+  "@faqProcessingTimeAnswer": {
+    "description": "FAQ answer 1"
+  },
+  "faqEditCancel": "Can I edit or cancel my request?",
+  "@faqEditCancel": {
+    "description": "FAQ question 2"
+  },
+  "faqEditCancelAnswer": "You can view your request details, but editing and cancellation features are currently being developed.",
+  "@faqEditCancelAnswer": {
+    "description": "FAQ answer 2"
+  },
+  "faqWhatInformation": "What information should I include?",
+  "@faqWhatInformation": {
+    "description": "FAQ question 3"
+  },
+  "faqWhatInformationAnswer": "Provide as much detail as possible: vehicle make, model, year, part name/number, and clear photos or videos.",
+  "@faqWhatInformationAnswer": {
+    "description": "FAQ answer 3"
+  },
+  "faqTrackStatus": "How do I track my request status?",
+  "@faqTrackStatus": {
+    "description": "FAQ question 4"
+  },
+  "faqTrackStatusAnswer": "Navigate to \"My Requests\" to see all your requests with their current status. Tap on any request for detailed information.",
+  "@faqTrackStatusAnswer": {
+    "description": "FAQ answer 4"
+  },
+  "needMoreHelp": "Need More Help?",
+  "@needMoreHelp": {
+    "description": "Contact section title"
+  },
+  "stillNeedHelp": "Still Need Help?",
+  "@stillNeedHelp": {
+    "description": "Contact card title"
+  },
+  "contactSupportTeam": "Contact our support team for assistance",
+  "@contactSupportTeam": {
+    "description": "Contact card subtitle"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email button"
+  },
+  "call": "Call",
+  "@call": {
+    "description": "Call button"
+  },
+  "requestDetails": "Request Details",
+  "@requestDetails": {
+    "description": "Request details page title"
+  },
+  "loadingRequestDetails": "Loading request details...",
+  "@loadingRequestDetails": {
+    "description": "Loading request details message"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Error title"
+  },
+  "failedToLoadRequestDetails": "Failed to load request details",
+  "@failedToLoadRequestDetails": {
+    "description": "Failed to load request details message"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button"
+  },
+  "requestNotFound": "Request not found",
+  "@requestNotFound": {
+    "description": "Request not found message"
+  },
+  "goBack": "Go Back",
+  "@goBack": {
+    "description": "Go back button"
+  },
+  "partInformation": "Part Information",
+  "@partInformation": {
+    "description": "Part information section"
+  },
+  "partName": "Part Name",
+  "@partName": {
+    "description": "Part name label"
+  },
+  "partNumber": "Part Number",
+  "@partNumber": {
+    "description": "Part number label"
+  },
+  "description": "Description",
+  "@description": {
+    "description": "Description label"
+  },
+  "vehicleInformation": "Vehicle Information",
+  "@vehicleInformation": {
+    "description": "Vehicle information section"
+  },
+  "vehicleType": "Vehicle Type",
+  "@vehicleType": {
+    "description": "Vehicle type label"
+  },
+  "model": "Model",
+  "@model": {
+    "description": "Model label"
+  },
+  "year": "Year",
+  "@year": {
+    "description": "Year label"
+  },
+  "media": "Media",
+  "@media": {
+    "description": "Media section"
+  },
+  "vehicleImage": "Vehicle Image",
+  "@vehicleImage": {
+    "description": "Vehicle image label"
+  },
+  "partImage": "Part Image",
+  "@partImage": {
+    "description": "Part image label"
+  },
+  "partVideo": "Part Video",
+  "@partVideo": {
+    "description": "Part video label"
+  },
+  "tapToViewVideo": "Tap to view video",
+  "@tapToViewVideo": {
+    "description": "Tap to view video text"
+  },
+  "suggestedProducts": "Suggested Products",
+  "@suggestedProducts": {
+    "description": "Suggested products section"
+  },
+  "adminSuggestedProducts": "Admin has suggested the following products for your request",
+  "@adminSuggestedProducts": {
+    "description": "Admin suggested products message"
+  },
+  "addedToCart": "{productName} added to cart",
+  "@addedToCart": {
+    "description": "Added to cart message",
+    "placeholders": {
+      "productName": {
+        "type": "String"
+      }
+    }
+  },
+  "viewCart": "View Cart",
+  "@viewCart": {
+    "description": "View cart button"
+  },
+  "failedToAddToCart": "Failed to add to cart: {error}",
+  "@failedToAddToCart": {
+    "description": "Failed to add to cart message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "requestInformation": "Request Information",
+  "@requestInformation": {
+    "description": "Request information section"
+  },
+  "requestId": "Request ID",
+  "@requestId": {
+    "description": "Request ID label"
+  },
+  "created": "Created",
+  "@created": {
+    "description": "Created label"
+  },
+  "lastUpdated": "Last Updated",
+  "@lastUpdated": {
+    "description": "Last updated label"
+  },
+  "noRequestsFound": "No Requests Found",
+  "@noRequestsFound": {
+    "description": "No requests found title"
+  },
+  "noRequestsFoundMessage": "You haven't made any spare part requests yet.",
+  "@noRequestsFoundMessage": {
+    "description": "No requests found message"
+  },
+  "createNewRequest": "Create New Request",
+  "@createNewRequest": {
+    "description": "Create new request button"
+  },
+  "billingAddress": "Billing Address",
+  "@billingAddress": {
+    "description": "Billing address section"
+  },
+  "fillBillingAddressFields": "Please fill in all billing address fields",
+  "@fillBillingAddressFields": {
+    "description": "Fill billing address error"
+  },
+  "payment": "Payment",
+  "@payment": {
+    "description": "Payment page title"
+  },
+  "orderSummary": "Order Summary",
+  "@orderSummary": {
+    "description": "Order summary title"
+  },
+  "deleteRequest": "Delete Request",
+  "@deleteRequest": {
+    "description": "Delete request dialog title"
+  },
+  "deleteRequestMessage": "Are you sure you want to delete this request? This action cannot be undone.",
+  "@deleteRequestMessage": {
+    "description": "Delete request message"
+  },
+  "deletingRequest": "Deleting request...",
+  "@deletingRequest": {
+    "description": "Deleting request message"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete button"
+  },
+  "requestDeletedSuccessfully": "Request deleted successfully",
+  "@requestDeletedSuccessfully": {
+    "description": "Request deleted success message"
+  },
+  "failedToDeleteRequest": "Failed to delete request",
+  "@failedToDeleteRequest": {
+    "description": "Failed to delete request message"
+  },
+  "needHelp": "Need Help?",
+  "@needHelp": {
+    "description": "Need help card title"
+  },
+  "needHelpDescription": "Learn how to request spare parts and manage your requests",
+  "@needHelpDescription": {
+    "description": "Need help card description"
+  },
+  "totalRequests": "Total Requests",
+  "@totalRequests": {
+    "description": "Total requests label"
+  },
+  "pending": "Pending",
+  "@pending": {
+    "description": "Pending requests label"
+  },
+  "completed": "Completed",
+  "@completed": {
+    "description": "Completed requests label"
+  },
+  "firstName": "First Name",
+  "@firstName": {
+    "description": "First name field label"
+  },
+  "lastName": "Last Name",
+  "@lastName": {
+    "description": "Last name field label"
+  },
+  "phoneNumber": "Phone Number",
+  "@phoneNumber": {
+    "description": "Phone number field label"
+  },
+  "streetAddress": "Street Address",
+  "@streetAddress": {
+    "description": "Street address field label"
+  },
+  "houseNumberStreetName": "House number, street name",
+  "@houseNumberStreetName": {
+    "description": "Street address hint"
+  },
+  "city": "City",
+  "@city": {
+    "description": "City field label"
+  },
+  "stateProvinceOptional": "State/Province (Optional)",
+  "@stateProvinceOptional": {
+    "description": "State/Province field label"
+  },
+  "country": "Country",
+  "@country": {
+    "description": "Country field label"
+  },
+  "phoneNumberRequired": "Phone number is required",
+  "@phoneNumberRequired": {
+    "description": "Phone number validation error"
+  },
+  "pleaseEnterValidPhoneNumber": "Please enter a valid phone number",
+  "@pleaseEnterValidPhoneNumber": {
+    "description": "Phone number format validation error"
+  }
+}

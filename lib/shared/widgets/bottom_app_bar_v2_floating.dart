@@ -3,22 +3,22 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import '../../features/cart/presentation/providers/cart_provider.dart';
-
+ 
 /// Floating Pill-Style Bottom Navigation Bar
 /// Features: Floating design with rounded pill shape, elevated above screen
 class AppBottomNavigationBarV2Floating extends StatefulWidget {
   const AppBottomNavigationBarV2Floating({super.key});
-
+ 
   @override
   State<AppBottomNavigationBarV2Floating> createState() =>
       _AppBottomNavigationBarV2FloatingState();
 }
-
+ 
 class _AppBottomNavigationBarV2FloatingState
     extends State<AppBottomNavigationBarV2Floating> {
   String _currentRoute = '/home';
   dynamic _routerDelegate;
-
+ 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -26,17 +26,17 @@ class _AppBottomNavigationBarV2FloatingState
     _updateCurrentRoute();
     _routerDelegate?.addListener(_onRouteChanged);
   }
-
+ 
   @override
   void dispose() {
     _routerDelegate?.removeListener(_onRouteChanged);
     super.dispose();
   }
-
+ 
   void _onRouteChanged() {
     _updateCurrentRoute();
   }
-
+ 
   void _updateCurrentRoute() {
     final router = GoRouter.of(context);
     final location = router.routerDelegate.currentConfiguration.uri.path;
@@ -46,7 +46,7 @@ class _AppBottomNavigationBarV2FloatingState
       });
     }
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -89,13 +89,6 @@ class _AppBottomNavigationBarV2FloatingState
               route: '/orders',
               isActive: _currentRoute == '/orders',
             ),
-            _buildNavItem(
-              icon: Icons.inventory_2_outlined,
-              activeIcon: Icons.inventory_2_rounded,
-              label: 'Products',
-              route: '/products',
-              isActive: _currentRoute == '/products',
-            ),
             Consumer<CartProvider>(
               builder: (context, cartProvider, child) {
                 return _buildNavItem(
@@ -124,7 +117,7 @@ class _AppBottomNavigationBarV2FloatingState
       ),
     );
   }
-
+ 
   Widget _buildNavItem({
     required IconData icon,
     required IconData activeIcon,
@@ -218,4 +211,3 @@ class _AppBottomNavigationBarV2FloatingState
     );
   }
 }
-
