@@ -9,18 +9,18 @@ import '../widgets/checkout_header_widget.dart';
 import '../widgets/checkout_empty_widget.dart';
 import '../widgets/checkout_summary_widget.dart';
 import '../widgets/order_summary_card.dart';
-
+ 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
-
+ 
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
 }
-
+ 
 class _CheckoutPageState extends State<CheckoutPage> {
   BillingAddress? _billingAddress;
   bool _isLoading = false;
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +32,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             if (cartProvider.isEmpty) {
               return const CheckoutEmptyWidget();
             }
-
+ 
             // Initialize billing address from user profile if available
             final user = authProvider.user;
             if (_billingAddress == null && user != null) {
@@ -51,12 +51,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 });
               });
             }
-
+ 
             return Column(
               children: [
                 // Header
                 const CheckoutHeaderWidget(),
-
+ 
                 // Content
                 Expanded(
                   child: SingleChildScrollView(
@@ -69,7 +69,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           cartProvider: cartProvider,
                         ),
                         const SizedBox(height: 24),
-
+ 
                         // Billing Address Card
                         GestureDetector(
                           onTap: () => _navigateToBillingAddress(context),
@@ -164,7 +164,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                   ),
                 ),
-
+ 
                 // Summary and Checkout Button
                 CheckoutSummaryWidget(
                   cartProvider: cartProvider,
@@ -178,7 +178,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       ),
     );
   }
-
+ 
   Future<void> _navigateToBillingAddress(BuildContext context) async {
     final result = await context.push<BillingAddress>(
       '/billing-address',
@@ -186,14 +186,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
         'billingAddress': _billingAddress,
       },
     );
-
+ 
     if (result != null && mounted) {
       setState(() {
         _billingAddress = result;
       });
     }
   }
-
+ 
   Future<void> _handleCheckout(
     BuildContext context,
     CartProvider cartProvider,
@@ -211,11 +211,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
       );
       return;
     }
-
+ 
     setState(() {
       _isLoading = true;
     });
-
+ 
     try {
       // Navigate to payment page with billing address and cart data
       if (mounted) {

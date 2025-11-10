@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class CheckoutHeaderWidget extends StatelessWidget {
@@ -37,14 +38,19 @@ class CheckoutHeaderWidget extends StatelessWidget {
           const SizedBox(width: 8),
           // Title
           Expanded(
-            child: Text(
-              'Checkout',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
-              textAlign: TextAlign.center,
+            child: Builder(
+              builder: (context) {
+                final l10n = AppLocalizations.of(context)!;
+                return Text(
+                  l10n.checkout,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
+                  textAlign: TextAlign.center,
+                );
+              },
             ),
           ),
           const SizedBox(width: 48), // Balance for back button

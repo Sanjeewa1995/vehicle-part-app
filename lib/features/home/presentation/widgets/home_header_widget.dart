@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 
@@ -8,11 +9,12 @@ class HomeHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Consumer<AuthProvider>(
       builder: (context, authProvider, child) {
         final user = authProvider.user;
         final userName = user?.fullName ?? user?.firstName ?? 'User';
-        final greeting = _getGreeting();
+        final greeting = _getGreeting(l10n);
 
         return Container(
           padding: const EdgeInsets.all(24),
@@ -120,14 +122,14 @@ class HomeHeaderWidget extends StatelessWidget {
     );
   }
 
-  String _getGreeting() {
+  String _getGreeting(AppLocalizations l10n) {
     final hour = DateTime.now().hour;
     if (hour < 12) {
-      return 'Good Morning';
+      return l10n.goodMorning;
     } else if (hour < 17) {
-      return 'Good Afternoon';
+      return l10n.goodAfternoon;
     } else {
-      return 'Good Evening';
+      return l10n.goodEvening;
     }
   }
 }
