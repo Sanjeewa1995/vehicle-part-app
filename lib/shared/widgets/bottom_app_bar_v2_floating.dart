@@ -89,6 +89,13 @@ class _AppBottomNavigationBarV2FloatingState
               route: '/orders',
               isActive: _currentRoute == '/orders',
             ),
+            _buildNavItem(
+              icon: Icons.inventory_2_outlined,
+              activeIcon: Icons.inventory_2_rounded,
+              label: 'Products',
+              route: '/products',
+              isActive: _currentRoute == '/products',
+            ),
             Consumer<CartProvider>(
               builder: (context, cartProvider, child) {
                 return _buildNavItem(

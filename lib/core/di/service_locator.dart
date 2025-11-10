@@ -17,6 +17,11 @@ import '../../features/requets/domain/usecases/delete_request_usecase.dart';
 import '../../features/requets/presentation/providers/request_list_provider.dart';
 import '../../features/requets/presentation/providers/request_detail_provider.dart';
 import '../../features/requets/presentation/providers/create_request_provider.dart';
+import '../../features/products/data/datasources/remote/product_remote_datasource.dart';
+import '../../features/products/data/repositories/product_repository_impl.dart';
+import '../../features/products/domain/repositories/product_repository.dart';
+import '../../features/products/domain/usecases/get_products_usecase.dart';
+import '../../features/products/presentation/providers/product_list_provider.dart';
 import '../../features/cart/presentation/providers/cart_provider.dart';
 import '../../features/cart/data/datasources/cart_remote_datasource.dart';
 import '../../features/cart/data/repositories/cart_repository_impl.dart';
@@ -108,6 +113,25 @@ class ServiceLocator {
       () => DeleteRequestUseCase(getIt<RequestRepository>()),
     );
 
+    // Product Data Sources
+    getIt.registerLazySingleton<ProductRemoteDataSource>(
+      () => ProductRemoteDataSourceImpl(
+        apiClient: getIt<ApiClient>(),
+      ),
+    );
+
+    // Product Repositories
+    getIt.registerLazySingleton<ProductRepository>(
+      () => ProductRepositoryImpl(
+        remoteDataSource: getIt<ProductRemoteDataSource>(),
+      ),
+    );
+
+    // Product Use Cases
+    getIt.registerLazySingleton(
+      () => GetProductsUseCase(getIt<ProductRepository>()),
+    );
+
     // Cart Data Sources
     getIt.registerLazySingleton<CartRemoteDataSource>(
       () => CartRemoteDataSourceImpl(
@@ -172,6 +196,12 @@ class ServiceLocator {
     getIt.registerFactory<CreateRequestProvider>(
       () => CreateRequestProvider(
         createRequestUseCase: getIt<CreateRequestUseCase>(),
+      ),
+    );
+
+    getIt.registerFactory<ProductListProvider>(
+      () => ProductListProvider(
+        getProductsUseCase: getIt<GetProductsUseCase>(),
       ),
     );
 
