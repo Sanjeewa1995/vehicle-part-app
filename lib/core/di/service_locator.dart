@@ -29,6 +29,7 @@ import '../../features/cart/domain/usecases/delete_cart_item_usecase.dart';
 import '../../features/cart/domain/usecases/clear_cart_usecase.dart';
 import '../network/api_client.dart';
 import '../services/token_service.dart';
+import '../services/image_compression_service.dart';
 
 final getIt = GetIt.instance;
 
@@ -40,6 +41,7 @@ class ServiceLocator {
 
     // Services
     getIt.registerLazySingleton(() => TokenService());
+    getIt.registerLazySingleton(() => ImageCompressionService());
 
     // API Client
     getIt.registerLazySingleton<ApiClient>(

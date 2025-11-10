@@ -44,8 +44,22 @@ class LoadingIndicator extends StatelessWidget {
 
   /// Hide loading indicator dialog
   static void hide(BuildContext context) {
-    if (Navigator.of(context).canPop()) {
-      Navigator.of(context).pop();
+    try {
+      final navigator = Navigator.of(context, rootNavigator: false);
+      if (navigator.canPop()) {
+        navigator.pop();
+      }
+    } catch (e) {
+      // If there's an error (e.g., context is invalid or dialog doesn't exist),
+      // try with root navigator
+      try {
+        final rootNavigator = Navigator.of(context, rootNavigator: true);
+        if (rootNavigator.canPop()) {
+          rootNavigator.pop();
+        }
+      } catch (_) {
+        // Silently fail if dialog doesn't exist
+      }
     }
   }
 

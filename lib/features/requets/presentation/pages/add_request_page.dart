@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/di/service_locator.dart';
+import 'package:vehicle_part_app/core/services/image_compression_service.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import 'package:vehicle_part_app/shared/widgets/loading_indicator.dart';
 import '../providers/create_request_provider.dart';
@@ -39,16 +40,15 @@ class _AddRequestPageState extends State<AddRequestPage> {
 
   // Form values
   String _selectedVehicleType = 'car';
-  String _selectedCountry = '';
   File? _vehicleImage;
   File? _partImage;
   File? _partVideo;
 
   // Validation error messages
   String? _vehicleTypeError;
-  String? _countryError;
 
   final ImagePicker _imagePicker = ImagePicker();
+  late final ImageCompressionService _compressionService;
 
   final List<String> _vehicleTypes = [
     'car',
@@ -65,6 +65,12 @@ class _AddRequestPageState extends State<AddRequestPage> {
     'NZ': 'New Zealand',
     'LK': 'Sri Lanka',
   };
+
+  @override
+  void initState() {
+    super.initState();
+    _compressionService = ServiceLocator.get<ImageCompressionService>();
+  }
 
   @override
   void dispose() {
@@ -85,20 +91,84 @@ class _AddRequestPageState extends State<AddRequestPage> {
     try {
       final XFile? image = await _imagePicker.pickImage(
         source: source,
-        imageQuality: 80,
+        imageQuality: 100, // Get original quality, we'll compress it ourselves
       );
 
       if (image != null) {
-        setState(() {
-          if (isVehicleImage) {
-            _vehicleImage = File(image.path);
-          } else {
-            _partImage = File(image.path);
+        final originalFile = File(image.path);
+        
+        // Show loading indicator while compressing
+        if (mounted) {
+          LoadingIndicator.show(
+            context,
+            message: 'Compressing image...',
+            subMessage: 'Please wait',
+            barrierDismissible: false,
+          );
+        }
+
+        try {
+          // Compress the image using moderate settings (balanced quality and size)
+          final compressedFile = await _compressionService.compressImageModerate(
+            originalFile,
+          );
+
+          if (mounted) {
+            LoadingIndicator.hide(context);
           }
-        });
+
+          if (compressedFile != null) {
+            // Get file sizes for feedback
+            final originalSize = await _compressionService.getFileSize(originalFile);
+            final compressedSize = await _compressionService.getFileSize(compressedFile);
+
+            setState(() {
+              if (isVehicleImage) {
+                _vehicleImage = compressedFile;
+              } else {
+                _partImage = compressedFile;
+              }
+            });
+
+            // Show success message with compression info
+            if (mounted && originalSize != compressedSize) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Image compressed: $originalSize → $compressedSize',
+                  ),
+                  backgroundColor: AppColors.success,
+                  duration: const Duration(seconds: 2),
+                ),
+              );
+            }
+          } else {
+            // If compression failed, use original file
+            setState(() {
+              if (isVehicleImage) {
+                _vehicleImage = originalFile;
+              } else {
+                _partImage = originalFile;
+              }
+            });
+          }
+        } catch (compressionError) {
+          if (mounted) {
+            LoadingIndicator.hide(context);
+            // If compression fails, use original file
+            setState(() {
+              if (isVehicleImage) {
+                _vehicleImage = originalFile;
+              } else {
+                _partImage = originalFile;
+              }
+            });
+          }
+        }
       }
     } catch (e) {
       if (mounted) {
+        LoadingIndicator.hide(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error picking image: ${e.toString()}'),
@@ -160,36 +230,10 @@ class _AddRequestPageState extends State<AddRequestPage> {
     );
   }
 
-  void _showCountrySelector() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => SafeArea(
-        child: ListView(
-          children: _countries.entries.map((entry) {
-            return ListTile(
-              title: Text(entry.value),
-              trailing: _selectedCountry == entry.key
-                  ? const Icon(Icons.check, color: AppColors.primary)
-                  : null,
-              onTap: () {
-                setState(() {
-                  _selectedCountry = entry.key;
-                  _countryError = null;
-                });
-                Navigator.pop(context);
-              },
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-
   bool _validateStep1() {
     // Clear previous errors
     setState(() {
       _vehicleTypeError = null;
-      _countryError = null;
     });
 
     // Validate vehicle type
@@ -199,18 +243,11 @@ class _AddRequestPageState extends State<AddRequestPage> {
       });
     }
 
-    // Validate country
-    if (_selectedCountry.isEmpty) {
-      setState(() {
-        _countryError = 'Please select a country';
-      });
-    }
-
     // Validate form fields
     final isValid = _formKeyStep1.currentState?.validate() ?? false;
 
     // Return true only if all validations pass
-    return isValid && _vehicleTypeError == null && _countryError == null;
+    return isValid && _vehicleTypeError == null;
   }
 
   bool _validateStep2() {
@@ -237,58 +274,90 @@ class _AddRequestPageState extends State<AddRequestPage> {
   }
 
   Future<void> _submitRequest(CreateRequestProvider provider) async {
-    final data = CreateRequestData(
-      vehicleType: _selectedVehicleType,
-      vehicleModel: _vehicleModelController.text.trim(),
-      vehicleYear: int.parse(_vehicleYearController.text.trim()),
-      partName: _partNameController.text.trim(),
-      partNumber: _partNumberController.text.trim().isEmpty
-          ? null
-          : _partNumberController.text.trim(),
-      description: _descriptionController.text.trim(),
-      vehicleImagePath: _vehicleImage?.path,
-      partImagePath: _partImage?.path,
-      partVideoPath: _partVideo?.path,
-    );
+    // Show loading indicator before starting the request
+    if (mounted) {
+      LoadingIndicator.show(
+        context,
+        message: 'Submitting your request...',
+        subMessage: _partVideo != null
+            ? 'Uploading video file... This may take a few minutes'
+            : 'Please wait, this may take a moment',
+        barrierDismissible: false,
+      );
+    }
 
-    await provider.createRequest(data);
+    try {
+      final data = CreateRequestData(
+        vehicleType: _selectedVehicleType,
+        vehicleModel: _vehicleModelController.text.trim(),
+        vehicleYear: int.parse(_vehicleYearController.text.trim()),
+        partName: _partNameController.text.trim(),
+        partNumber: _partNumberController.text.trim().isEmpty
+            ? null
+            : _partNumberController.text.trim(),
+        description: _descriptionController.text.trim(),
+        vehicleImagePath: _vehicleImage?.path,
+        partImagePath: _partImage?.path,
+        partVideoPath: _partVideo?.path,
+      );
 
-    if (provider.isSuccess) {
+      await provider.createRequest(data);
+
+      // Hide loading indicator after request completes
       if (mounted) {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => AlertDialog(
-            title: const Text('Request Submitted!'),
-            content: const Text(
-              'Your spare part request has been submitted successfully. '
-              'You will receive quotes from suppliers soon.',
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  _resetForm();
-                },
-                child: const Text('Submit Another'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  context.go('/orders');
-                },
-                style: TextButton.styleFrom(foregroundColor: AppColors.primary),
-                child: const Text('View Requests'),
-              ),
-            ],
-          ),
-        );
+        LoadingIndicator.hide(context);
+        // Wait a frame to ensure the dialog is dismissed before showing success dialog
+        await Future.delayed(const Duration(milliseconds: 100));
       }
-    } else if (provider.hasError) {
+
+      if (provider.isSuccess) {
+        if (mounted) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => AlertDialog(
+              title: const Text('Request Submitted!'),
+              content: const Text(
+                'Your spare part request has been submitted successfully. '
+                'You will receive quotes from suppliers soon.',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    _resetForm();
+                  },
+                  child: const Text('Submit Another'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    context.go('/orders');
+                  },
+                  style: TextButton.styleFrom(foregroundColor: AppColors.primary),
+                  child: const Text('View Requests'),
+                ),
+              ],
+            ),
+          );
+        }
+      } else if (provider.hasError) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(provider.errorMessage ?? 'Failed to submit request'),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      // Ensure loading indicator is hidden even if an error occurs
       if (mounted) {
+        LoadingIndicator.hide(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(provider.errorMessage ?? 'Failed to submit request'),
+            content: Text('Error submitting request: ${e.toString()}'),
             backgroundColor: AppColors.error,
           ),
         );
@@ -300,7 +369,6 @@ class _AddRequestPageState extends State<AddRequestPage> {
     setState(() {
       _currentStep = 0;
       _selectedVehicleType = 'car';
-      _selectedCountry = '';
       _vehicleImage = null;
       _partImage = null;
       _partVideo = null;
@@ -368,27 +436,6 @@ class _AddRequestPageState extends State<AddRequestPage> {
         body: SafeArea(
           child: Consumer<CreateRequestProvider>(
             builder: (context, provider, child) {
-              // Show loading dialog when provider is loading
-              if (provider.isLoading) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (provider.isLoading && mounted) {
-                    LoadingIndicator.show(
-                      context,
-                      message: 'Submitting your request...',
-                      subMessage: provider.hasVideo
-                          ? 'Uploading video file... This may take a few minutes'
-                          : 'Please wait, this may take a moment',
-                      barrierDismissible: false,
-                    );
-                  }
-                });
-              } else {
-                // Close dialog when not loading
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  LoadingIndicator.hide(context);
-                });
-              }
-
               return GestureDetector(
                 onTap: () {
                   // Dismiss keyboard when tapping outside (only when not loading)
@@ -428,10 +475,10 @@ class _AddRequestPageState extends State<AddRequestPage> {
                               vehicleYearController: _vehicleYearController,
                               provinceController: _provinceController,
                               selectedVehicleType: _selectedVehicleType,
-                              selectedCountry: _selectedCountry,
+                              selectedCountry: '',
                               vehicleImage: _vehicleImage,
                               vehicleTypeError: _vehicleTypeError,
-                              countryError: _countryError,
+                              countryError: null,
                               vehicleTypes: _vehicleTypes,
                               countries: _countries,
                               onVehicleTypeSelected: (type) {
@@ -440,12 +487,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
                                   _vehicleTypeError = null;
                                 });
                               },
-                              onCountryTap: () {
-                                _showCountrySelector();
-                                setState(() {
-                                  _countryError = null;
-                                });
-                              },
+                              onCountryTap: () {},
                               onImagePickerTap: () =>
                                   _showImagePickerOptions(true),
                               onRemoveImage: () =>

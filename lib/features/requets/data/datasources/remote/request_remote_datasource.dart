@@ -153,8 +153,7 @@ class RequestRemoteDataSourceImpl implements RequestRemoteDataSource {
           sendTimeout: Duration(milliseconds: timeout),
           receiveTimeout: Duration(milliseconds: timeout),
         ),
-      );
-
+      );   
       final responseData = response.data;
       if (responseData is Map<String, dynamic>) {
         final success = responseData['success'] as bool?;
