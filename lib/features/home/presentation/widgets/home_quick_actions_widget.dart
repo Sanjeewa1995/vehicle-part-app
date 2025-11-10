@@ -13,7 +13,10 @@ class HomeQuickActionsWidget extends StatelessWidget {
         'title': 'Request Spare Part',
         'subtitle': 'Find the part you need',
         'icon': Icons.search_outlined,
-        'gradient': [AppColors.primary, AppColors.primaryLight],
+        'gradient': [
+          AppColors.primary,
+          AppColors.primaryLight,
+        ],
         'route': '/parts',
       },
       {
@@ -21,7 +24,10 @@ class HomeQuickActionsWidget extends StatelessWidget {
         'title': 'My Requests',
         'subtitle': 'View your requests',
         'icon': Icons.list_alt_outlined,
-        'gradient': [AppColors.accent, AppColors.accentLight],
+        'gradient': [
+          AppColors.primaryLight,
+          const Color(0xFF5BA3D6), // Light blue
+        ],
         'route': '/orders',
       },
       {
@@ -29,7 +35,10 @@ class HomeQuickActionsWidget extends StatelessWidget {
         'title': 'Add Request',
         'subtitle': 'Create new request',
         'icon': Icons.add_circle_outline,
-        'gradient': [AppColors.success, AppColors.success],
+        'gradient': [
+          AppColors.primary,
+          AppColors.primaryLight,
+        ],
         'route': '/requests/add',
       },
     ];
@@ -43,9 +52,10 @@ class HomeQuickActionsWidget extends StatelessWidget {
             Text(
               'Quick Actions',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 26,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+                color: const Color(0xFF1F2937), // Dark gray
+                letterSpacing: -0.5,
               ),
             ),
             TextButton(
@@ -108,12 +118,13 @@ class HomeQuickActionsWidget extends StatelessWidget {
             end: Alignment.bottomRight,
             colors: gradient,
           ),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: gradient[0].withValues(alpha: 0.3),
-              blurRadius: 15,
-              offset: const Offset(0, 8),
+              color: gradient[0].withValues(alpha: 0.4),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
+              spreadRadius: 1,
             ),
           ],
         ),

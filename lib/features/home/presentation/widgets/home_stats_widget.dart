@@ -7,19 +7,20 @@ class HomeStatsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.background,
-        borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: AppColors.borderLight,
+          color: const Color(0xFFE5E7EB), // Light gray border
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadow.withValues(alpha: 0.1),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
+            color: AppColors.primary.withValues(alpha: 0.1),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+            spreadRadius: 0,
           ),
         ],
       ),
@@ -36,27 +37,27 @@ class HomeStatsWidget extends StatelessWidget {
           Container(
             width: 1,
             height: 50,
-            color: AppColors.borderLight,
+            color: const Color(0xFFE5E7EB), // Light gray border
           ),
           Expanded(
             child: _buildStatItem(
               icon: Icons.pending_outlined,
               label: 'Pending',
               value: '0',
-              color: AppColors.warning,
+              color: const Color(0xFFF59E0B), // Amber/Orange
             ),
           ),
           Container(
             width: 1,
             height: 50,
-            color: AppColors.borderLight,
+            color: const Color(0xFFE5E7EB), // Light gray border
           ),
           Expanded(
             child: _buildStatItem(
               icon: Icons.check_circle_outline,
               label: 'Completed',
               value: '0',
-              color: AppColors.success,
+              color: const Color(0xFF10B981), // Green (success)
             ),
           ),
         ],
@@ -89,17 +90,19 @@ class HomeStatsWidget extends StatelessWidget {
         Text(
           value,
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
+            color: AppColors.primary,
+            letterSpacing: -0.5,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 12,
-            color: AppColors.textSecondary,
+            color: Color(0xFF6B7280), // Medium gray for secondary text
+            fontWeight: FontWeight.w500,
           ),
           textAlign: TextAlign.center,
         ),

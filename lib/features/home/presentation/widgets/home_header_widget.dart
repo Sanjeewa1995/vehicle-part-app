@@ -17,20 +17,21 @@ class HomeHeaderWidget extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
                 AppColors.primary,
-                AppColors.primaryDark,
+                AppColors.primaryLight,
               ],
             ),
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(28),
             boxShadow: [
               BoxShadow(
                 color: AppColors.primary.withValues(alpha: 0.3),
-                blurRadius: 20,
-                offset: const Offset(0, 10),
+                blurRadius: 25,
+                offset: const Offset(0, 12),
+                spreadRadius: 2,
               ),
             ],
           ),

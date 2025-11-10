@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../shared/widgets/bottom_app_bar_v2_floating.dart';
 import '../widgets/home_header_widget.dart';
 import '../widgets/home_quick_actions_widget.dart';
@@ -12,7 +11,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundSecondary,
+      backgroundColor: const Color(0xFFF9FAFB), // Light gray background
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {

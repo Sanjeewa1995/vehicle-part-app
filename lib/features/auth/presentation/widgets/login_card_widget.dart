@@ -134,6 +134,7 @@ class LoginCardWidget extends StatelessWidget {
                         : onLogin,
                     isLoading: authProvider.status == AuthStatus.loading,
                     type: AppButtonType.primary,
+                    primaryColor: AppColors.primary,
                   );
                 },
               ),

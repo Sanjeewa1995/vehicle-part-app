@@ -10,19 +10,19 @@ class HomeHelpWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.accentUltraLight,
-            AppColors.primaryUltraLight,
-          ],
-        ),
-        borderRadius: BorderRadius.circular(20),
+        color: Colors.white, // White background
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: AppColors.borderLight,
+          color: const Color(0xFFE5E7EB), // Light gray border
           width: 1,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.08),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
       child: Row(
         children: [
@@ -30,19 +30,26 @@ class HomeHelpWidget extends StatelessWidget {
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(16),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  AppColors.primary,
+                  AppColors.primaryLight,
+                ],
+              ),
+              borderRadius: BorderRadius.circular(18),
               boxShadow: [
                 BoxShadow(
                   color: AppColors.primary.withValues(alpha: 0.3),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
                 ),
               ],
             ),
             child: const Icon(
               Icons.help_outline,
-              color: AppColors.textWhite,
+              color: Colors.white,
               size: 28,
             ),
           ),
@@ -53,19 +60,20 @@ class HomeHelpWidget extends StatelessWidget {
               children: [
                 Text(
                   'Need Help?',
-                  style: TextStyle(
-                    fontSize: 18,
+                  style: const TextStyle(
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                    color: AppColors.primary,
+                    letterSpacing: -0.3,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Learn how to request spare parts and manage your requests',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
-                    color: AppColors.textSecondary,
-                    height: 1.4,
+                    color: Color(0xFF6B7280), // Medium gray for secondary text
+                    height: 1.5,
                   ),
                 ),
               ],

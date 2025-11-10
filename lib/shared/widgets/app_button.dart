@@ -27,6 +27,7 @@ class AppButton extends StatelessWidget {
   final EdgeInsets? padding;
   final double? width;
   final double? height;
+  final Color? primaryColor; // Optional custom primary color
 
   const AppButton({
     super.key,
@@ -41,6 +42,7 @@ class AppButton extends StatelessWidget {
     this.padding,
     this.width,
     this.height = 53,
+    this.primaryColor,
   });
 
   Color _getBackgroundColor() {
@@ -50,7 +52,7 @@ class AppButton extends StatelessWidget {
 
     switch (type) {
       case AppButtonType.primary:
-        return AppColors.primary;
+        return primaryColor ?? AppColors.primary;
       case AppButtonType.secondary:
         return AppColors.secondary;
       case AppButtonType.outline:
@@ -73,7 +75,7 @@ class AppButton extends StatelessWidget {
         return AppColors.textWhite;
       case AppButtonType.outline:
       case AppButtonType.text:
-        return AppColors.primary;
+        return primaryColor ?? AppColors.primary;
     }
   }
 
@@ -84,11 +86,22 @@ class AppButton extends StatelessWidget {
 
     switch (type) {
       case AppButtonType.primary:
+        if (primaryColor != null) {
+          final r = primaryColor!.red;
+          final g = primaryColor!.green;
+          final b = primaryColor!.blue;
+          return Color.fromRGBO(
+            (r + (255 - r) * 0.3).round(),
+            (g + (255 - g) * 0.3).round(),
+            (b + (255 - b) * 0.3).round(),
+            1.0,
+          );
+        }
         return AppColors.primaryLight;
       case AppButtonType.secondary:
         return AppColors.secondaryLight;
       case AppButtonType.outline:
-        return AppColors.primary;
+        return primaryColor ?? AppColors.primary;
       case AppButtonType.text:
         return Colors.transparent;
       case AppButtonType.danger:
@@ -101,12 +114,27 @@ class AppButton extends StatelessWidget {
       return null;
     }
 
-    return const LinearGradient(
+    final primary = primaryColor ?? AppColors.primary;
+    Color primaryLight;
+    if (primaryColor != null) {
+      final r = primaryColor!.red;
+      final g = primaryColor!.green;
+      final b = primaryColor!.blue;
+      primaryLight = Color.fromRGBO(
+        (r + (255 - r) * 0.3).round(),
+        (g + (255 - g) * 0.3).round(),
+        (b + (255 - b) * 0.3).round(),
+        1.0,
+      );
+    } else {
+      primaryLight = AppColors.primaryLight;
+    }
+    return LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       colors: [
-        AppColors.primary,
-        AppColors.primaryLight,
+        primary,
+        primaryLight,
       ],
     );
   }

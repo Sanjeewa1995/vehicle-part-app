@@ -14,12 +14,12 @@ class LoginHeaderWidget extends StatelessWidget {
           height: 100,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
                 AppColors.primary,
-                AppColors.primaryDark,
+                AppColors.primaryLight,
               ],
             ),
             boxShadow: [
