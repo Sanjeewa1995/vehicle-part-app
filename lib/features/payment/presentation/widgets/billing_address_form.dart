@@ -191,18 +191,18 @@ class _BillingAddressFormState extends State<BillingAddressForm> {
                     validator: Validators.validateRequired,
                   ),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: TextFormField(
-                    controller: _postalCodeController,
-                    decoration: const InputDecoration(
-                      labelText: 'Postal Code *',
-                      prefixIcon: Icon(Icons.markunread_mailbox_outlined),
-                    ),
-                    keyboardType: TextInputType.number,
-                    validator: Validators.validateRequired,
-                  ),
-                ),
+                // const SizedBox(width: 12),
+                // Expanded(
+                //   child: TextFormField(
+                //     controller: _postalCodeController,
+                //     decoration: const InputDecoration(
+                //       labelText: 'Postal Code *',
+                //       prefixIcon: Icon(Icons.markunread_mailbox_outlined),
+                //     ),
+                //     keyboardType: TextInputType.number,
+                //     validator: Validators.validateRequired,
+                //   ),
+                // ),
               ],
             ),
             const SizedBox(height: 16),
