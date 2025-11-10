@@ -38,6 +38,9 @@ class ApiConstants {
   static const String vehiclePartRequests = '/api/v1/requests/vehicle-part-requests/';
   static String vehiclePartRequestDetail(int id) => '/api/v1/requests/vehicle-part-requests/$id/';
   
+  // Store products endpoints
+  static const String storeProducts = '/api/v1/store/products/';
+  
   // Headers
   static const String contentType = 'application/json';
   static const String authorization = 'Authorization';
