@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../providers/request_list_provider.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class ErrorStateWidget extends StatelessWidget {
   final String errorMessage;
@@ -13,6 +14,7 @@ class ErrorStateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return RefreshIndicator(
       onRefresh: () => context.read<RequestListProvider>().refresh(),
       child: SingleChildScrollView(
@@ -32,7 +34,7 @@ class ErrorStateWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Error',
+                    l10n.error,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -65,9 +67,9 @@ class ErrorStateWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: const Text(
-                      'Retry',
-                      style: TextStyle(
+                    child: Text(
+                      l10n.retry,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textWhite,

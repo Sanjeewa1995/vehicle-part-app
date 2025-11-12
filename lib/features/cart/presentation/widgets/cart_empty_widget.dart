@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../shared/widgets/app_button.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class CartEmptyWidget extends StatelessWidget {
   const CartEmptyWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -55,7 +57,7 @@ class CartEmptyWidget extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               Text(
-                'Your Cart is Empty',
+                l10n.yourCartIsEmpty,
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -65,7 +67,7 @@ class CartEmptyWidget extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Looks like you haven\'t added anything\nto your cart yet',
+                l10n.cartEmptyMessage,
                 style: TextStyle(
                   fontSize: 16,
                   color: AppColors.textSecondary,
@@ -75,7 +77,7 @@ class CartEmptyWidget extends StatelessWidget {
               ),
               const SizedBox(height: 48),
               AppButton(
-                text: 'Browse Requests',
+                text: l10n.browseRequests,
                 onPressed: () => context.go('/orders'),
                 type: AppButtonType.primary,
                 size: AppButtonSize.large,

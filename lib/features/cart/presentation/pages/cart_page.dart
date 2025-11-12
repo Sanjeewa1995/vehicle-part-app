@@ -7,6 +7,7 @@ import '../widgets/cart_header_widget.dart';
 import '../widgets/cart_empty_widget.dart';
 import '../widgets/cart_item_card_widget.dart';
 import '../widgets/cart_summary_widget.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -20,6 +21,7 @@ class CartPage extends StatelessWidget {
           builder: (context, cartProvider, child) {
             // Loading State
             if (cartProvider.isLoading) {
+              final l10n = AppLocalizations.of(context)!;
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -31,7 +33,7 @@ class CartPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Loading cart...',
+                      l10n.loadingCart,
                       style: TextStyle(
                         fontSize: 16,
                         color: AppColors.textSecondary,

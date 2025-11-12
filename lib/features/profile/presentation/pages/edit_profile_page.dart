@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import 'package:vehicle_part_app/shared/widgets/app_text_field.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -39,24 +40,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.dispose();
   }
 
-  String? _validateName(String? value, String fieldName) {
+  String? _validateName(String? value, String fieldName, AppLocalizations l10n) {
     if (value == null || value.trim().isEmpty) {
-      return '$fieldName is required';
+      return fieldName == l10n.firstName ? l10n.firstNameRequired : l10n.lastNameRequired;
     }
     if (value.trim().length < 2) {
-      return '$fieldName must be at least 2 characters';
+      return fieldName == l10n.firstName ? l10n.firstNameMustBeAtLeast2Characters : l10n.lastNameMustBeAtLeast2Characters;
     }
     return null;
   }
 
-  String? _validatePhone(String? value) {
+  String? _validatePhone(String? value, AppLocalizations l10n) {
     if (value == null || value.trim().isEmpty) {
-      return 'Phone number is required';
+      return l10n.phoneNumberRequired;
     }
     // Basic phone validation - can be enhanced
     final phoneRegex = RegExp(r'^\+?[1-9]\d{1,14}$');
     if (!phoneRegex.hasMatch(value.trim())) {
-      return 'Please enter a valid phone number';
+      return l10n.pleaseEnterValidPhoneNumber;
     }
     return null;
   }
@@ -85,29 +86,31 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     if (!mounted) return;
 
+    final l10n = AppLocalizations.of(context)!;
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Profile updated successfully'),
+        SnackBar(
+          content: Text(l10n.profileUpdatedSuccessfully),
           backgroundColor: AppColors.success,
         ),
       );
       context.pop();
     } else {
       setState(() {
-        _errorMessage = authProvider.errorMessage ?? 'Failed to update profile';
+        _errorMessage = authProvider.errorMessage ?? l10n.failedToUpdateProfile;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text(
-          'Edit Profile',
-          style: TextStyle(
+        title: Text(
+          l10n.editProfile,
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
@@ -171,11 +174,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 // First Name
                 AppTextField(
                   controller: _firstNameController,
-                  label: 'First Name',
-                  hint: 'Enter your first name',
+                  label: l10n.firstName,
+                  hint: l10n.enterFirstName,
                   type: AppTextFieldType.text,
                   prefixIcon: Icons.person_outline,
-                  validator: (value) => _validateName(value, 'First name'),
+                  validator: (value) => _validateName(value, l10n.firstName, l10n),
                   textInputAction: TextInputAction.next,
                   enabled: !_isLoading,
                 ),
@@ -184,11 +187,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 // Last Name
                 AppTextField(
                   controller: _lastNameController,
-                  label: 'Last Name',
-                  hint: 'Enter your last name',
+                  label: l10n.lastName,
+                  hint: l10n.enterLastName,
                   type: AppTextFieldType.text,
                   prefixIcon: Icons.person_outline,
-                  validator: (value) => _validateName(value, 'Last name'),
+                  validator: (value) => _validateName(value, l10n.lastName, l10n),
                   textInputAction: TextInputAction.next,
                   enabled: !_isLoading,
                 ),
@@ -197,11 +200,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 // Phone
                 AppTextField(
                   controller: _phoneController,
-                  label: 'Phone Number',
-                  hint: 'Enter your phone number',
+                  label: l10n.phoneNumber,
+                  hint: l10n.enterPhoneNumber,
                   type: AppTextFieldType.phone,
                   prefixIcon: Icons.phone_outlined,
-                  validator: _validatePhone,
+                  validator: (value) => _validatePhone(value, l10n),
                   textInputAction: TextInputAction.done,
                   enabled: !_isLoading,
                   onSubmitted: (_) => _handleUpdate(),
@@ -231,9 +234,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                           ),
                         )
-                      : const Text(
-                          'Update Profile',
-                          style: TextStyle(
+                      : Text(
+                          l10n.updateProfile,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -255,9 +258,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(
+                  child: Text(
+                    l10n.cancel,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),

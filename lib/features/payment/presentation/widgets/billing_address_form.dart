@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/validators.dart';
 import '../../domain/entities/billing_address.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class BillingAddressForm extends StatefulWidget {
   final BillingAddress? initialAddress;
@@ -85,6 +86,7 @@ class _BillingAddressFormState extends State<BillingAddressForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -102,9 +104,9 @@ class _BillingAddressFormState extends State<BillingAddressForm> {
                 Expanded(
                   child: TextFormField(
                     controller: _firstNameController,
-                    decoration: const InputDecoration(
-                      labelText: 'First Name *',
-                      prefixIcon: Icon(Icons.person_outline),
+                    decoration: InputDecoration(
+                      labelText: '${l10n.firstName} *',
+                      prefixIcon: const Icon(Icons.person_outline),
                     ),
                     textCapitalization: TextCapitalization.words,
                     validator: Validators.validateRequired,
@@ -114,9 +116,9 @@ class _BillingAddressFormState extends State<BillingAddressForm> {
                 Expanded(
                   child: TextFormField(
                     controller: _lastNameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Last Name *',
-                      prefixIcon: Icon(Icons.person_outline),
+                    decoration: InputDecoration(
+                      labelText: '${l10n.lastName} *',
+                      prefixIcon: const Icon(Icons.person_outline),
                     ),
                     textCapitalization: TextCapitalization.words,
                     validator: Validators.validateRequired,
@@ -129,9 +131,9 @@ class _BillingAddressFormState extends State<BillingAddressForm> {
             // Email
             TextFormField(
               controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email *',
-                prefixIcon: Icon(Icons.email_outlined),
+              decoration: InputDecoration(
+                labelText: '${l10n.emailAddress} *',
+                prefixIcon: const Icon(Icons.email_outlined),
               ),
               keyboardType: TextInputType.emailAddress,
               validator: Validators.validateEmail,
@@ -141,10 +143,10 @@ class _BillingAddressFormState extends State<BillingAddressForm> {
             // Phone
             TextFormField(
               controller: _phoneController,
-              decoration: const InputDecoration(
-                labelText: 'Phone Number *',
-                prefixIcon: Icon(Icons.phone_outlined),
-                hintText: '+94 77 123 4567',
+              decoration: InputDecoration(
+                labelText: '${l10n.phoneNumber} *',
+                prefixIcon: const Icon(Icons.phone_outlined),
+                hintText: l10n.enterPhoneNumber,
               ),
               keyboardType: TextInputType.phone,
               inputFormatters: [
@@ -152,10 +154,10 @@ class _BillingAddressFormState extends State<BillingAddressForm> {
               ],
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Phone number is required';
+                  return l10n.phoneNumberRequired;
                 }
                 if (value.length < 9) {
-                  return 'Please enter a valid phone number';
+                  return l10n.pleaseEnterValidPhoneNumber;
                 }
                 return null;
               },
@@ -165,10 +167,10 @@ class _BillingAddressFormState extends State<BillingAddressForm> {
             // Address
             TextFormField(
               controller: _addressController,
-              decoration: const InputDecoration(
-                labelText: 'Street Address *',
-                prefixIcon: Icon(Icons.home_outlined),
-                hintText: 'House number, street name',
+              decoration: InputDecoration(
+                labelText: '${l10n.streetAddress} *',
+                prefixIcon: const Icon(Icons.home_outlined),
+                hintText: l10n.houseNumberStreetName,
               ),
               maxLines: 2,
               textCapitalization: TextCapitalization.words,
@@ -183,9 +185,9 @@ class _BillingAddressFormState extends State<BillingAddressForm> {
                   flex: 2,
                   child: TextFormField(
                     controller: _cityController,
-                    decoration: const InputDecoration(
-                      labelText: 'City *',
-                      prefixIcon: Icon(Icons.location_city_outlined),
+                    decoration: InputDecoration(
+                      labelText: '${l10n.city} *',
+                      prefixIcon: const Icon(Icons.location_city_outlined),
                     ),
                     textCapitalization: TextCapitalization.words,
                     validator: Validators.validateRequired,
@@ -195,9 +197,9 @@ class _BillingAddressFormState extends State<BillingAddressForm> {
                 // Expanded(
                 //   child: TextFormField(
                 //     controller: _postalCodeController,
-                //     decoration: const InputDecoration(
-                //       labelText: 'Postal Code *',
-                //       prefixIcon: Icon(Icons.markunread_mailbox_outlined),
+                //     decoration: InputDecoration(
+                //       labelText: '${l10n.postalCode} *',
+                //       prefixIcon: const Icon(Icons.markunread_mailbox_outlined),
                 //     ),
                 //     keyboardType: TextInputType.number,
                 //     validator: Validators.validateRequired,
@@ -210,9 +212,9 @@ class _BillingAddressFormState extends State<BillingAddressForm> {
             // State (Optional)
             TextFormField(
               controller: _stateController,
-              decoration: const InputDecoration(
-                labelText: 'State/Province (Optional)',
-                prefixIcon: Icon(Icons.map_outlined),
+              decoration: InputDecoration(
+                labelText: l10n.stateProvinceOptional,
+                prefixIcon: const Icon(Icons.map_outlined),
               ),
               textCapitalization: TextCapitalization.words,
             ),
@@ -221,9 +223,9 @@ class _BillingAddressFormState extends State<BillingAddressForm> {
             // Country
             TextFormField(
               controller: _countryController,
-              decoration: const InputDecoration(
-                labelText: 'Country *',
-                prefixIcon: Icon(Icons.public_outlined),
+              decoration: InputDecoration(
+                labelText: '${l10n.country} *',
+                prefixIcon: const Icon(Icons.public_outlined),
               ),
               textCapitalization: TextCapitalization.words,
               validator: Validators.validateRequired,

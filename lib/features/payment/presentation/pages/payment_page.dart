@@ -9,6 +9,7 @@ import '../../../cart/presentation/providers/cart_provider.dart';
 import '../../domain/entities/billing_address.dart';
 import '../../data/repositories/payhere_service.dart';
 import '../../data/models/payment_request.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class PaymentPage extends StatefulWidget {
   final BillingAddress? billingAddress;
@@ -31,6 +32,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final total = widget.totalAmount;
 
     return Scaffold(
@@ -42,9 +44,9 @@ class _PaymentPageState extends State<PaymentPage> {
           icon: const Icon(Icons.chevron_left, color: AppColors.textPrimary),
           onPressed: () => context.pop(),
         ),
-        title: const Text(
-          'Payment',
-          style: TextStyle(
+        title: Text(
+          l10n.payment,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
@@ -68,9 +70,9 @@ class _PaymentPageState extends State<PaymentPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Order Summary
-                  const Text(
-                    'Order Summary',
-                    style: TextStyle(
+                  Text(
+                    l10n.orderSummary,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimary,
@@ -144,7 +146,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          'Qty: ${item.quantity} × ${CurrencyFormatter.formatLKR(double.tryParse(item.product.price) ?? 0.0)}',
+                                          '${l10n.quantity}: ${item.quantity} × ${CurrencyFormatter.formatLKR(double.tryParse(item.product.price) ?? 0.0)}',
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: AppColors.textSecondary,
@@ -175,9 +177,9 @@ class _PaymentPageState extends State<PaymentPage> {
 
                   // Billing Address Summary
                   if (widget.billingAddress != null) ...[
-                    const Text(
-                      'Billing Address',
-                      style: TextStyle(
+                    Text(
+                      l10n.billingAddress,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
@@ -213,7 +215,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Phone: ${widget.billingAddress!.phone}',
+                              '${l10n.phoneLabel}: ${widget.billingAddress!.phone}',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: AppColors.textSecondary,
@@ -221,7 +223,7 @@ class _PaymentPageState extends State<PaymentPage> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Email: ${widget.billingAddress!.email}',
+                              '${l10n.emailLabel}: ${widget.billingAddress!.email}',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: AppColors.textSecondary,
@@ -264,9 +266,9 @@ class _PaymentPageState extends State<PaymentPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Total',
-                        style: TextStyle(
+                      Text(
+                        l10n.total,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                           color: AppColors.textPrimary,
@@ -284,7 +286,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   ),
                   const SizedBox(height: 16),
                   AppButton(
-                    text: 'Pay',
+                    text: l10n.pay,
                     onPressed: _isProcessing ? null : () => _handlePayment(context, total),
                     type: AppButtonType.primary,
                     size: AppButtonSize.large,
@@ -322,10 +324,11 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   Future<void> _handlePayment(BuildContext context, double total) async {
+    final l10n = AppLocalizations.of(context)!;
     if (widget.billingAddress == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Billing address is required'),
+        SnackBar(
+          content: Text(l10n.billingAddressRequired),
           backgroundColor: AppColors.error,
         ),
       );
@@ -340,9 +343,10 @@ class _PaymentPageState extends State<PaymentPage> {
       await _handlePayHerePayment(context, total);
     } catch (e) {
       if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error: ${e.toString()}'),
+          content: Text(l10n.errorOccurred(e.toString())),
           backgroundColor: AppColors.error,
         ),
       );
@@ -398,21 +402,22 @@ class _PaymentPageState extends State<PaymentPage> {
         if (!mounted) return;
 
         // Show success dialog
+        final l10n = AppLocalizations.of(context)!;
         showDialog(
           context: context,
           barrierDismissible: false,
           builder: (dialogContext) => AlertDialog(
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.check_circle, color: AppColors.success, size: 32),
-                SizedBox(width: 12),
+                const Icon(Icons.check_circle, color: AppColors.success, size: 32),
+                const SizedBox(width: 12),
                 Expanded(
-                  child: Text('Payment Successful'),
+                  child: Text(l10n.paymentSuccessful),
                 ),
               ],
             ),
             content: Text(
-              'Your payment has been processed successfully.\n\nPayment ID: $paymentId\n\nYour order will be processed shortly.',
+              l10n.paymentProcessedSuccessfully(paymentId),
             ),
             actions: [
               TextButton(
@@ -422,7 +427,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     context.go('/orders');
                   }
                 },
-                child: const Text('View Orders'),
+                child: Text(l10n.viewOrders),
               ),
             ],
           ),
@@ -432,25 +437,26 @@ class _PaymentPageState extends State<PaymentPage> {
         if (!mounted) return;
 
         // Show error dialog
+        final l10n = AppLocalizations.of(context)!;
         showDialog(
           context: context,
           builder: (dialogContext) => AlertDialog(
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.error_outline, color: AppColors.error, size: 32),
-                SizedBox(width: 12),
+                const Icon(Icons.error_outline, color: AppColors.error, size: 32),
+                const SizedBox(width: 12),
                 Expanded(
-                  child: Text('Payment Failed'),
+                  child: Text(l10n.paymentFailed),
                 ),
               ],
             ),
-            content: Text('Payment could not be processed.\n\nError: $error\n\nPlease try again.'),
+            content: Text(l10n.paymentCouldNotBeProcessed(error)),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(dialogContext).pop();
                 },
-                child: const Text('OK'),
+                child: Text(l10n.ok),
               ),
             ],
           ),
@@ -458,11 +464,12 @@ class _PaymentPageState extends State<PaymentPage> {
       },
       onDismissed: () {
         if (!mounted) return;
+        final l10n = AppLocalizations.of(context)!;
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Payment was cancelled'),
-            duration: Duration(seconds: 2),
+          SnackBar(
+            content: Text(l10n.paymentCancelled),
+            duration: const Duration(seconds: 2),
           ),
         );
       },

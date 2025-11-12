@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import 'package:vehicle_part_app/shared/widgets/app_text_field.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 
 class ChangePasswordPage extends StatefulWidget {
@@ -28,22 +29,22 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     super.dispose();
   }
 
-  String? _validatePassword(String? value, String fieldName) {
+  String? _validatePassword(String? value, String fieldName, AppLocalizations l10n) {
     if (value == null || value.trim().isEmpty) {
-      return '$fieldName is required';
+      return fieldName == l10n.currentPassword ? l10n.currentPasswordRequired : l10n.newPasswordRequired;
     }
     if (value.length < 8) {
-      return 'Password must be at least 8 characters';
+      return l10n.passwordMustBeAtLeast8Characters;
     }
     return null;
   }
 
-  String? _validateConfirmPassword(String? value) {
+  String? _validateConfirmPassword(String? value, AppLocalizations l10n) {
     if (value == null || value.trim().isEmpty) {
-      return 'Please confirm your password';
+      return l10n.pleaseConfirmPassword;
     }
     if (value != _newPasswordController.text) {
-      return 'Passwords do not match';
+      return l10n.passwordsDoNotMatch;
     }
     return null;
   }
@@ -72,29 +73,31 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
     if (!mounted) return;
 
+    final l10n = AppLocalizations.of(context)!;
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Password changed successfully'),
+        SnackBar(
+          content: Text(l10n.passwordChangedSuccessfully),
           backgroundColor: AppColors.success,
         ),
       );
       context.pop();
     } else {
       setState(() {
-        _errorMessage = authProvider.errorMessage ?? 'Failed to change password';
+        _errorMessage = authProvider.errorMessage ?? l10n.failedToChangePassword;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text(
-          'Change Password',
-          style: TextStyle(
+        title: Text(
+          l10n.changePassword,
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
@@ -141,7 +144,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Your password must be at least 8 characters long.',
+                          l10n.passwordMustBeAtLeast8CharactersLong,
                           style: TextStyle(
                             color: AppColors.textPrimary,
                             fontSize: 14,
@@ -191,10 +194,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 // Current Password
                 AppTextField(
                   controller: _currentPasswordController,
-                  label: 'Current Password',
-                  hint: 'Enter your current password',
+                  label: l10n.currentPassword,
+                  hint: l10n.enterCurrentPassword,
                   type: AppTextFieldType.password,
-                  validator: (value) => _validatePassword(value, 'Current password'),
+                  validator: (value) => _validatePassword(value, l10n.currentPassword, l10n),
                   textInputAction: TextInputAction.next,
                   enabled: !_isLoading,
                 ),
@@ -203,10 +206,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 // New Password
                 AppTextField(
                   controller: _newPasswordController,
-                  label: 'New Password',
-                  hint: 'Enter your new password',
+                  label: l10n.newPassword,
+                  hint: l10n.enterNewPassword,
                   type: AppTextFieldType.password,
-                  validator: (value) => _validatePassword(value, 'New password'),
+                  validator: (value) => _validatePassword(value, l10n.newPassword, l10n),
                   textInputAction: TextInputAction.next,
                   enabled: !_isLoading,
                 ),
@@ -215,10 +218,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 // Confirm Password
                 AppTextField(
                   controller: _confirmPasswordController,
-                  label: 'Confirm New Password',
-                  hint: 'Confirm your new password',
+                  label: l10n.confirmNewPassword,
+                  hint: l10n.confirmNewPasswordHint,
                   type: AppTextFieldType.password,
-                  validator: _validateConfirmPassword,
+                  validator: (value) => _validateConfirmPassword(value, l10n),
                   textInputAction: TextInputAction.done,
                   enabled: !_isLoading,
                   onSubmitted: (_) => _handleChangePassword(),
@@ -248,9 +251,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             ),
                           ),
                         )
-                      : const Text(
-                          'Change Password',
-                          style: TextStyle(
+                      : Text(
+                          l10n.changePassword,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -272,9 +275,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(
+                  child: Text(
+                    l10n.cancel,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),

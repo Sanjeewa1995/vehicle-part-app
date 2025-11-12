@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import 'package:vehicle_part_app/core/di/service_locator.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../providers/request_detail_provider.dart';
 import '../../domain/entities/vehicle_part_request.dart';
 import '../widgets/product_card.dart';
@@ -33,13 +34,18 @@ class RequestDetailPage extends StatelessWidget {
             icon: const Icon(Icons.chevron_left, color: AppColors.textPrimary),
             onPressed: () => context.go('/orders'),
           ),
-          title: const Text(
-            'Request Details',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
-            ),
+          title: Builder(
+            builder: (context) {
+              final l10n = AppLocalizations.of(context)!;
+              return Text(
+                l10n.requestDetails,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+              );
+            },
           ),
           centerTitle: true,
           // actions: [
@@ -99,28 +105,34 @@ class RequestDetailPage extends StatelessWidget {
   }
 
   Widget _buildLoadingState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+    return Builder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                l10n.loadingRequestDetails,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 16),
-          Text(
-            'Loading request details...',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: AppColors.textSecondary,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
   Widget _buildErrorState(BuildContext context, RequestDetailProvider provider) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -134,7 +146,7 @@ class RequestDetailPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Error',
+              l10n.error,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -143,7 +155,7 @@ class RequestDetailPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              provider.errorMessage ?? 'Failed to load request details',
+              provider.errorMessage ?? l10n.failedToLoadRequestDetails,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
@@ -167,9 +179,9 @@ class RequestDetailPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Text(
-                'Retry',
-                style: TextStyle(
+              child: Text(
+                l10n.retry,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textWhite,
@@ -183,6 +195,7 @@ class RequestDetailPage extends StatelessWidget {
   }
 
   Widget _buildNotFoundState(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -196,7 +209,7 @@ class RequestDetailPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Request not found',
+              l10n.requestNotFound,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -216,9 +229,9 @@ class RequestDetailPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Text(
-                'Go Back',
-                style: TextStyle(
+              child: Text(
+                l10n.goBack,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textWhite,
@@ -233,6 +246,7 @@ class RequestDetailPage extends StatelessWidget {
 
   Widget _buildContent(BuildContext context, RequestDetailProvider provider) {
     final request = provider.request!;
+    final l10n = AppLocalizations.of(context)!;
 
     return SingleChildScrollView(
       child: Column(
@@ -241,30 +255,30 @@ class RequestDetailPage extends StatelessWidget {
           // Status Badge
           Padding(
             padding: const EdgeInsets.all(24),
-            child: _buildStatusBadge(request.status),
+            child: _buildStatusBadge(request.status, l10n),
           ),
 
           // Part Information
           _buildSection(
-            title: 'Part Information',
+            title: l10n.partInformation,
             children: [
-              _buildInfoRow('Part Name', request.partName),
+              _buildInfoRow(l10n.partName, request.partName),
               if (request.partNumber != null && request.partNumber!.isNotEmpty)
-                _buildInfoRow('Part Number', request.partNumber!),
-              _buildInfoRow('Description', request.description),
+                _buildInfoRow(l10n.partNumber, request.partNumber!),
+              _buildInfoRow(l10n.description, request.description),
             ],
           ),
 
           // Vehicle Information
           _buildSection(
-            title: 'Vehicle Information',
+            title: l10n.vehicleInformation,
             children: [
               _buildInfoRow(
-                'Vehicle Type',
+                l10n.vehicleType,
                 _capitalizeFirst(request.vehicleType),
               ),
-              _buildInfoRow('Model', request.vehicleModel),
-              _buildInfoRow('Year', request.vehicleYear.toString()),
+              _buildInfoRow(l10n.model, request.vehicleModel),
+              _buildInfoRow(l10n.year, request.vehicleYear.toString()),
             ],
           ),
 
@@ -272,23 +286,23 @@ class RequestDetailPage extends StatelessWidget {
           if (request.vehicleImage != null ||
               request.partImage != null ||
               request.partVideo != null)
-            _buildMediaSection(context, request),
+            _buildMediaSection(context, request, l10n),
 
           // Products Section (Admin's suggested products)
           if (request.products.isNotEmpty)
-            _buildProductsSection(context, request),
+            _buildProductsSection(context, request, l10n),
 
           // Request Information
           _buildSection(
-            title: 'Request Information',
+            title: l10n.requestInformation,
             children: [
-              _buildInfoRow('Request ID', '#${request.id}'),
+              _buildInfoRow(l10n.requestId, '#${request.id}'),
               _buildInfoRow(
-                'Created',
+                l10n.created,
                 _formatDate(request.createdAt),
               ),
               _buildInfoRow(
-                'Last Updated',
+                l10n.lastUpdated,
                 _formatDate(request.updatedAt),
               ),
             ],
@@ -300,9 +314,17 @@ class RequestDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusBadge(String status) {
+  Widget _buildStatusBadge(String status, AppLocalizations l10n) {
     final statusColor = _getStatusColor(status);
     final statusIcon = _getStatusIcon(status);
+    String statusText = status.toUpperCase();
+    
+    // Translate status if available
+    if (status.toLowerCase() == 'pending') {
+      statusText = l10n.pending.toUpperCase();
+    } else if (status.toLowerCase() == 'completed') {
+      statusText = l10n.completed.toUpperCase();
+    }
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -320,7 +342,7 @@ class RequestDetailPage extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            status.toUpperCase(),
+            statusText,
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
@@ -401,24 +423,25 @@ class RequestDetailPage extends StatelessWidget {
   Widget _buildMediaSection(
     BuildContext context,
     VehiclePartRequest request,
+    AppLocalizations l10n,
   ) {
     return _buildSection(
-      title: 'Media',
+      title: l10n.media,
       children: [
         if (request.vehicleImage != null && request.vehicleImage!.isNotEmpty)
           _buildImageItem(
             context,
-            'Vehicle Image',
+            l10n.vehicleImage,
             request.vehicleImage!,
           ),
         if (request.partImage != null && request.partImage!.isNotEmpty)
           _buildImageItem(
             context,
-            'Part Image',
+            l10n.partImage,
             request.partImage!,
           ),
         if (request.partVideo != null && request.partVideo!.isNotEmpty)
-          _buildVideoItem(context, 'Part Video', request.partVideo!),
+          _buildVideoItem(context, l10n.partVideo, request.partVideo!, l10n),
       ],
     );
   }
@@ -467,7 +490,7 @@ class RequestDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildVideoItem(BuildContext context, String label, String videoUrl) {
+  Widget _buildVideoItem(BuildContext context, String label, String videoUrl, AppLocalizations l10n) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Column(
@@ -506,7 +529,7 @@ class RequestDetailPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Tap to view video',
+                    l10n.tapToViewVideo,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -525,6 +548,7 @@ class RequestDetailPage extends StatelessWidget {
   Widget _buildProductsSection(
     BuildContext context,
     VehiclePartRequest request,
+    AppLocalizations l10n,
   ) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -552,9 +576,9 @@ class RequestDetailPage extends StatelessWidget {
                 size: 20,
               ),
               const SizedBox(width: 8),
-              const Text(
-                'Suggested Products',
-                style: TextStyle(
+              Text(
+                l10n.suggestedProducts,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: AppColors.textPrimary,
@@ -580,7 +604,7 @@ class RequestDetailPage extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Admin has suggested the following products for your request',
+            l10n.adminSuggestedProducts,
             style: TextStyle(
               fontSize: 14,
               color: AppColors.textSecondary,
@@ -602,6 +626,7 @@ class RequestDetailPage extends StatelessWidget {
 
   Future<void> _handleAddToCart(BuildContext context, Product product) async {
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    final l10n = AppLocalizations.of(context)!;
     
     try {
       await cartProvider.addToCart(product);
@@ -609,11 +634,11 @@ class RequestDetailPage extends StatelessWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${product.name} added to cart'),
+            content: Text(l10n.addedToCart(product.name)),
             backgroundColor: AppColors.success,
             duration: const Duration(seconds: 2),
             action: SnackBarAction(
-              label: 'View Cart',
+              label: l10n.viewCart,
               textColor: AppColors.textWhite,
               onPressed: () {
                 context.go('/cart');
@@ -626,7 +651,7 @@ class RequestDetailPage extends StatelessWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to add to cart: ${e.toString()}'),
+            content: Text(l10n.failedToAddToCart(e.toString())),
             backgroundColor: AppColors.error,
             duration: const Duration(seconds: 3),
           ),
@@ -768,19 +793,20 @@ class _DeleteDialogContentState extends State<_DeleteDialogContent> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('Delete Request'),
+      title: Text(l10n.deleteRequest),
       content: _isDeleting
-          ? const Column(
+          ? Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 16),
-                Text('Deleting request...'),
+                const CircularProgressIndicator(),
+                const SizedBox(height: 16),
+                Text(l10n.deletingRequest),
               ],
             )
-          : const Text(
-              'Are you sure you want to delete this request? This action cannot be undone.',
+          : Text(
+              l10n.deleteRequestMessage,
             ),
       actions: [
         TextButton(
@@ -788,7 +814,7 @@ class _DeleteDialogContentState extends State<_DeleteDialogContent> {
               ? null
               : () => Navigator.of(widget.dialogContext).pop(),
           child: Text(
-            'Cancel',
+            l10n.cancel,
             style: TextStyle(color: AppColors.textSecondary),
           ),
         ),
@@ -813,8 +839,8 @@ class _DeleteDialogContentState extends State<_DeleteDialogContent> {
                       // Navigate back to requests list after successful deletion
                       if (widget.parentContext.mounted) {
                         ScaffoldMessenger.of(widget.parentContext).showSnackBar(
-                          const SnackBar(
-                            content: Text('Request deleted successfully'),
+                          SnackBar(
+                            content: Text(l10n.requestDeletedSuccessfully),
                             backgroundColor: AppColors.success,
                           ),
                         );
@@ -826,7 +852,7 @@ class _DeleteDialogContentState extends State<_DeleteDialogContent> {
                         ScaffoldMessenger.of(widget.parentContext).showSnackBar(
                           SnackBar(
                             content: Text(
-                              widget.provider.errorMessage ?? 'Failed to delete request',
+                              widget.provider.errorMessage ?? l10n.failedToDeleteRequest,
                             ),
                             backgroundColor: AppColors.error,
                           ),
@@ -843,7 +869,7 @@ class _DeleteDialogContentState extends State<_DeleteDialogContent> {
                       ScaffoldMessenger.of(widget.parentContext).showSnackBar(
                         SnackBar(
                           content: Text(
-                            'Failed to delete request: ${e.toString()}',
+                            l10n.failedToDeleteRequest,
                           ),
                           backgroundColor: AppColors.error,
                         ),
@@ -851,9 +877,9 @@ class _DeleteDialogContentState extends State<_DeleteDialogContent> {
                     }
                   }
                 },
-          child: const Text(
-            'Delete',
-            style: TextStyle(color: AppColors.error),
+          child: Text(
+            l10n.delete,
+            style: const TextStyle(color: AppColors.error),
           ),
         ),
       ],

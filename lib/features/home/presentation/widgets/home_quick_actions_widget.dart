@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class HomeQuickActionsWidget extends StatelessWidget {
   const HomeQuickActionsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Quick Actions',
+          l10n.quickActions,
           style: TextStyle(
             fontSize: 26,
             fontWeight: FontWeight.bold,
@@ -25,8 +27,8 @@ class HomeQuickActionsWidget extends StatelessWidget {
             Expanded(
               child: _buildActionCard(
                 context: context,
-                title: 'Add Request',
-                subtitle: 'Create new request',
+                title: l10n.addRequest,
+                subtitle: l10n.createNewRequest,
                 icon: Icons.add_circle_outline,
                 gradient: [
                   AppColors.primary,
@@ -41,8 +43,8 @@ class HomeQuickActionsWidget extends StatelessWidget {
             Expanded(
               child: _buildActionCard(
                 context: context,
-                title: 'My Requests',
-                subtitle: 'View your requests',
+                title: l10n.myRequests,
+                subtitle: l10n.viewYourRequests,
                 icon: Icons.list_alt_outlined,
                 gradient: [
                   AppColors.primaryLight,

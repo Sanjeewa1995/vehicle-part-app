@@ -4,6 +4,7 @@ import '../../domain/entities/cart_item.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../providers/cart_provider.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class CartItemCardWidget extends StatelessWidget {
   final CartItem cartItem;
@@ -15,6 +16,7 @@ class CartItemCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final product = cartItem.product;
     final unitPrice = double.tryParse(product.price) ?? 0.0;
 
@@ -60,7 +62,7 @@ class CartItemCardWidget extends StatelessWidget {
 
                       // Free Delivery Text
                       Text(
-                        'Eligible for free delivery',
+                        l10n.eligibleForFreeDelivery,
                         style: TextStyle(
                           fontSize: 12,
                           color: AppColors.textTertiary,
@@ -78,7 +80,7 @@ class CartItemCardWidget extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            'In Stock',
+                            l10n.inStock,
                             style: TextStyle(
                               fontSize: 12,
                               color: AppColors.success,

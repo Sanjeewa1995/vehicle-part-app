@@ -6,6 +6,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../domain/entities/billing_address.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class BillingAddressPage extends StatefulWidget {
   final BillingAddress? initialAddress;
@@ -82,6 +83,7 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -113,9 +115,9 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
           shaderCallback: (bounds) => LinearGradient(
             colors: [AppColors.primary, AppColors.primaryLight],
           ).createShader(bounds),
-          child: const Text(
-            'Billing Address',
-            style: TextStyle(
+          child: Text(
+            l10n.billingAddress,
+            style: const TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -204,7 +206,7 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Billing Information',
+                                        l10n.billingInformation,
                                         style: TextStyle(
                                           fontSize: 22,
                                           fontWeight: FontWeight.bold,
@@ -213,7 +215,7 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
-                                        'Enter your billing details',
+                                        l10n.enterBillingDetails,
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: AppColors.textSecondary,
@@ -258,7 +260,7 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
-                                      'Personal Information',
+                                      l10n.personalInformation,
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,
@@ -273,10 +275,10 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
                                     Expanded(
                                       child: TextFormField(
                                         controller: _firstNameController,
-                                        decoration: const InputDecoration(
-                                          labelText: 'First Name *',
-                                          hintText: 'John',
-                                          prefixIcon: Icon(Icons.person_outline),
+                                        decoration: InputDecoration(
+                                          labelText: '${l10n.firstName} *',
+                                          hintText: l10n.enterFirstName,
+                                          prefixIcon: const Icon(Icons.person_outline),
                                         ),
                                         textCapitalization: TextCapitalization.words,
                                         validator: Validators.validateRequired,
@@ -286,10 +288,10 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
                                     Expanded(
                                       child: TextFormField(
                                         controller: _lastNameController,
-                                        decoration: const InputDecoration(
-                                          labelText: 'Last Name *',
-                                          hintText: 'Doe',
-                                          prefixIcon: Icon(Icons.person_outline),
+                                        decoration: InputDecoration(
+                                          labelText: '${l10n.lastName} *',
+                                          hintText: l10n.enterLastName,
+                                          prefixIcon: const Icon(Icons.person_outline),
                                         ),
                                         textCapitalization: TextCapitalization.words,
                                         validator: Validators.validateRequired,
@@ -300,10 +302,10 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
                                 const SizedBox(height: 16),
                                 TextFormField(
                                   controller: _emailController,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Email *',
-                                    hintText: 'john.doe@example.com',
-                                    prefixIcon: Icon(Icons.email_outlined),
+                                  decoration: InputDecoration(
+                                    labelText: '${l10n.emailAddress} *',
+                                    hintText: l10n.enterYourEmail,
+                                    prefixIcon: const Icon(Icons.email_outlined),
                                   ),
                                   keyboardType: TextInputType.emailAddress,
                                   validator: Validators.validateEmail,
@@ -311,10 +313,10 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
                                 const SizedBox(height: 16),
                                 TextFormField(
                                   controller: _phoneController,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Phone Number *',
-                                    hintText: '+94 77 123 4567',
-                                    prefixIcon: Icon(Icons.phone_outlined),
+                                  decoration: InputDecoration(
+                                    labelText: '${l10n.phoneNumber} *',
+                                    hintText: l10n.enterPhoneNumber,
+                                    prefixIcon: const Icon(Icons.phone_outlined),
                                   ),
                                   keyboardType: TextInputType.phone,
                                   inputFormatters: [
@@ -322,10 +324,10 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
                                   ],
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Phone number is required';
+                                      return l10n.phoneNumberRequired;
                                     }
                                     if (value.length < 9) {
-                                      return 'Please enter a valid phone number';
+                                      return l10n.pleaseEnterValidPhoneNumber;
                                     }
                                     return null;
                                   },
@@ -365,7 +367,7 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
-                                      'Address Information',
+                                      l10n.addressInformation,
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,
@@ -377,10 +379,10 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
                                 const SizedBox(height: 16),
                                 TextFormField(
                                   controller: _addressController,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Street Address *',
-                                    hintText: 'House number, street name',
-                                    prefixIcon: Icon(Icons.home_outlined),
+                                  decoration: InputDecoration(
+                                    labelText: '${l10n.streetAddress} *',
+                                    hintText: l10n.houseNumberStreetName,
+                                    prefixIcon: const Icon(Icons.home_outlined),
                                   ),
                                   textCapitalization: TextCapitalization.words,
                                   validator: Validators.validateRequired,
@@ -388,10 +390,10 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
                                 const SizedBox(height: 16),
                                 TextFormField(
                                   controller: _cityController,
-                                  decoration: const InputDecoration(
-                                    labelText: 'City *',
-                                    hintText: 'Colombo',
-                                    prefixIcon: Icon(Icons.location_city_outlined),
+                                  decoration: InputDecoration(
+                                    labelText: '${l10n.city} *',
+                                    hintText: l10n.city,
+                                    prefixIcon: const Icon(Icons.location_city_outlined),
                                   ),
                                   textCapitalization: TextCapitalization.words,
                                   validator: Validators.validateRequired,
@@ -399,20 +401,20 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
                                 const SizedBox(height: 16),
                                 TextFormField(
                                   controller: _stateController,
-                                  decoration: const InputDecoration(
-                                    labelText: 'State/Province (Optional)',
-                                    hintText: 'Western Province',
-                                    prefixIcon: Icon(Icons.map_outlined),
+                                  decoration: InputDecoration(
+                                    labelText: l10n.stateProvinceOptional,
+                                    hintText: l10n.provinceStateHint,
+                                    prefixIcon: const Icon(Icons.map_outlined),
                                   ),
                                   textCapitalization: TextCapitalization.words,
                                 ),
                                 const SizedBox(height: 16),
                                 TextFormField(
                                   controller: _countryController,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Country *',
-                                    hintText: 'Sri Lanka',
-                                    prefixIcon: Icon(Icons.public_outlined),
+                                  decoration: InputDecoration(
+                                    labelText: '${l10n.country} *',
+                                    hintText: l10n.selectCountry,
+                                    prefixIcon: const Icon(Icons.public_outlined),
                                   ),
                                   textCapitalization: TextCapitalization.words,
                                   validator: Validators.validateRequired,
@@ -455,7 +457,7 @@ class _BillingAddressPageState extends State<BillingAddressPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Continue',
+                                l10n.continueButton,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

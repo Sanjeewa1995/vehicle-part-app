@@ -7,6 +7,7 @@ import 'package:vehicle_part_app/core/di/service_locator.dart';
 import 'package:vehicle_part_app/core/services/image_compression_service.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import 'package:vehicle_part_app/shared/widgets/loading_indicator.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../providers/create_request_provider.dart';
 import '../widgets/beautiful_stepper_widget.dart';
 import '../widgets/step1_form_widget.dart';
@@ -420,13 +421,18 @@ class _AddRequestPageState extends State<AddRequestPage> {
                 shaderCallback: (bounds) => LinearGradient(
                   colors: [AppColors.primary, AppColors.primaryLight],
                 ).createShader(bounds),
-                child: const Text(
-                  'Request Spare Part',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                child: Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    return Text(
+                      l10n.requestSparePartTitle,
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

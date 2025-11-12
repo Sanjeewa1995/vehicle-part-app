@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import 'package:vehicle_part_app/core/di/service_locator.dart';
 import 'package:vehicle_part_app/shared/widgets/bottom_app_bar_v2_floating.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../providers/request_list_provider.dart';
 import '../widgets/loading_state_widget.dart';
 import '../widgets/error_state_widget.dart';
@@ -31,6 +32,7 @@ class _MyRequestListState extends State<MyRequestList> {
             provider.loadRequests(refresh: true);
           });
         }
+        final l10n = AppLocalizations.of(context)!;
         return Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
@@ -40,9 +42,9 @@ class _MyRequestListState extends State<MyRequestList> {
             icon: const Icon(Icons.chevron_left, color: AppColors.textPrimary),
             onPressed: () => context.pop(),
           ),
-          title: const Text(
-            'My Requests',
-            style: TextStyle(
+          title: Text(
+            l10n.myRequests,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
@@ -74,8 +76,9 @@ class _MyRequestListState extends State<MyRequestList> {
 
             if (provider.status == RequestListStatus.error &&
                 provider.requests.isEmpty) {
+              final l10n = AppLocalizations.of(context)!;
               return ErrorStateWidget(
-                errorMessage: provider.errorMessage ?? 'Failed to load requests',
+                errorMessage: provider.errorMessage ?? l10n.failedToLoadRequestDetails,
               );
             }
 

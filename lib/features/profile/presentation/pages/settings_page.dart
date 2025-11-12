@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import 'package:vehicle_part_app/shared/widgets/bottom_app_bar_v2_floating.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
+import '../../../../core/providers/locale_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vehicle_part_app/core/di/service_locator.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text(
-          'Settings',
-          style: TextStyle(
+        title: Text(
+          l10n.settings,
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
@@ -60,6 +65,7 @@ class SettingsPage extends StatelessWidget {
   }
 
   Widget _buildProfileSection(BuildContext context, user) {
+    final l10n = AppLocalizations.of(context)!;
     final firstName = user?.firstName ?? 'User';
     final lastName = user?.lastName ?? '';
     final email = user?.email ?? 'user@example.com';
@@ -71,7 +77,7 @@ class SettingsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'PROFILE',
+            l10n.profile,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
@@ -172,13 +178,14 @@ class SettingsPage extends StatelessWidget {
   }
 
   Widget _buildAccountSection(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'ACCOUNT',
+            l10n.account,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
@@ -203,8 +210,8 @@ class SettingsPage extends StatelessWidget {
               children: [
                 _SettingItem(
                   icon: Icons.person_outline,
-                  title: 'Edit Profile',
-                  subtitle: 'Update your personal information',
+                  title: l10n.editProfile,
+                  subtitle: l10n.editProfileSubtitle,
                   onTap: () {
                     context.push('/profile/edit');
                   },
@@ -212,19 +219,28 @@ class SettingsPage extends StatelessWidget {
                 _buildDivider(),
                 _SettingItem(
                   icon: Icons.lock_outline,
-                  title: 'Change Password',
-                  subtitle: 'Update your password',
+                  title: l10n.changePassword,
+                  subtitle: l10n.changePasswordSubtitle,
                   onTap: () {
                     context.push('/profile/change-password');
                   },
                 ),
                 _buildDivider(),
                 _SettingItem(
-                  icon: Icons.shield_outlined,
-                  title: 'Privacy & Security',
-                  subtitle: 'Manage your privacy settings',
+                  icon: Icons.language,
+                  title: l10n.language,
+                  subtitle: l10n.languageSubtitle,
                   onTap: () {
-                    _showComingSoonDialog(context, 'Privacy & Security');
+                    _showLanguageDialog(context);
+                  },
+                ),
+                _buildDivider(),
+                _SettingItem(
+                  icon: Icons.shield_outlined,
+                  title: l10n.privacySecurity,
+                  subtitle: l10n.privacySecuritySubtitle,
+                  onTap: () {
+                    _showComingSoonDialog(context, l10n.privacySecurity);
                   },
                 ),
               ],
@@ -237,13 +253,14 @@ class SettingsPage extends StatelessWidget {
   }
 
   Widget _buildSupportSection(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'SUPPORT',
+            l10n.support,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
@@ -268,35 +285,35 @@ class SettingsPage extends StatelessWidget {
               children: [
                 _SettingItem(
                   icon: Icons.help_outline,
-                  title: 'Help & Support',
-                  subtitle: 'Get help and contact support',
+                  title: l10n.helpSupport,
+                  subtitle: l10n.helpSupportSubtitle,
                   onTap: () {
-                    _showComingSoonDialog(context, 'Help & Support');
+                    _showComingSoonDialog(context, l10n.helpSupport);
                   },
                 ),
                 _buildDivider(),
                 _SettingItem(
                   icon: Icons.description_outlined,
-                  title: 'Privacy Policy',
-                  subtitle: 'Read our privacy policy',
+                  title: l10n.privacyPolicy,
+                  subtitle: l10n.privacyPolicySubtitle,
                   onTap: () {
-                    _showComingSoonDialog(context, 'Privacy Policy');
+                    _showComingSoonDialog(context, l10n.privacyPolicy);
                   },
                 ),
                 _buildDivider(),
                 _SettingItem(
                   icon: Icons.description_outlined,
-                  title: 'Terms of Service',
-                  subtitle: 'Read our terms of service',
+                  title: l10n.termsOfService,
+                  subtitle: l10n.termsOfServiceSubtitle,
                   onTap: () {
-                    _showComingSoonDialog(context, 'Terms of Service');
+                    _showComingSoonDialog(context, l10n.termsOfService);
                   },
                 ),
                 _buildDivider(),
                 _SettingItem(
                   icon: Icons.info_outline,
-                  title: 'About',
-                  subtitle: 'App version and information',
+                  title: l10n.about,
+                  subtitle: l10n.aboutSubtitle,
                   onTap: () {
                     _showAboutDialog(context);
                   },
@@ -314,6 +331,7 @@ class SettingsPage extends StatelessWidget {
     BuildContext context,
     AuthProvider authProvider,
   ) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Container(
@@ -330,8 +348,8 @@ class SettingsPage extends StatelessWidget {
         ),
         child: _SettingItem(
           icon: Icons.logout,
-          title: 'Logout',
-          subtitle: 'Sign out of your account',
+          title: l10n.logout,
+          subtitle: l10n.logoutSubtitle,
           onTap: () {
             _showLogoutDialog(context, authProvider);
           },
@@ -351,19 +369,66 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
+  void _showLanguageDialog(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+    final localeProvider = Provider.of<LocaleProvider>(context, listen: false);
+    final prefs = ServiceLocator.get<SharedPreferences>();
+    
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.selectLanguage),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: LocaleProvider.supportedLocales.map((locale) {
+            final isSelected = localeProvider.locale == locale;
+            return RadioListTile<Locale>(
+              title: Text(
+                localeProvider.getLanguageName(locale.languageCode),
+                style: TextStyle(
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
+              value: locale,
+              groupValue: localeProvider.locale,
+              onChanged: (Locale? value) async {
+                if (value != null) {
+                  await localeProvider.setLocale(value, prefs);
+                  if (dialogContext.mounted) {
+                    Navigator.pop(dialogContext);
+                  }
+                }
+              },
+            );
+          }).toList(),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primary,
+            ),
+            child: Text(l10n.ok),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _showComingSoonDialog(BuildContext context, String feature) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Coming Soon'),
-        content: Text('$feature will be available soon.'),
+        title: Text(l10n.comingSoon),
+        content: Text(l10n.comingSoonMessage(feature)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
             style: TextButton.styleFrom(
               foregroundColor: AppColors.primary,
             ),
-            child: const Text('OK'),
+            child: Text(l10n.ok),
           ),
         ],
       ),
@@ -371,22 +436,19 @@ class SettingsPage extends StatelessWidget {
   }
 
   void _showAboutDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('About M AUTO-ZONE'),
-        content: const Text(
-          'Version 1.0.0\n\n'
-          'Your trusted partner for quality auto parts.\n\n'
-          '© 2025 M AUTO-ZONE. All rights reserved.',
-        ),
+        title: Text(l10n.aboutTitle),
+        content: Text(l10n.aboutMessage),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
             style: TextButton.styleFrom(
               foregroundColor: AppColors.primary,
             ),
-            child: const Text('OK'),
+            child: Text(l10n.ok),
           ),
         ],
       ),
@@ -394,16 +456,17 @@ class SettingsPage extends StatelessWidget {
   }
 
   void _showLogoutDialog(BuildContext context, AuthProvider authProvider) {
+    final l10n = AppLocalizations.of(context)!;
     final router = GoRouter.of(context);
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout?'),
+        title: Text(l10n.logoutTitle),
+        content: Text(l10n.logoutMessage),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -425,7 +488,7 @@ class SettingsPage extends StatelessWidget {
             style: TextButton.styleFrom(
               foregroundColor: AppColors.error,
             ),
-            child: const Text('Logout'),
+            child: Text(l10n.logout),
           ),
         ],
       ),
@@ -517,4 +580,3 @@ class _SettingItem extends StatelessWidget {
     );
   }
 }
-

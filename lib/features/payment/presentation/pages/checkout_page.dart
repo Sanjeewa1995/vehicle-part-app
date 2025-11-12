@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../domain/entities/billing_address.dart';
@@ -23,6 +24,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.backgroundSecondary,
       body: SafeArea(
@@ -102,52 +104,57 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                            color: AppColors.primaryUltraLight,
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: Icon(
-                                            Icons.location_on,
-                                            color: AppColors.primary,
-                                            size: 20,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 12),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Billing Address',
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColors.textPrimary,
-                                              ),
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.primaryUltraLight,
+                                              borderRadius: BorderRadius.circular(10),
                                             ),
-                                            const SizedBox(height: 4),
-                                            Text(
-                                              _billingAddress != null &&
-                                                      _billingAddress!.address.isNotEmpty
-                                                  ? _billingAddress!.fullAddress
-                                                  : 'Tap to add billing address',
-                                              style: TextStyle(
-                                                fontSize: 13,
-                                                color: _billingAddress != null &&
-                                                        _billingAddress!.address.isNotEmpty
-                                                    ? AppColors.textSecondary
-                                                    : AppColors.textLight,
-                                              ),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
+                                            child: Icon(
+                                              Icons.location_on,
+                                              color: AppColors.primary,
+                                              size: 20,
                                             ),
-                                          ],
-                                        ),
-                                      ],
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  l10n.billingAddress,
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: AppColors.textPrimary,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 4),
+                                                Text(
+                                                  _billingAddress != null &&
+                                                          _billingAddress!.address.isNotEmpty
+                                                      ? _billingAddress!.fullAddress
+                                                      : l10n.fillBillingAddressFields,
+                                                  style: TextStyle(
+                                                    fontSize: 13,
+                                                    color: _billingAddress != null &&
+                                                            _billingAddress!.address.isNotEmpty
+                                                        ? AppColors.textSecondary
+                                                        : AppColors.textLight,
+                                                  ),
+                                                  maxLines: 2,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
+                                    const SizedBox(width: 8),
                                     Icon(
                                       Icons.arrow_forward_ios,
                                       size: 16,
@@ -198,10 +205,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
     BuildContext context,
     CartProvider cartProvider,
   ) async {
+    final l10n = AppLocalizations.of(context)!;
     if (_billingAddress == null || _billingAddress!.address.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Please add your billing address'),
+          content: Text(l10n.fillBillingAddressFields),
           backgroundColor: AppColors.error,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
@@ -230,9 +238,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
       }
     } catch (e) {
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error: ${e.toString()}'),
+            content: Text(l10n.errorOccurred(e.toString())),
             backgroundColor: AppColors.error,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(

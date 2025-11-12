@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../shared/widgets/app_text_field.dart';
 import '../../../../shared/widgets/app_button.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../providers/auth_provider.dart';
 
 class LoginCardWidget extends StatelessWidget {
@@ -20,28 +21,29 @@ class LoginCardWidget extends StatelessWidget {
     required this.onLogin,
   });
 
-  String? _validateEmail(String? value) {
+  String? _validateEmail(String? value, AppLocalizations l10n) {
     if (value == null || value.isEmpty) {
-      return 'Email is required';
+      return l10n.emailRequired;
     }
     if (!value.contains('@') || !value.contains('.')) {
-      return 'Please enter a valid email';
+      return l10n.validEmailRequired;
     }
     return null;
   }
 
-  String? _validatePassword(String? value) {
+  String? _validatePassword(String? value, AppLocalizations l10n) {
     if (value == null || value.isEmpty) {
-      return 'Password is required';
+      return l10n.passwordRequired;
     }
     if (value.length < 6) {
-      return 'Password must be at least 6 characters';
+      return l10n.passwordMinLength;
     }
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.background,
@@ -63,7 +65,7 @@ class LoginCardWidget extends StatelessWidget {
             children: [
               // Welcome Text
               Text(
-                'Welcome Back',
+                l10n.welcomeBack,
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -72,7 +74,7 @@ class LoginCardWidget extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Sign in to continue to your account',
+                l10n.signInToContinue,
                 style: TextStyle(
                   fontSize: 14,
                   color: AppColors.textSecondary,
@@ -83,11 +85,11 @@ class LoginCardWidget extends StatelessWidget {
               // Email Field
               AppTextField(
                 controller: emailController,
-                label: 'Email Address',
-                hint: 'Enter your email',
+                label: l10n.emailAddress,
+                hint: l10n.enterYourEmail,
                 type: AppTextFieldType.email,
                 prefixIcon: Icons.email_outlined,
-                validator: _validateEmail,
+                validator: (value) => _validateEmail(value, l10n),
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 20),
@@ -95,11 +97,11 @@ class LoginCardWidget extends StatelessWidget {
               // Password Field
               AppTextField(
                 controller: passwordController,
-                label: 'Password',
-                hint: 'Enter your password',
+                label: l10n.password,
+                hint: l10n.enterYourPassword,
                 type: AppTextFieldType.password,
                 prefixIcon: Icons.lock_outlined,
-                validator: _validatePassword,
+                validator: (value) => _validatePassword(value, l10n),
                 textInputAction: TextInputAction.done,
                 onSubmitted: (_) => onLogin(),
               ),
@@ -113,7 +115,7 @@ class LoginCardWidget extends StatelessWidget {
                     context.go('/forgot-password');
                   },
                   child: Text(
-                    'Forgot Password?',
+                    l10n.forgotPassword,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -128,7 +130,7 @@ class LoginCardWidget extends StatelessWidget {
               Consumer<AuthProvider>(
                 builder: (context, authProvider, child) {
                   return AppButton(
-                    text: 'Sign In',
+                    text: l10n.signIn,
                     onPressed: authProvider.status == AuthStatus.loading
                         ? null
                         : onLogin,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class CheckoutSummaryWidget extends StatelessWidget {
   final CartProvider cartProvider;
@@ -17,6 +18,7 @@ class CheckoutSummaryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.background,
@@ -88,7 +90,7 @@ class CheckoutSummaryWidget extends StatelessWidget {
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                'Items',
+                                l10n.items,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: AppColors.textSecondary,
@@ -97,7 +99,7 @@ class CheckoutSummaryWidget extends StatelessWidget {
                             ],
                           ),
                           Text(
-                            '${cartProvider.itemCount} ${cartProvider.itemCount == 1 ? 'item' : 'items'}',
+                            '${cartProvider.itemCount} ${cartProvider.itemCount == 1 ? l10n.item : l10n.items}',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -117,7 +119,7 @@ class CheckoutSummaryWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Total Amount',
+                            l10n.totalAmount,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -169,7 +171,7 @@ class CheckoutSummaryWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Proceed to Payment',
+                                l10n.proceedToPayment,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

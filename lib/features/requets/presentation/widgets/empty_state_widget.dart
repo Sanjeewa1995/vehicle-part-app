@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../providers/request_list_provider.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   final RequestListProvider provider;
@@ -13,6 +14,7 @@ class EmptyStateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return RefreshIndicator(
       onRefresh: () => provider.refresh(),
       child: SingleChildScrollView(
@@ -40,7 +42,7 @@ class EmptyStateWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'No Requests Found',
+                    l10n.noRequestsFound,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -49,7 +51,7 @@ class EmptyStateWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'You haven\'t made any spare part requests yet.',
+                    l10n.noRequestsFoundMessage,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
@@ -64,9 +66,9 @@ class EmptyStateWidget extends StatelessWidget {
                       context.go('/requests/add');
                     },
                     icon: const Icon(Icons.add, color: AppColors.textWhite),
-                    label: const Text(
-                      'Create New Request',
-                      style: TextStyle(
+                    label: Text(
+                      l10n.createNewRequest,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textWhite,

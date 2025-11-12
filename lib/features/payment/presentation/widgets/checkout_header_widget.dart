@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class CheckoutHeaderWidget extends StatelessWidget {
   const CheckoutHeaderWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
@@ -38,7 +40,7 @@ class CheckoutHeaderWidget extends StatelessWidget {
           // Title
           Expanded(
             child: Text(
-              'Checkout',
+              l10n.checkout,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

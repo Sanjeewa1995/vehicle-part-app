@@ -3,6 +3,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
 import '../../../cart/domain/entities/cart_item.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class OrderSummaryCard extends StatelessWidget {
   final CartProvider cartProvider;
@@ -14,6 +15,7 @@ class OrderSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.background,
@@ -55,7 +57,7 @@ class OrderSummaryCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  'Order Summary',
+                  l10n.orderSummary,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -68,7 +70,7 @@ class OrderSummaryCard extends StatelessWidget {
 
             // Items List
             ...cartProvider.items.map((item) {
-              return _buildOrderItem(item);
+              return _buildOrderItem(context, item);
             }).toList(),
           ],
         ),
@@ -76,7 +78,8 @@ class OrderSummaryCard extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderItem(CartItem item) {
+  Widget _buildOrderItem(BuildContext context, CartItem item) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       child: Row(
@@ -168,7 +171,7 @@ class OrderSummaryCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
-                        'Qty: ${item.quantity}',
+                        '${l10n.quantity}: ${item.quantity}',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
