@@ -10,7 +10,7 @@ import '../../features/auth/presentation/pages/signup_page.dart';
 import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/auth/presentation/pages/otp_verification_page.dart';
 import '../../features/auth/presentation/pages/reset_password_page.dart';
-import '../../features/parts/presentation/pages/parts_list_page.dart';
+import '../../features/products/presentation/pages/product_list_page.dart';
 import '../../features/cart/presentation/pages/cart_page.dart';
 import '../../features/requets/presentation/pages/my_request_list_page.dart';
 import '../../features/requets/presentation/pages/request_detail_page.dart';
@@ -143,7 +143,7 @@ class AppRouter {
       GoRoute(
         path: '/parts',
         name: 'parts',
-        builder: (context, state) => const PartsListPage(),
+        builder: (context, state) => const ProductListPage(),
       ),
       GoRoute(
         path: '/cart',

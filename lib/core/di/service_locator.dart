@@ -27,6 +27,11 @@ import '../../features/cart/domain/usecases/add_cart_item_usecase.dart';
 import '../../features/cart/domain/usecases/update_cart_item_usecase.dart';
 import '../../features/cart/domain/usecases/delete_cart_item_usecase.dart';
 import '../../features/cart/domain/usecases/clear_cart_usecase.dart';
+import '../../features/products/data/datasources/remote/product_remote_datasource.dart';
+import '../../features/products/data/repositories/product_repository_impl.dart';
+import '../../features/products/domain/repositories/product_repository.dart';
+import '../../features/products/domain/usecases/get_products_usecase.dart';
+import '../../features/products/presentation/providers/product_list_provider.dart';
 import '../network/api_client.dart';
 import '../services/token_service.dart';
 import '../services/image_compression_service.dart';
@@ -147,6 +152,25 @@ class ServiceLocator {
       () => ClearCartUseCase(getIt<CartRepository>()),
     );
 
+    // Product Data Sources
+    getIt.registerLazySingleton<ProductRemoteDataSource>(
+      () => ProductRemoteDataSourceImpl(
+        apiClient: getIt<ApiClient>(),
+      ),
+    );
+
+    // Product Repositories
+    getIt.registerLazySingleton<ProductRepository>(
+      () => ProductRepositoryImpl(
+        remoteDataSource: getIt<ProductRemoteDataSource>(),
+      ),
+    );
+
+    // Product Use Cases
+    getIt.registerLazySingleton(
+      () => GetProductsUseCase(getIt<ProductRepository>()),
+    );
+
     // Providers
     getIt.registerFactory<AuthProvider>(
       () => AuthProvider(
@@ -184,6 +208,12 @@ class ServiceLocator {
         getIt<UpdateCartItemUseCase>(),
         getIt<DeleteCartItemUseCase>(),
         getIt<ClearCartUseCase>(),
+      ),
+    );
+
+    getIt.registerFactory<ProductListProvider>(
+      () => ProductListProvider(
+        getProductsUseCase: getIt<GetProductsUseCase>(),
       ),
     );
   }

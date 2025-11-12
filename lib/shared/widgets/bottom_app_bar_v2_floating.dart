@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
-import '../../features/cart/presentation/providers/cart_provider.dart';
 import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 /// Floating Pill-Style Bottom Navigation Bar
@@ -35,16 +33,25 @@ class _AppBottomNavigationBarV2FloatingState
   }
 
   void _onRouteChanged() {
-    _updateCurrentRoute();
+    if (mounted) {
+      _updateCurrentRoute();
+    }
   }
 
   void _updateCurrentRoute() {
-    final router = GoRouter.of(context);
-    final location = router.routerDelegate.currentConfiguration.uri.path;
-    if (_currentRoute != location) {
-      setState(() {
-        _currentRoute = location;
-      });
+    if (!mounted) return;
+    try {
+      final router = GoRouter.of(context);
+      final location = router.routerDelegate.currentConfiguration.uri.path;
+      if (_currentRoute != location) {
+        if (mounted) {
+          setState(() {
+            _currentRoute = location;
+          });
+        }
+      }
+    } catch (e) {
+      // Widget might be disposed, ignore
     }
   }
 
@@ -91,19 +98,12 @@ class _AppBottomNavigationBarV2FloatingState
               route: '/orders',
               isActive: _currentRoute == '/orders',
             ),
-            Consumer<CartProvider>(
-              builder: (context, cartProvider, child) {
-                return _buildNavItem(
-                  icon: Icons.shopping_cart_outlined,
-                  activeIcon: Icons.shopping_cart_rounded,
-                  label: l10n.cart,
-                  route: '/cart',
-                  isActive: _currentRoute == '/cart',
-                  badgeCount: cartProvider.itemCount > 0
-                      ? cartProvider.itemCount
-                      : null,
-                );
-              },
+            _buildNavItem(
+              icon: Icons.shopping_bag_outlined,
+              activeIcon: Icons.shopping_bag_rounded,
+              label: l10n.products,
+              route: '/parts',
+              isActive: _currentRoute == '/parts',
             ),
             _buildNavItem(
               icon: Icons.settings_outlined,
