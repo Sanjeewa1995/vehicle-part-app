@@ -1737,6 +1737,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Part Details'**
   String get partDetails;
+
+  /// Add to cart button text
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Cart'**
+  String get addToCart;
+
+  /// In cart button text
+  ///
+  /// In en, this message translates to:
+  /// **'In Cart'**
+  String get inCart;
+
+  /// Related request label
+  ///
+  /// In en, this message translates to:
+  /// **'Related Request'**
+  String get relatedRequest;
+
+  /// Product ID label
+  ///
+  /// In en, this message translates to:
+  /// **'ID'**
+  String get productId;
+
+  /// No products found message
+  ///
+  /// In en, this message translates to:
+  /// **'No Products Found'**
+  String get noProductsFound;
+
+  /// No products available message
+  ///
+  /// In en, this message translates to:
+  /// **'There are no products available at the moment.'**
+  String get noProductsAvailable;
+
+  /// Loading products message
+  ///
+  /// In en, this message translates to:
+  /// **'Loading products...'**
+  String get loadingProducts;
 }
 
 class _AppLocalizationsDelegate

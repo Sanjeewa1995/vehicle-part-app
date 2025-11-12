@@ -877,4 +877,25 @@ class AppLocalizationsSi extends AppLocalizations {
 
   @override
   String get partDetails => 'කොටස් තොරතුරු';
+
+  @override
+  String get addToCart => 'කරත්තයට එක් කරන්න';
+
+  @override
+  String get inCart => 'කරත්තයේ';
+
+  @override
+  String get relatedRequest => 'අදාළ ඉල්ලීම';
+
+  @override
+  String get productId => 'හැඳුනුම්පත';
+
+  @override
+  String get noProductsFound => 'නිෂ්පාදන හමු නොවීය';
+
+  @override
+  String get noProductsAvailable => 'මේ මොහොතේ නිෂ්පාදන නොමැත.';
+
+  @override
+  String get loadingProducts => 'නිෂ්පාදන ලබා ගනිමින්...';
 }

@@ -359,5 +359,12 @@
     }
   },
   "vehicleInfo": "වාහන තොරතුරු",
-  "partDetails": "කොටස් තොරතුරු"
+  "partDetails": "කොටස් තොරතුරු",
+  "addToCart": "කරත්තයට එක් කරන්න",
+  "inCart": "කරත්තයේ",
+  "relatedRequest": "අදාළ ඉල්ලීම",
+  "productId": "හැඳුනුම්පත",
+  "noProductsFound": "නිෂ්පාදන හමු නොවීය",
+  "noProductsAvailable": "මේ මොහොතේ නිෂ්පාදන නොමැත.",
+  "loadingProducts": "නිෂ්පාදන ලබා ගනිමින්..."
 }

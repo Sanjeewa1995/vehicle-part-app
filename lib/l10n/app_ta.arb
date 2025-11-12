@@ -359,5 +359,12 @@
     }
   },
   "vehicleInfo": "வாகன தகவல்",
-  "partDetails": "பாக விவரங்கள்"
+  "partDetails": "பாக விவரங்கள்",
+  "addToCart": "கார்ட்டில் சேர்",
+  "inCart": "கார்ட்டில் உள்ளது",
+  "relatedRequest": "தொடர்புடைய கோரிக்கை",
+  "productId": "ஐடி",
+  "noProductsFound": "தயாரிப்புகள் கிடைக்கவில்லை",
+  "noProductsAvailable": "இந்த நேரத்தில் தயாரிப்புகள் எதுவும் இல்லை.",
+  "loadingProducts": "தயாரிப்புகளை ஏற்றுகிறது..."
 }

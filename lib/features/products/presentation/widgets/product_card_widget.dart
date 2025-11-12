@@ -6,6 +6,7 @@ import '../../domain/entities/store_product.dart';
 import '../../../requets/domain/entities/product.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
 import '../../../../shared/widgets/app_button.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class ProductCardWidget extends StatelessWidget {
   final StoreProduct product;
@@ -30,6 +31,7 @@ class ProductCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -147,9 +149,9 @@ class ProductCardWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'DESCRIPTION',
-                      style: TextStyle(
+                    Text(
+                      l10n.descriptionLabel.toUpperCase(),
+                      style: const TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textSecondary,
@@ -185,9 +187,9 @@ class ProductCardWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'RELATED REQUEST',
-                      style: TextStyle(
+                    Text(
+                      l10n.relatedRequest.toUpperCase(),
+                      style: const TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textSecondary,
@@ -260,26 +262,28 @@ class ProductCardWidget extends StatelessWidget {
             const Divider(height: 1, color: AppColors.borderLight),
             const SizedBox(height: 12),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'ID: ${product.id}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    color: AppColors.textTertiary,
+                Expanded(
+                  child: Text(
+                    '${l10n.productId}: ${product.id}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      color: AppColors.textTertiary,
+                    ),
                   ),
                 ),
+                const SizedBox(width: 8),
                 Consumer<CartProvider>(
                   builder: (context, cartProvider, child) {
                     final isInCart = cartProvider.isInCart(product.id);
                     final isLoading = cartProvider.isLoading;
                     
-                    return SizedBox(
-                      width: 130,
+                    return Expanded(
+                      flex: 2,
                       child: AppButton(
-                        text: isInCart ? 'In Cart' : 'Add to Cart',
+                        text: isInCart ? l10n.inCart : l10n.addToCart,
                         onPressed: isLoading || isInCart
                             ? null
                             : () => _handleAddToCart(context, product),
@@ -300,6 +304,7 @@ class ProductCardWidget extends StatelessWidget {
   }
 
   Future<void> _handleAddToCart(BuildContext context, StoreProduct storeProduct) async {
+    final l10n = AppLocalizations.of(context)!;
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     
     // Convert StoreProduct to Product
@@ -317,11 +322,11 @@ class ProductCardWidget extends StatelessWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${product.name} added to cart'),
+            content: Text(l10n.addedToCart(product.name)),
             backgroundColor: AppColors.success,
             duration: const Duration(seconds: 2),
             action: SnackBarAction(
-              label: 'View Cart',
+              label: l10n.viewCart,
               textColor: AppColors.textWhite,
               onPressed: () {
                 // Navigate directly - snackbar will dismiss automatically
@@ -335,7 +340,7 @@ class ProductCardWidget extends StatelessWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to add to cart: ${e.toString()}'),
+            content: Text(l10n.failedToAddToCart(e.toString())),
             backgroundColor: AppColors.error,
             duration: const Duration(seconds: 3),
           ),

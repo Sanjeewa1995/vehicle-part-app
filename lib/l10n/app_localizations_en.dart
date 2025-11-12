@@ -875,4 +875,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get partDetails => 'Part Details';
+
+  @override
+  String get addToCart => 'Add to Cart';
+
+  @override
+  String get inCart => 'In Cart';
+
+  @override
+  String get relatedRequest => 'Related Request';
+
+  @override
+  String get productId => 'ID';
+
+  @override
+  String get noProductsFound => 'No Products Found';
+
+  @override
+  String get noProductsAvailable =>
+      'There are no products available at the moment.';
+
+  @override
+  String get loadingProducts => 'Loading products...';
 }

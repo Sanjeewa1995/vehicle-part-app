@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../providers/product_list_provider.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class ProductEmptyStateWidget extends StatelessWidget {
   final ProductListProvider provider;
@@ -12,6 +13,7 @@ class ProductEmptyStateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return RefreshIndicator(
       onRefresh: () => provider.refresh(),
       child: SingleChildScrollView(
@@ -39,7 +41,7 @@ class ProductEmptyStateWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'No Products Found',
+                    l10n.noProductsFound,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -48,7 +50,7 @@ class ProductEmptyStateWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'There are no products available at the moment.',
+                    l10n.noProductsAvailable,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,

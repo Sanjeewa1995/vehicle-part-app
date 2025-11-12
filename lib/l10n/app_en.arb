@@ -1168,5 +1168,33 @@
   "partDetails": "Part Details",
   "@partDetails": {
     "description": "Part details step label"
+  },
+  "addToCart": "Add to Cart",
+  "@addToCart": {
+    "description": "Add to cart button text"
+  },
+  "inCart": "In Cart",
+  "@inCart": {
+    "description": "In cart button text"
+  },
+  "relatedRequest": "Related Request",
+  "@relatedRequest": {
+    "description": "Related request label"
+  },
+  "productId": "ID",
+  "@productId": {
+    "description": "Product ID label"
+  },
+  "noProductsFound": "No Products Found",
+  "@noProductsFound": {
+    "description": "No products found message"
+  },
+  "noProductsAvailable": "There are no products available at the moment.",
+  "@noProductsAvailable": {
+    "description": "No products available message"
+  },
+  "loadingProducts": "Loading products...",
+  "@loadingProducts": {
+    "description": "Loading products message"
   }
 }

@@ -891,4 +891,26 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get partDetails => 'பாக விவரங்கள்';
+
+  @override
+  String get addToCart => 'கார்ட்டில் சேர்';
+
+  @override
+  String get inCart => 'கார்ட்டில் உள்ளது';
+
+  @override
+  String get relatedRequest => 'தொடர்புடைய கோரிக்கை';
+
+  @override
+  String get productId => 'ஐடி';
+
+  @override
+  String get noProductsFound => 'தயாரிப்புகள் கிடைக்கவில்லை';
+
+  @override
+  String get noProductsAvailable =>
+      'இந்த நேரத்தில் தயாரிப்புகள் எதுவும் இல்லை.';
+
+  @override
+  String get loadingProducts => 'தயாரிப்புகளை ஏற்றுகிறது...';
 }
