@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../shared/widgets/app_text_field.dart';
 import '../providers/create_request_provider.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class Step1FormWidget extends StatefulWidget {
   final CreateRequestProvider provider;
@@ -68,6 +69,7 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(
         20,
@@ -120,7 +122,7 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Vehicle Information',
+                          l10n.vehicleInformation,
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -129,7 +131,7 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Tell us about your vehicle',
+                          l10n.tellUsAboutYourVehicle,
                           style: TextStyle(
                             fontSize: 14,
                             color: AppColors.textSecondary,
@@ -172,7 +174,7 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
                       Icon(Icons.category, size: 18, color: AppColors.primary),
                       const SizedBox(width: 8),
                       Text(
-                        'Vehicle Type *',
+                        '${l10n.vehicleTypeLabel} *',
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -266,12 +268,12 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
             // Vehicle Model
             AppTextField(
               controller: widget.vehicleModelController,
-              label: 'Vehicle Model *',
-              hint: 'e.g., Toyota Camry',
+              label: '${l10n.vehicleModelLabel} *',
+              hint: l10n.vehicleModelHint,
               type: AppTextFieldType.text,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Please enter vehicle model';
+                  return l10n.pleaseEnterVehicleModel;
                 }
                 return null;
               },
@@ -281,18 +283,18 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
             // Vehicle Year
             AppTextField(
               controller: widget.vehicleYearController,
-              label: 'Vehicle Year *',
-              hint: 'e.g., 2020',
+              label: '${l10n.vehicleYearLabel} *',
+              hint: l10n.vehicleYearHint,
               type: AppTextFieldType.number,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Please enter vehicle year';
+                  return l10n.pleaseEnterVehicleYear;
                 }
                 final year = int.tryParse(value.trim());
                 if (year == null ||
                     year < 1900 ||
                     year > DateTime.now().year + 1) {
-                  return 'Please enter a valid vehicle year';
+                  return l10n.pleaseEnterValidVehicleYear;
                 }
                 return null;
               },
@@ -385,12 +387,12 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
             // Province/State
             AppTextField(
               controller: widget.provinceController,
-              label: 'Province/State *',
-              hint: 'e.g., California, Ontario, London',
+              label: '${l10n.provinceStateLabel} *',
+              hint: l10n.provinceStateHint,
               type: AppTextFieldType.text,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Please enter province/state';
+                  return l10n.pleaseEnterProvinceState;
                 }
                 return null;
               },
@@ -483,7 +485,7 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              'Tap to add vehicle image',
+                              l10n.tapToAddVehicleImage,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -492,7 +494,7 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Optional',
+                              l10n.optional,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: AppColors.textSecondary,
@@ -548,7 +550,7 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
                             )
                           else ...[
                             Text(
-                              'Continue',
+                              l10n.continueButton,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,

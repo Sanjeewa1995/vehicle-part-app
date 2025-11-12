@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../shared/widgets/app_text_field.dart';
 import '../providers/create_request_provider.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class Step2FormWidget extends StatefulWidget {
   final CreateRequestProvider provider;
@@ -41,6 +42,7 @@ class Step2FormWidget extends StatefulWidget {
 class _Step2FormWidgetState extends State<Step2FormWidget> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(
         20,
@@ -93,7 +95,7 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Spare Part Details',
+                          l10n.sparePartDetails,
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -102,7 +104,7 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Describe the part you need',
+                          l10n.describePartYouNeed,
                           style: TextStyle(
                             fontSize: 14,
                             color: AppColors.textSecondary,
@@ -120,12 +122,12 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
             // Part Name
             AppTextField(
               controller: widget.partNameController,
-              label: 'Part Name *',
-              hint: 'e.g., Brake Pad, Engine Oil Filter',
+              label: '${l10n.partNameLabel} *',
+              hint: l10n.partNameHint,
               type: AppTextFieldType.text,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Please enter part name';
+                  return l10n.pleaseEnterPartName;
                 }
                 return null;
               },
@@ -135,8 +137,8 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
             // Part Number
             AppTextField(
               controller: widget.partNumberController,
-              label: 'Part Number',
-              hint: 'e.g., BP-001 (Optional)',
+              label: l10n.partNumberLabel,
+              hint: l10n.partNumberHint,
               type: AppTextFieldType.text,
             ),
             const SizedBox(height: 16),
@@ -144,13 +146,13 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
             // Description
             AppTextField(
               controller: widget.descriptionController,
-              label: 'Description *',
-              hint: 'Detailed description of the part you need',
+              label: '${l10n.descriptionLabel} *',
+              hint: l10n.descriptionHint,
               type: AppTextFieldType.multiline,
               maxLines: 4,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Please enter description';
+                  return l10n.pleaseEnterDescription;
                 }
                 return null;
               },
@@ -245,7 +247,7 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              'Tap to add part image',
+                              l10n.tapToAddPartImage,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -254,7 +256,7 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Optional',
+                              l10n.optional,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: AppColors.textSecondary,
@@ -323,7 +325,7 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              'Video selected',
+                              l10n.videoSelected,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: AppColors.primary,
@@ -343,7 +345,7 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Text(
-                                  'Remove',
+                                  l10n.remove,
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w600,
@@ -371,7 +373,7 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              'Tap to add part video',
+                              l10n.tapToAddPartVideo,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -380,7 +382,7 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Optional',
+                              l10n.optional,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: AppColors.textSecondary,
@@ -442,7 +444,7 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Submit Request',
+                              l10n.submitRequest,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,

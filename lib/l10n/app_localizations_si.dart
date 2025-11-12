@@ -852,4 +852,29 @@ class AppLocalizationsSi extends AppLocalizations {
 
   @override
   String get paymentCancelled => 'ගෙවීම අවලංගු කරන ලදී';
+
+  @override
+  String get compressingImage => 'රූපය සංකෝචනය කරමින්...';
+
+  @override
+  String imageCompressed(String originalSize, String compressedSize) {
+    return 'රූපය සංකෝචනය කරන ලදී: $originalSize → $compressedSize';
+  }
+
+  @override
+  String get optional => 'විකල්ප';
+
+  @override
+  String get failedToSubmitRequest => 'ඉල්ලීම ඉදිරිපත් කිරීමට අසමත් විය';
+
+  @override
+  String errorSubmittingRequest(String error) {
+    return 'ඉල්ලීම ඉදිරිපත් කිරීමේ දෝෂය: $error';
+  }
+
+  @override
+  String get vehicleInfo => 'වාහන තොරතුරු';
+
+  @override
+  String get partDetails => 'කොටස් තොරතුරු';
 }

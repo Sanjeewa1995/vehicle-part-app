@@ -866,4 +866,29 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get paymentCancelled => 'கட்டணம் ரத்து செய்யப்பட்டது';
+
+  @override
+  String get compressingImage => 'படத்தை சுருக்குகிறது...';
+
+  @override
+  String imageCompressed(String originalSize, String compressedSize) {
+    return 'படம் சுருக்கப்பட்டது: $originalSize → $compressedSize';
+  }
+
+  @override
+  String get optional => 'விருப்பமானது';
+
+  @override
+  String get failedToSubmitRequest => 'கோரிக்கையை சமர்ப்பிக்க முடியவில்லை';
+
+  @override
+  String errorSubmittingRequest(String error) {
+    return 'கோரிக்கையை சமர்ப்பிக்கும் பிழை: $error';
+  }
+
+  @override
+  String get vehicleInfo => 'வாகன தகவல்';
+
+  @override
+  String get partDetails => 'பாக விவரங்கள்';
 }

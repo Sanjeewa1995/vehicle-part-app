@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class HomeStatsWidget extends StatelessWidget {
   const HomeStatsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -29,7 +31,7 @@ class HomeStatsWidget extends StatelessWidget {
           Expanded(
             child: _buildStatItem(
               icon: Icons.inventory_2_outlined,
-              label: 'Total Requests',
+              label: l10n.totalRequests,
               value: '0',
               color: AppColors.primary,
             ),
@@ -42,7 +44,7 @@ class HomeStatsWidget extends StatelessWidget {
           Expanded(
             child: _buildStatItem(
               icon: Icons.pending_outlined,
-              label: 'Pending',
+              label: l10n.pending,
               value: '0',
               color: const Color(0xFFF59E0B), // Amber/Orange
             ),
@@ -55,7 +57,7 @@ class HomeStatsWidget extends StatelessWidget {
           Expanded(
             child: _buildStatItem(
               icon: Icons.check_circle_outline,
-              label: 'Completed',
+              label: l10n.completed,
               value: '0',
               color: const Color(0xFF10B981), // Green (success)
             ),

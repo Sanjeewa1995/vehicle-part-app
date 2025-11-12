@@ -628,7 +628,7 @@ abstract class AppLocalizations {
   /// **'Add photos of the part or vehicle area where the part is needed. You can also upload a video.'**
   String get uploadImagesVideoDesc;
 
-  /// Step 5 title
+  /// Submit request button
   ///
   /// In en, this message translates to:
   /// **'Submit Request'**
@@ -1695,6 +1695,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment was cancelled'**
   String get paymentCancelled;
+
+  /// Image compression loading message
+  ///
+  /// In en, this message translates to:
+  /// **'Compressing image...'**
+  String get compressingImage;
+
+  /// Image compression success message
+  ///
+  /// In en, this message translates to:
+  /// **'Image compressed: {originalSize} → {compressedSize}'**
+  String imageCompressed(String originalSize, String compressedSize);
+
+  /// Optional field label
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get optional;
+
+  /// Failed to submit request error
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to submit request'**
+  String get failedToSubmitRequest;
+
+  /// Error submitting request message
+  ///
+  /// In en, this message translates to:
+  /// **'Error submitting request: {error}'**
+  String errorSubmittingRequest(String error);
+
+  /// Vehicle information step label
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle Info'**
+  String get vehicleInfo;
+
+  /// Part details step label
+  ///
+  /// In en, this message translates to:
+  /// **'Part Details'**
+  String get partDetails;
 }
 
 class _AppLocalizationsDelegate

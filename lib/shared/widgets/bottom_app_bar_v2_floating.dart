@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import '../../features/cart/presentation/providers/cart_provider.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 /// Floating Pill-Style Bottom Navigation Bar
 /// Features: Floating design with rounded pill shape, elevated above screen
@@ -49,6 +50,7 @@ class _AppBottomNavigationBarV2FloatingState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SafeArea(
       top: false,
       child: Padding(
@@ -78,14 +80,14 @@ class _AppBottomNavigationBarV2FloatingState
             _buildNavItem(
               icon: Icons.home_outlined,
               activeIcon: Icons.home_rounded,
-              label: 'Home',
+              label: l10n.home,
               route: '/home',
               isActive: _currentRoute == '/home',
             ),
             _buildNavItem(
               icon: Icons.list_alt_outlined,
               activeIcon: Icons.list_alt_rounded,
-              label: 'Requests',
+              label: l10n.requests,
               route: '/orders',
               isActive: _currentRoute == '/orders',
             ),
@@ -94,7 +96,7 @@ class _AppBottomNavigationBarV2FloatingState
                 return _buildNavItem(
                   icon: Icons.shopping_cart_outlined,
                   activeIcon: Icons.shopping_cart_rounded,
-                  label: 'Cart',
+                  label: l10n.cart,
                   route: '/cart',
                   isActive: _currentRoute == '/cart',
                   badgeCount: cartProvider.itemCount > 0
@@ -106,7 +108,7 @@ class _AppBottomNavigationBarV2FloatingState
             _buildNavItem(
               icon: Icons.settings_outlined,
               activeIcon: Icons.settings_rounded,
-              label: 'Settings',
+              label: l10n.settings,
               route: '/settings',
               isActive: _currentRoute == '/settings' ||
                   _currentRoute == '/profile',

@@ -1123,5 +1123,50 @@
   "paymentCancelled": "Payment was cancelled",
   "@paymentCancelled": {
     "description": "Payment cancelled message"
+  },
+  "compressingImage": "Compressing image...",
+  "@compressingImage": {
+    "description": "Image compression loading message"
+  },
+  "imageCompressed": "Image compressed: {originalSize} → {compressedSize}",
+  "@imageCompressed": {
+    "description": "Image compression success message",
+    "placeholders": {
+      "originalSize": {
+        "type": "String"
+      },
+      "compressedSize": {
+        "type": "String"
+      }
+    }
+  },
+  "optional": "Optional",
+  "@optional": {
+    "description": "Optional field label"
+  },
+  "submitRequest": "Submit Request",
+  "@submitRequest": {
+    "description": "Submit request button"
+  },
+  "failedToSubmitRequest": "Failed to submit request",
+  "@failedToSubmitRequest": {
+    "description": "Failed to submit request error"
+  },
+  "errorSubmittingRequest": "Error submitting request: {error}",
+  "@errorSubmittingRequest": {
+    "description": "Error submitting request message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "vehicleInfo": "Vehicle Info",
+  "@vehicleInfo": {
+    "description": "Vehicle information step label"
+  },
+  "partDetails": "Part Details",
+  "@partDetails": {
+    "description": "Part details step label"
   }
 }

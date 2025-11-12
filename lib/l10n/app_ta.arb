@@ -334,5 +334,30 @@
       }
     }
   },
-  "paymentCancelled": "கட்டணம் ரத்து செய்யப்பட்டது"
+  "paymentCancelled": "கட்டணம் ரத்து செய்யப்பட்டது",
+  "compressingImage": "படத்தை சுருக்குகிறது...",
+  "imageCompressed": "படம் சுருக்கப்பட்டது: {originalSize} → {compressedSize}",
+  "@imageCompressed": {
+    "placeholders": {
+      "originalSize": {
+        "type": "String"
+      },
+      "compressedSize": {
+        "type": "String"
+      }
+    }
+  },
+  "optional": "விருப்பமானது",
+  "submitRequest": "கோரிக்கையை சமர்ப்பிக்க",
+  "failedToSubmitRequest": "கோரிக்கையை சமர்ப்பிக்க முடியவில்லை",
+  "errorSubmittingRequest": "கோரிக்கையை சமர்ப்பிக்கும் பிழை: {error}",
+  "@errorSubmittingRequest": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "vehicleInfo": "வாகன தகவல்",
+  "partDetails": "பாக விவரங்கள்"
 }

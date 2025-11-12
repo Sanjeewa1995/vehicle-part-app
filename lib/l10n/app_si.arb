@@ -334,5 +334,30 @@
       }
     }
   },
-  "paymentCancelled": "ගෙවීම අවලංගු කරන ලදී"
+  "paymentCancelled": "ගෙවීම අවලංගු කරන ලදී",
+  "compressingImage": "රූපය සංකෝචනය කරමින්...",
+  "imageCompressed": "රූපය සංකෝචනය කරන ලදී: {originalSize} → {compressedSize}",
+  "@imageCompressed": {
+    "placeholders": {
+      "originalSize": {
+        "type": "String"
+      },
+      "compressedSize": {
+        "type": "String"
+      }
+    }
+  },
+  "optional": "විකල්ප",
+  "submitRequest": "ඉල්ලීම ඉදිරිපත් කරන්න",
+  "failedToSubmitRequest": "ඉල්ලීම ඉදිරිපත් කිරීමට අසමත් විය",
+  "errorSubmittingRequest": "ඉල්ලීම ඉදිරිපත් කිරීමේ දෝෂය: {error}",
+  "@errorSubmittingRequest": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "vehicleInfo": "වාහන තොරතුරු",
+  "partDetails": "කොටස් තොරතුරු"
 }

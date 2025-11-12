@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
 class HomeHelpWidget extends StatelessWidget {
   const HomeHelpWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -59,7 +61,7 @@ class HomeHelpWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Need Help?',
+                  l10n.needHelp,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -69,7 +71,7 @@ class HomeHelpWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Learn how to request spare parts and manage your requests',
+                  l10n.needHelpDescription,
                   style: const TextStyle(
                     fontSize: 14,
                     color: Color(0xFF6B7280), // Medium gray for secondary text

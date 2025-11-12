@@ -100,10 +100,11 @@ class _AddRequestPageState extends State<AddRequestPage> {
         
         // Show loading indicator while compressing
         if (mounted) {
+          final l10n = AppLocalizations.of(context)!;
           LoadingIndicator.show(
             context,
-            message: 'Compressing image...',
-            subMessage: 'Please wait',
+            message: l10n.compressingImage,
+            subMessage: l10n.pleaseWait,
             barrierDismissible: false,
           );
         }
@@ -133,10 +134,11 @@ class _AddRequestPageState extends State<AddRequestPage> {
 
             // Show success message with compression info
             if (mounted && originalSize != compressedSize) {
+              final l10n = AppLocalizations.of(context)!;
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    'Image compressed: $originalSize → $compressedSize',
+                    l10n.imageCompressed(originalSize, compressedSize),
                   ),
                   backgroundColor: AppColors.success,
                   duration: const Duration(seconds: 2),
@@ -170,9 +172,10 @@ class _AddRequestPageState extends State<AddRequestPage> {
     } catch (e) {
       if (mounted) {
         LoadingIndicator.hide(context);
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error picking image: ${e.toString()}'),
+            content: Text(l10n.errorPickingImage(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -193,9 +196,10 @@ class _AddRequestPageState extends State<AddRequestPage> {
       }
     } catch (e) {
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error picking video: ${e.toString()}'),
+            content: Text(l10n.errorPickingVideo(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -204,6 +208,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
   }
 
   void _showImagePickerOptions(bool isVehicleImage) {
+    final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
       builder: (context) => SafeArea(
@@ -211,7 +216,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
           children: [
             ListTile(
               leading: const Icon(Icons.camera_alt),
-              title: const Text('Take Photo'),
+              title: Text(l10n.takePhoto),
               onTap: () {
                 Navigator.pop(context);
                 _pickImage(ImageSource.camera, isVehicleImage: isVehicleImage);
@@ -219,7 +224,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
             ),
             ListTile(
               leading: const Icon(Icons.photo_library),
-              title: const Text('Choose from Gallery'),
+              title: Text(l10n.chooseFromGallery),
               onTap: () {
                 Navigator.pop(context);
                 _pickImage(ImageSource.gallery, isVehicleImage: isVehicleImage);
@@ -239,8 +244,9 @@ class _AddRequestPageState extends State<AddRequestPage> {
 
     // Validate vehicle type
     if (_selectedVehicleType.isEmpty) {
+      final l10n = AppLocalizations.of(context)!;
       setState(() {
-        _vehicleTypeError = 'Please select a vehicle type';
+        _vehicleTypeError = l10n.pleaseSelectVehicleType;
       });
     }
 
@@ -277,12 +283,13 @@ class _AddRequestPageState extends State<AddRequestPage> {
   Future<void> _submitRequest(CreateRequestProvider provider) async {
     // Show loading indicator before starting the request
     if (mounted) {
+      final l10n = AppLocalizations.of(context)!;
       LoadingIndicator.show(
         context,
-        message: 'Submitting your request...',
+        message: l10n.submittingRequest,
         subMessage: _partVideo != null
-            ? 'Uploading video file... This may take a few minutes'
-            : 'Please wait, this may take a moment',
+            ? l10n.uploadingVideoFile
+            : l10n.pleaseWait,
         barrierDismissible: false,
       );
     }
@@ -313,22 +320,20 @@ class _AddRequestPageState extends State<AddRequestPage> {
 
       if (provider.isSuccess) {
         if (mounted) {
+          final l10n = AppLocalizations.of(context)!;
           showDialog(
             context: context,
             barrierDismissible: false,
             builder: (context) => AlertDialog(
-              title: const Text('Request Submitted!'),
-              content: const Text(
-                'Your spare part request has been submitted successfully. '
-                'You will receive quotes from suppliers soon.',
-              ),
+              title: Text(l10n.requestSubmitted),
+              content: Text(l10n.requestSubmittedMessage),
               actions: [
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                     _resetForm();
                   },
-                  child: const Text('Submit Another'),
+                  child: Text(l10n.submitAnother),
                 ),
                 TextButton(
                   onPressed: () {
@@ -336,7 +341,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
                     context.go('/orders');
                   },
                   style: TextButton.styleFrom(foregroundColor: AppColors.primary),
-                  child: const Text('View Requests'),
+                  child: Text(l10n.viewRequests),
                 ),
               ],
             ),
@@ -344,9 +349,10 @@ class _AddRequestPageState extends State<AddRequestPage> {
         }
       } else if (provider.hasError) {
         if (mounted) {
+          final l10n = AppLocalizations.of(context)!;
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(provider.errorMessage ?? 'Failed to submit request'),
+              content: Text(provider.errorMessage ?? l10n.failedToSubmitRequest),
               backgroundColor: AppColors.error,
             ),
           );
@@ -356,9 +362,10 @@ class _AddRequestPageState extends State<AddRequestPage> {
       // Ensure loading indicator is hidden even if an error occurs
       if (mounted) {
         LoadingIndicator.hide(context);
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error submitting request: ${e.toString()}'),
+            content: Text(l10n.errorSubmittingRequest(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -456,10 +463,15 @@ class _AddRequestPageState extends State<AddRequestPage> {
                   ),
                   child: Column(
                     children: [
-                      BeautifulStepperWidget(
-                        currentStep: _currentStep,
-                        totalSteps: _totalSteps,
-                        stepLabels: const ['Vehicle Info', 'Part Details'],
+                      Builder(
+                        builder: (context) {
+                          final l10n = AppLocalizations.of(context)!;
+                          return BeautifulStepperWidget(
+                            currentStep: _currentStep,
+                            totalSteps: _totalSteps,
+                            stepLabels: [l10n.vehicleInfo, l10n.partDetails],
+                          );
+                        },
                       ),
 
                       // Form Content

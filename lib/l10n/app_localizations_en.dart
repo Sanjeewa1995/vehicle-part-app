@@ -850,4 +850,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paymentCancelled => 'Payment was cancelled';
+
+  @override
+  String get compressingImage => 'Compressing image...';
+
+  @override
+  String imageCompressed(String originalSize, String compressedSize) {
+    return 'Image compressed: $originalSize → $compressedSize';
+  }
+
+  @override
+  String get optional => 'Optional';
+
+  @override
+  String get failedToSubmitRequest => 'Failed to submit request';
+
+  @override
+  String errorSubmittingRequest(String error) {
+    return 'Error submitting request: $error';
+  }
+
+  @override
+  String get vehicleInfo => 'Vehicle Info';
+
+  @override
+  String get partDetails => 'Part Details';
 }
