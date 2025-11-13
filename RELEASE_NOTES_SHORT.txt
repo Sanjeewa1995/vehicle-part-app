@@ -1,0 +1,19 @@
+🎉 Welcome to AUTO-ZONE - Your One Zone for Every Part!
+
+Initial Release - Version 1.0.0
+
+✨ Key Features:
+• Browse and purchase vehicle parts
+• Create custom part requests with photos/videos
+• Secure PayHere payment integration
+• Track orders and request status
+• Multi-language support (English, Sinhala, Tamil)
+• Dashboard with real-time statistics
+• User profile and account management
+
+🎨 Modern dark theme with vibrant design
+🔒 Secure and reliable
+📱 Optimized for all Android devices
+
+Thank you for choosing AUTO-ZONE!
+

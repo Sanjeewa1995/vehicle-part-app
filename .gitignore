@@ -68,5 +68,10 @@ app.*.map.json
 .env.local
 .env.*.local
 
+# Android signing keys (DO NOT COMMIT)
+android/key.properties
+android/*.jks
+android/*.keystore
+
 # Reference projects (React Native app)
 M-AUTO-ZONE-APP/

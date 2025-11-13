@@ -15,3 +15,10 @@
 -keep class lk.payhere.androidsdk.models.** { *; }
 -keep class lk.payhere.androidsdk.** { *; }
 
+# Suppress warnings for optional dependencies
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+-dontwarn javax.annotation.concurrent.GuardedBy
+-dontwarn org.conscrypt.Conscrypt
+-dontwarn org.conscrypt.OpenSSLProvider
+
