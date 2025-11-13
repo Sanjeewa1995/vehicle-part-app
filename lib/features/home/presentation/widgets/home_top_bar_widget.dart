@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:country_flags/country_flags.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
 
 class HomeTopBarWidget extends StatelessWidget {
@@ -10,18 +11,18 @@ class HomeTopBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           // Right side - Icons
           Row(
             children: [
-              // American Flag Icon (using location/flag icon as placeholder)
-              Icon(
-                Icons.flag,
-                size: 20,
-                color: Colors.black.withOpacity(0.7),
+              // Sri Lanka flag
+              SizedBox(
+                height: 20,
+                width: 30,
+                child: ClipRRect(child: CountryFlag.fromCountryCode('LK')),
               ),
               const SizedBox(width: 16),
               // Shopping Cart Icon
@@ -52,7 +53,9 @@ class HomeTopBarWidget extends StatelessWidget {
                                 minHeight: 14,
                               ),
                               child: Text(
-                                cartProvider.itemCount > 9 ? '9+' : '${cartProvider.itemCount}',
+                                cartProvider.itemCount > 9
+                                    ? '9+'
+                                    : '${cartProvider.itemCount}',
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 9,
@@ -74,4 +77,3 @@ class HomeTopBarWidget extends StatelessWidget {
     );
   }
 }
-

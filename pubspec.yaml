@@ -15,6 +15,7 @@ dependencies:
 
   # UI & Icons
   cupertino_icons: ^1.0.8
+  country_flags: ^4.1.0
   
   # State Management
   provider: ^6.1.2

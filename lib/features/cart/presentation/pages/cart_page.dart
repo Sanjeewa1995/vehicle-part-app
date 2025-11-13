@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../shared/widgets/bottom_app_bar_v2_floating.dart';
 import '../providers/cart_provider.dart';
 import '../widgets/cart_header_widget.dart';
 import '../widgets/cart_empty_widget.dart';
@@ -46,7 +45,16 @@ class CartPage extends StatelessWidget {
 
             // Empty State
             if (cartProvider.isEmpty) {
-              return const CartEmptyWidget();
+              return Column(
+                children: [
+                  // Header
+                  const CartHeaderWidget(),
+                  // Empty Cart Content
+                  const Expanded(
+                    child: CartEmptyWidget(),
+                  ),
+                ],
+              );
             }
 
             // Cart with Items
@@ -80,7 +88,6 @@ class CartPage extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: const AppBottomNavigationBarV2Floating(),
     );
   }
 }

@@ -11,14 +11,24 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
       backgroundColor: const Color(0xFFF9FAFB), // Light gray background
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: 10,),
-            // Top Bar
-            const HomeTopBarWidget(),
+      body: Column(
+        children: [
+          // Top safe area with white background (matching top app bar)
+          Container(
+            height: topPadding,
+            color: Colors.white,
+          ),
+          // Content with SafeArea (excluding top)
+          Expanded(
+            child: SafeArea(
+              top: false,
+              child: Column(
+                children: [
+                  // Top Bar
+                  const HomeTopBarWidget(),
             // Scrollable Content
             Expanded(
               child: RefreshIndicator(
@@ -52,8 +62,11 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: const AppBottomNavigationBarV2Floating(),
     );
