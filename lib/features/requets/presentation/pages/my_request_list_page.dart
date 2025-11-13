@@ -38,10 +38,6 @@ class _MyRequestListState extends State<MyRequestList> {
         appBar: AppBar(
           backgroundColor: AppColors.background,
           elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.chevron_left, color: AppColors.textPrimary),
-            onPressed: () => context.pop(),
-          ),
           title: Text(
             l10n.myRequests,
             style: const TextStyle(

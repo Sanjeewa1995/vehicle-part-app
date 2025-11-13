@@ -13,19 +13,17 @@ class HomeTopBarWidget extends StatelessWidget {
       color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 12),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Right side - Icons
+          const _AutoZoneLogo(),
           Row(
             children: [
-              // Sri Lanka flag
               SizedBox(
                 height: 20,
                 width: 30,
                 child: ClipRRect(child: CountryFlag.fromCountryCode('LK')),
               ),
               const SizedBox(width: 16),
-              // Shopping Cart Icon
               Consumer<CartProvider>(
                 builder: (context, cartProvider, child) {
                   return GestureDetector(
@@ -73,6 +71,23 @@ class HomeTopBarWidget extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _AutoZoneLogo extends StatelessWidget {
+  const _AutoZoneLogo();
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Image.asset(
+        'assets/images/logo.jpeg',
+        height: 48,
+        width: 48,
+        fit: BoxFit.cover,
       ),
     );
   }

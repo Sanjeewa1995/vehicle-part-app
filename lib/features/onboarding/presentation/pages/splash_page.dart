@@ -4,6 +4,7 @@ import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
 import '../../../../core/di/service_locator.dart';
 import '../../../../core/services/onboarding_service.dart';
+import '../../../../shared/widgets/loading_indicator.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -115,62 +116,93 @@ class _SplashPageState extends State<SplashPage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // Logo/Brand Icon
-                      Container(
-                        width: 120,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [AppColors.primary, AppColors.primaryLight],
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.shadowColored,
-                              blurRadius: 30,
-                              offset: const Offset(0, 10),
-                            ),
-                          ],
-                        ),
-                        child: const Icon(
-                          Icons.build,
-                          size: 60,
-                          color: AppColors.textWhite,
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Image.asset(
+                          'assets/images/logo.jpeg',
+                          width: 160,
+                          height: 160,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 24),
 
-                      // Brand Name
-                      Text(
-                        'M AUTO-ZONE',
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.textPrimary,
-                          letterSpacing: 2,
-                          shadows: [
-                            Shadow(
-                              color: AppColors.shadowLight,
-                              offset: const Offset(0, 2),
-                              blurRadius: 4,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 16),
+                      // // Brand Name
+                      // RichText(
+                      //   text: TextSpan(
+                      //     style: const TextStyle(
+                      //       fontSize: 34,
+                      //       fontWeight: FontWeight.w800,
+                      //       letterSpacing: 3,
+                      //       fontFamily: 'Roboto',
+                      //     ),
+                      //     children: [
+                      //       TextSpan(
+                      //         text: 'M ',
+                      //         style: TextStyle(
+                      //           color: const Color(0xFF8BC34A),
+                      //           shadows: [
+                      //             Shadow(
+                      //               color: AppColors.shadowLight,
+                      //               offset: const Offset(0, 2),
+                      //               blurRadius: 4,
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //       TextSpan(
+                      //         text: 'AUTO',
+                      //         style: TextStyle(
+                      //           color: Colors.white,
+                      //           shadows: [
+                      //             Shadow(
+                      //               color: AppColors.shadowLight,
+                      //               offset: const Offset(0, 2),
+                      //               blurRadius: 4,
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //       TextSpan(
+                      //         text: ' - ',
+                      //         style: TextStyle(
+                      //           color: Colors.white.withValues(alpha: 0.7),
+                      //         ),
+                      //       ),
+                      //       TextSpan(
+                      //         text: 'ZONE',
+                      //         style: TextStyle(
+                      //           color: Colors.white,
+                      //           shadows: [
+                      //             Shadow(
+                      //               color: AppColors.shadowColored,
+                      //               offset: const Offset(0, 2),
+                      //               blurRadius: 6,
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 8),
+                      // Text(
+                      //   '" One Zone for Every Part "',
+                      //   style: TextStyle(
+                      //     fontSize: 14,
+                      //     fontWeight: FontWeight.w500,
+                      //     letterSpacing: 1.2,
+                      //     color: AppColors.textSecondary.withValues(alpha: 0.9),
+                      //   ),
+                      // ),
+                      const SizedBox(height: 20),
 
-                      // Loading Indicator
-                      const SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 3,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.primary,
-                          ),
-                        ),
-                      ),
+                      // LoadingIndicator(
+                      //   showBackground: false,
+                      //   backgroundColor: Colors.transparent,
+                      //   spinnerColor: AppColors.primary,
+                      //   spinnerSize: 48,
+                      // ),
                     ],
                   ),
                 ),
