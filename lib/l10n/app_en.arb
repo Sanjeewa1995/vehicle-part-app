@@ -1196,5 +1196,41 @@
   "loadingProducts": "Loading products...",
   "@loadingProducts": {
     "description": "Loading products message"
+  },
+  "provinceWestern": "Western Province",
+  "@provinceWestern": {
+    "description": "Western Province name"
+  },
+  "provinceCentral": "Central Province",
+  "@provinceCentral": {
+    "description": "Central Province name"
+  },
+  "provinceSouthern": "Southern Province",
+  "@provinceSouthern": {
+    "description": "Southern Province name"
+  },
+  "provinceNorthern": "Northern Province",
+  "@provinceNorthern": {
+    "description": "Northern Province name"
+  },
+  "provinceEastern": "Eastern Province",
+  "@provinceEastern": {
+    "description": "Eastern Province name"
+  },
+  "provinceNorthWestern": "North Western Province",
+  "@provinceNorthWestern": {
+    "description": "North Western Province name"
+  },
+  "provinceNorthCentral": "North Central Province",
+  "@provinceNorthCentral": {
+    "description": "North Central Province name"
+  },
+  "provinceUva": "Uva Province",
+  "@provinceUva": {
+    "description": "Uva Province name"
+  },
+  "provinceSabaragamuwa": "Sabaragamuwa Province",
+  "@provinceSabaragamuwa": {
+    "description": "Sabaragamuwa Province name"
   }
 }

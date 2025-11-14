@@ -1779,6 +1779,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Loading products...'**
   String get loadingProducts;
+
+  /// Western Province name
+  ///
+  /// In en, this message translates to:
+  /// **'Western Province'**
+  String get provinceWestern;
+
+  /// Central Province name
+  ///
+  /// In en, this message translates to:
+  /// **'Central Province'**
+  String get provinceCentral;
+
+  /// Southern Province name
+  ///
+  /// In en, this message translates to:
+  /// **'Southern Province'**
+  String get provinceSouthern;
+
+  /// Northern Province name
+  ///
+  /// In en, this message translates to:
+  /// **'Northern Province'**
+  String get provinceNorthern;
+
+  /// Eastern Province name
+  ///
+  /// In en, this message translates to:
+  /// **'Eastern Province'**
+  String get provinceEastern;
+
+  /// North Western Province name
+  ///
+  /// In en, this message translates to:
+  /// **'North Western Province'**
+  String get provinceNorthWestern;
+
+  /// North Central Province name
+  ///
+  /// In en, this message translates to:
+  /// **'North Central Province'**
+  String get provinceNorthCentral;
+
+  /// Uva Province name
+  ///
+  /// In en, this message translates to:
+  /// **'Uva Province'**
+  String get provinceUva;
+
+  /// Sabaragamuwa Province name
+  ///
+  /// In en, this message translates to:
+  /// **'Sabaragamuwa Province'**
+  String get provinceSabaragamuwa;
 }
 
 class _AppLocalizationsDelegate

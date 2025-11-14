@@ -10,16 +10,15 @@ class Step1FormWidget extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController vehicleModelController;
   final TextEditingController vehicleYearController;
-  final TextEditingController provinceController;
   final String selectedVehicleType;
-  final String selectedCountry;
+  final String? selectedProvince;
   final File? vehicleImage;
   final String? vehicleTypeError;
-  final String? countryError;
+  final String? provinceError;
   final List<String> vehicleTypes;
-  final Map<String, String> countries;
+  final List<String> provinces;
   final Function(String) onVehicleTypeSelected;
-  final VoidCallback onCountryTap;
+  final Function(String) onProvinceSelected;
   final VoidCallback onImagePickerTap;
   final VoidCallback onRemoveImage;
   final Function(CreateRequestProvider) onNext;
@@ -30,16 +29,15 @@ class Step1FormWidget extends StatefulWidget {
     required this.formKey,
     required this.vehicleModelController,
     required this.vehicleYearController,
-    required this.provinceController,
     required this.selectedVehicleType,
-    required this.selectedCountry,
+    this.selectedProvince,
     this.vehicleImage,
     this.vehicleTypeError,
-    this.countryError,
+    this.provinceError,
     required this.vehicleTypes,
-    required this.countries,
+    required this.provinces,
     required this.onVehicleTypeSelected,
-    required this.onCountryTap,
+    required this.onProvinceSelected,
     required this.onImagePickerTap,
     required this.onRemoveImage,
     required this.onNext,
@@ -384,19 +382,187 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
             // ],
             // const SizedBox(height: 16),
 
-            // Province/State
-            AppTextField(
-              controller: widget.provinceController,
-              label: '${l10n.provinceStateLabel} *',
-              hint: l10n.provinceStateHint,
-              type: AppTextFieldType.text,
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return l10n.pleaseEnterProvinceState;
-                }
-                return null;
-              },
+            // Province/State Dropdown
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: AppColors.background,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: widget.provinceError != null
+                      ? AppColors.error
+                      : AppColors.border,
+                  width: widget.provinceError != null ? 2 : 1,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.shadowLight,
+                    blurRadius: 4,
+                    offset: const Offset(0, 1),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.location_on, size: 18, color: AppColors.primary),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${l10n.provinceStateLabel} *',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) => Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.background,
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(top: 12, bottom: 8),
+                                width: 40,
+                                height: 4,
+                                decoration: BoxDecoration(
+                                  color: AppColors.border,
+                                  borderRadius: BorderRadius.circular(2),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 16,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.location_on,
+                                      color: AppColors.primary,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      l10n.provinceStateLabel,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.textPrimary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Divider(height: 1),
+                              Flexible(
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: widget.provinces.length,
+                                  itemBuilder: (context, index) {
+                                    final province = widget.provinces[index];
+                                    final isSelected =
+                                        widget.selectedProvince == province;
+                                    return ListTile(
+                                      title: Text(
+                                        province,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: isSelected
+                                              ? FontWeight.w600
+                                              : FontWeight.normal,
+                                          color: isSelected
+                                              ? AppColors.primary
+                                              : AppColors.textPrimary,
+                                        ),
+                                      ),
+                                      trailing: isSelected
+                                          ? Icon(
+                                              Icons.check_circle,
+                                              color: AppColors.primary,
+                                              size: 24,
+                                            )
+                                          : null,
+                                      onTap: () {
+                                        widget.onProvinceSelected(province);
+                                        Navigator.pop(context);
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                height: MediaQuery.of(context).padding.bottom,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 16,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundSecondary,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: widget.provinceError != null
+                              ? AppColors.error
+                              : AppColors.border,
+                          width: 1,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              widget.selectedProvince ?? l10n.provinceStateHint,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: widget.selectedProvince == null
+                                    ? AppColors.textLight
+                                    : AppColors.textPrimary,
+                                fontWeight: widget.selectedProvince == null
+                                    ? FontWeight.normal
+                                    : FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_drop_down,
+                            color: AppColors.textSecondary,
+                            size: 24,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
+            if (widget.provinceError != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                widget.provinceError!,
+                style: TextStyle(fontSize: 12, color: AppColors.error),
+              ),
+            ],
             const SizedBox(height: 24),
 
             // Vehicle Image

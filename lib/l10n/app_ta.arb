@@ -366,5 +366,14 @@
   "productId": "ஐடி",
   "noProductsFound": "தயாரிப்புகள் கிடைக்கவில்லை",
   "noProductsAvailable": "இந்த நேரத்தில் தயாரிப்புகள் எதுவும் இல்லை.",
-  "loadingProducts": "தயாரிப்புகளை ஏற்றுகிறது..."
+  "loadingProducts": "தயாரிப்புகளை ஏற்றுகிறது...",
+  "provinceWestern": "மேற்கு மாகாணம்",
+  "provinceCentral": "மத்திய மாகாணம்",
+  "provinceSouthern": "தெற்கு மாகாணம்",
+  "provinceNorthern": "வடக்கு மாகாணம்",
+  "provinceEastern": "கிழக்கு மாகாணம்",
+  "provinceNorthWestern": "வடமேற்கு மாகாணம்",
+  "provinceNorthCentral": "வடமத்திய மாகாணம்",
+  "provinceUva": "உவா மாகாணம்",
+  "provinceSabaragamuwa": "சபரகமுவா மாகாணம்"
 }

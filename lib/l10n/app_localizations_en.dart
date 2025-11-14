@@ -897,4 +897,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loadingProducts => 'Loading products...';
+
+  @override
+  String get provinceWestern => 'Western Province';
+
+  @override
+  String get provinceCentral => 'Central Province';
+
+  @override
+  String get provinceSouthern => 'Southern Province';
+
+  @override
+  String get provinceNorthern => 'Northern Province';
+
+  @override
+  String get provinceEastern => 'Eastern Province';
+
+  @override
+  String get provinceNorthWestern => 'North Western Province';
+
+  @override
+  String get provinceNorthCentral => 'North Central Province';
+
+  @override
+  String get provinceUva => 'Uva Province';
+
+  @override
+  String get provinceSabaragamuwa => 'Sabaragamuwa Province';
 }

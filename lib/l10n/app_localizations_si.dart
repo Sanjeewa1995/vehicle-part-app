@@ -898,4 +898,31 @@ class AppLocalizationsSi extends AppLocalizations {
 
   @override
   String get loadingProducts => 'නිෂ්පාදන ලබා ගනිමින්...';
+
+  @override
+  String get provinceWestern => 'බස්නාහිර පළාත';
+
+  @override
+  String get provinceCentral => 'මධ්‍යම පළාත';
+
+  @override
+  String get provinceSouthern => 'දකුණු පළාත';
+
+  @override
+  String get provinceNorthern => 'උතුරු පළාත';
+
+  @override
+  String get provinceEastern => 'නැගෙනහිර පළාත';
+
+  @override
+  String get provinceNorthWestern => 'වයඹ පළාත';
+
+  @override
+  String get provinceNorthCentral => 'උතුරු මැද පළාත';
+
+  @override
+  String get provinceUva => 'ඌව පළාත';
+
+  @override
+  String get provinceSabaragamuwa => 'සබරගමුව පළාත';
 }

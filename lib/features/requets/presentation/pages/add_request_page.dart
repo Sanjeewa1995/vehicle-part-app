@@ -32,7 +32,6 @@ class _AddRequestPageState extends State<AddRequestPage> {
   // Step 1 Controllers
   final _vehicleModelController = TextEditingController();
   final _vehicleYearController = TextEditingController();
-  final _provinceController = TextEditingController();
 
   // Step 2 Controllers
   final _partNameController = TextEditingController();
@@ -41,12 +40,14 @@ class _AddRequestPageState extends State<AddRequestPage> {
 
   // Form values
   String _selectedVehicleType = 'car';
+  String? _selectedProvinceKey; // Store province key instead of localized name
   File? _vehicleImage;
   File? _partImage;
   File? _partVideo;
 
   // Validation error messages
   String? _vehicleTypeError;
+  String? _provinceError;
 
   final ImagePicker _imagePicker = ImagePicker();
   late final ImageCompressionService _compressionService;
@@ -67,6 +68,66 @@ class _AddRequestPageState extends State<AddRequestPage> {
     'LK': 'Sri Lanka',
   };
 
+  // Province keys (used to get localized names)
+  final List<String> _provinceKeys = [
+    'western',
+    'central',
+    'southern',
+    'northern',
+    'eastern',
+    'northWestern',
+    'northCentral',
+    'uva',
+    'sabaragamuwa',
+  ];
+
+  // Get localized province names
+  List<String> _getProvinceNames(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return _provinceKeys.map((key) {
+      switch (key) {
+        case 'western':
+          return l10n.provinceWestern;
+        case 'central':
+          return l10n.provinceCentral;
+        case 'southern':
+          return l10n.provinceSouthern;
+        case 'northern':
+          return l10n.provinceNorthern;
+        case 'eastern':
+          return l10n.provinceEastern;
+        case 'northWestern':
+          return l10n.provinceNorthWestern;
+        case 'northCentral':
+          return l10n.provinceNorthCentral;
+        case 'uva':
+          return l10n.provinceUva;
+        case 'sabaragamuwa':
+          return l10n.provinceSabaragamuwa;
+        default:
+          return '';
+      }
+    }).toList();
+  }
+
+  // Get province key from localized name
+  String? _getProvinceKey(String? localizedName, BuildContext context) {
+    if (localizedName == null) return null;
+    final names = _getProvinceNames(context);
+    final index = names.indexOf(localizedName);
+    return index >= 0 ? _provinceKeys[index] : null;
+  }
+
+  // Get localized name from province key
+  String? _getProvinceName(String? key, BuildContext context) {
+    if (key == null) return null;
+    final index = _provinceKeys.indexOf(key);
+    if (index >= 0) {
+      return _getProvinceNames(context)[index];
+    }
+    return null;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -78,7 +139,6 @@ class _AddRequestPageState extends State<AddRequestPage> {
     _pageController.dispose();
     _vehicleModelController.dispose();
     _vehicleYearController.dispose();
-    _provinceController.dispose();
     _partNameController.dispose();
     _partNumberController.dispose();
     _descriptionController.dispose();
@@ -240,6 +300,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
     // Clear previous errors
     setState(() {
       _vehicleTypeError = null;
+      _provinceError = null;
     });
 
     // Validate vehicle type
@@ -250,11 +311,19 @@ class _AddRequestPageState extends State<AddRequestPage> {
       });
     }
 
+    // Validate province
+    if (_selectedProvinceKey == null || _selectedProvinceKey!.isEmpty) {
+      final l10n = AppLocalizations.of(context)!;
+      setState(() {
+        _provinceError = l10n.pleaseEnterProvinceState;
+      });
+    }
+
     // Validate form fields
     final isValid = _formKeyStep1.currentState?.validate() ?? false;
 
     // Return true only if all validations pass
-    return isValid && _vehicleTypeError == null;
+    return isValid && _vehicleTypeError == null && _provinceError == null;
   }
 
   bool _validateStep2() {
@@ -295,10 +364,16 @@ class _AddRequestPageState extends State<AddRequestPage> {
     }
 
     try {
+      // Get localized province name for API (or use key, depending on backend requirement)
+      final provinceName = _selectedProvinceKey != null
+          ? _getProvinceName(_selectedProvinceKey, context) ?? ''
+          : '';
+
       final data = CreateRequestData(
         vehicleType: _selectedVehicleType,
         vehicleModel: _vehicleModelController.text.trim(),
         vehicleYear: int.parse(_vehicleYearController.text.trim()),
+        province: provinceName,
         partName: _partNameController.text.trim(),
         partNumber: _partNumberController.text.trim().isEmpty
             ? null
@@ -377,13 +452,13 @@ class _AddRequestPageState extends State<AddRequestPage> {
     setState(() {
       _currentStep = 0;
       _selectedVehicleType = 'car';
+      _selectedProvinceKey = null;
       _vehicleImage = null;
       _partImage = null;
       _partVideo = null;
     });
     _vehicleModelController.clear();
     _vehicleYearController.clear();
-    _provinceController.clear();
     _partNameController.clear();
     _partNumberController.clear();
     _descriptionController.clear();
@@ -491,21 +566,29 @@ class _AddRequestPageState extends State<AddRequestPage> {
                               formKey: _formKeyStep1,
                               vehicleModelController: _vehicleModelController,
                               vehicleYearController: _vehicleYearController,
-                              provinceController: _provinceController,
                               selectedVehicleType: _selectedVehicleType,
-                              selectedCountry: '',
+                              selectedProvince: _selectedProvinceKey != null
+                                  ? _getProvinceName(_selectedProvinceKey, context)
+                                  : null,
                               vehicleImage: _vehicleImage,
                               vehicleTypeError: _vehicleTypeError,
-                              countryError: null,
+                              provinceError: _provinceError,
                               vehicleTypes: _vehicleTypes,
-                              countries: _countries,
+                              provinces: _getProvinceNames(context),
                               onVehicleTypeSelected: (type) {
                                 setState(() {
                                   _selectedVehicleType = type;
                                   _vehicleTypeError = null;
                                 });
                               },
-                              onCountryTap: () {},
+                              onProvinceSelected: (province) {
+                                // Convert localized name back to key
+                                final key = _getProvinceKey(province, context);
+                                setState(() {
+                                  _selectedProvinceKey = key;
+                                  _provinceError = null;
+                                });
+                              },
                               onImagePickerTap: () =>
                                   _showImagePickerOptions(true),
                               onRemoveImage: () =>

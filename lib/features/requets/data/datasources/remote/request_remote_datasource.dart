@@ -121,6 +121,7 @@ class RequestRemoteDataSourceImpl implements RequestRemoteDataSource {
         'vehicle_type': data.vehicleType,
         'vehicle_model': data.vehicleModel,
         'vehicle_year': data.vehicleYear.toString(), // Convert to string for form-data
+        'province': data.province,
         'part_name': data.partName,
         'description': data.description,
         if (data.partNumber != null && data.partNumber!.isNotEmpty)

@@ -913,4 +913,31 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get loadingProducts => 'தயாரிப்புகளை ஏற்றுகிறது...';
+
+  @override
+  String get provinceWestern => 'மேற்கு மாகாணம்';
+
+  @override
+  String get provinceCentral => 'மத்திய மாகாணம்';
+
+  @override
+  String get provinceSouthern => 'தெற்கு மாகாணம்';
+
+  @override
+  String get provinceNorthern => 'வடக்கு மாகாணம்';
+
+  @override
+  String get provinceEastern => 'கிழக்கு மாகாணம்';
+
+  @override
+  String get provinceNorthWestern => 'வடமேற்கு மாகாணம்';
+
+  @override
+  String get provinceNorthCentral => 'வடமத்திய மாகாணம்';
+
+  @override
+  String get provinceUva => 'உவா மாகாணம்';
+
+  @override
+  String get provinceSabaragamuwa => 'சபரகமுவா மாகாணம்';
 }

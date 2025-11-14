@@ -366,5 +366,14 @@
   "productId": "හැඳුනුම්පත",
   "noProductsFound": "නිෂ්පාදන හමු නොවීය",
   "noProductsAvailable": "මේ මොහොතේ නිෂ්පාදන නොමැත.",
-  "loadingProducts": "නිෂ්පාදන ලබා ගනිමින්..."
+  "loadingProducts": "නිෂ්පාදන ලබා ගනිමින්...",
+  "provinceWestern": "බස්නාහිර පළාත",
+  "provinceCentral": "මධ්‍යම පළාත",
+  "provinceSouthern": "දකුණු පළාත",
+  "provinceNorthern": "උතුරු පළාත",
+  "provinceEastern": "නැගෙනහිර පළාත",
+  "provinceNorthWestern": "වයඹ පළාත",
+  "provinceNorthCentral": "උතුරු මැද පළාත",
+  "provinceUva": "ඌව පළාත",
+  "provinceSabaragamuwa": "සබරගමුව පළාත"
 }
