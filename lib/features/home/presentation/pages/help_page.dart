@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/theme/app_colors.dart';
 import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
@@ -523,18 +524,14 @@ class HelpPage extends StatelessWidget {
                 context: context,
                 icon: Icons.email_outlined,
                 label: l10n.email,
-                onTap: () {
-                  // TODO: Open email
-                },
+                onTap: () => _openEmail(context),
               ),
               const SizedBox(width: 12),
               _buildContactButton(
                 context: context,
                 icon: Icons.phone_outlined,
                 label: l10n.call,
-                onTap: () {
-                  // TODO: Make phone call
-                },
+                onTap: () => _makePhoneCall(context),
               ),
             ],
           ),
@@ -581,6 +578,99 @@ class HelpPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _openEmail(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+    const email = 'maziautozz@gmail.com';
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: email,
+    );
+
+    try {
+      if (await canLaunchUrl(emailUri)) {
+        await launchUrl(
+          emailUri,
+          mode: LaunchMode.externalApplication,
+        );
+      } else {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('${l10n.email}: $email'),
+              backgroundColor: AppColors.primary,
+              duration: const Duration(seconds: 3),
+              action: SnackBarAction(
+                label: l10n.ok,
+                textColor: AppColors.textWhite,
+                onPressed: () {},
+              ),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${l10n.email}: $email'),
+            backgroundColor: AppColors.primary,
+            duration: const Duration(seconds: 3),
+            action: SnackBarAction(
+              label: l10n.ok,
+              textColor: AppColors.textWhite,
+              onPressed: () {},
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _makePhoneCall(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+    const phoneNumber = '0741117363'; // Removed spaces for tel: URI
+    final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
+
+    try {
+      if (await canLaunchUrl(phoneUri)) {
+        await launchUrl(
+          phoneUri,
+          mode: LaunchMode.externalApplication,
+        );
+      } else {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('${l10n.call}: 074 111 7363'),
+              backgroundColor: AppColors.primary,
+              duration: const Duration(seconds: 3),
+              action: SnackBarAction(
+                label: l10n.ok,
+                textColor: AppColors.textWhite,
+                onPressed: () {},
+              ),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${l10n.call}: 074 111 7363'),
+            backgroundColor: AppColors.primary,
+            duration: const Duration(seconds: 3),
+            action: SnackBarAction(
+              label: l10n.ok,
+              textColor: AppColors.textWhite,
+              onPressed: () {},
+            ),
+          ),
+        );
+      }
+    }
   }
 }
 
