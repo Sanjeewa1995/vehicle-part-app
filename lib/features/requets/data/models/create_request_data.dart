@@ -1,6 +1,7 @@
 class CreateRequestData {
   final String vehicleType;
   final String vehicleModel;
+  final String? vehicleSubCategory;
   final int vehicleYear;
   final String province;
   final String partName;
@@ -13,6 +14,7 @@ class CreateRequestData {
   CreateRequestData({
     required this.vehicleType,
     required this.vehicleModel,
+    this.vehicleSubCategory,
     required this.vehicleYear,
     required this.province,
     required this.partName,

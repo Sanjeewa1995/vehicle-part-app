@@ -30,8 +30,8 @@ class _AddRequestPageState extends State<AddRequestPage> {
   final int _totalSteps = 2;
 
   // Step 1 Controllers
-  final _vehicleModelController = TextEditingController();
   final _vehicleYearController = TextEditingController();
+  final _subCategoryController = TextEditingController();
 
   // Step 2 Controllers
   final _partNameController = TextEditingController();
@@ -40,6 +40,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
 
   // Form values
   String _selectedVehicleType = 'car';
+  String? _selectedVehicleModel;
   String? _selectedProvinceKey; // Store province key instead of localized name
   File? _vehicleImage;
   File? _partImage;
@@ -47,6 +48,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
 
   // Validation error messages
   String? _vehicleTypeError;
+  String? _vehicleModelError;
   String? _provinceError;
 
   final ImagePicker _imagePicker = ImagePicker();
@@ -128,6 +130,379 @@ class _AddRequestPageState extends State<AddRequestPage> {
     return null;
   }
 
+  // Vehicle models organized by vehicle type
+  final Map<String, List<String>> _vehicleModels = {
+    'car': [
+      'Toyota',
+      'Honda',
+      'Nissan',
+      'Mazda',
+      'Suzuki',
+      'Mitsubishi',
+      'Hyundai',
+      'Kia',
+      'Ford',
+      'Chevrolet',
+      'BMW',
+      'Mercedes-Benz',
+      'Audi',
+      'Volkswagen',
+      'Volvo',
+      'Other',
+    ],
+    'truck': [
+      'Toyota',
+      'Isuzu',
+      'Mitsubishi',
+      'Nissan',
+      'Ford',
+      'Chevrolet',
+      'GMC',
+      'Dodge',
+      'Ram',
+      'Other',
+    ],
+    'motorcycle': [
+      'Honda',
+      'Yamaha',
+      'Suzuki',
+      'Kawasaki',
+      'Bajaj',
+      'TVS',
+      'Hero',
+      'Royal Enfield',
+      'Other',
+    ],
+    'bus': [
+      'Leyland',
+      'TATA',
+      'Ashok Leyland',
+      'Volvo',
+      'Scania',
+      'Mercedes-Benz',
+      'Other',
+    ],
+    'van': [
+      'Toyota',
+      'Nissan',
+      'Ford',
+      'Mercedes-Benz',
+      'Volkswagen',
+      'Other',
+    ],
+  };
+
+  // Sub-categories organized by vehicle type and model
+  final Map<String, Map<String, List<String>>> _subCategories = {
+    'car': {
+      'Toyota': [
+        'Corolla',
+        'Camry',
+        'Prius',
+        'RAV4',
+        'Highlander',
+        'Land Cruiser',
+        'Yaris',
+        'Avalon',
+        '4Runner',
+        'Sienna',
+        'Other',
+      ],
+      'Honda': [
+        'Civic',
+        'Accord',
+        'CR-V',
+        'Pilot',
+        'Odyssey',
+        'Fit',
+        'HR-V',
+        'Ridgeline',
+        'Other',
+      ],
+      'Nissan': [
+        'Altima',
+        'Sentra',
+        'Maxima',
+        'Rogue',
+        'Pathfinder',
+        'Murano',
+        'Frontier',
+        'Other',
+      ],
+      'Mazda': [
+        'Mazda3',
+        'Mazda6',
+        'CX-5',
+        'CX-9',
+        'MX-5',
+        'Other',
+      ],
+      'Suzuki': [
+        'Swift',
+        'Vitara',
+        'SX4',
+        'Grand Vitara',
+        'Other',
+      ],
+      'Mitsubishi': [
+        'Lancer',
+        'Outlander',
+        'Pajero',
+        'Mirage',
+        'Other',
+      ],
+      'Hyundai': [
+        'Elantra',
+        'Sonata',
+        'Tucson',
+        'Santa Fe',
+        'Accent',
+        'Other',
+      ],
+      'Kia': [
+        'Optima',
+        'Sorento',
+        'Sportage',
+        'Forte',
+        'Rio',
+        'Other',
+      ],
+      'Ford': [
+        'Focus',
+        'Fusion',
+        'Escape',
+        'Explorer',
+        'F-150',
+        'Mustang',
+        'Other',
+      ],
+      'Chevrolet': [
+        'Malibu',
+        'Impala',
+        'Equinox',
+        'Tahoe',
+        'Silverado',
+        'Cruze',
+        'Other',
+      ],
+      'BMW': [
+        '3 Series',
+        '5 Series',
+        'X3',
+        'X5',
+        '7 Series',
+        'Other',
+      ],
+      'Mercedes-Benz': [
+        'C-Class',
+        'E-Class',
+        'S-Class',
+        'GLC',
+        'GLE',
+        'Other',
+      ],
+      'Audi': [
+        'A3',
+        'A4',
+        'A6',
+        'Q5',
+        'Q7',
+        'Other',
+      ],
+      'Volkswagen': [
+        'Jetta',
+        'Passat',
+        'Tiguan',
+        'Golf',
+        'Other',
+      ],
+      'Volvo': [
+        'S60',
+        'S90',
+        'XC60',
+        'XC90',
+        'Other',
+      ],
+      'Other': [],
+    },
+    'truck': {
+      'Toyota': [
+        'Hilux',
+        'Tundra',
+        'Tacoma',
+        'Land Cruiser',
+        'Other',
+      ],
+      'Isuzu': [
+        'D-Max',
+        'NPR',
+        'NQR',
+        'Other',
+      ],
+      'Mitsubishi': [
+        'L200',
+        'Triton',
+        'Other',
+      ],
+      'Nissan': [
+        'Navara',
+        'Frontier',
+        'Titan',
+        'Other',
+      ],
+      'Ford': [
+        'F-150',
+        'F-250',
+        'F-350',
+        'Ranger',
+        'Other',
+      ],
+      'Chevrolet': [
+        'Silverado',
+        'Colorado',
+        'Other',
+      ],
+      'GMC': [
+        'Sierra',
+        'Canyon',
+        'Other',
+      ],
+      'Dodge': [
+        'Ram 1500',
+        'Ram 2500',
+        'Other',
+      ],
+      'Ram': [
+        '1500',
+        '2500',
+        '3500',
+        'Other',
+      ],
+      'Other': [],
+    },
+    'motorcycle': {
+      'Honda': [
+        'CBR',
+        'CB',
+        'CRF',
+        'XR',
+        'Other',
+      ],
+      'Yamaha': [
+        'YZF',
+        'MT',
+        'XT',
+        'FZ',
+        'Other',
+      ],
+      'Suzuki': [
+        'GSX',
+        'DR',
+        'RM',
+        'Other',
+      ],
+      'Kawasaki': [
+        'Ninja',
+        'Z',
+        'KLX',
+        'Other',
+      ],
+      'Bajaj': [
+        'Pulsar',
+        'Discover',
+        'Boxer',
+        'Other',
+      ],
+      'TVS': [
+        'Apache',
+        'Jupiter',
+        'Other',
+      ],
+      'Hero': [
+        'Splendor',
+        'Passion',
+        'Other',
+      ],
+      'Royal Enfield': [
+        'Classic',
+        'Bullet',
+        'Himalayan',
+        'Other',
+      ],
+      'Other': [],
+    },
+    'bus': {
+      'Leyland': [
+        'Tiger',
+        'Viking',
+        'Other',
+      ],
+      'TATA': [
+        'Marcopolo',
+        'Starbus',
+        'Other',
+      ],
+      'Ashok Leyland': [
+        'Viking',
+        'Other',
+      ],
+      'Volvo': [
+        'B7R',
+        'B9R',
+        'Other',
+      ],
+      'Scania': [
+        'K Series',
+        'Other',
+      ],
+      'Mercedes-Benz': [
+        'Tourismo',
+        'Other',
+      ],
+      'Other': [],
+    },
+    'van': {
+      'Toyota': [
+        'Hiace',
+        'Sienna',
+        'Other',
+      ],
+      'Nissan': [
+        'NV200',
+        'NV3500',
+        'Other',
+      ],
+      'Ford': [
+        'Transit',
+        'E-Series',
+        'Other',
+      ],
+      'Mercedes-Benz': [
+        'Sprinter',
+        'Vito',
+        'Other',
+      ],
+      'Volkswagen': [
+        'Transporter',
+        'Other',
+      ],
+      'Other': [],
+    },
+  };
+
+  // Get vehicle models for selected vehicle type
+  List<String> _getVehicleModels() {
+    return _vehicleModels[_selectedVehicleType] ?? [];
+  }
+
+  // Get sub-categories for selected vehicle type and model
+  List<String> _getSubCategories() {
+    if (_selectedVehicleType.isEmpty || _selectedVehicleModel == null) {
+      return [];
+    }
+    return _subCategories[_selectedVehicleType]?[_selectedVehicleModel] ?? [];
+  }
+
   @override
   void initState() {
     super.initState();
@@ -137,8 +512,8 @@ class _AddRequestPageState extends State<AddRequestPage> {
   @override
   void dispose() {
     _pageController.dispose();
-    _vehicleModelController.dispose();
     _vehicleYearController.dispose();
+    _subCategoryController.dispose();
     _partNameController.dispose();
     _partNumberController.dispose();
     _descriptionController.dispose();
@@ -300,6 +675,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
     // Clear previous errors
     setState(() {
       _vehicleTypeError = null;
+      _vehicleModelError = null;
       _provinceError = null;
     });
 
@@ -308,6 +684,14 @@ class _AddRequestPageState extends State<AddRequestPage> {
       final l10n = AppLocalizations.of(context)!;
       setState(() {
         _vehicleTypeError = l10n.pleaseSelectVehicleType;
+      });
+    }
+
+    // Validate vehicle model
+    if (_selectedVehicleModel == null || _selectedVehicleModel!.isEmpty) {
+      final l10n = AppLocalizations.of(context)!;
+      setState(() {
+        _vehicleModelError = l10n.pleaseEnterVehicleModel;
       });
     }
 
@@ -323,7 +707,10 @@ class _AddRequestPageState extends State<AddRequestPage> {
     final isValid = _formKeyStep1.currentState?.validate() ?? false;
 
     // Return true only if all validations pass
-    return isValid && _vehicleTypeError == null && _provinceError == null;
+    return isValid && 
+           _vehicleTypeError == null && 
+           _vehicleModelError == null && 
+           _provinceError == null;
   }
 
   bool _validateStep2() {
@@ -371,7 +758,10 @@ class _AddRequestPageState extends State<AddRequestPage> {
 
       final data = CreateRequestData(
         vehicleType: _selectedVehicleType,
-        vehicleModel: _vehicleModelController.text.trim(),
+        vehicleModel: _selectedVehicleModel ?? '',
+        vehicleSubCategory: _subCategoryController.text.trim().isEmpty
+            ? null
+            : _subCategoryController.text.trim(),
         vehicleYear: int.parse(_vehicleYearController.text.trim()),
         province: provinceName,
         partName: _partNameController.text.trim(),
@@ -452,13 +842,14 @@ class _AddRequestPageState extends State<AddRequestPage> {
     setState(() {
       _currentStep = 0;
       _selectedVehicleType = 'car';
+      _selectedVehicleModel = null;
       _selectedProvinceKey = null;
       _vehicleImage = null;
       _partImage = null;
       _partVideo = null;
     });
-    _vehicleModelController.clear();
     _vehicleYearController.clear();
+    _subCategoryController.clear();
     _partNameController.clear();
     _partNumberController.clear();
     _descriptionController.clear();
@@ -564,7 +955,6 @@ class _AddRequestPageState extends State<AddRequestPage> {
                             Step1FormWidget(
                               provider: provider,
                               formKey: _formKeyStep1,
-                              vehicleModelController: _vehicleModelController,
                               vehicleYearController: _vehicleYearController,
                               selectedVehicleType: _selectedVehicleType,
                               selectedProvince: _selectedProvinceKey != null
@@ -578,9 +968,21 @@ class _AddRequestPageState extends State<AddRequestPage> {
                               onVehicleTypeSelected: (type) {
                                 setState(() {
                                   _selectedVehicleType = type;
+                                  _selectedVehicleModel = null; // Reset model when type changes
                                   _vehicleTypeError = null;
+                                  _vehicleModelError = null;
                                 });
                               },
+                              onVehicleModelSelected: (model) {
+                                setState(() {
+                                  _selectedVehicleModel = model;
+                                  _vehicleModelError = null;
+                                });
+                              },
+                              selectedVehicleModel: _selectedVehicleModel,
+                              vehicleModels: _getVehicleModels(),
+                              vehicleModelError: _vehicleModelError,
+                              subCategoryController: _subCategoryController,
                               onProvinceSelected: (province) {
                                 // Convert localized name back to key
                                 final key = _getProvinceKey(province, context);

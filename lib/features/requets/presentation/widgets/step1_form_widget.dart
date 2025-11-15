@@ -8,16 +8,20 @@ import 'package:vehicle_part_app/l10n/app_localizations.dart';
 class Step1FormWidget extends StatefulWidget {
   final CreateRequestProvider provider;
   final GlobalKey<FormState> formKey;
-  final TextEditingController vehicleModelController;
   final TextEditingController vehicleYearController;
+  final TextEditingController subCategoryController;
   final String selectedVehicleType;
+  final String? selectedVehicleModel;
   final String? selectedProvince;
   final File? vehicleImage;
   final String? vehicleTypeError;
+  final String? vehicleModelError;
   final String? provinceError;
   final List<String> vehicleTypes;
+  final List<String> vehicleModels;
   final List<String> provinces;
   final Function(String) onVehicleTypeSelected;
+  final Function(String) onVehicleModelSelected;
   final Function(String) onProvinceSelected;
   final VoidCallback onImagePickerTap;
   final VoidCallback onRemoveImage;
@@ -27,16 +31,20 @@ class Step1FormWidget extends StatefulWidget {
     super.key,
     required this.provider,
     required this.formKey,
-    required this.vehicleModelController,
     required this.vehicleYearController,
+    required this.subCategoryController,
     required this.selectedVehicleType,
+    this.selectedVehicleModel,
     this.selectedProvince,
     this.vehicleImage,
     this.vehicleTypeError,
+    this.vehicleModelError,
     this.provinceError,
     required this.vehicleTypes,
+    required this.vehicleModels,
     required this.provinces,
     required this.onVehicleTypeSelected,
+    required this.onVehicleModelSelected,
     required this.onProvinceSelected,
     required this.onImagePickerTap,
     required this.onRemoveImage,
@@ -263,20 +271,201 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
             ],
             const SizedBox(height: 24),
 
-            // Vehicle Model
-            AppTextField(
-              controller: widget.vehicleModelController,
-              label: '${l10n.vehicleModelLabel} *',
-              hint: l10n.vehicleModelHint,
-              type: AppTextFieldType.text,
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return l10n.pleaseEnterVehicleModel;
-                }
-                return null;
-              },
+            // Vehicle Model Dropdown
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: AppColors.background,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: widget.vehicleModelError != null
+                      ? AppColors.error
+                      : AppColors.border,
+                  width: widget.vehicleModelError != null ? 2 : 1,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.shadowLight,
+                    blurRadius: 4,
+                    offset: const Offset(0, 1),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.directions_car, size: 18, color: AppColors.primary),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${l10n.vehicleModelLabel} *',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  GestureDetector(
+                    onTap: widget.vehicleModels.isEmpty
+                        ? null
+                        : () {
+                            showModalBottomSheet(
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) => Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.background,
+                                  borderRadius: const BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 12, bottom: 8),
+                                      width: 40,
+                                      height: 4,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.border,
+                                        borderRadius: BorderRadius.circular(2),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 16,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.directions_car,
+                                            color: AppColors.primary,
+                                            size: 20,
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            l10n.vehicleModelLabel,
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.textPrimary,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const Divider(height: 1),
+                                    Flexible(
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: widget.vehicleModels.length,
+                                        itemBuilder: (context, index) {
+                                          final model = widget.vehicleModels[index];
+                                          final isSelected =
+                                              widget.selectedVehicleModel == model;
+                                          return ListTile(
+                                            title: Text(
+                                              model,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: isSelected
+                                                    ? FontWeight.w600
+                                                    : FontWeight.normal,
+                                                color: isSelected
+                                                    ? AppColors.primary
+                                                    : AppColors.textPrimary,
+                                              ),
+                                            ),
+                                            trailing: isSelected
+                                                ? Icon(
+                                                    Icons.check_circle,
+                                                    color: AppColors.primary,
+                                                    size: 24,
+                                                  )
+                                                : null,
+                                            onTap: () {
+                                              widget.onVehicleModelSelected(model);
+                                              Navigator.pop(context);
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: MediaQuery.of(context).padding.bottom,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 16,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundSecondary,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: widget.vehicleModelError != null
+                              ? AppColors.error
+                              : AppColors.border,
+                          width: 1,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              widget.selectedVehicleModel ?? l10n.vehicleModelHint,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: widget.selectedVehicleModel == null
+                                    ? AppColors.textLight
+                                    : AppColors.textPrimary,
+                                fontWeight: widget.selectedVehicleModel == null
+                                    ? FontWeight.normal
+                                    : FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_drop_down,
+                            color: AppColors.textSecondary,
+                            size: 24,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
+            if (widget.vehicleModelError != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                widget.vehicleModelError!,
+                style: TextStyle(fontSize: 12, color: AppColors.error),
+              ),
+            ],
             const SizedBox(height: 16),
+
+            // Sub-Category Text Field (only show if model is selected)
+            if (widget.selectedVehicleModel != null)
+              AppTextField(
+                controller: widget.subCategoryController,
+                label: 'Sub Category',
+                hint: 'e.g., Corolla, Civic, etc.',
+                type: AppTextFieldType.text,
+              ),
+            if (widget.selectedVehicleModel != null)
+              const SizedBox(height: 16),
 
             // Vehicle Year
             AppTextField(
