@@ -246,7 +246,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                 // Cancel Button
                 OutlinedButton(
-                  onPressed: _isLoading ? null : () => context.pop(),
+                  onPressed: _isLoading
+                      ? null
+                      : () {
+                          // Clear any error state before navigating back
+                          final authProvider = Provider.of<AuthProvider>(context, listen: false);
+                          authProvider.clearError();
+                          // Navigate back safely
+                          context.pop();
+                        },
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.textPrimary,
                     padding: const EdgeInsets.symmetric(vertical: 16),

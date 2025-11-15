@@ -177,8 +177,10 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-      _status = AuthStatus.error;
+      // Don't change auth status to error - keep user authenticated
+      // Only set error message for display
       _errorMessage = e.toString().replaceAll('Exception: ', '');
+      _status = AuthStatus.authenticated; // Keep authenticated status
       notifyListeners();
       return false;
     }
