@@ -218,15 +218,6 @@ class SettingsPage extends StatelessWidget {
                 ),
                 _buildDivider(),
                 _SettingItem(
-                  icon: Icons.shopping_bag_outlined,
-                  title: l10n.myOrders,
-                  subtitle: l10n.myOrdersSubtitle,
-                  onTap: () {
-                    context.push('/orders');
-                  },
-                ),
-                _buildDivider(),
-                _SettingItem(
                   icon: Icons.lock_outline,
                   title: l10n.changePassword,
                   subtitle: l10n.changePasswordSubtitle,
