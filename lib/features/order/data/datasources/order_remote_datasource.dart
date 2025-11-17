@@ -5,6 +5,7 @@ import 'package:vehicle_part_app/core/error/exceptions.dart';
 import 'package:vehicle_part_app/features/order/data/models/create_order_request.dart';
 import 'package:vehicle_part_app/features/order/data/models/create_order_response.dart';
 import 'package:vehicle_part_app/features/order/data/models/order_list_response.dart';
+import 'package:vehicle_part_app/features/order/data/models/order_detail_response.dart';
 
 abstract class OrderRemoteDataSource {
   Future<CreateOrderResponse> createOrder(CreateOrderRequest request);
@@ -12,6 +13,7 @@ abstract class OrderRemoteDataSource {
     int page = 1,
     int pageSize = 20,
   });
+  Future<OrderDetailResponse> getOrderById(int id);
 }
 
 class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
@@ -122,6 +124,50 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
           statusCode: 200,
         );
       }
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<OrderDetailResponse> getOrderById(int id) async {
+    try {
+      final response = await apiClient.get(
+        '${ApiConstants.createOrder}$id/',
+      );
+
+      final responseData = response.data;
+      
+      // Ensure responseData is a Map
+      if (responseData is! Map<String, dynamic>) {
+        throw Exception('Invalid response format');
+      }
+
+      final success = responseData['success'] as bool?;
+      if (success == false) {
+        String? errorMessage = responseData['message'] as String?;
+
+        if (errorMessage == null || errorMessage.isEmpty) {
+          final errors = responseData['errors'] as Map<String, dynamic>?;
+          if (errors != null) {
+            final nonFieldErrors = errors['non_field_errors'] as List?;
+            if (nonFieldErrors != null && nonFieldErrors.isNotEmpty) {
+              final firstError = nonFieldErrors.first;
+              errorMessage = firstError is String ? firstError : firstError.toString();
+            }
+          }
+        }
+
+        if (errorMessage == null || errorMessage.isEmpty) {
+          errorMessage = responseData['error'] as String?;
+        }
+
+        throw Exception(errorMessage ?? 'An error occurred');
+      }
+
+      return OrderDetailResponse.fromJson(responseData);
+    } on AppException catch (e) {
+      throw Exception(e.message);
+    } catch (e) {
       throw Exception(e.toString());
     }
   }

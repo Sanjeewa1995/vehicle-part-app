@@ -1552,7 +1552,7 @@ abstract class AppLocalizations {
   /// **'Update Profile'**
   String get updateProfile;
 
-  /// Postal code field label
+  /// Postal code label
   ///
   /// In en, this message translates to:
   /// **'Postal Code'**
@@ -1863,6 +1863,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to load orders'**
   String get failedToLoadOrders;
+
+  /// Order details page title
+  ///
+  /// In en, this message translates to:
+  /// **'Order Details'**
+  String get orderDetails;
+
+  /// Order not found message
+  ///
+  /// In en, this message translates to:
+  /// **'Order not found'**
+  String get orderNotFound;
+
+  /// Error message when order details fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load order details'**
+  String get failedToLoadOrderDetails;
+
+  /// Order number label
+  ///
+  /// In en, this message translates to:
+  /// **'Order Number'**
+  String get orderNumber;
+
+  /// Order date label
+  ///
+  /// In en, this message translates to:
+  /// **'Order Date'**
+  String get orderDate;
+
+  /// Order items section title
+  ///
+  /// In en, this message translates to:
+  /// **'Order Items'**
+  String get orderItems;
+
+  /// Order information section title
+  ///
+  /// In en, this message translates to:
+  /// **'Order Information'**
+  String get orderInformation;
+
+  /// Loading message
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loading;
+
+  /// Status label
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  /// Currency label
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get currency;
+
+  /// Source label
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get source;
+
+  /// Shipping address section title
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping Address'**
+  String get shippingAddress;
+
+  /// Full name label
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get fullName;
+
+  /// Address label
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get address;
+
+  /// State label
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get state;
 
   /// Continue shopping button
   ///

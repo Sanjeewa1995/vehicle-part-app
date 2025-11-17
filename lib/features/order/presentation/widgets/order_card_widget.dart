@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../../data/models/order_model.dart';
@@ -90,7 +91,7 @@ class OrderCardWidget extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
           onTap: () {
-            // TODO: Navigate to order detail page
+            context.push('/orders/${order.id}');
           },
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -197,7 +198,7 @@ class OrderCardWidget extends StatelessWidget {
                     // View Details Button
                     TextButton.icon(
                       onPressed: () {
-                        // TODO: Navigate to order detail
+                        context.push('/orders/${order.id}');
                       },
                       icon: const Icon(
                         Icons.arrow_forward_ios,

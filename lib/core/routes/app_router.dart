@@ -16,6 +16,7 @@ import '../../features/requets/presentation/pages/my_request_list_page.dart';
 import '../../features/requets/presentation/pages/request_detail_page.dart';
 import '../../features/requets/presentation/pages/add_request_page.dart';
 import '../../features/order/presentation/pages/orders_list_page.dart';
+import '../../features/order/presentation/pages/order_detail_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/profile/presentation/pages/settings_page.dart';
 import '../../features/profile/presentation/pages/edit_profile_page.dart';
@@ -155,6 +156,14 @@ class AppRouter {
         path: '/orders',
         name: 'orders',
         builder: (context, state) => const OrdersListPage(),
+      ),
+      GoRoute(
+        path: '/orders/:id',
+        name: 'order-detail',
+        builder: (context, state) {
+          final id = int.parse(state.pathParameters['id']!);
+          return OrderDetailPage(orderId: id);
+        },
       ),
       GoRoute(
         path: '/requests',

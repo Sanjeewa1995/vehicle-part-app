@@ -959,6 +959,51 @@ class AppLocalizationsTa extends AppLocalizations {
   String get failedToLoadOrders => 'Failed to load orders';
 
   @override
+  String get orderDetails => 'ஆர்டர் விவரங்கள்';
+
+  @override
+  String get orderNotFound => 'ஆர்டர் கிடைக்கவில்லை';
+
+  @override
+  String get failedToLoadOrderDetails => 'ஆர்டர் விவரங்களை ஏற்ற முடியவில்லை';
+
+  @override
+  String get orderNumber => 'ஆர்டர் எண்';
+
+  @override
+  String get orderDate => 'ஆர்டர் தேதி';
+
+  @override
+  String get orderItems => 'ஆர்டர் உருப்படிகள்';
+
+  @override
+  String get orderInformation => 'ஆர்டர் தகவல்';
+
+  @override
+  String get loading => 'ஏற்றுகிறது...';
+
+  @override
+  String get status => 'நிலை';
+
+  @override
+  String get currency => 'நாணயம்';
+
+  @override
+  String get source => 'மூலம்';
+
+  @override
+  String get shippingAddress => 'அனுப்பும் முகவரி';
+
+  @override
+  String get fullName => 'முழு பெயர்';
+
+  @override
+  String get address => 'முகவரி';
+
+  @override
+  String get state => 'மாநிலம்';
+
+  @override
   String get continueShopping => 'Continue Shopping';
 
   @override

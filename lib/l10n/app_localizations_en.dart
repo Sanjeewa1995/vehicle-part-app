@@ -942,6 +942,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get failedToLoadOrders => 'Failed to load orders';
 
   @override
+  String get orderDetails => 'Order Details';
+
+  @override
+  String get orderNotFound => 'Order not found';
+
+  @override
+  String get failedToLoadOrderDetails => 'Failed to load order details';
+
+  @override
+  String get orderNumber => 'Order Number';
+
+  @override
+  String get orderDate => 'Order Date';
+
+  @override
+  String get orderItems => 'Order Items';
+
+  @override
+  String get orderInformation => 'Order Information';
+
+  @override
+  String get loading => 'Loading...';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get currency => 'Currency';
+
+  @override
+  String get source => 'Source';
+
+  @override
+  String get shippingAddress => 'Shipping Address';
+
+  @override
+  String get fullName => 'Full Name';
+
+  @override
+  String get address => 'Address';
+
+  @override
+  String get state => 'State';
+
+  @override
   String get continueShopping => 'Continue Shopping';
 
   @override

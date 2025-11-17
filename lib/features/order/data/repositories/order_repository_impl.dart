@@ -3,6 +3,7 @@ import 'package:vehicle_part_app/features/order/data/datasources/order_remote_da
 import 'package:vehicle_part_app/features/order/data/models/create_order_request.dart';
 import 'package:vehicle_part_app/features/order/data/models/shipping_address_model.dart';
 import 'package:vehicle_part_app/features/order/data/models/order_list_response.dart';
+import 'package:vehicle_part_app/features/order/data/models/order_detail_response.dart';
 import 'package:vehicle_part_app/features/order/domain/repositories/order_repository.dart';
 
 class OrderRepositoryImpl implements OrderRepository {
@@ -75,6 +76,20 @@ class OrderRepositoryImpl implements OrderRepository {
         rethrow;
       }
       throw Exception('Failed to load orders: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<OrderDetailResponse> getOrderById(int id) async {
+    try {
+      return await remoteDataSource.getOrderById(id);
+    } on AppException {
+      rethrow;
+    } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
+      throw Exception('Failed to load order details: ${e.toString()}');
     }
   }
 }

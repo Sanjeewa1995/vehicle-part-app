@@ -1,4 +1,5 @@
 import '../../data/models/order_list_response.dart';
+import '../../data/models/order_detail_response.dart';
 
 abstract class OrderRepository {
   Future<Map<String, dynamic>> createOrder({
@@ -12,5 +13,7 @@ abstract class OrderRepository {
     int page = 1,
     int pageSize = 20,
   });
+
+  Future<OrderDetailResponse> getOrderById(int id);
 }
 

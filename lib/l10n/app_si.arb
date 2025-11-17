@@ -377,5 +377,21 @@
   "provinceUva": "ඌව පළාත",
   "provinceSabaragamuwa": "සබරගමුව පළාත",
   "myOrders": "මගේ ඇණවුම්",
-  "myOrdersSubtitle": "ඔබේ ඇණවුම් බලා ලුහුබැඳීම"
+  "myOrdersSubtitle": "ඔබේ ඇණවුම් බලා ලුහුබැඳීම",
+  "orderDetails": "ඇණවුම් විස්තර",
+  "orderNotFound": "ඇණවුම හමු නොවීය",
+  "failedToLoadOrderDetails": "ඇණවුම් විස්තර පූරණය කිරීමට අසමත් විය",
+  "orderNumber": "ඇණවුම් අංකය",
+  "orderDate": "ඇණවුම් දිනය",
+  "orderItems": "ඇණවුම් අයිතම",
+  "orderInformation": "ඇණවුම් තොරතුරු",
+  "loading": "පූරණය වෙමින්...",
+  "status": "තත්වය",
+  "currency": "මුදල්",
+  "source": "මූලාශ්‍රය",
+  "shippingAddress": "බෙදා හැරීමේ ලිපිනය",
+  "fullName": "සම්පූර්ණ නම",
+  "address": "ලිපිනය",
+  "state": "පළාත",
+  "postalCode": "තැපැල් කේතය"
 }

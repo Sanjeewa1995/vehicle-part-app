@@ -377,5 +377,21 @@
   "provinceUva": "உவா மாகாணம்",
   "provinceSabaragamuwa": "சபரகமுவா மாகாணம்",
   "myOrders": "எனது ஆர்டர்கள்",
-  "myOrdersSubtitle": "உங்கள் ஆர்டர்களைக் காண்க மற்றும் கண்காணிக்கவும்"
+  "myOrdersSubtitle": "உங்கள் ஆர்டர்களைக் காண்க மற்றும் கண்காணிக்கவும்",
+  "orderDetails": "ஆர்டர் விவரங்கள்",
+  "orderNotFound": "ஆர்டர் கிடைக்கவில்லை",
+  "failedToLoadOrderDetails": "ஆர்டர் விவரங்களை ஏற்ற முடியவில்லை",
+  "orderNumber": "ஆர்டர் எண்",
+  "orderDate": "ஆர்டர் தேதி",
+  "orderItems": "ஆர்டர் உருப்படிகள்",
+  "orderInformation": "ஆர்டர் தகவல்",
+  "loading": "ஏற்றுகிறது...",
+  "status": "நிலை",
+  "currency": "நாணயம்",
+  "source": "மூலம்",
+  "shippingAddress": "அனுப்பும் முகவரி",
+  "fullName": "முழு பெயர்",
+  "address": "முகவரி",
+  "state": "மாநிலம்",
+  "postalCode": "அஞ்சல் குறியீடு"
 }

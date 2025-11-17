@@ -1253,6 +1253,70 @@
   "@failedToLoadOrders": {
     "description": "Error message when orders fail to load"
   },
+  "orderDetails": "Order Details",
+  "@orderDetails": {
+    "description": "Order details page title"
+  },
+  "orderNotFound": "Order not found",
+  "@orderNotFound": {
+    "description": "Order not found message"
+  },
+  "failedToLoadOrderDetails": "Failed to load order details",
+  "@failedToLoadOrderDetails": {
+    "description": "Error message when order details fail to load"
+  },
+  "orderNumber": "Order Number",
+  "@orderNumber": {
+    "description": "Order number label"
+  },
+  "orderDate": "Order Date",
+  "@orderDate": {
+    "description": "Order date label"
+  },
+  "orderItems": "Order Items",
+  "@orderItems": {
+    "description": "Order items section title"
+  },
+  "orderInformation": "Order Information",
+  "@orderInformation": {
+    "description": "Order information section title"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading message"
+  },
+  "status": "Status",
+  "@status": {
+    "description": "Status label"
+  },
+  "currency": "Currency",
+  "@currency": {
+    "description": "Currency label"
+  },
+  "source": "Source",
+  "@source": {
+    "description": "Source label"
+  },
+  "shippingAddress": "Shipping Address",
+  "@shippingAddress": {
+    "description": "Shipping address section title"
+  },
+  "fullName": "Full Name",
+  "@fullName": {
+    "description": "Full name label"
+  },
+  "address": "Address",
+  "@address": {
+    "description": "Address label"
+  },
+  "state": "State",
+  "@state": {
+    "description": "State label"
+  },
+  "postalCode": "Postal Code",
+  "@postalCode": {
+    "description": "Postal code label"
+  },
   "continueShopping": "Continue Shopping",
   "@continueShopping": {
     "description": "Continue shopping button"

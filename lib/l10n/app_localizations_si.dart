@@ -943,6 +943,51 @@ class AppLocalizationsSi extends AppLocalizations {
   String get failedToLoadOrders => 'Failed to load orders';
 
   @override
+  String get orderDetails => 'ඇණවුම් විස්තර';
+
+  @override
+  String get orderNotFound => 'ඇණවුම හමු නොවීය';
+
+  @override
+  String get failedToLoadOrderDetails => 'ඇණවුම් විස්තර පූරණය කිරීමට අසමත් විය';
+
+  @override
+  String get orderNumber => 'ඇණවුම් අංකය';
+
+  @override
+  String get orderDate => 'ඇණවුම් දිනය';
+
+  @override
+  String get orderItems => 'ඇණවුම් අයිතම';
+
+  @override
+  String get orderInformation => 'ඇණවුම් තොරතුරු';
+
+  @override
+  String get loading => 'පූරණය වෙමින්...';
+
+  @override
+  String get status => 'තත්වය';
+
+  @override
+  String get currency => 'මුදල්';
+
+  @override
+  String get source => 'මූලාශ්‍රය';
+
+  @override
+  String get shippingAddress => 'බෙදා හැරීමේ ලිපිනය';
+
+  @override
+  String get fullName => 'සම්පූර්ණ නම';
+
+  @override
+  String get address => 'ලිපිනය';
+
+  @override
+  String get state => 'පළාත';
+
+  @override
   String get continueShopping => 'Continue Shopping';
 
   @override
