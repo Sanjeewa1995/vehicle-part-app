@@ -14,7 +14,9 @@ import '../../features/requets/domain/usecases/get_requests_usecase.dart';
 import '../../features/requets/domain/usecases/get_request_by_id_usecase.dart';
 import '../../features/requets/domain/usecases/create_request_usecase.dart';
 import '../../features/requets/domain/usecases/delete_request_usecase.dart';
+import '../../features/requets/domain/usecases/get_request_stats_usecase.dart';
 import '../../features/requets/presentation/providers/request_list_provider.dart';
+import '../../features/home/presentation/providers/home_stats_provider.dart';
 import '../../features/requets/presentation/providers/request_detail_provider.dart';
 import '../../features/requets/presentation/providers/create_request_provider.dart';
 import '../../features/cart/presentation/providers/cart_provider.dart';
@@ -119,6 +121,10 @@ class ServiceLocator {
 
     getIt.registerLazySingleton(
       () => DeleteRequestUseCase(getIt<RequestRepository>()),
+    );
+
+    getIt.registerLazySingleton(
+      () => GetRequestStatsUseCase(getIt<RequestRepository>()),
     );
 
     // Cart Data Sources
@@ -261,6 +267,12 @@ class ServiceLocator {
     getIt.registerFactory<OrderDetailProvider>(
       () => OrderDetailProvider(
         getOrderByIdUseCase: getIt<GetOrderByIdUseCase>(),
+      ),
+    );
+
+    getIt.registerFactory<HomeStatsProvider>(
+      () => HomeStatsProvider(
+        getRequestStatsUseCase: getIt<GetRequestStatsUseCase>(),
       ),
     );
   }

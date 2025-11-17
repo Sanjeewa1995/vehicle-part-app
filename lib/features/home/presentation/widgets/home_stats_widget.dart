@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import 'package:vehicle_part_app/l10n/app_localizations.dart';
+import '../providers/home_stats_provider.dart';
 
 class HomeStatsWidget extends StatelessWidget {
   const HomeStatsWidget({super.key});
@@ -8,62 +10,77 @@ class HomeStatsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: const Color(0xFFE5E7EB), // Light gray border
-          width: 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-            spreadRadius: 0,
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: _buildStatItem(
-              icon: Icons.inventory_2_outlined,
-              label: l10n.totalRequests,
-              value: '0',
-              color: AppColors.primary,
+    return Consumer<HomeStatsProvider>(
+      builder: (context, provider, child) {
+        final stats = provider.stats;
+        
+        return Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(
+              color: const Color(0xFFE5E7EB), // Light gray border
+              width: 1,
             ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.1),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
+                spreadRadius: 0,
+              ),
+            ],
           ),
-          Container(
-            width: 1,
-            height: 50,
-            color: const Color(0xFFE5E7EB), // Light gray border
-          ),
-          Expanded(
-            child: _buildStatItem(
-              icon: Icons.pending_outlined,
-              label: l10n.pending,
-              value: '0',
-              color: const Color(0xFFF59E0B), // Amber/Orange
-            ),
-          ),
-          Container(
-            width: 1,
-            height: 50,
-            color: const Color(0xFFE5E7EB), // Light gray border
-          ),
-          Expanded(
-            child: _buildStatItem(
-              icon: Icons.check_circle_outline,
-              label: l10n.completed,
-              value: '0',
-              color: const Color(0xFF10B981), // Green (success)
-            ),
-          ),
-        ],
-      ),
+          child: provider.isLoading
+              ? const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                    ),
+                  ),
+                )
+              : Row(
+                  children: [
+                    Expanded(
+                      child: _buildStatItem(
+                        icon: Icons.inventory_2_outlined,
+                        label: l10n.totalRequests,
+                        value: stats?.totalRequests.toString() ?? '0',
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    Container(
+                      width: 1,
+                      height: 50,
+                      color: const Color(0xFFE5E7EB), // Light gray border
+                    ),
+                    Expanded(
+                      child: _buildStatItem(
+                        icon: Icons.pending_outlined,
+                        label: l10n.pending,
+                        value: stats?.pendingRequests.toString() ?? '0',
+                        color: const Color(0xFFF59E0B), // Amber/Orange
+                      ),
+                    ),
+                    Container(
+                      width: 1,
+                      height: 50,
+                      color: const Color(0xFFE5E7EB), // Light gray border
+                    ),
+                    Expanded(
+                      child: _buildStatItem(
+                        icon: Icons.check_circle_outline,
+                        label: l10n.completed,
+                        value: stats?.completedRequests.toString() ?? '0',
+                        color: const Color(0xFF10B981), // Green (success)
+                      ),
+                    ),
+                  ],
+                ),
+        );
+      },
     );
   }
 

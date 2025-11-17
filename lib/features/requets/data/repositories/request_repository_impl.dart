@@ -2,6 +2,7 @@ import '../../domain/entities/vehicle_part_request.dart';
 import '../../domain/repositories/request_repository.dart';
 import '../datasources/remote/request_remote_datasource.dart';
 import '../models/create_request_data.dart';
+import '../models/request_stats_response.dart';
 
 class RequestRepositoryImpl implements RequestRepository {
   final RequestRemoteDataSource remoteDataSource;
@@ -121,6 +122,29 @@ class RequestRepositoryImpl implements RequestRepository {
       }
 
       throw Exception(errorMessage.isEmpty ? 'Failed to delete request' : errorMessage);
+    }
+  }
+
+  @override
+  Future<RequestStatsResponse> getStats() async {
+    try {
+      return await remoteDataSource.getStats();
+    } catch (e) {
+      // Extract clean error message
+      String errorMessage;
+
+      if (e is Exception) {
+        errorMessage = e.toString()
+            .replaceAll('Exception: ', '')
+            .replaceAll('ServerException: ', '')
+            .replaceAll('AuthenticationException: ', '')
+            .replaceAll('NetworkException: ', '')
+            .trim();
+      } else {
+        errorMessage = e.toString();
+      }
+
+      throw Exception(errorMessage.isEmpty ? 'Failed to load stats' : errorMessage);
     }
   }
 }

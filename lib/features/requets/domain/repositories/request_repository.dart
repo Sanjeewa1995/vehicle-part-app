@@ -1,5 +1,6 @@
 import '../entities/vehicle_part_request.dart';
 import '../../data/models/create_request_data.dart';
+import '../../data/models/request_stats_response.dart';
 
 abstract class RequestRepository {
   Future<List<VehiclePartRequest>> getRequests({
@@ -12,5 +13,7 @@ abstract class RequestRepository {
   Future<VehiclePartRequest> createRequest(CreateRequestData data);
 
   Future<void> deleteRequest(int id);
+
+  Future<RequestStatsResponse> getStats();
 }
 

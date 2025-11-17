@@ -5,6 +5,7 @@ import 'package:vehicle_part_app/core/error/exceptions.dart';
 import '../../models/request_list_response.dart';
 import '../../models/request_detail_response.dart';
 import '../../models/create_request_data.dart';
+import '../../models/request_stats_response.dart';
 
 abstract class RequestRemoteDataSource {
   Future<RequestListResponse> getRequests({
@@ -17,6 +18,8 @@ abstract class RequestRemoteDataSource {
   Future<RequestDetailResponse> createRequest(CreateRequestData data);
 
   Future<void> deleteRequest(int id);
+
+  Future<RequestStatsResponse> getStats();
 }
 
 class RequestRemoteDataSourceImpl implements RequestRemoteDataSource {
@@ -223,6 +226,46 @@ class RequestRemoteDataSourceImpl implements RequestRemoteDataSource {
           throw Exception(errorMessage ?? 'Failed to delete request');
         }
       }
+    } on AppException catch (e) {
+      throw Exception(e.message);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<RequestStatsResponse> getStats() async {
+    try {
+      final response = await apiClient.get(
+        ApiConstants.vehiclePartRequestsStats,
+      );
+
+      final responseData = response.data;
+      if (responseData is Map<String, dynamic>) {
+        final success = responseData['success'] as bool?;
+        if (success == false) {
+          String? errorMessage = responseData['message'] as String?;
+
+          if (errorMessage == null || errorMessage.isEmpty) {
+            final errors = responseData['errors'] as Map<String, dynamic>?;
+            if (errors != null) {
+              final nonFieldErrors = errors['non_field_errors'] as List?;
+              if (nonFieldErrors != null && nonFieldErrors.isNotEmpty) {
+                final firstError = nonFieldErrors.first;
+                errorMessage = firstError is String ? firstError : firstError.toString();
+              }
+            }
+          }
+
+          if (errorMessage == null || errorMessage.isEmpty) {
+            errorMessage = responseData['error'] as String?;
+          }
+
+          throw Exception(errorMessage ?? 'An error occurred');
+        }
+      }
+
+      return RequestStatsResponse.fromJson(responseData);
     } on AppException catch (e) {
       throw Exception(e.message);
     } catch (e) {
