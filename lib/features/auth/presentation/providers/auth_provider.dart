@@ -44,12 +44,12 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> login(String email, String password) async {
+  Future<bool> login(String phone, String password) async {
     try {
       _status = AuthStatus.loading;
       _errorMessage = null;
       notifyListeners();
-      _user = await loginUseCase(email, password);
+      _user = await loginUseCase(phone, password);
       _status = AuthStatus.authenticated;
       _errorMessage = null;
       notifyListeners();

@@ -9,24 +9,24 @@ import '../providers/auth_provider.dart';
 
 class LoginCardWidget extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final TextEditingController emailController;
+  final TextEditingController phoneController;
   final TextEditingController passwordController;
   final VoidCallback onLogin;
 
   const LoginCardWidget({
     super.key,
     required this.formKey,
-    required this.emailController,
+    required this.phoneController,
     required this.passwordController,
     required this.onLogin,
   });
 
-  String? _validateEmail(String? value, AppLocalizations l10n) {
+  String? _validatePhone(String? value, AppLocalizations l10n) {
     if (value == null || value.isEmpty) {
-      return l10n.emailRequired;
+      return 'Phone number is required';
     }
-    if (!value.contains('@') || !value.contains('.')) {
-      return l10n.validEmailRequired;
+    if (value.length < 9) {
+      return 'Please enter a valid phone number';
     }
     return null;
   }
@@ -82,14 +82,13 @@ class LoginCardWidget extends StatelessWidget {
               ),
               const SizedBox(height: 32),
 
-              // Email Field
+              // Phone Field
               AppTextField(
-                controller: emailController,
-                label: l10n.emailAddress,
-                hint: l10n.enterYourEmail,
-                type: AppTextFieldType.email,
-                prefixIcon: Icons.email_outlined,
-                validator: (value) => _validateEmail(value, l10n),
+                controller: phoneController,
+                label: 'Phone Number',
+                hint: 'Enter your phone number',
+                type: AppTextFieldType.phone,
+                validator: (value) => _validatePhone(value, l10n),
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 20),

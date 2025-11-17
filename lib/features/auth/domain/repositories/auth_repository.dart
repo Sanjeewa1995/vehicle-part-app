@@ -2,7 +2,7 @@ import '../entities/user.dart';
 import '../entities/auth_tokens.dart';
 
 abstract class AuthRepository {
-  Future<User> login(String email, String password);
+  Future<User> login(String phone, String password);
   Future<User> register({
     required String firstName,
     required String lastName,

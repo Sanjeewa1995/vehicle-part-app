@@ -6,14 +6,14 @@ class LoginUseCase {
 
   LoginUseCase(this.repository);
 
-  Future<User> call(String email, String password) async {
-    if (email.isEmpty) {
-      throw Exception('Email is required');
+  Future<User> call(String phone, String password) async {
+    if (phone.isEmpty) {
+      throw Exception('Phone number is required');
     }
     if (password.isEmpty) {
       throw Exception('Password is required');
     }
-    return await repository.login(email, password);
+    return await repository.login(phone, password);
   }
 }
 

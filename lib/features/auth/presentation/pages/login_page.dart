@@ -17,7 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage>
   @override
   void dispose() {
     _animationController.dispose();
-    _emailController.dispose();
+    _phoneController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage>
     if (_formKey.currentState!.validate()) {
       final authProvider = context.read<AuthProvider>();
       await authProvider.login(
-        _emailController.text.trim(),
+        _phoneController.text.trim(),
         _passwordController.text,
       );
 
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage>
                     // Login Card
                     LoginCardWidget(
                       formKey: _formKey,
-                      emailController: _emailController,
+                      phoneController: _phoneController,
                       passwordController: _passwordController,
                       onLogin: _handleLogin,
                     ),
