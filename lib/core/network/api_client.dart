@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import '../../config/env.dart';
 import '../constants/api_constants.dart';
 import '../constants/app_constants.dart';
@@ -45,6 +46,7 @@ class ApiClient {
                   '${ApiConstants.bearer} $token';
             }
           }
+          
           return handler.next(options);
         },
         onResponse: (response, handler) {
@@ -168,7 +170,40 @@ class ApiClient {
         options: options,
       );
     } on DioException catch (e) {
-      throw Exception(e.message);
+      final statusCode = e.response?.statusCode;
+      final responseData = e.response?.data;
+      String errorMessage = e.message ?? 'An error occurred';
+      
+      // Try to extract more detailed error message from response
+      if (responseData is Map<String, dynamic>) {
+        errorMessage = responseData['message'] ?? 
+                       responseData['error'] ?? 
+                       responseData['detail'] ??
+                       errorMessage;
+        
+        // Include field-level errors if available
+        if (responseData.containsKey('errors') || responseData.containsKey('field_errors')) {
+          final fieldErrors = responseData['errors'] ?? responseData['field_errors'];
+          if (fieldErrors is Map) {
+            final fieldErrorMessages = fieldErrors.entries
+                .map((e) => '${e.key}: ${e.value}')
+                .join(', ');
+            errorMessage = '$errorMessage ($fieldErrorMessages)';
+          }
+        }
+      } else if (responseData is String) {
+        errorMessage = responseData;
+      }
+      
+      final detailedMessage = statusCode != null 
+          ? 'HTTP $statusCode: $errorMessage'
+          : errorMessage;
+      
+      throw Exception(detailedMessage);
+    } on AppException {
+      rethrow;
+    } catch (e) {
+      throw Exception('Unexpected error: ${e.toString()}');
     }
   }
 

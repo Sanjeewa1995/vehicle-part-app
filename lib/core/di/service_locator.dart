@@ -32,6 +32,10 @@ import '../../features/products/data/repositories/product_repository_impl.dart';
 import '../../features/products/domain/repositories/product_repository.dart';
 import '../../features/products/domain/usecases/get_products_usecase.dart';
 import '../../features/products/presentation/providers/product_list_provider.dart';
+import '../../features/order/data/datasources/order_remote_datasource.dart';
+import '../../features/order/data/repositories/order_repository_impl.dart';
+import '../../features/order/domain/repositories/order_repository.dart';
+import '../../features/order/domain/usecases/create_order_usecase.dart';
 import '../network/api_client.dart';
 import '../services/token_service.dart';
 import '../services/image_compression_service.dart';
@@ -169,6 +173,25 @@ class ServiceLocator {
     // Product Use Cases
     getIt.registerLazySingleton(
       () => GetProductsUseCase(getIt<ProductRepository>()),
+    );
+
+    // Order Data Sources
+    getIt.registerLazySingleton<OrderRemoteDataSource>(
+      () => OrderRemoteDataSourceImpl(
+        apiClient: getIt<ApiClient>(),
+      ),
+    );
+
+    // Order Repositories
+    getIt.registerLazySingleton<OrderRepository>(
+      () => OrderRepositoryImpl(
+        remoteDataSource: getIt<OrderRemoteDataSource>(),
+      ),
+    );
+
+    // Order Use Cases
+    getIt.registerLazySingleton(
+      () => CreateOrderUseCase(getIt<OrderRepository>()),
     );
 
     // Providers

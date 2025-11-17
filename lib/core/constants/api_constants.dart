@@ -28,6 +28,9 @@ class ApiConstants {
   static const String cartItems = '/api/v1/store/cart-items/';
   static String cartItemDetail(int id) => '/api/v1/store/cart-items/$id/';
   
+  // Order endpoints
+  static const String createOrder = '/api/v1/store/orders/';
+  
   // Store products endpoints
   static const String storeProducts = '/api/v1/store/products/';
   

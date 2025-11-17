@@ -3,9 +3,11 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/currency_formatter.dart';
+import '../../../../core/di/service_locator.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../../../cart/domain/entities/cart_item.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
+import '../../../order/domain/usecases/create_order_usecase.dart';
 import '../../domain/entities/billing_address.dart';
 import '../../data/repositories/payhere_service.dart';
 import '../../data/models/payment_request.dart';
@@ -395,43 +397,165 @@ class _PaymentPageState extends State<PaymentPage> {
       onSuccess: (paymentId) async {
         if (!mounted) return;
 
-        // Clear cart after successful payment
         final cartProvider = Provider.of<CartProvider>(context, listen: false);
-        await cartProvider.clearCart();
-
-        if (!mounted) return;
-
-        // Show success dialog
+        final cartId = cartProvider.cartId;
         final l10n = AppLocalizations.of(context)!;
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (dialogContext) => AlertDialog(
-            title: Row(
-              children: [
-                const Icon(Icons.check_circle, color: AppColors.success, size: 32),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(l10n.paymentSuccessful),
+
+        // Create order after successful payment
+        if (cartId != null && widget.billingAddress != null) {
+          try {
+            final createOrderUseCase = ServiceLocator.get<CreateOrderUseCase>();
+            
+            // Convert billing address to shipping address format
+            // Handle empty postal code - use a default value if empty to avoid API validation errors
+            final postalCode = widget.billingAddress!.postalCode?.trim();
+            final shippingAddress = {
+              'first_name': widget.billingAddress!.firstName,
+              'last_name': widget.billingAddress!.lastName,
+              'country': widget.billingAddress!.country,
+              'state': widget.billingAddress!.state?.trim() ?? '',
+              'post_code': postalCode?.isNotEmpty == true ? postalCode! : '00000',
+              'city': widget.billingAddress!.city,
+              'address1': widget.billingAddress!.address,
+            };
+
+            await createOrderUseCase(
+              cartId: cartId,
+              shippingAddress: shippingAddress,
+              source: 'web',
+              currency: 'LKR',
+            );
+
+            // Clear cart only after successful order creation
+            await cartProvider.clearCart();
+
+            if (!mounted) return;
+
+            // Show success dialog
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (dialogContext) => AlertDialog(
+                title: Row(
+                  children: [
+                    const Icon(Icons.check_circle, color: AppColors.success, size: 32),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(l10n.paymentSuccessful),
+                    ),
+                  ],
+                ),
+                content: Text(
+                  l10n.paymentProcessedSuccessfully(paymentId),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop();
+                      if (mounted) {
+                        context.go('/orders');
+                      }
+                    },
+                    child: Text(l10n.viewOrders),
+                  ),
+                ],
+              ),
+            );
+          } catch (e, stackTrace) {
+            // Log detailed error
+            debugPrint('❌ Order creation failed: $e');
+            debugPrint('Stack trace: $stackTrace');
+            
+            if (!mounted) return;
+
+            // Show error dialog to user
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (dialogContext) => AlertDialog(
+                title: Row(
+                  children: [
+                    const Icon(Icons.warning_amber_rounded, color: AppColors.error, size: 32),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text('Payment Successful, Order Failed'),
+                    ),
+                  ],
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Your payment was processed successfully (Payment ID: $paymentId), but we encountered an issue creating your order.',
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      'Error: ${e.toString()}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.textSecondary,
+                        fontFamily: 'monospace',
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'Please contact support with your payment ID. Your cart has been preserved.',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop();
+                      if (mounted) {
+                        context.pop(); // Go back to checkout
+                      }
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              ),
+            );
+            // DO NOT clear cart if order creation failed
+          }
+        } else {
+          // Missing cart ID or billing address
+          debugPrint('⚠️ Cannot create order: cartId=$cartId, billingAddress=${widget.billingAddress != null}');
+          
+          if (!mounted) return;
+
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (dialogContext) => AlertDialog(
+              title: Row(
+                children: [
+                  const Icon(Icons.warning_amber_rounded, color: AppColors.error, size: 32),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text('Payment Successful, Order Failed'),
+                  ),
+                ],
+              ),
+              content: Text(
+                'Your payment was processed successfully (Payment ID: $paymentId), but we could not create your order due to missing information. Please contact support.',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(dialogContext).pop();
+                    if (mounted) {
+                      context.pop();
+                    }
+                  },
+                  child: Text('OK'),
                 ),
               ],
             ),
-            content: Text(
-              l10n.paymentProcessedSuccessfully(paymentId),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(dialogContext).pop();
-                  if (mounted) {
-                    context.go('/orders');
-                  }
-                },
-                child: Text(l10n.viewOrders),
-              ),
-            ],
-          ),
-        );
+          );
+        }
       },
       onError: (error) {
         if (!mounted) return;
