@@ -925,4 +925,29 @@ class AppLocalizationsSi extends AppLocalizations {
 
   @override
   String get provinceSabaragamuwa => 'සබරගමුව පළාත';
+
+  @override
+  String get myOrders => 'මගේ ඇණවුම්';
+
+  @override
+  String get myOrdersSubtitle => 'ඔබේ ඇණවුම් බලා ලුහුබැඳීම';
+
+  @override
+  String get noOrdersYet => 'No Orders Yet';
+
+  @override
+  String get noOrdersYetMessage =>
+      'You haven\'t placed any orders yet. Start shopping to see your orders here.';
+
+  @override
+  String get failedToLoadOrders => 'Failed to load orders';
+
+  @override
+  String get continueShopping => 'Continue Shopping';
+
+  @override
+  String get browseProducts => 'Browse Products';
+
+  @override
+  String get refresh => 'Refresh';
 }

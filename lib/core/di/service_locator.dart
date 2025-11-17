@@ -36,6 +36,8 @@ import '../../features/order/data/datasources/order_remote_datasource.dart';
 import '../../features/order/data/repositories/order_repository_impl.dart';
 import '../../features/order/domain/repositories/order_repository.dart';
 import '../../features/order/domain/usecases/create_order_usecase.dart';
+import '../../features/order/domain/usecases/get_orders_usecase.dart';
+import '../../features/order/presentation/providers/order_list_provider.dart';
 import '../network/api_client.dart';
 import '../services/token_service.dart';
 import '../services/image_compression_service.dart';
@@ -194,6 +196,10 @@ class ServiceLocator {
       () => CreateOrderUseCase(getIt<OrderRepository>()),
     );
 
+    getIt.registerLazySingleton(
+      () => GetOrdersUseCase(getIt<OrderRepository>()),
+    );
+
     // Providers
     getIt.registerFactory<AuthProvider>(
       () => AuthProvider(
@@ -237,6 +243,12 @@ class ServiceLocator {
     getIt.registerFactory<ProductListProvider>(
       () => ProductListProvider(
         getProductsUseCase: getIt<GetProductsUseCase>(),
+      ),
+    );
+
+    getIt.registerFactory<OrderListProvider>(
+      () => OrderListProvider(
+        getOrdersUseCase: getIt<GetOrdersUseCase>(),
       ),
     );
   }

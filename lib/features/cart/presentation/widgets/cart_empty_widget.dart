@@ -78,7 +78,7 @@ class CartEmptyWidget extends StatelessWidget {
               const SizedBox(height: 48),
               AppButton(
                 text: l10n.browseRequests,
-                onPressed: () => context.go('/orders'),
+                onPressed: () => context.go('/requests'),
                 type: AppButtonType.primary,
                 size: AppButtonSize.large,
                 icon: Icons.search,

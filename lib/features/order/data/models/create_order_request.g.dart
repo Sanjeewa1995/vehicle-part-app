@@ -19,7 +19,7 @@ CreateOrderRequest _$CreateOrderRequestFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$CreateOrderRequestToJson(CreateOrderRequest instance) =>
     <String, dynamic>{
       'cart_id': instance.cartId,
-      'shipping_address': instance.shippingAddress.toJson(),
+      'shipping_address': instance.shippingAddress,
       'source': instance.source,
       'currency': instance.currency,
     };

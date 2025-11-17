@@ -63,7 +63,7 @@ class CheckoutEmptyWidget extends StatelessWidget {
             const SizedBox(height: 40),
             AppButton(
               text: 'Browse Requests',
-              onPressed: () => context.go('/orders'),
+              onPressed: () => context.go('/requests'),
               type: AppButtonType.primary,
               size: AppButtonSize.large,
               icon: Icons.search,

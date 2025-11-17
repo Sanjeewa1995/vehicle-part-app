@@ -95,8 +95,8 @@ class _AppBottomNavigationBarV2FloatingState
               icon: Icons.list_alt_outlined,
               activeIcon: Icons.list_alt_rounded,
               label: l10n.requests,
-              route: '/orders',
-              isActive: _currentRoute == '/orders',
+              route: '/requests',
+              isActive: _currentRoute == '/requests',
             ),
             _buildNavItem(
               icon: Icons.shopping_bag_outlined,
@@ -104,6 +104,13 @@ class _AppBottomNavigationBarV2FloatingState
               label: l10n.products,
               route: '/parts',
               isActive: _currentRoute == '/parts',
+            ),
+            _buildNavItem(
+              icon: Icons.receipt_long_outlined,
+              activeIcon: Icons.receipt_long_rounded,
+              label: l10n.myOrders,
+              route: '/orders',
+              isActive: _currentRoute == '/orders',
             ),
             _buildNavItem(
               icon: Icons.settings_outlined,

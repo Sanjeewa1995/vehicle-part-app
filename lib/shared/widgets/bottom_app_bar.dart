@@ -87,8 +87,8 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
                 icon: Icons.list_outlined,
                 activeIcon: Icons.list,
                 label: 'My Requests',
-                route: '/orders',
-                isActive: _currentRoute == '/orders',
+                route: '/requests',
+                isActive: _currentRoute == '/requests',
               ),
               Consumer<CartProvider>(
                 builder: (context, cartProvider, child) {

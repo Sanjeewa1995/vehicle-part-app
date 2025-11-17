@@ -24,11 +24,9 @@ Map<String, dynamic> _$CreateOrderResponseToJson(
 };
 
 OrderData _$OrderDataFromJson(Map<String, dynamic> json) => OrderData(
-  id: (json['id'] as num).toInt(),
+  id: OrderData._idFromJson(json['id']),
   status: json['status'] as String,
-  total: json['total'] is String 
-      ? double.parse(json['total'] as String)
-      : (json['total'] as num).toDouble(),
+  total: OrderData._totalFromJson(json['total']),
 );
 
 Map<String, dynamic> _$OrderDataToJson(OrderData instance) => <String, dynamic>{

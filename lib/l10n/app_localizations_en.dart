@@ -924,4 +924,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get provinceSabaragamuwa => 'Sabaragamuwa Province';
+
+  @override
+  String get myOrders => 'My Orders';
+
+  @override
+  String get myOrdersSubtitle => 'View and track your orders';
+
+  @override
+  String get noOrdersYet => 'No Orders Yet';
+
+  @override
+  String get noOrdersYetMessage =>
+      'You haven\'t placed any orders yet. Start shopping to see your orders here.';
+
+  @override
+  String get failedToLoadOrders => 'Failed to load orders';
+
+  @override
+  String get continueShopping => 'Continue Shopping';
+
+  @override
+  String get browseProducts => 'Browse Products';
+
+  @override
+  String get refresh => 'Refresh';
 }

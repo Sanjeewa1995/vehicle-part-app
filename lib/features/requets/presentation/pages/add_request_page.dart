@@ -803,7 +803,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    context.go('/orders');
+                    context.go('/requests');
                   },
                   style: TextButton.styleFrom(foregroundColor: AppColors.primary),
                   child: Text(l10n.viewRequests),

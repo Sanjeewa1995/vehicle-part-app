@@ -15,6 +15,7 @@ import '../../features/cart/presentation/pages/cart_page.dart';
 import '../../features/requets/presentation/pages/my_request_list_page.dart';
 import '../../features/requets/presentation/pages/request_detail_page.dart';
 import '../../features/requets/presentation/pages/add_request_page.dart';
+import '../../features/order/presentation/pages/orders_list_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/profile/presentation/pages/settings_page.dart';
 import '../../features/profile/presentation/pages/edit_profile_page.dart';
@@ -153,6 +154,11 @@ class AppRouter {
       GoRoute(
         path: '/orders',
         name: 'orders',
+        builder: (context, state) => const OrdersListPage(),
+      ),
+      GoRoute(
+        path: '/requests',
+        name: 'requests',
         builder: (context, state) => const MyRequestList(),
       ),
       // More specific route must come before parameterized route

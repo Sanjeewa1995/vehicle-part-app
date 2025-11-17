@@ -22,8 +22,12 @@ class CreateOrderResponse {
 
 @JsonSerializable()
 class OrderData {
+  @JsonKey(name: 'id', fromJson: _idFromJson)
   final int id;
+  
   final String status;
+  
+  @JsonKey(name: 'total', fromJson: _totalFromJson)
   final double total;
 
   const OrderData({
@@ -32,8 +36,29 @@ class OrderData {
     required this.total,
   });
 
-  factory OrderData.fromJson(Map<String, dynamic> json) =>
-      _$OrderDataFromJson(json);
+  static int _idFromJson(dynamic value) {
+    if (value is num) return value.toInt();
+    if (value is String) return int.tryParse(value) ?? 0;
+    return 0;
+  }
+
+  static double _totalFromJson(dynamic value) {
+    if (value is String) return double.tryParse(value) ?? 0.0;
+    if (value is num) return value.toDouble();
+    return 0.0;
+  }
+
+  factory OrderData.fromJson(Map<String, dynamic> json) {
+    // Handle type conversion safely for id and total
+    final idValue = json['id'];
+    final totalValue = json['total'];
+    
+    return OrderData(
+      id: _idFromJson(idValue),
+      status: json['status'] as String,
+      total: _totalFromJson(totalValue),
+    );
+  }
 
   Map<String, dynamic> toJson() => _$OrderDataToJson(this);
 }

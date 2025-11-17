@@ -1232,5 +1232,37 @@
   "provinceSabaragamuwa": "Sabaragamuwa Province",
   "@provinceSabaragamuwa": {
     "description": "Sabaragamuwa Province name"
+  },
+  "myOrders": "My Orders",
+  "@myOrders": {
+    "description": "My orders page title"
+  },
+  "myOrdersSubtitle": "View and track your orders",
+  "@myOrdersSubtitle": {
+    "description": "My orders menu item subtitle"
+  },
+  "noOrdersYet": "No Orders Yet",
+  "@noOrdersYet": {
+    "description": "Empty orders state title"
+  },
+  "noOrdersYetMessage": "You haven't placed any orders yet. Start shopping to see your orders here.",
+  "@noOrdersYetMessage": {
+    "description": "Empty orders state message"
+  },
+  "failedToLoadOrders": "Failed to load orders",
+  "@failedToLoadOrders": {
+    "description": "Error message when orders fail to load"
+  },
+  "continueShopping": "Continue Shopping",
+  "@continueShopping": {
+    "description": "Continue shopping button"
+  },
+  "browseProducts": "Browse Products",
+  "@browseProducts": {
+    "description": "Browse products button"
+  },
+  "refresh": "Refresh",
+  "@refresh": {
+    "description": "Refresh button"
   }
 }

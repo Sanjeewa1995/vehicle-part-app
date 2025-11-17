@@ -51,7 +51,7 @@ class HomeQuickActionsWidget extends StatelessWidget {
                   const Color(0xFF5BA3D6), // Light blue
                 ],
                 onTap: () {
-                  context.go('/orders');
+                  context.go('/requests');
                 },
               ),
             ),

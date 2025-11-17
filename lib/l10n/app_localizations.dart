@@ -1833,6 +1833,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sabaragamuwa Province'**
   String get provinceSabaragamuwa;
+
+  /// My orders page title
+  ///
+  /// In en, this message translates to:
+  /// **'My Orders'**
+  String get myOrders;
+
+  /// My orders menu item subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'View and track your orders'**
+  String get myOrdersSubtitle;
+
+  /// Empty orders state title
+  ///
+  /// In en, this message translates to:
+  /// **'No Orders Yet'**
+  String get noOrdersYet;
+
+  /// Empty orders state message
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t placed any orders yet. Start shopping to see your orders here.'**
+  String get noOrdersYetMessage;
+
+  /// Error message when orders fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load orders'**
+  String get failedToLoadOrders;
+
+  /// Continue shopping button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Shopping'**
+  String get continueShopping;
+
+  /// Browse products button
+  ///
+  /// In en, this message translates to:
+  /// **'Browse Products'**
+  String get browseProducts;
+
+  /// Refresh button
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
 }
 
 class _AppLocalizationsDelegate

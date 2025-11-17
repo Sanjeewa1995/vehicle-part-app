@@ -2,6 +2,7 @@ import 'package:vehicle_part_app/core/error/exceptions.dart';
 import 'package:vehicle_part_app/features/order/data/datasources/order_remote_datasource.dart';
 import 'package:vehicle_part_app/features/order/data/models/create_order_request.dart';
 import 'package:vehicle_part_app/features/order/data/models/shipping_address_model.dart';
+import 'package:vehicle_part_app/features/order/data/models/order_list_response.dart';
 import 'package:vehicle_part_app/features/order/domain/repositories/order_repository.dart';
 
 class OrderRepositoryImpl implements OrderRepository {
@@ -54,6 +55,26 @@ class OrderRepositoryImpl implements OrderRepository {
         rethrow;
       }
       throw Exception('Order creation failed: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<OrderListResponse> getOrders({
+    int page = 1,
+    int pageSize = 20,
+  }) async {
+    try {
+      return await remoteDataSource.getOrders(
+        page: page,
+        pageSize: pageSize,
+      );
+    } on AppException {
+      rethrow;
+    } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
+      throw Exception('Failed to load orders: ${e.toString()}');
     }
   }
 }

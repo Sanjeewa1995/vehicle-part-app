@@ -32,7 +32,7 @@ class RequestDetailPage extends StatelessWidget {
           elevation: 0,
           leading: IconButton(
             icon: const Icon(Icons.chevron_left, color: AppColors.textPrimary),
-            onPressed: () => context.go('/orders'),
+            onPressed: () => context.go('/requests'),
           ),
           title: Builder(
             builder: (context) {
@@ -218,7 +218,7 @@ class RequestDetailPage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () => context.go('/orders'),
+              onPressed: () => context.go('/requests'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 padding: const EdgeInsets.symmetric(
@@ -844,7 +844,7 @@ class _DeleteDialogContentState extends State<_DeleteDialogContent> {
                             backgroundColor: AppColors.success,
                           ),
                         );
-                        GoRouter.of(widget.parentContext).go('/orders');
+                        GoRouter.of(widget.parentContext).go('/requests');
                       }
                     } else if (widget.provider.status == RequestDetailStatus.error) {
                       // Show error message
