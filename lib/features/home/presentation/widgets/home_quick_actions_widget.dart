@@ -12,14 +12,24 @@ class HomeQuickActionsWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          l10n.quickActions,
-          style: TextStyle(
-            fontSize: 26,
-            fontWeight: FontWeight.bold,
-            color: const Color(0xFF1F2937), // Dark gray
-            letterSpacing: -0.5,
-          ),
+        Row(
+          children: [
+            const Icon(
+              Icons.speed,
+              color: Color(0xFF1E3A5F),
+              size: 28,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              l10n.quickActions,
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xFF1F2937), // Dark gray
+                letterSpacing: -0.5,
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 16),
         Row(
@@ -29,10 +39,10 @@ class HomeQuickActionsWidget extends StatelessWidget {
                 context: context,
                 title: l10n.addRequest,
                 subtitle: l10n.createNewRequest,
-                icon: Icons.add_circle_outline,
+                icon: Icons.build_circle,
                 gradient: [
-                  AppColors.primary,
-                  AppColors.primaryLight,
+                  const Color(0xFFE63946), // Automotive red
+                  const Color(0xFFFF6B6B), // Lighter red
                 ],
                 onTap: () {
                   context.go('/requests/add');
@@ -45,10 +55,10 @@ class HomeQuickActionsWidget extends StatelessWidget {
                 context: context,
                 title: l10n.myRequests,
                 subtitle: l10n.viewYourRequests,
-                icon: Icons.list_alt_outlined,
+                icon: Icons.inventory_2,
                 gradient: [
+                  const Color(0xFF2D5A87), // Dark blue
                   AppColors.primaryLight,
-                  const Color(0xFF5BA3D6), // Light blue
                 ],
                 onTap: () {
                   context.go('/requests');
@@ -99,16 +109,20 @@ class HomeQuickActionsWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 44,
-                height: 44,
+                width: 48,
+                height: 48,
                 decoration: BoxDecoration(
-                  color: AppColors.textWhite.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
+                  color: AppColors.textWhite.withValues(alpha: 0.25),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: AppColors.textWhite.withValues(alpha: 0.3),
+                    width: 1.5,
+                  ),
                 ),
                 child: Icon(
                   icon,
                   color: AppColors.textWhite,
-                  size: 22,
+                  size: 26,
                 ),
               ),
               const SizedBox(height: 12),

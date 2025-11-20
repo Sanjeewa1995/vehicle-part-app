@@ -50,7 +50,7 @@ class HomeHelpWidget extends StatelessWidget {
               ],
             ),
             child: const Icon(
-              Icons.help_outline,
+              Icons.support_agent,
               color: Colors.white,
               size: 28,
             ),

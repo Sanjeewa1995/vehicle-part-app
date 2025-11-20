@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../shared/widgets/bottom_app_bar_v2_floating.dart';
 import '../../../../core/di/service_locator.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../widgets/home_header_widget.dart';
 import '../widgets/home_quick_actions_widget.dart';
 import '../widgets/home_stats_widget.dart';
@@ -25,8 +26,36 @@ class HomePage extends StatelessWidget {
         return provider;
       },
       child: Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB), // Light gray background
-      body: Column(
+      backgroundColor: const Color(0xFFF5F7FA), // Slightly darker gray for contrast
+      body: Stack(
+        children: [
+          // Subtle vehicle-themed background decoration
+          Positioned(
+            right: -50,
+            top: 100,
+            child: Opacity(
+              opacity: 0.03,
+              child: Icon(
+                Icons.precision_manufacturing,
+                size: 300,
+                color: AppColors.primary,
+              ),
+            ),
+          ),
+          Positioned(
+            left: -30,
+            bottom: 200,
+            child: Opacity(
+              opacity: 0.03,
+              child: Icon(
+                Icons.engineering,
+                size: 250,
+                color: AppColors.primary,
+              ),
+            ),
+          ),
+          // Main content
+          Column(
         children: [
           // Top safe area with white background (matching top app bar)
           Container(
@@ -80,6 +109,8 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+        ],
           ),
         ],
       ),

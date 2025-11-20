@@ -31,10 +31,17 @@ class HomeTopBarWidget extends StatelessWidget {
                     child: Stack(
                       clipBehavior: Clip.none,
                       children: [
-                        Icon(
-                          Icons.shopping_cart_outlined,
-                          size: 22,
-                          color: Colors.black.withOpacity(0.7),
+                        Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Icon(
+                            Icons.shopping_cart_outlined,
+                            size: 20,
+                            color: Colors.black.withOpacity(0.7),
+                          ),
                         ),
                         if (cartProvider.itemCount > 0)
                           Positioned(

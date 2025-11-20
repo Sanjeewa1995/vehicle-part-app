@@ -21,11 +21,11 @@ class HomeStatsWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
               color: const Color(0xFFE5E7EB), // Light gray border
-              width: 1,
+              width: 1.5,
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.1),
+                color: AppColors.primary.withValues(alpha: 0.12),
                 blurRadius: 20,
                 offset: const Offset(0, 8),
                 spreadRadius: 0,
@@ -45,7 +45,7 @@ class HomeStatsWidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: _buildStatItem(
-                        icon: Icons.inventory_2_outlined,
+                        icon: Icons.precision_manufacturing,
                         label: l10n.totalRequests,
                         value: stats?.totalRequests.toString() ?? '0',
                         color: AppColors.primary,
@@ -58,7 +58,7 @@ class HomeStatsWidget extends StatelessWidget {
                     ),
                     Expanded(
                       child: _buildStatItem(
-                        icon: Icons.pending_outlined,
+                        icon: Icons.build,
                         label: l10n.pending,
                         value: stats?.pendingRequests.toString() ?? '0',
                         color: const Color(0xFFF59E0B), // Amber/Orange
@@ -71,7 +71,7 @@ class HomeStatsWidget extends StatelessWidget {
                     ),
                     Expanded(
                       child: _buildStatItem(
-                        icon: Icons.check_circle_outline,
+                        icon: Icons.check_circle,
                         label: l10n.completed,
                         value: stats?.completedRequests.toString() ?? '0',
                         color: const Color(0xFF10B981), // Green (success)
@@ -93,16 +93,20 @@ class HomeStatsWidget extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 40,
-          height: 40,
+          width: 44,
+          height: 44,
           decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(10),
+            color: color.withValues(alpha: 0.15),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: color.withValues(alpha: 0.2),
+              width: 1,
+            ),
           ),
           child: Icon(
             icon,
             color: color,
-            size: 20,
+            size: 22,
           ),
         ),
         const SizedBox(height: 8),
