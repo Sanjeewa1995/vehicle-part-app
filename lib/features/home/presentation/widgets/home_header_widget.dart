@@ -4,7 +4,6 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import 'animated_engine_widget.dart';
-import 'animated_vehicle_parts_widget.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
   const HomeHeaderWidget({super.key});
@@ -25,8 +24,7 @@ class HomeHeaderWidget extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Color(0xFF1E3A5F), // Darker automotive blue
-                Color(0xFF2D5A87), // Medium blue
+                AppColors.primary,
                 AppColors.primaryLight,
               ],
             ),
@@ -42,30 +40,31 @@ class HomeHeaderWidget extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              // Animated vehicle parts in background
+              // Animated engine in background
               Positioned(
                 right: -20,
                 top: -20,
                 child: Opacity(
                   opacity: 0.15,
-                  child: const AnimatedVehiclePartsWidget(
-                    width: 150,
-                    height: 150,
+                  child: AnimatedEngineWidget(
+                    size: 140,
+                    color: AppColors.textWhite,
                   ),
                 ),
               ),
+              // Vehicle parts decorative elements
               Positioned(
-                left: -10,
-                bottom: -10,
+                right: 20,
+                bottom: 10,
                 child: Opacity(
-                  opacity: 0.1,
-                  child: const AnimatedVehiclePartsWidget(
-                    width: 120,
-                    height: 120,
+                  opacity: 0.2,
+                  child: Icon(
+                    Icons.build_circle_outlined,
+                    size: 60,
+                    color: AppColors.textWhite,
                   ),
                 ),
               ),
-              // Main content
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -78,9 +77,9 @@ class HomeHeaderWidget extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                const Icon(
-                                  Icons.build_circle_outlined,
-                                  color: AppColors.textWhite,
+                                Icon(
+                                  Icons.directions_car,
+                                  color: AppColors.textWhite.withValues(alpha: 0.9),
                                   size: 20,
                                 ),
                                 const SizedBox(width: 8),
@@ -104,49 +103,62 @@ class HomeHeaderWidget extends StatelessWidget {
                                 letterSpacing: 0.5,
                               ),
                             ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.precision_manufacturing,
+                                  color: AppColors.textWhite.withValues(alpha: 0.8),
+                                  size: 14,
+                                ),
+                                const SizedBox(width: 6),
+                                Text(
+                                  'Vehicle Spare Parts',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.textWhite.withValues(alpha: 0.9),
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
-                      // Animated engine widget instead of person icon
                       Container(
-                        width: 70,
-                        height: 70,
+                        width: 56,
+                        height: 56,
                         decoration: BoxDecoration(
-                          color: AppColors.textWhite.withValues(alpha: 0.15),
+                          color: AppColors.textWhite.withValues(alpha: 0.2),
                           shape: BoxShape.circle,
                           border: Border.all(
                             color: AppColors.textWhite.withValues(alpha: 0.3),
                             width: 2,
                           ),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: AnimatedEngineWidget(
-                            size: 46,
-                            color: AppColors.textWhite,
-                          ),
+                        child: const Icon(
+                          Icons.person,
+                          color: AppColors.textWhite,
+                          size: 28,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 16),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
                       color: AppColors.textWhite.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: AppColors.textWhite.withValues(alpha: 0.3),
-                        width: 1,
-                      ),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const Icon(
-                          Icons.precision_manufacturing,
+                          Icons.auto_awesome,
                           color: AppColors.textWhite,
-                          size: 18,
+                          size: 16,
                         ),
                         const SizedBox(width: 8),
                         Text(
@@ -157,12 +169,6 @@ class HomeHeaderWidget extends StatelessWidget {
                             color: AppColors.textWhite,
                             letterSpacing: 1.5,
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        const Icon(
-                          Icons.engineering,
-                          color: AppColors.textWhite,
-                          size: 16,
                         ),
                       ],
                     ),

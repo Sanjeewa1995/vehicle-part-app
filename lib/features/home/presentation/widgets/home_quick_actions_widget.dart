@@ -12,24 +12,14 @@ class HomeQuickActionsWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            const Icon(
-              Icons.speed,
-              color: Color(0xFF1E3A5F),
-              size: 28,
-            ),
-            const SizedBox(width: 8),
-            Text(
-              l10n.quickActions,
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xFF1F2937), // Dark gray
-                letterSpacing: -0.5,
-              ),
-            ),
-          ],
+        Text(
+          l10n.quickActions,
+          style: TextStyle(
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+            color: const Color(0xFF1F2937), // Dark gray
+            letterSpacing: -0.5,
+          ),
         ),
         const SizedBox(height: 16),
         Row(
@@ -41,8 +31,8 @@ class HomeQuickActionsWidget extends StatelessWidget {
                 subtitle: l10n.createNewRequest,
                 icon: Icons.build_circle,
                 gradient: [
-                  const Color(0xFFE63946), // Automotive red
-                  const Color(0xFFFF6B6B), // Lighter red
+                  AppColors.primary,
+                  AppColors.primaryLight,
                 ],
                 onTap: () {
                   context.go('/requests/add');
@@ -57,8 +47,8 @@ class HomeQuickActionsWidget extends StatelessWidget {
                 subtitle: l10n.viewYourRequests,
                 icon: Icons.inventory_2,
                 gradient: [
-                  const Color(0xFF2D5A87), // Dark blue
                   AppColors.primaryLight,
+                  const Color(0xFF5BA3D6), // Light blue
                 ],
                 onTap: () {
                   context.go('/requests');
@@ -101,61 +91,85 @@ class HomeQuickActionsWidget extends StatelessWidget {
             ),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: AppColors.textWhite.withValues(alpha: 0.25),
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(
-                    color: AppColors.textWhite.withValues(alpha: 0.3),
-                    width: 1.5,
-                  ),
-                ),
+        child: Stack(
+          children: [
+            // Decorative vehicle part icon in background
+            Positioned(
+              right: -10,
+              bottom: -10,
+              child: Opacity(
+                opacity: 0.15,
                 child: Icon(
-                  icon,
+                  icon == Icons.build_circle 
+                      ? Icons.precision_manufacturing 
+                      : Icons.engineering,
+                  size: 80,
                   color: AppColors.textWhite,
-                  size: 26,
                 ),
               ),
-              const SizedBox(height: 12),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textWhite,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: AppColors.textWhite.withValues(alpha: 0.25),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.textWhite.withValues(alpha: 0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: AppColors.textWhite.withValues(alpha: 0.9),
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    child: Icon(
+                      icon,
+                      color: AppColors.textWhite,
+                      size: 24,
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 12),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textWhite,
+                            letterSpacing: 0.2,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          subtitle,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: AppColors.textWhite.withValues(alpha: 0.9),
+                            fontWeight: FontWeight.w500,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

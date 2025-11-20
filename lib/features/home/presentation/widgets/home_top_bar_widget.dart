@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:country_flags/country_flags.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
+import '../../../../core/theme/app_colors.dart';
 
 class HomeTopBarWidget extends StatelessWidget {
   const HomeTopBarWidget({super.key});
@@ -10,12 +11,31 @@ class HomeTopBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
       padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const _AutoZoneLogo(),
+          Row(
+            children: [
+              const _AutoZoneLogo(),
+              const SizedBox(width: 12),
+              Icon(
+                Icons.directions_car,
+                size: 18,
+                color: AppColors.primary.withValues(alpha: 0.7),
+              ),
+            ],
+          ),
           Row(
             children: [
               SizedBox(
@@ -34,19 +54,19 @@ class HomeTopBarWidget extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.1),
+                            color: AppColors.primary.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(
                             Icons.shopping_cart_outlined,
                             size: 20,
-                            color: Colors.black.withOpacity(0.7),
+                            color: AppColors.primary,
                           ),
                         ),
                         if (cartProvider.itemCount > 0)
                           Positioned(
-                            right: -6,
-                            top: -6,
+                            right: -4,
+                            top: -4,
                             child: Container(
                               padding: const EdgeInsets.all(3),
                               decoration: const BoxDecoration(

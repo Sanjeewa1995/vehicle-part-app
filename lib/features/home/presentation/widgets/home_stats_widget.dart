@@ -21,11 +21,11 @@ class HomeStatsWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
               color: const Color(0xFFE5E7EB), // Light gray border
-              width: 1.5,
+              width: 1,
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.12),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 blurRadius: 20,
                 offset: const Offset(0, 8),
                 spreadRadius: 0,
@@ -58,7 +58,7 @@ class HomeStatsWidget extends StatelessWidget {
                     ),
                     Expanded(
                       child: _buildStatItem(
-                        icon: Icons.build,
+                        icon: Icons.build_circle,
                         label: l10n.pending,
                         value: stats?.pendingRequests.toString() ?? '0',
                         color: const Color(0xFFF59E0B), // Amber/Orange
@@ -96,12 +96,19 @@ class HomeStatsWidget extends StatelessWidget {
           width: 44,
           height: 44,
           decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.15),
+            color: color.withValues(alpha: 0.12),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: color.withValues(alpha: 0.2),
-              width: 1,
+              width: 1.5,
             ),
+            boxShadow: [
+              BoxShadow(
+                color: color.withValues(alpha: 0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
           child: Icon(
             icon,
@@ -109,11 +116,11 @@ class HomeStatsWidget extends StatelessWidget {
             size: 22,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 10),
         Text(
           value,
           style: TextStyle(
-            fontSize: 22,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
             color: AppColors.primary,
             letterSpacing: -0.5,
