@@ -79,10 +79,14 @@ flutter:
   #   # - family: CustomFont
   #   #   fonts:
   #   #     - asset: assets/fonts/CustomFont-Regular.ttf
-
 flutter_launcher_icons:
   android: true
-  ios: false
+  ios: true
+  # Use original logo for iOS and regular Android icons
   image_path: "assets/images/logo.jpeg"
+  # Use padded logo for Android adaptive icons (prevents cropping)
+  adaptive_icon_foreground: "assets/images/logo_padded.png"
+  # Use black background for adaptive icon
   adaptive_icon_background: "#000000"
-  adaptive_icon_foreground: "assets/images/logo.jpeg"
+  remove_alpha_ios: true
+

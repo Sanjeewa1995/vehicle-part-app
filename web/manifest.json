@@ -1,6 +1,6 @@
 {
-    "name": "vehicle_part_app",
-    "short_name": "vehicle_part_app",
+    "name": "MAutoZone",
+    "short_name": "MAutoZone",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

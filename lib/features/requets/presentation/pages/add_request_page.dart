@@ -861,8 +861,20 @@ class _AddRequestPageState extends State<AddRequestPage> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => ServiceLocator.get<CreateRequestProvider>(),
-      child: Scaffold(
-        backgroundColor: AppColors.background,
+      child: PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) {
+          if (!didPop) {
+            // Handle Android back button - navigate back to requests page
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/home');
+            }
+          }
+        },
+        child: Scaffold(
+          backgroundColor: AppColors.background,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -885,7 +897,13 @@ class _AddRequestPageState extends State<AddRequestPage> {
                 color: AppColors.textPrimary,
                 size: 18,
               ),
-              onPressed: () => context.go('/orders'),
+              onPressed: () {
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.go('/home');
+                }
+              },
             ),
           ),
           title: Column(
@@ -1023,6 +1041,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
               );
             },
           ),
+        ),
         ),
       ),
     );
