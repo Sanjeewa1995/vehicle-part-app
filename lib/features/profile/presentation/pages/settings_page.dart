@@ -15,8 +15,16 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Scaffold(
-      backgroundColor: AppColors.background,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, dynamic result) {
+        if (!didPop) {
+          // Navigate to home when back button is pressed
+          context.go('/home');
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(
           l10n.settings,
@@ -61,6 +69,7 @@ class SettingsPage extends StatelessWidget {
         },
       ),
       bottomNavigationBar: const AppBottomNavigationBarV2Floating(),
+      ),
     );
   }
 

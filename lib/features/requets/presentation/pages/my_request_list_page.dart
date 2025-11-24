@@ -33,8 +33,16 @@ class _MyRequestListState extends State<MyRequestList> {
           });
         }
         final l10n = AppLocalizations.of(context)!;
-        return Scaffold(
-        backgroundColor: AppColors.background,
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (bool didPop, dynamic result) {
+            if (!didPop) {
+              // Navigate to home when back button is pressed
+              context.go('/home');
+            }
+          },
+          child: Scaffold(
+          backgroundColor: AppColors.background,
         appBar: AppBar(
           backgroundColor: AppColors.background,
           elevation: 0,
@@ -48,12 +56,12 @@ class _MyRequestListState extends State<MyRequestList> {
           ),
           centerTitle: true,
           actions: [
-            IconButton(
-              icon: const Icon(Icons.filter_list, color: AppColors.textSecondary),
-              onPressed: () {
-                // TODO: Implement filter
-              },
-            ),
+            // IconButton(
+            //   icon: const Icon(Icons.filter_list, color: AppColors.textSecondary),
+            //   onPressed: () {
+            //     // TODO: Implement filter
+            //   },
+            // ),
           ],
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(1),
@@ -101,6 +109,7 @@ class _MyRequestListState extends State<MyRequestList> {
           },
         ),
         bottomNavigationBar: const AppBottomNavigationBarV2Floating(),
+          ),
         );
       },
     );

@@ -863,7 +863,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
       create: (_) => ServiceLocator.get<CreateRequestProvider>(),
       child: PopScope(
         canPop: false,
-        onPopInvoked: (didPop) {
+        onPopInvokedWithResult: (bool didPop, dynamic result) {
           if (!didPop) {
             // Handle Android back button - navigate back to requests page
             if (context.canPop()) {

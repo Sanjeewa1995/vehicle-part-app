@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/di/service_locator.dart';
@@ -40,8 +41,16 @@ class _OrdersListPageState extends State<OrdersListPage> {
           });
         }
 
-        return Scaffold(
-          backgroundColor: AppColors.background,
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (bool didPop, dynamic result) {
+            if (!didPop) {
+              // Navigate to home when back button is pressed
+              context.go('/home');
+            }
+          },
+          child: Scaffold(
+            backgroundColor: AppColors.background,
           appBar: AppBar(
             backgroundColor: AppColors.background,
             elevation: 0,
@@ -121,6 +130,7 @@ class _OrdersListPageState extends State<OrdersListPage> {
             },
           ),
           bottomNavigationBar: const AppBottomNavigationBarV2Floating(),
+          ),
         );
       },
     );

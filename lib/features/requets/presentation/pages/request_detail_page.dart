@@ -25,8 +25,16 @@ class RequestDetailPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => ServiceLocator.get<RequestDetailProvider>()
         ..loadRequest(requestId),
-      child: Scaffold(
-        backgroundColor: AppColors.background,
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (bool didPop, dynamic result) {
+          if (!didPop) {
+            // Navigate to request list page when back button is pressed
+            context.go('/requests');
+          }
+        },
+        child: Scaffold(
+          backgroundColor: AppColors.background,
         appBar: AppBar(
           backgroundColor: AppColors.background,
           elevation: 0,
@@ -99,6 +107,7 @@ class RequestDetailPage extends StatelessWidget {
 
             return _buildContent(context, provider);
           },
+        ),
         ),
       ),
     );

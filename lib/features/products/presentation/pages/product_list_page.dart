@@ -32,8 +32,16 @@ class _ProductListPageState extends State<ProductListPage> {
           });
         }
         final l10n = AppLocalizations.of(context)!;
-        return Scaffold(
-          backgroundColor: AppColors.background,
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (bool didPop, dynamic result) {
+            if (!didPop) {
+              // Navigate to home when back button is pressed
+              context.go('/home');
+            }
+          },
+          child: Scaffold(
+            backgroundColor: AppColors.background,
           appBar: AppBar(
             backgroundColor: AppColors.background,
             elevation: 0,
@@ -84,6 +92,7 @@ class _ProductListPageState extends State<ProductListPage> {
             },
           ),
           bottomNavigationBar: const AppBottomNavigationBarV2Floating(),
+          ),
         );
       },
     );
