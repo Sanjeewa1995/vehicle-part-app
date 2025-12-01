@@ -55,7 +55,7 @@ class SettingsPage extends StatelessWidget {
               _buildProfileSection(context, user),
 
               // Account Section
-              _buildAccountSection(context),
+              _buildAccountSection(context, authProvider),
 
               // Support Section
               _buildSupportSection(context),
@@ -186,7 +186,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildAccountSection(BuildContext context) {
+  Widget _buildAccountSection(BuildContext context, AuthProvider authProvider) {
     final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -251,6 +251,16 @@ class SettingsPage extends StatelessWidget {
                   onTap: () {
                     _showComingSoonDialog(context, l10n.privacySecurity);
                   },
+                ),
+                _buildDivider(),
+                _SettingItem(
+                  icon: Icons.delete_outline,
+                  title: l10n.deleteAccount,
+                  subtitle: l10n.deleteAccountSubtitle,
+                  onTap: () {
+                    _showDeleteAccountDialog(context, authProvider);
+                  },
+                  isDestructive: true,
                 ),
               ],
             ),
@@ -500,6 +510,164 @@ class SettingsPage extends StatelessWidget {
             child: Text(l10n.logout),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showDeleteAccountDialog(BuildContext context, AuthProvider authProvider) {
+    final l10n = AppLocalizations.of(context)!;
+    final router = GoRouter.of(context);
+    final passwordController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+    bool isLoading = false;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: Text(
+            l10n.deleteAccountTitle,
+            style: const TextStyle(color: AppColors.error),
+          ),
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.deleteAccountMessage,
+                  style: const TextStyle(fontSize: 14),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  l10n.enterPasswordToDelete,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: l10n.enterYourPassword,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: AppColors.border),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: AppColors.primary),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: AppColors.error),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return l10n.passwordRequired;
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: isLoading
+                  ? null
+                  : () => Navigator.pop(dialogContext),
+              child: Text(l10n.cancel),
+            ),
+            TextButton(
+              onPressed: isLoading
+                  ? null
+                  : () async {
+                      if (formKey.currentState!.validate()) {
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        try {
+                          final success = await authProvider.deleteAccount(
+                            passwordController.text,
+                          );
+
+                          if (dialogContext.mounted) {
+                            Navigator.pop(dialogContext);
+
+                            if (success) {
+                              // Show success message
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(l10n.accountDeletedSuccessfully),
+                                  backgroundColor: AppColors.success,
+                                ),
+                              );
+
+                              // Navigate to splash screen
+                              await Future.delayed(
+                                const Duration(milliseconds: 500),
+                              );
+
+                              if (context.mounted) {
+                                router.go('/splash');
+                              }
+                            } else {
+                              // Show error message
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    authProvider.errorMessage ??
+                                        l10n.failedToDeleteAccount,
+                                  ),
+                                  backgroundColor: AppColors.error,
+                                ),
+                              );
+                            }
+                          }
+                        } catch (e) {
+                          if (dialogContext.mounted) {
+                            Navigator.pop(dialogContext);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  e.toString().replaceAll('Exception: ', ''),
+                                ),
+                                backgroundColor: AppColors.error,
+                              ),
+                            );
+                          }
+                        }
+                      }
+                    },
+              style: TextButton.styleFrom(
+                foregroundColor: AppColors.error,
+              ),
+              child: isLoading
+                  ? const SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppColors.error,
+                        ),
+                      ),
+                    )
+                  : Text(l10n.delete),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -994,4 +994,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get refresh => 'Refresh';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get deleteAccountSubtitle => 'Permanently delete your account';
+
+  @override
+  String get deleteAccountTitle => 'Delete Account';
+
+  @override
+  String get deleteAccountMessage =>
+      'Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently deleted.';
+
+  @override
+  String get enterPasswordToDelete =>
+      'Enter your password to confirm account deletion';
+
+  @override
+  String get accountDeletedSuccessfully =>
+      'Your account has been deleted successfully';
+
+  @override
+  String get failedToDeleteAccount => 'Failed to delete account';
+
+  @override
+  String get deletingAccount => 'Deleting account...';
 }

@@ -1971,6 +1971,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Refresh'**
   String get refresh;
+
+  /// Delete account menu item
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
+
+  /// Delete account subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Permanently delete your account'**
+  String get deleteAccountSubtitle;
+
+  /// Delete account dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccountTitle;
+
+  /// Delete account confirmation message
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently deleted.'**
+  String get deleteAccountMessage;
+
+  /// Password prompt for account deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password to confirm account deletion'**
+  String get enterPasswordToDelete;
+
+  /// Account deleted success message
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been deleted successfully'**
+  String get accountDeletedSuccessfully;
+
+  /// Failed to delete account error
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete account'**
+  String get failedToDeleteAccount;
+
+  /// Deleting account loading message
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting account...'**
+  String get deletingAccount;
 }
 
 class _AppLocalizationsDelegate

@@ -17,6 +17,7 @@ class ApiConstants {
   static const String verifyOTP = '/api/v1/auth/verify-otp/';
   static const String updateProfile = '/api/v1/auth/profile/update/';
   static const String changePassword = '/api/v1/auth/change-password/';
+  static const String deleteAccount = '/api/v1/auth/delete-account/';
   
   static const String parts = '/parts';
   static const String partsSearch = '/parts/search';

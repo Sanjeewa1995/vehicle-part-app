@@ -995,4 +995,30 @@ class AppLocalizationsSi extends AppLocalizations {
 
   @override
   String get refresh => 'Refresh';
+
+  @override
+  String get deleteAccount => 'ගිණුම මකන්න';
+
+  @override
+  String get deleteAccountSubtitle => 'ඔබේ ගිණුම ස්ථිරවම මකන්න';
+
+  @override
+  String get deleteAccountTitle => 'ගිණුම මකන්න';
+
+  @override
+  String get deleteAccountMessage =>
+      'ඔබට ඇත්තටම ඔබේ ගිණුම මකා දැමීමට අවශ්‍යද? මෙම ක්‍රියාව අහෝසි කළ නොහැකි අතර ඔබේ සියලුම දත්ත ස්ථිරවම මකා දමනු ඇත.';
+
+  @override
+  String get enterPasswordToDelete =>
+      'ගිණුම් මැකීම තහවුරු කිරීමට ඔබේ මුරපදය ඇතුළත් කරන්න';
+
+  @override
+  String get accountDeletedSuccessfully => 'ඔබේ ගිණුම සාර්ථකව මකා දමන ලදී';
+
+  @override
+  String get failedToDeleteAccount => 'ගිණුම මකා දැමීමට අසමත් විය';
+
+  @override
+  String get deletingAccount => 'ගිණුම මකමින්...';
 }

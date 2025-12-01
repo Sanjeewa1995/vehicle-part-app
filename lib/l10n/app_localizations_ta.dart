@@ -1011,4 +1011,31 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get refresh => 'Refresh';
+
+  @override
+  String get deleteAccount => 'கணக்கை நீக்க';
+
+  @override
+  String get deleteAccountSubtitle => 'உங்கள் கணக்கை நிரந்தரமாக நீக்க';
+
+  @override
+  String get deleteAccountTitle => 'கணக்கை நீக்க';
+
+  @override
+  String get deleteAccountMessage =>
+      'நீங்கள் உண்மையில் உங்கள் கணக்கை நீக்க விரும்புகிறீர்களா? இந்த செயலை திரும்பப் பெற முடியாது மற்றும் உங்கள் அனைத்து தரவும் நிரந்தரமாக நீக்கப்படும்.';
+
+  @override
+  String get enterPasswordToDelete =>
+      'கணக்கு நீக்குதலை உறுதிப்படுத்த உங்கள் கடவுச்சொல்லை உள்ளிடவும்';
+
+  @override
+  String get accountDeletedSuccessfully =>
+      'உங்கள் கணக்கு வெற்றிகரமாக நீக்கப்பட்டது';
+
+  @override
+  String get failedToDeleteAccount => 'கணக்கை நீக்க முடியவில்லை';
+
+  @override
+  String get deletingAccount => 'கணக்கை நீக்குகிறது...';
 }

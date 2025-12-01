@@ -30,6 +30,7 @@ abstract class AuthRepository {
     required String newPasswordConfirm,
   });
   Future<void> logout();
+  Future<bool> deleteAccount(String password);
   Future<AuthTokens?> getStoredTokens();
   Future<User?> getStoredUser();
   Future<bool> isAuthenticated();

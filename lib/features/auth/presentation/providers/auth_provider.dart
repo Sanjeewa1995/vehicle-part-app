@@ -225,6 +225,27 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> deleteAccount(String password) async {
+    try {
+      _status = AuthStatus.loading;
+      _errorMessage = null;
+      notifyListeners();
+      final success = await authRepository.deleteAccount(password);
+      if (success) {
+        _user = null;
+        _status = AuthStatus.unauthenticated;
+        _errorMessage = null;
+      }
+      notifyListeners();
+      return success;
+    } catch (e) {
+      _status = AuthStatus.error;
+      _errorMessage = e.toString().replaceAll('Exception: ', '');
+      notifyListeners();
+      return false;
+    }
+  }
+
   void clearError() {
     _errorMessage = null;
     notifyListeners();

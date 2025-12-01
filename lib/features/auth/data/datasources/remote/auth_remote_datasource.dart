@@ -17,6 +17,7 @@ import 'package:vehicle_part_app/features/auth/data/models/user_model.dart';
 import 'package:vehicle_part_app/features/auth/data/models/change_password_request.dart';
 import 'package:vehicle_part_app/features/auth/data/models/change_password_response.dart';
 import 'package:vehicle_part_app/features/auth/data/models/logout_request.dart';
+import 'package:vehicle_part_app/features/auth/data/models/delete_account_request.dart';
 
 abstract class AuthRemoteDataSource {
   Future<LoginResponse> login(LoginRequest request);
@@ -27,6 +28,7 @@ abstract class AuthRemoteDataSource {
   Future<UpdateProfileResponse> updateProfile(UpdateProfileRequest request);
   Future<ChangePasswordResponse> changePassword(ChangePasswordRequest request);
   Future<void> logout(LogoutRequest request);
+  Future<void> deleteAccount(DeleteAccountRequest request);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -181,6 +183,20 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     try {
       await apiClient.post(
         ApiConstants.logout,
+        data: request.toJson(),
+      );
+    } on AppException {
+      rethrow;
+    } on DioException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  @override
+  Future<void> deleteAccount(DeleteAccountRequest request) async {
+    try {
+      await apiClient.delete(
+        ApiConstants.deleteAccount,
         data: request.toJson(),
       );
     } on AppException {

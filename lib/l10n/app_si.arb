@@ -393,5 +393,13 @@
   "fullName": "සම්පූර්ණ නම",
   "address": "ලිපිනය",
   "state": "පළාත",
-  "postalCode": "තැපැල් කේතය"
+  "postalCode": "තැපැල් කේතය",
+  "deleteAccount": "ගිණුම මකන්න",
+  "deleteAccountSubtitle": "ඔබේ ගිණුම ස්ථිරවම මකන්න",
+  "deleteAccountTitle": "ගිණුම මකන්න",
+  "deleteAccountMessage": "ඔබට ඇත්තටම ඔබේ ගිණුම මකා දැමීමට අවශ්‍යද? මෙම ක්‍රියාව අහෝසි කළ නොහැකි අතර ඔබේ සියලුම දත්ත ස්ථිරවම මකා දමනු ඇත.",
+  "enterPasswordToDelete": "ගිණුම් මැකීම තහවුරු කිරීමට ඔබේ මුරපදය ඇතුළත් කරන්න",
+  "accountDeletedSuccessfully": "ඔබේ ගිණුම සාර්ථකව මකා දමන ලදී",
+  "failedToDeleteAccount": "ගිණුම මකා දැමීමට අසමත් විය",
+  "deletingAccount": "ගිණුම මකමින්..."
 }

@@ -12,6 +12,7 @@ import '../models/reset_password_request.dart';
 import '../models/update_profile_request.dart';
 import '../models/change_password_request.dart';
 import '../models/logout_request.dart';
+import '../models/delete_account_request.dart';
 import '../models/user_model.dart';
 import '../../../../core/services/token_service.dart';
 
@@ -203,6 +204,30 @@ class AuthRepositoryImpl implements AuthRepository {
     } finally {
       await localDataSource.clearTokens();
       await localDataSource.clearUser();
+    }
+  }
+
+  @override
+  Future<bool> deleteAccount(String password) async {
+    try {
+      // Get refresh token for the request
+      final refreshToken = await TokenService.getRefreshToken();
+      final request = DeleteAccountRequest(
+        password: password,
+        refresh: refreshToken,
+      );
+      await remoteDataSource.deleteAccount(request);
+      
+      // Clear local data after successful deletion
+      await localDataSource.clearTokens();
+      await localDataSource.clearUser();
+      
+      return true;
+    } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
+      throw Exception('Account deletion failed: ${e.toString()}');
     }
   }
 
