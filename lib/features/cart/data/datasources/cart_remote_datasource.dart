@@ -221,13 +221,18 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
     required int quantity,
   }) async {
     try {
+      final requestData = {
+        'cart_id': cartId,
+        'product_id': productId,
+        'quantity': quantity,
+      };
+      
+      // ignore: avoid_print
+      print('Adding to cart: ${ApiConstants.cartItems} with data: $requestData');
+
       final response = await apiClient.post(
         ApiConstants.cartItems,
-        data: {
-          'cart_id': cartId,
-          'product_id': productId,
-          'quantity': quantity,
-        },
+        data: requestData,
       );
 
       final responseData = response.data;

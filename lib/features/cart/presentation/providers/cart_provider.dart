@@ -109,6 +109,39 @@ class CartProvider extends ChangeNotifier {
 
   Future<void> addToCart(Product product) async {
     try {
+      await _addToCartInternal(product);
+    } catch (e) {
+      // Check for 500 error (Server Error) or 404 (Not Found - invalid cart ID)
+      final errorMessage = e.toString();
+      if (errorMessage.contains('500') || errorMessage.contains('404')) {
+        debugPrint('Add to cart failed with $errorMessage. Retrying with new cart...');
+        
+        // Clear local cart ID as it might be invalid/stale on server
+        _cartId = null;
+        await _prefs.remove(_cartIdKey);
+        
+        try {
+          // Create new cart and retry
+          await _ensureCart();
+          await _addToCartInternal(product);
+          debugPrint('Retry successful with new cart ID: $_cartId');
+          return;
+        } catch (retryError) {
+          debugPrint('Retry failed: $retryError');
+          _errorMessage = retryError.toString();
+          notifyListeners();
+          rethrow;
+        }
+      }
+      
+      debugPrint('Error adding to cart: $e');
+      _errorMessage = e.toString();
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  Future<void> _addToCartInternal(Product product) async {
       await _ensureCart();
 
       // Check if product already exists in cart
@@ -123,7 +156,7 @@ class CartProvider extends ChangeNotifier {
         await updateQuantity(product.id, existingItem.quantity + 1);
       } else {
         // Add new item
-        debugPrint('Adding new product ${product.id} to cart');
+        debugPrint('Adding new product ${product.id} to cart with cart ID: $_cartId');
         final cartItem = await _addCartItemUseCase(
           cartId: _cartId!,
           productId: product.id,
@@ -147,12 +180,6 @@ class CartProvider extends ChangeNotifier {
       
       // Refresh cart to ensure sync with backend
       await refreshCart();
-    } catch (e) {
-      debugPrint('Error adding to cart: $e');
-      _errorMessage = e.toString();
-      notifyListeners();
-      rethrow;
-    }
   }
 
   Future<void> removeFromCart(int productId) async {
