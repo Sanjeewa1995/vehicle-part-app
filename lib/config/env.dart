@@ -3,10 +3,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class Env {
   static String get apiBaseUrl {
     try {
-      return dotenv.env['API_BASE_URL'] ?? 'http://3.25.146.196:8000';
+      return dotenv.env['API_BASE_URL'] ?? 'http://206.189.137.79';
     } catch (e) {
       // dotenv not initialized, return default
-      return 'http://3.25.146.196:8000';
+      return 'http://206.189.137.79';
     }
   }
   
