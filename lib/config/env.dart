@@ -37,5 +37,42 @@ class Env {
       return true; // Default to development
     }
   }
-}
 
+  static bool get payHereSandbox {
+    try {
+      final value = dotenv.env['PAYHERE_SANDBOX'];
+      if (value == null) return true;
+      return value.toLowerCase() == 'true' || value == '1';
+    } catch (e) {
+      // dotenv not initialized, default to sandbox mode
+      return true;
+    }
+  }
+
+  static String get payHereMerchantId {
+    try {
+      return dotenv.env['PAYHERE_MERCHANT_ID'] ?? '';
+    } catch (e) {
+      // dotenv not initialized
+      return '';
+    }
+  }
+
+  static String get payHereMerchantSecret {
+    try {
+      return dotenv.env['PAYHERE_MERCHANT_SECRET'] ?? '';
+    } catch (e) {
+      // dotenv not initialized
+      return '';
+    }
+  }
+
+  static String get payHereNotifyUrl {
+    try {
+      return dotenv.env['PAYHERE_NOTIFY_URL'] ?? '';
+    } catch (e) {
+      // dotenv not initialized
+      return '';
+    }
+  }
+}

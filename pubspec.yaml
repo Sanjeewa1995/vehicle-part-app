@@ -2,7 +2,7 @@ name: vehicle_part_app
 description: "A Flutter application for vehicle parts management."
 publish_to: 'none'
 
-version: 1.0.0+4
+version: 1.0.2+11
 
 environment:
   sdk: ^3.8.1
@@ -73,6 +73,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - .env
 
   # fonts:
   #   # Add custom fonts here when needed

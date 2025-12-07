@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:payhere_mobilesdk_flutter/payhere_mobilesdk_flutter.dart';
+import 'package:vehicle_part_app/config/env.dart';
 import '../models/payment_request.dart';
 
 class PayHereService {
   // PayHere Credentials
   // IMPORTANT: Make sure your app package name matches what's registered in PayHere
   // Current app package name: com.vehiclepart.vehicle_part_app (Android)
-  // Android Merchant Secret (for com.vehiclepart.vehicle_part_app)
-  static const String merchantId = '1232890';
-  static const String merchantSecret = 'MjkwMzc1Mzk3NDIzNTI5NjY0NTMxMzYwMzAyMjg2MzExMTk1MTE5MA==';
-  static const String notifyUrl = 'https://yourdomain.com/notify';
-  
-  // Note: iOS would use a different merchant secret if package name differs
-  // iOS Merchant Secret (if different): MTQyODExODgyMjI0OTkxNDQ0MDE0Njg4MjU3MzQxMjI0NDYyMDQ=
-  
-  // Set to false for production
-  static const bool sandbox = true;
+  // Credentials and sandbox flag are read from environment variables via Env
+  static String get merchantId => Env.payHereMerchantId;
+  static String get merchantSecret => Env.payHereMerchantSecret;
+  static String get notifyUrl => Env.payHereNotifyUrl;
+  static bool get sandbox => Env.payHereSandbox;
 
   /// Initiate PayHere payment
   static Future<void> startPayment({
