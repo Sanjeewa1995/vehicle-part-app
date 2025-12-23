@@ -29,7 +29,14 @@ class CartHeaderWidget extends StatelessWidget {
               color: AppColors.textPrimary,
               size: 20,
             ),
-            onPressed: () => context.pop(),
+            onPressed: () {
+              // Check if we can pop, otherwise navigate to home
+              if (context.canPop()) {
+                context.pop();
+              } else {
+                context.go('/home');
+              }
+            },
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(
               minWidth: 40,
