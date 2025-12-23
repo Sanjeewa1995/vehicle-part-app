@@ -94,12 +94,12 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> forgotPassword(String email) async {
+  Future<bool> forgotPassword(String phone) async {
     try {
       _status = AuthStatus.loading;
       _errorMessage = null;
       notifyListeners();
-      final success = await authRepository.forgotPassword(email);
+      final success = await authRepository.forgotPassword(phone);
       _status = AuthStatus.unauthenticated;
       _errorMessage = null;
       notifyListeners();
@@ -112,12 +112,12 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> verifyOTP(String email, String otp) async {
+  Future<bool> verifyOTP(String phone, String otp) async {
     try {
       _status = AuthStatus.loading;
       _errorMessage = null;
       notifyListeners();
-      final success = await authRepository.verifyOTP(email, otp);
+      final success = await authRepository.verifyOTP(phone, otp);
       _status = AuthStatus.unauthenticated;
       _errorMessage = null;
       notifyListeners();
@@ -131,7 +131,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<bool> resetPassword({
-    required String email,
+    required String contact,
     required String otp,
     required String newPassword,
     required String newPasswordConfirm,
@@ -141,7 +141,7 @@ class AuthProvider extends ChangeNotifier {
       _errorMessage = null;
       notifyListeners();
       final success = await authRepository.resetPassword(
-        email: email,
+        phone: contact,
         otp: otp,
         newPassword: newPassword,
         newPasswordConfirm: newPasswordConfirm,

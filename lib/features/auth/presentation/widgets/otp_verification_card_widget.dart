@@ -5,13 +5,13 @@ import '../../../../shared/widgets/app_button.dart';
 import '../providers/auth_provider.dart';
 
 class OTPVerificationCardWidget extends StatefulWidget {
-  final String email;
+  final String contact;
   final Function(String otp) onVerify;
   final VoidCallback onResend;
 
   const OTPVerificationCardWidget({
     super.key,
-    required this.email,
+    required this.contact,
     required this.onVerify,
     required this.onResend,
   });
@@ -148,7 +148,7 @@ class _OTPVerificationCardWidgetState
             ),
             const SizedBox(height: 8),
             Text(
-              'We\'ve sent a 6-digit code to ${widget.email}. If you don\'t receive a code, the email might not be registered.',
+              'We\'ve sent a 6-digit code to ${widget.contact}. If you don\'t receive a code, the contact number might not be registered.',
               style: TextStyle(
                 fontSize: 14,
                 color: AppColors.textSecondary,

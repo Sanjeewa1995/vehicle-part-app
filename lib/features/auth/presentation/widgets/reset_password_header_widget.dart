@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class ResetPasswordHeaderWidget extends StatelessWidget {
-  final String email;
+  final String contact;
 
   const ResetPasswordHeaderWidget({
     super.key,
-    required this.email,
+    required this.contact,
   });
 
   @override
@@ -63,7 +63,7 @@ class ResetPasswordHeaderWidget extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          email,
+          contact,
           style: TextStyle(
             fontSize: 16,
             color: AppColors.primary,

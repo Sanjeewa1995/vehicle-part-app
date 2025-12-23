@@ -7,11 +7,11 @@ import '../widgets/otp_verification_card_widget.dart';
 import '../providers/auth_provider.dart';
 
 class OTPVerificationPage extends StatefulWidget {
-  final String email;
+  final String contact;
 
   const OTPVerificationPage({
     super.key,
-    required this.email,
+    required this.contact,
   });
 
   @override
@@ -62,14 +62,14 @@ class _OTPVerificationPageState extends State<OTPVerificationPage>
     final authProvider = context.read<AuthProvider>();
 
     final success = await authProvider.verifyOTP(
-      widget.email,
+      widget.contact,
       otp,
     );
 
     if (mounted && success) {
       // Navigate to reset password page
       context.go('/reset-password', extra: {
-        'email': widget.email,
+        'contact': widget.contact,
         'otp': otp,
       });
     }
@@ -78,12 +78,12 @@ class _OTPVerificationPageState extends State<OTPVerificationPage>
   Future<void> _handleResendOTP() async {
     final authProvider = context.read<AuthProvider>();
 
-    final success = await authProvider.forgotPassword(widget.email);
+    final success = await authProvider.forgotPassword(widget.contact);
 
     if (mounted && success) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('A new OTP has been sent to your email.'),
+          content: Text('A new OTP has been sent to your contact number.'),
           backgroundColor: AppColors.success,
         ),
       );
@@ -118,13 +118,13 @@ class _OTPVerificationPageState extends State<OTPVerificationPage>
                     const SizedBox(height: 40),
 
                     // Header Section
-                    OTPVerificationHeaderWidget(email: widget.email),
+                    OTPVerificationHeaderWidget(contact: widget.contact),
 
                     const SizedBox(height: 48),
 
                     // OTP Verification Card
                     OTPVerificationCardWidget(
-                      email: widget.email,
+                      contact: widget.contact,
                       onVerify: _handleVerifyOTP,
                       onResend: _handleResendOTP,
                     ),

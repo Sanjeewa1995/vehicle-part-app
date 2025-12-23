@@ -8,13 +8,13 @@ import '../providers/auth_provider.dart';
 
 class ForgotPasswordCardWidget extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final TextEditingController emailController;
+  final TextEditingController contactController;
   final VoidCallback onSendCode;
 
   const ForgotPasswordCardWidget({
     super.key,
     required this.formKey,
-    required this.emailController,
+    required this.contactController,
     required this.onSendCode,
   });
 
@@ -58,14 +58,14 @@ class ForgotPasswordCardWidget extends StatelessWidget {
               ),
               const SizedBox(height: 32),
 
-              // Email Field
+              // Contact Number Field
               AppTextField(
-                controller: emailController,
-                label: 'Email Address',
-                hint: 'Enter your email',
-                type: AppTextFieldType.email,
-                prefixIcon: Icons.email_outlined,
-                validator: Validators.validateEmail,
+                controller: contactController,
+                label: 'Contact Number',
+                hint: 'Enter your contact number',
+                type: AppTextFieldType.phone,
+                prefixIcon: Icons.phone_outlined,
+                validator: Validators.validatePhoneNumber,
                 textInputAction: TextInputAction.done,
                 onSubmitted: (_) => onSendCode(),
               ),

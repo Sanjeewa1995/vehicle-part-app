@@ -110,31 +110,31 @@ class AppRouter {
         path: '/otp-verification',
         name: 'otp-verification',
         builder: (context, state) {
-          final email = state.extra is Map
-              ? (state.extra as Map)['email'] as String?
-              : state.uri.queryParameters['email'];
-          if (email == null || email.isEmpty) {
-            // If no email provided, redirect back to forgot password
+          final contact = state.extra is Map
+              ? (state.extra as Map)['contact'] as String?
+              : state.uri.queryParameters['contact'];
+          if (contact == null || contact.isEmpty) {
+            // If no contact provided, redirect back to forgot password
             return const ForgotPasswordPage();
           }
-          return OTPVerificationPage(email: email);
+          return OTPVerificationPage(contact: contact);
         },
       ),
       GoRoute(
         path: '/reset-password',
         name: 'reset-password',
         builder: (context, state) {
-          final email = state.extra is Map
-              ? (state.extra as Map)['email'] as String?
-              : state.uri.queryParameters['email'];
+          final contact = state.extra is Map
+              ? (state.extra as Map)['contact'] as String?
+              : state.uri.queryParameters['contact'];
           final otp = state.extra is Map
               ? (state.extra as Map)['otp'] as String?
               : state.uri.queryParameters['otp'];
-          if (email == null || email.isEmpty || otp == null || otp.isEmpty) {
-            // If no email or OTP provided, redirect back to forgot password
+          if (contact == null || contact.isEmpty || otp == null || otp.isEmpty) {
+            // If no contact or OTP provided, redirect back to forgot password
             return const ForgotPasswordPage();
           }
-          return ResetPasswordPage(email: email, otp: otp);
+          return ResetPasswordPage(contact: contact, otp: otp);
         },
       ),
       GoRoute(

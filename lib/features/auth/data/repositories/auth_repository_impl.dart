@@ -90,9 +90,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<bool> forgotPassword(String email) async {
+  Future<bool> forgotPassword(String phone) async {
     try {
-      final request = PasswordResetRequest(email: email);
+      final request = PasswordResetRequest(phone: phone);
       final response = await remoteDataSource.forgotPassword(request);
       return response.success;
     } catch (e) {
@@ -104,9 +104,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<bool> verifyOTP(String email, String otp) async {
+  Future<bool> verifyOTP(String phone, String otp) async {
     try {
-      final request = VerifyOTPRequest(email: email, otp: otp);
+      final request = VerifyOTPRequest(phone: phone, otp: otp);
       final response = await remoteDataSource.verifyOTP(request);
       return response.success;
     } catch (e) {
@@ -119,14 +119,14 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<bool> resetPassword({
-    required String email,
+    required String phone,
     required String otp,
     required String newPassword,
     required String newPasswordConfirm,
   }) async {
     try {
       final request = ResetPasswordRequest(
-        email: email,
+        phone: phone,
         otp: otp,
         newPassword: newPassword,
         newPasswordConfirm: newPasswordConfirm,

@@ -8,9 +8,9 @@ part of 'verify_otp_request.dart';
 
 VerifyOTPRequest _$VerifyOTPRequestFromJson(Map<String, dynamic> json) =>
     VerifyOTPRequest(
-      email: json['email'] as String,
+      phone: json['phone'] as String,
       otp: json['otp'] as String,
     );
 
 Map<String, dynamic> _$VerifyOTPRequestToJson(VerifyOTPRequest instance) =>
-    <String, dynamic>{'email': instance.email, 'otp': instance.otp};
+    <String, dynamic>{'phone': instance.phone, 'otp': instance.otp};

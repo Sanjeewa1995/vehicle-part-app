@@ -48,7 +48,7 @@ class ForgotPasswordHeaderWidget extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'Enter your email to receive a verification code',
+          'Enter your contact number to receive a verification code',
           style: TextStyle(
             fontSize: 16,
             color: AppColors.textSecondary,

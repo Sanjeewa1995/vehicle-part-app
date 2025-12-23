@@ -17,7 +17,7 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  final _contactController = TextEditingController();
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
@@ -53,7 +53,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
   @override
   void dispose() {
     _animationController.dispose();
-    _emailController.dispose();
+    _contactController.dispose();
     super.dispose();
   }
 
@@ -62,13 +62,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
       final authProvider = context.read<AuthProvider>();
       
       final success = await authProvider.forgotPassword(
-        _emailController.text.trim(),
+        _contactController.text.trim(),
       );
 
       if (mounted && success) {
         // Navigate to OTP verification page
         context.go('/otp-verification', extra: {
-          'email': _emailController.text.trim(),
+          'contact': _contactController.text.trim(),
         });
       }
     }
@@ -109,7 +109,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
                     // Forgot Password Card
                     ForgotPasswordCardWidget(
                       formKey: _formKey,
-                      emailController: _emailController,
+                      contactController: _contactController,
                       onSendCode: _handleSendResetEmail,
                     ),
 

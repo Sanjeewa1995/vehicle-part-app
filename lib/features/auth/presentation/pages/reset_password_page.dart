@@ -8,12 +8,12 @@ import '../widgets/reset_password_login_link_widget.dart';
 import '../providers/auth_provider.dart';
 
 class ResetPasswordPage extends StatefulWidget {
-  final String email;
+  final String contact;
   final String otp;
 
   const ResetPasswordPage({
     super.key,
-    required this.email,
+    required this.contact,
     required this.otp,
   });
 
@@ -71,7 +71,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
       final authProvider = context.read<AuthProvider>();
 
       final success = await authProvider.resetPassword(
-        email: widget.email,
+        contact: widget.contact,
         otp: widget.otp,
         newPassword: _passwordController.text,
         newPasswordConfirm: _confirmPasswordController.text,
@@ -191,7 +191,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
                     const SizedBox(height: 40),
 
                     // Header Section
-                    ResetPasswordHeaderWidget(email: widget.email),
+                    ResetPasswordHeaderWidget(contact: widget.contact),
 
                     const SizedBox(height: 48),
 

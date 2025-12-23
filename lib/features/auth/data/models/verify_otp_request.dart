@@ -4,11 +4,11 @@ part 'verify_otp_request.g.dart';
 
 @JsonSerializable()
 class VerifyOTPRequest {
-  final String email;
+  final String phone;
   final String otp;
 
   VerifyOTPRequest({
-    required this.email,
+    required this.phone,
     required this.otp,
   });
 
