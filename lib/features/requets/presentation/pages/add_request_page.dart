@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:video_compress/video_compress.dart';
 import 'package:vehicle_part_app/core/di/service_locator.dart';
 import 'package:vehicle_part_app/core/services/image_compression_service.dart';
+import 'package:vehicle_part_app/core/services/video_compression_service.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import 'package:vehicle_part_app/shared/widgets/loading_indicator.dart';
 import 'package:vehicle_part_app/l10n/app_localizations.dart';
@@ -53,6 +55,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
 
   final ImagePicker _imagePicker = ImagePicker();
   late final ImageCompressionService _compressionService;
+  late final VideoCompressionService _videoCompressionService;
 
   final List<String> _vehicleTypes = [
     'car',
@@ -507,6 +510,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
   void initState() {
     super.initState();
     _compressionService = ServiceLocator.get<ImageCompressionService>();
+    _videoCompressionService = ServiceLocator.get<VideoCompressionService>();
   }
 
   @override
@@ -546,6 +550,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
 
         try {
           // Compress the image using moderate settings (balanced quality and size)
+          // This is for preview - we'll compress more aggressively before upload
           final compressedFile = await _compressionService.compressImageModerate(
             originalFile,
           );
@@ -625,12 +630,93 @@ class _AddRequestPageState extends State<AddRequestPage> {
       );
 
       if (video != null) {
-        setState(() {
-          _partVideo = File(video.path);
-        });
+        final videoFile = File(video.path);
+        final videoSize = await videoFile.length();
+        const maxVideoSize = 100 * 1024 * 1024; // 100MB limit (before compression)
+
+        if (videoSize > maxVideoSize) {
+          if (mounted) {
+            final l10n = AppLocalizations.of(context)!;
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  l10n.videoTooLarge(
+                    _formatFileSize(videoSize),
+                    _formatFileSize(maxVideoSize),
+                  ),
+                ),
+                backgroundColor: AppColors.error,
+                duration: const Duration(seconds: 4),
+              ),
+            );
+          }
+          return;
+        }
+
+        // Show loading indicator while compressing
+        if (mounted) {
+          final l10n = AppLocalizations.of(context)!;
+          LoadingIndicator.show(
+            context,
+            message: l10n.compressingVideo,
+            subMessage: l10n.pleaseWait,
+            barrierDismissible: false,
+          );
+        }
+
+        try {
+          // Compress video for preview (moderate compression)
+          final compressedVideo = await _videoCompressionService.compressVideo(
+            videoFile: videoFile,
+            quality: VideoQuality.MediumQuality,
+            deleteOrigin: false,
+          );
+
+          if (mounted) {
+            LoadingIndicator.hide(context);
+          }
+
+          if (compressedVideo != null) {
+            // Get file sizes for feedback
+            final originalSize = await _videoCompressionService.getFileSize(videoFile);
+            final compressedSize = await _videoCompressionService.getFileSize(compressedVideo);
+
+            setState(() {
+              _partVideo = compressedVideo;
+            });
+
+            // Show success message with compression info
+            if (mounted && originalSize != compressedSize) {
+              final l10n = AppLocalizations.of(context)!;
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    l10n.videoCompressed(originalSize, compressedSize),
+                  ),
+                  backgroundColor: AppColors.success,
+                  duration: const Duration(seconds: 3),
+                ),
+              );
+            }
+          } else {
+            // If compression failed, use original file
+            setState(() {
+              _partVideo = videoFile;
+            });
+          }
+        } catch (compressionError) {
+          if (mounted) {
+            LoadingIndicator.hide(context);
+            // If compression fails, use original file
+            setState(() {
+              _partVideo = videoFile;
+            });
+          }
+        }
       }
     } catch (e) {
       if (mounted) {
+        LoadingIndicator.hide(context);
         final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -639,6 +725,16 @@ class _AddRequestPageState extends State<AddRequestPage> {
           ),
         );
       }
+    }
+  }
+
+  String _formatFileSize(int bytes) {
+    if (bytes < 1024) {
+      return '${bytes}B';
+    } else if (bytes < 1024 * 1024) {
+      return '${(bytes / 1024).toStringAsFixed(2)}KB';
+    } else {
+      return '${(bytes / (1024 * 1024)).toStringAsFixed(2)}MB';
     }
   }
 
@@ -742,15 +838,132 @@ class _AddRequestPageState extends State<AddRequestPage> {
       final l10n = AppLocalizations.of(context)!;
       LoadingIndicator.show(
         context,
-        message: l10n.submittingRequest,
-        subMessage: _partVideo != null
-            ? l10n.uploadingVideoFile
-            : l10n.pleaseWait,
+        message: l10n.optimizingFiles,
+        subMessage: l10n.pleaseWait,
         barrierDismissible: false,
       );
     }
 
     try {
+      // Optimize images before upload
+      File? optimizedVehicleImage = _vehicleImage;
+      File? optimizedPartImage = _partImage;
+
+      // Compress images for upload if they exist
+      // Only compress if they're larger than 2MB (skip if already optimized)
+      if (_vehicleImage != null) {
+        final vehicleImageSize = await _vehicleImage!.length();
+        const maxImageSize = 2 * 1024 * 1024; // 2MB
+        
+        if (vehicleImageSize > maxImageSize) {
+          if (mounted) {
+            LoadingIndicator.hide(context);
+            final l10n = AppLocalizations.of(context)!;
+            LoadingIndicator.show(
+              context,
+              message: l10n.compressingVehicleImage,
+              subMessage: l10n.pleaseWait,
+              barrierDismissible: false,
+            );
+          }
+          optimizedVehicleImage = await _compressionService.compressImageForUpload(
+            _vehicleImage!,
+            maxSizeBytes: maxImageSize,
+            skipIfAlreadyCompressed: true,
+          );
+        } else {
+          // Already optimized, use as-is
+          optimizedVehicleImage = _vehicleImage;
+        }
+      }
+
+      if (_partImage != null) {
+        final partImageSize = await _partImage!.length();
+        const maxImageSize = 2 * 1024 * 1024; // 2MB
+        
+        if (partImageSize > maxImageSize) {
+          if (mounted) {
+            LoadingIndicator.hide(context);
+            final l10n = AppLocalizations.of(context)!;
+            LoadingIndicator.show(
+              context,
+              message: l10n.compressingPartImage,
+              subMessage: l10n.pleaseWait,
+              barrierDismissible: false,
+            );
+          }
+          optimizedPartImage = await _compressionService.compressImageForUpload(
+            _partImage!,
+            maxSizeBytes: maxImageSize,
+            skipIfAlreadyCompressed: true,
+          );
+        } else {
+          // Already optimized, use as-is
+          optimizedPartImage = _partImage;
+        }
+      }
+
+      // Compress video for upload if it exists
+      File? optimizedVideo = _partVideo;
+      if (_partVideo != null) {
+        if (mounted) {
+          LoadingIndicator.hide(context);
+          final l10n = AppLocalizations.of(context)!;
+          LoadingIndicator.show(
+            context,
+            message: l10n.compressingVideoForUpload,
+            subMessage: l10n.pleaseWait,
+            barrierDismissible: false,
+          );
+        }
+        
+        // Compress video for upload (aggressive compression)
+        optimizedVideo = await _videoCompressionService.compressVideoForUpload(
+          _partVideo!,
+          maxSizeBytes: 20 * 1024 * 1024, // 20MB max for videos
+        );
+        
+        // Final size check after compression
+        if (optimizedVideo != null) {
+          final finalSize = await optimizedVideo.length();
+          const maxVideoSize = 50 * 1024 * 1024; // 50MB absolute limit
+          
+          if (finalSize > maxVideoSize) {
+            if (mounted) {
+              LoadingIndicator.hide(context);
+              final l10n = AppLocalizations.of(context)!;
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    l10n.videoTooLarge(
+                      _formatFileSize(finalSize),
+                      _formatFileSize(maxVideoSize),
+                    ),
+                  ),
+                  backgroundColor: AppColors.error,
+                  duration: const Duration(seconds: 4),
+                ),
+              );
+            }
+            return;
+          }
+        }
+      }
+
+      // Update loading message for upload
+      if (mounted) {
+        LoadingIndicator.hide(context);
+        final l10n = AppLocalizations.of(context)!;
+        LoadingIndicator.show(
+          context,
+          message: l10n.submittingRequest,
+          subMessage: _partVideo != null
+              ? l10n.uploadingVideoFile
+              : l10n.pleaseWait,
+          barrierDismissible: false,
+        );
+      }
+
       // Get localized province name for API (or use key, depending on backend requirement)
       final provinceName = _selectedProvinceKey != null
           ? _getProvinceName(_selectedProvinceKey, context) ?? ''
@@ -769,9 +982,9 @@ class _AddRequestPageState extends State<AddRequestPage> {
             ? null
             : _partNumberController.text.trim(),
         description: _descriptionController.text.trim(),
-        vehicleImagePath: _vehicleImage?.path,
-        partImagePath: _partImage?.path,
-        partVideoPath: _partVideo?.path,
+        vehicleImagePath: optimizedVehicleImage?.path,
+        partImagePath: optimizedPartImage?.path,
+        partVideoPath: optimizedVideo?.path,
       );
 
       await provider.createRequest(data);

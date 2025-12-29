@@ -19,3 +19,4 @@ class DeleteAccountRequest {
       _$DeleteAccountRequestFromJson(json);
 }
 
+

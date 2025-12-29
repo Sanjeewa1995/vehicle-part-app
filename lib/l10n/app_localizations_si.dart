@@ -857,8 +857,39 @@ class AppLocalizationsSi extends AppLocalizations {
   String get compressingImage => 'රූපය සංකෝචනය කරමින්...';
 
   @override
+  String get compressingVehicleImage => 'වාහන රූපය ප්‍රශස්ත කරමින්...';
+
+  @override
+  String get compressingPartImage => 'අමුත්ත රූපය ප්‍රශස්ත කරමින්...';
+
+  @override
+  String get optimizingFiles => 'උඩුගත කිරීම සඳහා ගොනු ප්‍රශස්ත කරමින්...';
+
+  @override
   String imageCompressed(String originalSize, String compressedSize) {
     return 'රූපය සංකෝචනය කරන ලදී: $originalSize → $compressedSize';
+  }
+
+  @override
+  String videoTooLarge(String fileSize, String maxSize) {
+    return 'වීඩියෝ ගොනුව විශාල වැඩිය ($fileSize). උපරිම ප්‍රමාණය $maxSize වේ. කරුණාකර කුඩා වීඩියෝවක් තෝරන්න.';
+  }
+
+  @override
+  String videoSelectedWithSize(String fileSize) {
+    return 'වීඩියෝව තෝරාගෙන ඇත ($fileSize)';
+  }
+
+  @override
+  String get compressingVideo => 'වීඩියෝ සංකෝචනය කරමින්...';
+
+  @override
+  String get compressingVideoForUpload =>
+      'උඩුගත කිරීම සඳහා වීඩියෝ ප්‍රශස්ත කරමින්...';
+
+  @override
+  String videoCompressed(String originalSize, String compressedSize) {
+    return 'වීඩියෝ සංකෝචනය කරන ලදී: $originalSize → $compressedSize';
   }
 
   @override

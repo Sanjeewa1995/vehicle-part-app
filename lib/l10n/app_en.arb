@@ -1128,9 +1128,62 @@
   "@compressingImage": {
     "description": "Image compression loading message"
   },
+  "compressingVehicleImage": "Optimizing vehicle image...",
+  "@compressingVehicleImage": {
+    "description": "Vehicle image compression loading message"
+  },
+  "compressingPartImage": "Optimizing part image...",
+  "@compressingPartImage": {
+    "description": "Part image compression loading message"
+  },
+  "optimizingFiles": "Optimizing files for upload...",
+  "@optimizingFiles": {
+    "description": "File optimization loading message"
+  },
   "imageCompressed": "Image compressed: {originalSize} → {compressedSize}",
   "@imageCompressed": {
     "description": "Image compression success message",
+    "placeholders": {
+      "originalSize": {
+        "type": "String"
+      },
+      "compressedSize": {
+        "type": "String"
+      }
+    }
+  },
+  "videoTooLarge": "Video file is too large ({fileSize}). Maximum size is {maxSize}. Please select a smaller video.",
+  "@videoTooLarge": {
+    "description": "Video file too large error message",
+    "placeholders": {
+      "fileSize": {
+        "type": "String"
+      },
+      "maxSize": {
+        "type": "String"
+      }
+    }
+  },
+  "videoSelectedWithSize": "Video selected ({fileSize})",
+  "@videoSelectedWithSize": {
+    "description": "Video selected message with file size",
+    "placeholders": {
+      "fileSize": {
+        "type": "String"
+      }
+    }
+  },
+  "compressingVideo": "Compressing video...",
+  "@compressingVideo": {
+    "description": "Video compression loading message"
+  },
+  "compressingVideoForUpload": "Optimizing video for upload...",
+  "@compressingVideoForUpload": {
+    "description": "Video compression for upload loading message"
+  },
+  "videoCompressed": "Video compressed: {originalSize} → {compressedSize}",
+  "@videoCompressed": {
+    "description": "Video compression success message",
     "placeholders": {
       "originalSize": {
         "type": "String"

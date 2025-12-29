@@ -45,6 +45,7 @@ import '../../features/order/presentation/providers/order_detail_provider.dart';
 import '../network/api_client.dart';
 import '../services/token_service.dart';
 import '../services/image_compression_service.dart';
+import '../services/video_compression_service.dart';
 
 final getIt = GetIt.instance;
 
@@ -57,6 +58,7 @@ class ServiceLocator {
     // Services
     getIt.registerLazySingleton(() => TokenService());
     getIt.registerLazySingleton(() => ImageCompressionService());
+    getIt.registerLazySingleton(() => VideoCompressionService());
 
     // API Client
     getIt.registerLazySingleton<ApiClient>(

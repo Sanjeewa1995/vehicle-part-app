@@ -336,8 +336,43 @@
   },
   "paymentCancelled": "கட்டணம் ரத்து செய்யப்பட்டது",
   "compressingImage": "படத்தை சுருக்குகிறது...",
+  "compressingVehicleImage": "வாகன படத்தை மேம்படுத்துகிறது...",
+  "compressingPartImage": "பாக படத்தை மேம்படுத்துகிறது...",
+  "optimizingFiles": "பதிவேற்றத்திற்காக கோப்புகளை மேம்படுத்துகிறது...",
   "imageCompressed": "படம் சுருக்கப்பட்டது: {originalSize} → {compressedSize}",
   "@imageCompressed": {
+    "placeholders": {
+      "originalSize": {
+        "type": "String"
+      },
+      "compressedSize": {
+        "type": "String"
+      }
+    }
+  },
+  "videoTooLarge": "வீடியோ கோப்பு மிகவும் பெரியது ({fileSize}). அதிகபட்ச அளவு {maxSize} ஆகும். தயவுசெய்து சிறிய வீடியோவைத் தேர்ந்தெடுக்கவும்.",
+  "@videoTooLarge": {
+    "placeholders": {
+      "fileSize": {
+        "type": "String"
+      },
+      "maxSize": {
+        "type": "String"
+      }
+    }
+  },
+  "videoSelectedWithSize": "வீடியோ தேர்ந்தெடுக்கப்பட்டது ({fileSize})",
+  "@videoSelectedWithSize": {
+    "placeholders": {
+      "fileSize": {
+        "type": "String"
+      }
+    }
+  },
+  "compressingVideo": "வீடியோவை சுருக்குகிறது...",
+  "compressingVideoForUpload": "பதிவேற்றத்திற்காக வீடியோவை மேம்படுத்துகிறது...",
+  "videoCompressed": "வீடியோ சுருக்கப்பட்டது: {originalSize} → {compressedSize}",
+  "@videoCompressed": {
     "placeholders": {
       "originalSize": {
         "type": "String"

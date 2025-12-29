@@ -155,6 +155,33 @@ class ImageCompressionService {
     }
   }
 
+  /// Get file size in bytes
+  Future<int> getFileSizeBytes(File file) async {
+    try {
+      return await file.length();
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  /// Check if file size is acceptable for upload
+  /// 
+  /// [file] - The file to check
+  /// [maxSizeBytes] - Maximum acceptable size in bytes
+  /// 
+  /// Returns true if file size is acceptable
+  Future<bool> isFileSizeAcceptable(
+    File file, {
+    int maxSizeBytes = 10 * 1024 * 1024, // 10MB default
+  }) async {
+    try {
+      final size = await file.length();
+      return size <= maxSizeBytes;
+    } catch (e) {
+      return false;
+    }
+  }
+
   /// Compress multiple images
   /// 
   /// [imageFiles] - List of image files to compress
@@ -180,6 +207,82 @@ class ImageCompressionService {
       results.add(compressed);
     }
     return results;
+  }
+
+  /// Compress image optimized for upload (aggressive compression for faster uploads)
+  /// This method ensures the image is under a target size (default 2MB)
+  /// 
+  /// [imageFile] - The image file to compress
+  /// [maxSizeBytes] - Maximum file size in bytes (default 2MB)
+  /// [skipIfAlreadyCompressed] - Skip compression if file is already small enough
+  /// 
+  /// Returns the compressed image file
+  Future<File?> compressImageForUpload(
+    File imageFile, {
+    int maxSizeBytes = 2 * 1024 * 1024, // 2MB default
+    bool skipIfAlreadyCompressed = true,
+  }) async {
+    try {
+      if (!await imageFile.exists()) {
+        return null;
+      }
+
+      final currentSize = await imageFile.length();
+      
+      // If already under target size, return as-is (no need to compress again)
+      if (currentSize <= maxSizeBytes) {
+        return imageFile;
+      }
+
+      // If file is only slightly over the limit (within 10%), try light compression first
+      if (currentSize <= maxSizeBytes * 1.1) {
+        final compressed = await compressImageLight(imageFile);
+        if (compressed != null) {
+          final compressedSize = await compressed.length();
+          if (compressedSize <= maxSizeBytes) {
+            return compressed;
+          }
+        }
+      }
+
+      // Try moderate compression first (balanced quality/size)
+      File? compressed = await compressImageModerate(imageFile);
+      if (compressed != null) {
+        final compressedSize = await compressed.length();
+        if (compressedSize <= maxSizeBytes) {
+          return compressed;
+        }
+        // If moderate compression got us close (within 20%), use it
+        if (compressedSize <= maxSizeBytes * 1.2) {
+          return compressed;
+        }
+      }
+
+      // If still too large, use aggressive compression
+      compressed = await compressImageAggressive(compressed ?? imageFile);
+      if (compressed != null) {
+        final compressedSize = await compressed.length();
+        if (compressedSize <= maxSizeBytes) {
+          return compressed;
+        }
+        // If aggressive compression got us close (within 30%), use it
+        if (compressedSize <= maxSizeBytes * 1.3) {
+          return compressed;
+        }
+      }
+
+      // If still too large, try even more aggressive settings (last resort)
+      compressed = await compressImage(
+        imageFile: compressed ?? imageFile,
+        quality: 60,
+        maxWidth: 1024,
+        maxHeight: 1024,
+      );
+
+      return compressed ?? imageFile;
+    } catch (e) {
+      return imageFile;
+    }
   }
 }
 

@@ -1702,11 +1702,59 @@ abstract class AppLocalizations {
   /// **'Compressing image...'**
   String get compressingImage;
 
+  /// Vehicle image compression loading message
+  ///
+  /// In en, this message translates to:
+  /// **'Optimizing vehicle image...'**
+  String get compressingVehicleImage;
+
+  /// Part image compression loading message
+  ///
+  /// In en, this message translates to:
+  /// **'Optimizing part image...'**
+  String get compressingPartImage;
+
+  /// File optimization loading message
+  ///
+  /// In en, this message translates to:
+  /// **'Optimizing files for upload...'**
+  String get optimizingFiles;
+
   /// Image compression success message
   ///
   /// In en, this message translates to:
   /// **'Image compressed: {originalSize} → {compressedSize}'**
   String imageCompressed(String originalSize, String compressedSize);
+
+  /// Video file too large error message
+  ///
+  /// In en, this message translates to:
+  /// **'Video file is too large ({fileSize}). Maximum size is {maxSize}. Please select a smaller video.'**
+  String videoTooLarge(String fileSize, String maxSize);
+
+  /// Video selected message with file size
+  ///
+  /// In en, this message translates to:
+  /// **'Video selected ({fileSize})'**
+  String videoSelectedWithSize(String fileSize);
+
+  /// Video compression loading message
+  ///
+  /// In en, this message translates to:
+  /// **'Compressing video...'**
+  String get compressingVideo;
+
+  /// Video compression for upload loading message
+  ///
+  /// In en, this message translates to:
+  /// **'Optimizing video for upload...'**
+  String get compressingVideoForUpload;
+
+  /// Video compression success message
+  ///
+  /// In en, this message translates to:
+  /// **'Video compressed: {originalSize} → {compressedSize}'**
+  String videoCompressed(String originalSize, String compressedSize);
 
   /// Optional field label
   ///

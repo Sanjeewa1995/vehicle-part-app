@@ -336,8 +336,43 @@
   },
   "paymentCancelled": "ගෙවීම අවලංගු කරන ලදී",
   "compressingImage": "රූපය සංකෝචනය කරමින්...",
+  "compressingVehicleImage": "වාහන රූපය ප්‍රශස්ත කරමින්...",
+  "compressingPartImage": "අමුත්ත රූපය ප්‍රශස්ත කරමින්...",
+  "optimizingFiles": "උඩුගත කිරීම සඳහා ගොනු ප්‍රශස්ත කරමින්...",
   "imageCompressed": "රූපය සංකෝචනය කරන ලදී: {originalSize} → {compressedSize}",
   "@imageCompressed": {
+    "placeholders": {
+      "originalSize": {
+        "type": "String"
+      },
+      "compressedSize": {
+        "type": "String"
+      }
+    }
+  },
+  "videoTooLarge": "වීඩියෝ ගොනුව විශාල වැඩිය ({fileSize}). උපරිම ප්‍රමාණය {maxSize} වේ. කරුණාකර කුඩා වීඩියෝවක් තෝරන්න.",
+  "@videoTooLarge": {
+    "placeholders": {
+      "fileSize": {
+        "type": "String"
+      },
+      "maxSize": {
+        "type": "String"
+      }
+    }
+  },
+  "videoSelectedWithSize": "වීඩියෝව තෝරාගෙන ඇත ({fileSize})",
+  "@videoSelectedWithSize": {
+    "placeholders": {
+      "fileSize": {
+        "type": "String"
+      }
+    }
+  },
+  "compressingVideo": "වීඩියෝ සංකෝචනය කරමින්...",
+  "compressingVideoForUpload": "උඩුගත කිරීම සඳහා වීඩියෝ ප්‍රශස්ත කරමින්...",
+  "videoCompressed": "වීඩියෝ සංකෝචනය කරන ලදී: {originalSize} → {compressedSize}",
+  "@videoCompressed": {
     "placeholders": {
       "originalSize": {
         "type": "String"

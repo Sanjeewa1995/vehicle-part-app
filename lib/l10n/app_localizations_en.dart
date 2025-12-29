@@ -855,8 +855,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get compressingImage => 'Compressing image...';
 
   @override
+  String get compressingVehicleImage => 'Optimizing vehicle image...';
+
+  @override
+  String get compressingPartImage => 'Optimizing part image...';
+
+  @override
+  String get optimizingFiles => 'Optimizing files for upload...';
+
+  @override
   String imageCompressed(String originalSize, String compressedSize) {
     return 'Image compressed: $originalSize → $compressedSize';
+  }
+
+  @override
+  String videoTooLarge(String fileSize, String maxSize) {
+    return 'Video file is too large ($fileSize). Maximum size is $maxSize. Please select a smaller video.';
+  }
+
+  @override
+  String videoSelectedWithSize(String fileSize) {
+    return 'Video selected ($fileSize)';
+  }
+
+  @override
+  String get compressingVideo => 'Compressing video...';
+
+  @override
+  String get compressingVideoForUpload => 'Optimizing video for upload...';
+
+  @override
+  String videoCompressed(String originalSize, String compressedSize) {
+    return 'Video compressed: $originalSize → $compressedSize';
   }
 
   @override

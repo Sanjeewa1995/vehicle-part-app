@@ -871,8 +871,40 @@ class AppLocalizationsTa extends AppLocalizations {
   String get compressingImage => 'படத்தை சுருக்குகிறது...';
 
   @override
+  String get compressingVehicleImage => 'வாகன படத்தை மேம்படுத்துகிறது...';
+
+  @override
+  String get compressingPartImage => 'பாக படத்தை மேம்படுத்துகிறது...';
+
+  @override
+  String get optimizingFiles =>
+      'பதிவேற்றத்திற்காக கோப்புகளை மேம்படுத்துகிறது...';
+
+  @override
   String imageCompressed(String originalSize, String compressedSize) {
     return 'படம் சுருக்கப்பட்டது: $originalSize → $compressedSize';
+  }
+
+  @override
+  String videoTooLarge(String fileSize, String maxSize) {
+    return 'வீடியோ கோப்பு மிகவும் பெரியது ($fileSize). அதிகபட்ச அளவு $maxSize ஆகும். தயவுசெய்து சிறிய வீடியோவைத் தேர்ந்தெடுக்கவும்.';
+  }
+
+  @override
+  String videoSelectedWithSize(String fileSize) {
+    return 'வீடியோ தேர்ந்தெடுக்கப்பட்டது ($fileSize)';
+  }
+
+  @override
+  String get compressingVideo => 'வீடியோவை சுருக்குகிறது...';
+
+  @override
+  String get compressingVideoForUpload =>
+      'பதிவேற்றத்திற்காக வீடியோவை மேம்படுத்துகிறது...';
+
+  @override
+  String videoCompressed(String originalSize, String compressedSize) {
+    return 'வீடியோ சுருக்கப்பட்டது: $originalSize → $compressedSize';
   }
 
   @override
