@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import '../../data/models/order_model.dart';
 import '../../domain/usecases/get_orders_usecase.dart';
+import '../../../../core/utils/error_message_helper.dart';
 
 enum OrderListStatus { initial, loading, loaded, error }
 
@@ -62,16 +63,7 @@ class OrderListProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _status = OrderListStatus.error;
-      String errorMsg = e.toString();
-
-      // Remove common prefixes
-      errorMsg = errorMsg
-          .replaceAll('Exception: ', '')
-          .replaceAll('ServerException: ', '')
-          .replaceAll('AuthenticationException: ', '')
-          .replaceAll('NetworkException: ', '')
-          .trim();
-
+      final errorMsg = ErrorMessageHelper.getUserFriendlyMessage(e);
       _errorMessage = errorMsg.isEmpty ? 'Failed to load orders' : errorMsg;
       notifyListeners();
     }

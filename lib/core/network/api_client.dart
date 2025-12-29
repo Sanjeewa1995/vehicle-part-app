@@ -5,6 +5,7 @@ import '../constants/api_constants.dart';
 import '../constants/app_constants.dart';
 import '../error/exceptions.dart';
 import '../services/refresh_token_service.dart';
+import '../utils/error_message_helper.dart';
 
 class ApiClient {
   late final Dio _dio;
@@ -99,45 +100,40 @@ class ApiClient {
 
   DioException _handleError(DioException error) {
     final responseData = error.response?.data;
+    String message = 'An error occurred';
+    
     if (responseData is Map<String, dynamic>) {
-      final message =
-          responseData['message'] ??
-          responseData['error'] ??
-          'An error occurred';
-      return DioException(
-        requestOptions: error.requestOptions,
-        response: error.response,
-        type: error.type,
-        message: message,
-      );
-    }
-    switch (error.type) {
-      case DioExceptionType.connectionTimeout:
-      case DioExceptionType.sendTimeout:
-      case DioExceptionType.receiveTimeout:
-        throw NetworkException(
-          'Connection timeout',
-          statusCode: error.response?.statusCode,
-        );
-      case DioExceptionType.badResponse:
-        final statusCode = error.response?.statusCode;
-        if (statusCode == 401) {
-          throw AuthenticationException('Unauthorized', statusCode: statusCode);
-        } else if (statusCode == 404) {
-          throw NotFoundException('Resource not found', statusCode: statusCode);
-        } else if (statusCode != null && statusCode >= 500) {
-          throw ServerException('Server error', statusCode: statusCode);
+      // Extract error message from common API error format
+      String? extractedMessage = responseData['message'] ?? 
+                                 responseData['error'] ??
+                                 responseData['detail'];
+      
+      if (extractedMessage != null) {
+        message = extractedMessage;
+      }
+      
+      // Handle non_field_errors format
+      if (responseData.containsKey('errors')) {
+        final errors = responseData['errors'] as Map<String, dynamic>?;
+        if (errors != null) {
+          final nonFieldErrors = errors['non_field_errors'] as List?;
+          if (nonFieldErrors != null && nonFieldErrors.isNotEmpty) {
+            final firstError = nonFieldErrors.first;
+            message = firstError is String ? firstError : firstError.toString();
+          }
         }
-        throw ServerException(
-          error.response?.data['message'] ?? 'An error occurred',
-          statusCode: statusCode,
-        );
-      default:
-        throw NetworkException(
-          'Network error',
-          statusCode: error.response?.statusCode,
-        );
+      }
+      
+      // Convert to user-friendly message
+      message = ErrorMessageHelper.getUserFriendlyMessage(message);
     }
+    
+    return DioException(
+      requestOptions: error.requestOptions,
+      response: error.response,
+      type: error.type,
+      message: message,
+    );
   }
 
   Future<Response> get(
@@ -152,7 +148,14 @@ class ApiClient {
         options: options,
       );
     } on DioException catch (e) {
-      throw Exception(e.message);
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e.message ?? e);
+      throw Exception(userFriendlyMessage);
+    } on AppException catch (e) {
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e.message);
+      throw AppException(userFriendlyMessage, statusCode: e.statusCode);
+    } catch (e) {
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
+      throw Exception(userFriendlyMessage);
     }
   }
 
@@ -176,34 +179,55 @@ class ApiClient {
       
       // Try to extract more detailed error message from response
       if (responseData is Map<String, dynamic>) {
-        errorMessage = responseData['message'] ?? 
-                       responseData['error'] ?? 
-                       responseData['detail'] ??
-                       errorMessage;
+        // Extract error message from common API error format
+        String? extractedMessage = responseData['message'] ?? 
+                                   responseData['error'] ?? 
+                                   responseData['detail'];
         
-        // Include field-level errors if available
-        if (responseData.containsKey('errors') || responseData.containsKey('field_errors')) {
-          final fieldErrors = responseData['errors'] ?? responseData['field_errors'];
-          if (fieldErrors is Map) {
-            final fieldErrorMessages = fieldErrors.entries
-                .map((e) => '${e.key}: ${e.value}')
-                .join(', ');
-            errorMessage = '$errorMessage ($fieldErrorMessages)';
+        if (extractedMessage != null) {
+          errorMessage = extractedMessage;
+        }
+        
+        // Handle non_field_errors format
+        if (responseData.containsKey('errors')) {
+          final errors = responseData['errors'] as Map<String, dynamic>?;
+          if (errors != null) {
+            final nonFieldErrors = errors['non_field_errors'] as List?;
+            if (nonFieldErrors != null && nonFieldErrors.isNotEmpty) {
+              final firstError = nonFieldErrors.first;
+              errorMessage = firstError is String ? firstError : firstError.toString();
+            } else {
+              // Handle field-specific errors
+              final fieldErrors = errors.entries
+                  .where((e) => e.key != 'non_field_errors')
+                  .map((e) => '${e.key}: ${e.value}')
+                  .toList();
+              if (fieldErrors.isNotEmpty && extractedMessage == null) {
+                errorMessage = fieldErrors.join(', ');
+              }
+            }
           }
         }
       } else if (responseData is String) {
         errorMessage = responseData;
       }
       
-      final detailedMessage = statusCode != null 
+      // Build technical error message for parsing
+      final technicalMessage = statusCode != null 
           ? 'HTTP $statusCode: $errorMessage'
           : errorMessage;
       
-      throw Exception(detailedMessage);
-    } on AppException {
-      rethrow;
+      // Convert to user-friendly message
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(technicalMessage);
+      
+      throw Exception(userFriendlyMessage);
+    } on AppException catch (e) {
+      // Convert AppException messages to user-friendly format
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e.message);
+      throw AppException(userFriendlyMessage, statusCode: e.statusCode);
     } catch (e) {
-      throw Exception('Unexpected error: ${e.toString()}');
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
+      throw Exception(userFriendlyMessage);
     }
   }
 
@@ -221,7 +245,14 @@ class ApiClient {
         options: options,
       );
     } on DioException catch (e) {
-      throw Exception(e.message);
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e.message ?? e);
+      throw Exception(userFriendlyMessage);
+    } on AppException catch (e) {
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e.message);
+      throw AppException(userFriendlyMessage, statusCode: e.statusCode);
+    } catch (e) {
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
+      throw Exception(userFriendlyMessage);
     }
   }
 
@@ -239,7 +270,14 @@ class ApiClient {
         options: options,
       );
     } on DioException catch (e) {
-      throw Exception(e.message);
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e.message ?? e);
+      throw Exception(userFriendlyMessage);
+    } on AppException catch (e) {
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e.message);
+      throw AppException(userFriendlyMessage, statusCode: e.statusCode);
+    } catch (e) {
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
+      throw Exception(userFriendlyMessage);
     }
   }
 
@@ -257,7 +295,14 @@ class ApiClient {
         options: options,
       );
     } on DioException catch (e) {
-        throw Exception(e.message);
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e.message ?? e);
+      throw Exception(userFriendlyMessage);
+    } on AppException catch (e) {
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e.message);
+      throw AppException(userFriendlyMessage, statusCode: e.statusCode);
+    } catch (e) {
+      final userFriendlyMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
+      throw Exception(userFriendlyMessage);
     }
   }
 }

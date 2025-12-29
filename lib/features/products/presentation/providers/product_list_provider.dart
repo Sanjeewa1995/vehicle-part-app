@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import '../../domain/entities/store_product.dart';
 import '../../domain/usecases/get_products_usecase.dart';
+import '../../../../core/utils/error_message_helper.dart';
 
 enum ProductListStatus { initial, loading, loaded, error }
 
@@ -55,16 +56,7 @@ class ProductListProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _status = ProductListStatus.error;
-      String errorMsg = e.toString();
-
-      // Remove common prefixes
-      errorMsg = errorMsg
-          .replaceAll('Exception: ', '')
-          .replaceAll('ServerException: ', '')
-          .replaceAll('AuthenticationException: ', '')
-          .replaceAll('NetworkException: ', '')
-          .trim();
-
+      final errorMsg = ErrorMessageHelper.getUserFriendlyMessage(e);
       _errorMessage = errorMsg.isEmpty ? 'Failed to load products' : errorMsg;
       notifyListeners();
     }

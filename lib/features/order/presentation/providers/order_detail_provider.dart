@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import '../../data/models/order_detail_response.dart';
 import '../../domain/usecases/get_order_by_id_usecase.dart';
+import '../../../../core/utils/error_message_helper.dart';
 
 enum OrderDetailStatus { initial, loading, loaded, error }
 
@@ -33,21 +34,12 @@ class OrderDetailProvider extends ChangeNotifier {
         _errorMessage = null;
       } else {
         _status = OrderDetailStatus.error;
-        _errorMessage = response.message;
+        _errorMessage = ErrorMessageHelper.getUserFriendlyMessage(response.message);
       }
       notifyListeners();
     } catch (e) {
       _status = OrderDetailStatus.error;
-      String errorMsg = e.toString();
-
-      // Remove common prefixes
-      errorMsg = errorMsg
-          .replaceAll('Exception: ', '')
-          .replaceAll('ServerException: ', '')
-          .replaceAll('AuthenticationException: ', '')
-          .replaceAll('NetworkException: ', '')
-          .trim();
-
+      final errorMsg = ErrorMessageHelper.getUserFriendlyMessage(e);
       _errorMessage = errorMsg.isEmpty ? 'Failed to load order details' : errorMsg;
       notifyListeners();
     }

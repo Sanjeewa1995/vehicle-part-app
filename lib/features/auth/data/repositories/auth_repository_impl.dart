@@ -15,6 +15,7 @@ import '../models/logout_request.dart';
 import '../models/delete_account_request.dart';
 import '../models/user_model.dart';
 import '../../../../core/services/token_service.dart';
+import '../../../../core/utils/error_message_helper.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
@@ -40,13 +41,13 @@ class AuthRepositoryImpl implements AuthRepository {
 
         return response.data.user;
       } else {
-        throw Exception(response.message);
+        throw Exception(ErrorMessageHelper.getUserFriendlyMessage(response.message));
       }
     } catch (e) {
       if (e is Exception) {
         rethrow;
       }
-      throw Exception('Login failed: ${e.toString()}');
+      throw Exception(ErrorMessageHelper.getUserFriendlyMessage('Login failed: ${e.toString()}'));
     }
   }
 
@@ -79,13 +80,13 @@ class AuthRepositoryImpl implements AuthRepository {
 
         return response.data.user;
       } else {
-        throw Exception(response.message);
+        throw Exception(ErrorMessageHelper.getUserFriendlyMessage(response.message));
       }
     } catch (e) {
       if (e is Exception) {
         rethrow;
       }
-      throw Exception('Registration failed: ${e.toString()}');
+      throw Exception(ErrorMessageHelper.getUserFriendlyMessage('Registration failed: ${e.toString()}'));
     }
   }
 
@@ -99,7 +100,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (e is Exception) {
         rethrow;
       }
-      throw Exception('Password reset failed: ${e.toString()}');
+      throw Exception(ErrorMessageHelper.getUserFriendlyMessage('Password reset failed: ${e.toString()}'));
     }
   }
 
@@ -113,7 +114,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (e is Exception) {
         rethrow;
       }
-      throw Exception('OTP verification failed: ${e.toString()}');
+      throw Exception(ErrorMessageHelper.getUserFriendlyMessage('OTP verification failed: ${e.toString()}'));
     }
   }
 
@@ -137,7 +138,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (e is Exception) {
         rethrow;
       }
-      throw Exception('Password reset failed: ${e.toString()}');
+      throw Exception(ErrorMessageHelper.getUserFriendlyMessage('Password reset failed: ${e.toString()}'));
     }
   }
 
@@ -164,7 +165,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (e is Exception) {
         rethrow;
       }
-      throw Exception('Profile update failed: ${e.toString()}');
+      throw Exception(ErrorMessageHelper.getUserFriendlyMessage('Profile update failed: ${e.toString()}'));
     }
   }
 
@@ -186,7 +187,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (e is Exception) {
         rethrow;
       }
-      throw Exception('Password change failed: ${e.toString()}');
+      throw Exception(ErrorMessageHelper.getUserFriendlyMessage('Password change failed: ${e.toString()}'));
     }
   }
 
@@ -227,7 +228,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (e is Exception) {
         rethrow;
       }
-      throw Exception('Account deletion failed: ${e.toString()}');
+      throw Exception(ErrorMessageHelper.getUserFriendlyMessage('Account deletion failed: ${e.toString()}'));
     }
   }
 

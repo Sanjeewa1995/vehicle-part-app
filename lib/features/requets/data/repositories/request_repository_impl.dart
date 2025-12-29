@@ -3,6 +3,7 @@ import '../../domain/repositories/request_repository.dart';
 import '../datasources/remote/request_remote_datasource.dart';
 import '../models/create_request_data.dart';
 import '../models/request_stats_response.dart';
+import '../../../../core/utils/error_message_helper.dart';
 
 class RequestRepositoryImpl implements RequestRepository {
   final RequestRemoteDataSource remoteDataSource;
@@ -26,20 +27,8 @@ class RequestRepositoryImpl implements RequestRepository {
         throw Exception(response.message);
       }
     } catch (e) {
-      // Extract clean error message
-      String errorMessage;
-
-      if (e is Exception) {
-        errorMessage = e.toString()
-            .replaceAll('Exception: ', '')
-            .replaceAll('ServerException: ', '')
-            .replaceAll('AuthenticationException: ', '')
-            .replaceAll('NetworkException: ', '')
-            .trim();
-      } else {
-        errorMessage = e.toString();
-      }
-
+      // Convert to user-friendly message
+      final errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       throw Exception(errorMessage.isEmpty ? 'Failed to load requests' : errorMessage);
     }
   }
@@ -55,20 +44,8 @@ class RequestRepositoryImpl implements RequestRepository {
         throw Exception(response.message);
       }
     } catch (e) {
-      // Extract clean error message
-      String errorMessage;
-
-      if (e is Exception) {
-        errorMessage = e.toString()
-            .replaceAll('Exception: ', '')
-            .replaceAll('ServerException: ', '')
-            .replaceAll('AuthenticationException: ', '')
-            .replaceAll('NetworkException: ', '')
-            .trim();
-      } else {
-        errorMessage = e.toString();
-      }
-
+      // Convert to user-friendly message
+      final errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       throw Exception(errorMessage.isEmpty ? 'Failed to load request' : errorMessage);
     }
   }
@@ -84,20 +61,8 @@ class RequestRepositoryImpl implements RequestRepository {
         throw Exception(response.message);
       }
     } catch (e) {
-      // Extract clean error message
-      String errorMessage;
-
-      if (e is Exception) {
-        errorMessage = e.toString()
-            .replaceAll('Exception: ', '')
-            .replaceAll('ServerException: ', '')
-            .replaceAll('AuthenticationException: ', '')
-            .replaceAll('NetworkException: ', '')
-            .trim();
-      } else {
-        errorMessage = e.toString();
-      }
-
+      // Convert to user-friendly message
+      final errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       throw Exception(errorMessage.isEmpty ? 'Failed to create request' : errorMessage);
     }
   }
@@ -107,20 +72,8 @@ class RequestRepositoryImpl implements RequestRepository {
     try {
       await remoteDataSource.deleteRequest(id);
     } catch (e) {
-      // Extract clean error message
-      String errorMessage;
-
-      if (e is Exception) {
-        errorMessage = e.toString()
-            .replaceAll('Exception: ', '')
-            .replaceAll('ServerException: ', '')
-            .replaceAll('AuthenticationException: ', '')
-            .replaceAll('NetworkException: ', '')
-            .trim();
-      } else {
-        errorMessage = e.toString();
-      }
-
+      // Convert to user-friendly message
+      final errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       throw Exception(errorMessage.isEmpty ? 'Failed to delete request' : errorMessage);
     }
   }
@@ -130,20 +83,8 @@ class RequestRepositoryImpl implements RequestRepository {
     try {
       return await remoteDataSource.getStats();
     } catch (e) {
-      // Extract clean error message
-      String errorMessage;
-
-      if (e is Exception) {
-        errorMessage = e.toString()
-            .replaceAll('Exception: ', '')
-            .replaceAll('ServerException: ', '')
-            .replaceAll('AuthenticationException: ', '')
-            .replaceAll('NetworkException: ', '')
-            .trim();
-      } else {
-        errorMessage = e.toString();
-      }
-
+      // Convert to user-friendly message
+      final errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       throw Exception(errorMessage.isEmpty ? 'Failed to load stats' : errorMessage);
     }
   }

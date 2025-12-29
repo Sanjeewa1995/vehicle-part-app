@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import '../../domain/entities/vehicle_part_request.dart';
 import '../../domain/usecases/create_request_usecase.dart';
 import '../../data/models/create_request_data.dart';
+import '../../../../core/utils/error_message_helper.dart';
 
 enum CreateRequestStatus {
   initial,
@@ -40,7 +41,7 @@ class CreateRequestProvider extends ChangeNotifier {
       _errorMessage = null;
     } catch (e) {
       _status = CreateRequestStatus.error;
-      _errorMessage = e.toString().replaceAll('Exception: ', '').trim();
+      _errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       _createdRequest = null;
     } finally {
       notifyListeners();

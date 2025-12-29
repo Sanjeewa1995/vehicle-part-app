@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import '../../domain/entities/vehicle_part_request.dart';
 import '../../domain/usecases/get_request_by_id_usecase.dart';
 import '../../domain/usecases/delete_request_usecase.dart';
+import '../../../../core/utils/error_message_helper.dart';
 
 enum RequestDetailStatus { initial, loading, loaded, error, deleting, deleted }
 
@@ -38,16 +39,7 @@ class RequestDetailProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _status = RequestDetailStatus.error;
-      String errorMsg = e.toString();
-
-      // Remove common prefixes
-      errorMsg = errorMsg
-          .replaceAll('Exception: ', '')
-          .replaceAll('ServerException: ', '')
-          .replaceAll('AuthenticationException: ', '')
-          .replaceAll('NetworkException: ', '')
-          .trim();
-
+      final errorMsg = ErrorMessageHelper.getUserFriendlyMessage(e);
       _errorMessage = errorMsg.isEmpty ? 'Failed to load request' : errorMsg;
       notifyListeners();
     }
@@ -67,16 +59,7 @@ class RequestDetailProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _status = RequestDetailStatus.error;
-      String errorMsg = e.toString();
-
-      // Remove common prefixes
-      errorMsg = errorMsg
-          .replaceAll('Exception: ', '')
-          .replaceAll('ServerException: ', '')
-          .replaceAll('AuthenticationException: ', '')
-          .replaceAll('NetworkException: ', '')
-          .trim();
-
+      final errorMsg = ErrorMessageHelper.getUserFriendlyMessage(e);
       _errorMessage = errorMsg.isEmpty ? 'Failed to delete request' : errorMsg;
       notifyListeners();
     }

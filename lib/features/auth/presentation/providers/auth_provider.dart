@@ -3,6 +3,7 @@ import '../../domain/entities/user.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../../../../core/utils/error_message_helper.dart';
 
 enum AuthStatus { initial, loading, authenticated, unauthenticated, error }
 
@@ -56,7 +57,7 @@ class AuthProvider extends ChangeNotifier {
       return true;
     } catch (e) {
       _status = AuthStatus.error;
-      _errorMessage = e.toString().replaceAll('Exception: ', '');
+      _errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       notifyListeners();
       return false;
     }
@@ -88,7 +89,7 @@ class AuthProvider extends ChangeNotifier {
       return true;
     } catch (e) {
       _status = AuthStatus.error;
-      _errorMessage = e.toString().replaceAll('Exception: ', '');
+      _errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       notifyListeners();
       return false;
     }
@@ -106,7 +107,7 @@ class AuthProvider extends ChangeNotifier {
       return success;
     } catch (e) {
       _status = AuthStatus.error;
-      _errorMessage = e.toString().replaceAll('Exception: ', '');
+      _errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       notifyListeners();
       return false;
     }
@@ -124,7 +125,7 @@ class AuthProvider extends ChangeNotifier {
       return success;
     } catch (e) {
       _status = AuthStatus.error;
-      _errorMessage = e.toString().replaceAll('Exception: ', '');
+      _errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       notifyListeners();
       return false;
     }
@@ -179,7 +180,7 @@ class AuthProvider extends ChangeNotifier {
     } catch (e) {
       // Don't change auth status to error - keep user authenticated
       // Only set error message for display
-      _errorMessage = e.toString().replaceAll('Exception: ', '');
+      _errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       _status = AuthStatus.authenticated; // Keep authenticated status
       notifyListeners();
       return false;
@@ -206,7 +207,7 @@ class AuthProvider extends ChangeNotifier {
       return success;
     } catch (e) {
       _status = AuthStatus.error;
-      _errorMessage = e.toString().replaceAll('Exception: ', '');
+      _errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       notifyListeners();
       return false;
     }
@@ -220,7 +221,7 @@ class AuthProvider extends ChangeNotifier {
       _errorMessage = null;
       notifyListeners();
     } catch (e) {
-      _errorMessage = e.toString();
+      _errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       notifyListeners();
     }
   }
@@ -240,7 +241,7 @@ class AuthProvider extends ChangeNotifier {
       return success;
     } catch (e) {
       _status = AuthStatus.error;
-      _errorMessage = e.toString().replaceAll('Exception: ', '');
+      _errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       notifyListeners();
       return false;
     }
