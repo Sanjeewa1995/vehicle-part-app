@@ -140,12 +140,12 @@ class _SignUpPageState extends State<SignUpPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 20),
 
-                    // Logo and Brand Section
+                    // Logo and Brand Section with Car Image
                     const SignUpHeaderWidget(),
 
-                    const SizedBox(height: 48),
+                    const SizedBox(height: 32),
 
                     // Sign Up Card
                     SignUpCardWidget(

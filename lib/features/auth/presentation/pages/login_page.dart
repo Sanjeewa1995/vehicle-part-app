@@ -98,12 +98,12 @@ class _LoginPageState extends State<LoginPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 20),
 
-                    // Logo and Brand Section
+                    // Logo and Brand Section with Car Image
                     const LoginHeaderWidget(),
 
-                    const SizedBox(height: 48),
+                    const SizedBox(height: 32),
 
                     // Login Card
                     LoginCardWidget(

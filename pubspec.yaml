@@ -73,6 +73,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/car_parts/
     - assets/icons/
     - .env
 

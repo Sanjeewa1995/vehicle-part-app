@@ -22,6 +22,7 @@ class _SplashPageState extends State<SplashPage>
   
   late Animation<double> _logoFadeAnimation;
   late Animation<double> _logoScaleAnimation;
+  late Animation<double> _logoRotationAnimation;
   late Animation<double> _progressAnimation;
   late Animation<double> _shimmerAnimation;
   late Animation<double> _textFadeAnimation;
@@ -51,10 +52,17 @@ class _SplashPageState extends State<SplashPage>
       ),
     );
 
-    _logoScaleAnimation = Tween<double>(begin: 0.3, end: 1.0).animate(
+    _logoScaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
       CurvedAnimation(
         parent: _logoAnimationController,
         curve: const Interval(0.0, 0.8, curve: Curves.elasticOut),
+      ),
+    );
+
+    _logoRotationAnimation = Tween<double>(begin: -0.1, end: 0.0).animate(
+      CurvedAnimation(
+        parent: _logoAnimationController,
+        curve: const Interval(0.0, 1.0, curve: Curves.easeOutCubic),
       ),
     );
 
@@ -205,7 +213,10 @@ class _SplashPageState extends State<SplashPage>
                     opacity: _logoFadeAnimation.value,
                     child: Transform.scale(
                       scale: _logoScaleAnimation.value,
-                      child: _buildLogoWithShimmer(),
+                      child: Transform.rotate(
+                        angle: _logoRotationAnimation.value,
+                        child: _buildLogoWithShimmer(),
+                      ),
                     ),
                   );
                 },
@@ -303,36 +314,85 @@ class _SplashPageState extends State<SplashPage>
       animation: _shimmerAnimationController,
       builder: (context, child) {
         return Container(
+          width: 220,
+          height: 220,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(30),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.15),
-                blurRadius: 30,
-                spreadRadius: 5,
-                offset: const Offset(0, 10),
+                color: AppColors.primary.withValues(alpha: 0.3),
+                blurRadius: 40,
+                spreadRadius: 8,
+                offset: const Offset(0, 15),
+              ),
+              BoxShadow(
+                color: AppColors.primaryDark.withValues(alpha: 0.2),
+                blurRadius: 60,
+                spreadRadius: 4,
+                offset: const Offset(0, 20),
               ),
             ],
           ),
           child: Stack(
             alignment: Alignment.center,
             children: [
-              // Logo
+              // Spare Parts Image - Main Hero
               ClipRRect(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(30),
                 child: Image.asset(
-                  'assets/images/logo.jpeg',
-                  width: 140,
-                  height: 140,
+                  'assets/images/car_parts/spare_part_1.png',
+                  width: 220,
+                  height: 220,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: 220,
+                      height: 220,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            AppColors.primary,
+                            AppColors.primaryDark,
+                          ],
+                        ),
+                      ),
+                      child: const Icon(
+                        Icons.build_circle,
+                        size: 100,
+                        color: Colors.white70,
+                      ),
+                    );
+                  },
                 ),
               ),
-              // Shimmer overlay
+              // Elegant Gradient Overlay
               ClipRRect(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(30),
                 child: Container(
-                  width: 140,
-                  height: 140,
+                  width: 220,
+                  height: 220,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        AppColors.primary.withValues(alpha: 0.2),
+                        AppColors.primary.withValues(alpha: 0.4),
+                        AppColors.primaryDark.withValues(alpha: 0.3),
+                      ],
+                      stops: const [0.0, 0.5, 1.0],
+                    ),
+                  ),
+                ),
+              ),
+              // Shimmer overlay - Enhanced
+              ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: Container(
+                  width: 220,
+                  height: 220,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -340,18 +400,28 @@ class _SplashPageState extends State<SplashPage>
                       colors: [
                         Colors.transparent,
                         Colors.white.withValues(alpha: 0.0),
-                        Colors.white.withValues(alpha: 0.3),
+                        Colors.white.withValues(alpha: 0.4),
                         Colors.white.withValues(alpha: 0.0),
                         Colors.transparent,
                       ],
                       stops: [
                         0.0,
-                        (1.0 + _shimmerAnimation.value) / 2 - 0.2,
+                        (1.0 + _shimmerAnimation.value) / 2 - 0.25,
                         (1.0 + _shimmerAnimation.value) / 2,
-                        (1.0 + _shimmerAnimation.value) / 2 + 0.2,
+                        (1.0 + _shimmerAnimation.value) / 2 + 0.25,
                         1.0,
                       ],
                     ),
+                  ),
+                ),
+              ),
+              // Subtle border glow
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.3),
+                    width: 2,
                   ),
                 ),
               ),
