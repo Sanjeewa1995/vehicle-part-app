@@ -162,7 +162,7 @@ class HomeHeaderWidget extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'AUTO-ZONE',
+                          'M-AUTO-ZONE',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
