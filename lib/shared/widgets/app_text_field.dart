@@ -161,11 +161,13 @@ class _AppTextFieldState extends State<AppTextField> {
                      widget.type != AppTextFieldType.password,
           obscureText: _obscureText,
           enabled: widget.enabled,
+          autofocus: false,
           maxLines: widget.maxLines ?? (isMultiline ? null : 1),
           maxLength: widget.maxLength,
           onChanged: widget.onChanged,
           onFieldSubmitted: widget.onSubmitted,
           validator: widget.validator,
+          readOnly: false,
           decoration: InputDecoration(
             hintText: widget.hint,
             hintStyle: TextStyle(

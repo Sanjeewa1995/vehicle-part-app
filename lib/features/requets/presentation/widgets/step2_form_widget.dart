@@ -172,7 +172,14 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
                 ],
               ),
               child: GestureDetector(
-                onTap: () => widget.onImagePickerTap(false),
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  // Dismiss keyboard before opening image picker
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  Future.delayed(const Duration(milliseconds: 100), () {
+                    widget.onImagePickerTap(false);
+                  });
+                },
                 child: Container(
                   height: 180,
                   decoration: BoxDecoration(
@@ -206,7 +213,11 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
                               top: 12,
                               right: 12,
                               child: GestureDetector(
-                                onTap: widget.onRemoveImage,
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () {
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                  widget.onRemoveImage();
+                                },
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
@@ -282,7 +293,14 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
                 ],
               ),
               child: GestureDetector(
-                onTap: widget.onPickVideo,
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  // Dismiss keyboard before opening video picker
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  Future.delayed(const Duration(milliseconds: 100), () {
+                    widget.onPickVideo();
+                  });
+                },
                 child: Container(
                   height: 180,
                   decoration: BoxDecoration(
@@ -334,7 +352,11 @@ class _Step2FormWidgetState extends State<Step2FormWidget> {
                             ),
                             const SizedBox(height: 8),
                             GestureDetector(
-                              onTap: widget.onRemoveVideo,
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                widget.onRemoveVideo();
+                              },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 16,

@@ -196,7 +196,11 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
                     children: widget.vehicleTypes.map((type) {
                       final isSelected = widget.selectedVehicleType == type;
                       return GestureDetector(
-                        onTap: () => widget.onVehicleTypeSelected(type),
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          widget.onVehicleTypeSelected(type);
+                        },
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 200),
                           padding: const EdgeInsets.symmetric(
@@ -310,10 +314,14 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
                   ),
                   const SizedBox(height: 12),
                   GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: widget.vehicleModels.isEmpty
                         ? null
                         : () {
-                            showModalBottomSheet(
+                            // Dismiss keyboard before showing dropdown
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            Future.delayed(const Duration(milliseconds: 100), () {
+                              showModalBottomSheet(
                               context: context,
                               backgroundColor: Colors.transparent,
                               builder: (context) => Container(
@@ -403,6 +411,7 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
                                 ),
                               ),
                             );
+                            });
                           },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
@@ -610,8 +619,12 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
                   ),
                   const SizedBox(height: 12),
                   GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () {
-                      showModalBottomSheet(
+                      // Dismiss keyboard before showing dropdown
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      Future.delayed(const Duration(milliseconds: 100), () {
+                        showModalBottomSheet(
                         context: context,
                         backgroundColor: Colors.transparent,
                         builder: (context) => Container(
@@ -701,6 +714,7 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
                           ),
                         ),
                       );
+                      });
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
@@ -767,7 +781,14 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
                 ],
               ),
               child: GestureDetector(
-                onTap: widget.onImagePickerTap,
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  // Dismiss keyboard before opening image picker
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  Future.delayed(const Duration(milliseconds: 100), () {
+                    widget.onImagePickerTap();
+                  });
+                },
                 child: Container(
                   height: 180,
                   padding: EdgeInsets.symmetric(horizontal: 10),
@@ -799,7 +820,11 @@ class _Step1FormWidgetState extends State<Step1FormWidget> {
                               top: 12,
                               right: 12,
                               child: GestureDetector(
-                                onTap: widget.onRemoveImage,
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () {
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                  widget.onRemoveImage();
+                                },
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(

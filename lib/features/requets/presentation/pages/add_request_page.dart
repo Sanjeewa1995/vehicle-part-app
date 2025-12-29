@@ -557,6 +557,8 @@ class _AddRequestPageState extends State<AddRequestPage> {
 
           if (mounted) {
             LoadingIndicator.hide(context);
+            // Ensure keyboard is dismissed after compression
+            FocusManager.instance.primaryFocus?.unfocus();
           }
 
           if (compressedFile != null) {
@@ -571,6 +573,13 @@ class _AddRequestPageState extends State<AddRequestPage> {
                 _partImage = compressedFile;
               }
             });
+
+            // Ensure keyboard stays dismissed after setState (use post-frame callback)
+            if (mounted) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              });
+            }
 
             // Show success message with compression info
             if (mounted && originalSize != compressedSize) {
@@ -594,10 +603,18 @@ class _AddRequestPageState extends State<AddRequestPage> {
                 _partImage = originalFile;
               }
             });
+            // Ensure keyboard stays dismissed after setState (use post-frame callback)
+            if (mounted) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              });
+            }
           }
         } catch (compressionError) {
           if (mounted) {
             LoadingIndicator.hide(context);
+            // Ensure keyboard is dismissed
+            FocusManager.instance.primaryFocus?.unfocus();
             // If compression fails, use original file
             setState(() {
               if (isVehicleImage) {
@@ -606,6 +623,12 @@ class _AddRequestPageState extends State<AddRequestPage> {
                 _partImage = originalFile;
               }
             });
+            // Ensure keyboard stays dismissed after setState (use post-frame callback)
+            if (mounted) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              });
+            }
           }
         }
       }
@@ -674,6 +697,8 @@ class _AddRequestPageState extends State<AddRequestPage> {
 
           if (mounted) {
             LoadingIndicator.hide(context);
+            // Ensure keyboard is dismissed after compression
+            FocusManager.instance.primaryFocus?.unfocus();
           }
 
           if (compressedVideo != null) {
@@ -684,6 +709,13 @@ class _AddRequestPageState extends State<AddRequestPage> {
             setState(() {
               _partVideo = compressedVideo;
             });
+
+            // Ensure keyboard stays dismissed after setState (use post-frame callback)
+            if (mounted) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              });
+            }
 
             // Show success message with compression info
             if (mounted && originalSize != compressedSize) {
@@ -703,20 +735,36 @@ class _AddRequestPageState extends State<AddRequestPage> {
             setState(() {
               _partVideo = videoFile;
             });
+            // Ensure keyboard stays dismissed after setState (use post-frame callback)
+            if (mounted) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              });
+            }
           }
         } catch (compressionError) {
           if (mounted) {
             LoadingIndicator.hide(context);
+            // Ensure keyboard is dismissed
+            FocusManager.instance.primaryFocus?.unfocus();
             // If compression fails, use original file
             setState(() {
               _partVideo = videoFile;
             });
+            // Ensure keyboard stays dismissed after setState (use post-frame callback)
+            if (mounted) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              });
+            }
           }
         }
       }
     } catch (e) {
       if (mounted) {
         LoadingIndicator.hide(context);
+        // Ensure keyboard is dismissed on error
+        FocusManager.instance.primaryFocus?.unfocus();
         final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -739,8 +787,11 @@ class _AddRequestPageState extends State<AddRequestPage> {
   }
 
   void _showImagePickerOptions(bool isVehicleImage) {
+    // Dismiss keyboard before showing image picker options
+    FocusManager.instance.primaryFocus?.unfocus();
     final l10n = AppLocalizations.of(context)!;
-    showModalBottomSheet(
+    Future.delayed(const Duration(milliseconds: 100), () {
+      showModalBottomSheet(
       context: context,
       builder: (context) => SafeArea(
         child: Wrap(
@@ -765,6 +816,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
         ),
       ),
     );
+    });
   }
 
   bool _validateStep1() {
