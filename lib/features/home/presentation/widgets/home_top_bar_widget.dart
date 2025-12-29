@@ -29,10 +29,29 @@ class HomeTopBarWidget extends StatelessWidget {
             children: [
               const _AutoZoneLogo(),
               const SizedBox(width: 12),
-              Icon(
-                Icons.directions_car,
-                size: 18,
-                color: AppColors.primary.withValues(alpha: 0.7),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'M-AUTO-ZONE',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  Text(
+                    'Vehicle Parts',
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textSecondary,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
