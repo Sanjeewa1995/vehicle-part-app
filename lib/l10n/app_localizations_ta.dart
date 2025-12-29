@@ -252,7 +252,7 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get findAnswersAndLearn =>
-      'பதில்களைக் கண்டறிந்து AUTO-ZONE ஐ எவ்வாறு பயன்படுத்துவது என்பதை அறிக';
+      'பதில்களைக் கண்டறிந்து M-AUTO-ZONE ஐ எவ்வாறு பயன்படுத்துவது என்பதை அறிக';
 
   @override
   String get howToRequestSparePart => 'ஸ்பேர் பாகத்தை எவ்வாறு கோருவது';

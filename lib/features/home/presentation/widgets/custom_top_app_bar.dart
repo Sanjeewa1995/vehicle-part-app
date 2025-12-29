@@ -234,7 +234,7 @@ class _CustomTopAppBarState extends State<CustomTopAppBar> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'AUTO-ZONE',
+                      'M-AUTO-ZONE',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

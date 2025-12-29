@@ -38,7 +38,7 @@ class WelcomeHeaderWidget extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         Text(
-          'AUTO-ZONE',
+          'M-AUTO-ZONE',
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,

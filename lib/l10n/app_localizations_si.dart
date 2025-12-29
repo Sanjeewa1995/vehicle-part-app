@@ -247,7 +247,7 @@ class AppLocalizationsSi extends AppLocalizations {
 
   @override
   String get findAnswersAndLearn =>
-      'පිළිතුරු සොයාගෙන AUTO-ZONE භාවිතා කරන්නේ කෙසේදැයි ඉගෙන ගන්න';
+      'පිළිතුරු සොයාගෙන M-AUTO-ZONE භාවිතා කරන්නේ කෙසේදැයි ඉගෙන ගන්න';
 
   @override
   String get howToRequestSparePart => 'උපකරණ කොටසක් ඉල්ලන්නේ කෙසේද';
