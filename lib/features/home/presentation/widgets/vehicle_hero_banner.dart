@@ -105,18 +105,16 @@ class _VehicleHeroBannerState extends State<VehicleHeroBanner>
                         );
                       },
                     ),
-                    // Gradient Overlay
+                    // Gradient Overlay - Branded Primary Color
                     Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Colors.transparent,
-                            Colors.black.withValues(alpha: 0.2),
-                            Colors.black.withValues(alpha: 0.4),
+                            AppColors.primary.withValues(alpha: 0.4),
+                            AppColors.primary.withValues(alpha: 0.6),
                           ],
-                          stops: const [0.0, 0.6, 1.0],
                         ),
                       ),
                     ),
