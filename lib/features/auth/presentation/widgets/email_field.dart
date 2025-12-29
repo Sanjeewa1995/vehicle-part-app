@@ -18,7 +18,7 @@ class EmailField extends StatelessWidget {
       label: 'EMAIL ADDRESS',
       hint: 'you@example.com',
       type: AppTextFieldType.email,
-      validator: Validators.validateEmail,
+      validator: Validators.emailValidator(context),
     );
   }
 }

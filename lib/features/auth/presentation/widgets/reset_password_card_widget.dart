@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/error_message_helper.dart';
 import '../../../../shared/widgets/app_text_field.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../providers/auth_provider.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class ResetPasswordCardWidget extends StatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -29,27 +31,30 @@ class _ResetPasswordCardWidgetState extends State<ResetPasswordCardWidget> {
   bool _showConfirmPassword = false;
 
   String? _validatePassword(String? value) {
+    final l10n = AppLocalizations.of(context)!;
     if (value == null || value.isEmpty) {
-      return 'Password is required';
+      return l10n.newPasswordRequired;
     }
     if (value.length < 4) {
-      return 'Password must be at least 4 characters';
+      return l10n.passwordMustBeAtLeast4Characters;
     }
     return null;
   }
 
   String? _validateConfirmPassword(String? value) {
+    final l10n = AppLocalizations.of(context)!;
     if (value == null || value.isEmpty) {
-      return 'Please confirm your password';
+      return l10n.pleaseConfirmPassword;
     }
     if (value != widget.passwordController.text) {
-      return "Passwords don't match";
+      return l10n.passwordsDoNotMatch;
     }
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.background,
@@ -71,7 +76,7 @@ class _ResetPasswordCardWidgetState extends State<ResetPasswordCardWidget> {
             children: [
               // Header Text
               Text(
-                'Reset Password',
+                l10n.resetPassword,
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -80,7 +85,7 @@ class _ResetPasswordCardWidgetState extends State<ResetPasswordCardWidget> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Enter your new password. Make sure it\'s strong and secure.',
+                l10n.enterYourNewPasswordMakeSureItsStrongAndSecure,
                 style: TextStyle(
                   fontSize: 14,
                   color: AppColors.textSecondary,
@@ -91,8 +96,8 @@ class _ResetPasswordCardWidgetState extends State<ResetPasswordCardWidget> {
               // Password Field
               AppTextField(
                 controller: widget.passwordController,
-                label: 'New Password',
-                hint: 'Enter your new password',
+                label: l10n.newPassword,
+                hint: l10n.enterNewPassword,
                 type: AppTextFieldType.password,
                 prefixIcon: Icons.lock_outline,
                 obscureText: !_showPassword,
@@ -112,8 +117,8 @@ class _ResetPasswordCardWidgetState extends State<ResetPasswordCardWidget> {
               // Confirm Password Field
               AppTextField(
                 controller: widget.confirmPasswordController,
-                label: 'Confirm New Password',
-                hint: 'Confirm your new password',
+                label: l10n.confirmNewPassword,
+                hint: l10n.confirmNewPasswordHint,
                 type: AppTextFieldType.password,
                 prefixIcon: Icons.lock_outline,
                 obscureText: !_showConfirmPassword,
@@ -135,7 +140,7 @@ class _ResetPasswordCardWidgetState extends State<ResetPasswordCardWidget> {
               Consumer<AuthProvider>(
                 builder: (context, authProvider, child) {
                   return AppButton(
-                    text: 'Update Password',
+                    text: l10n.updatePassword,
                     onPressed: authProvider.status == AuthStatus.loading
                         ? null
                         : widget.onResetPassword,
@@ -150,6 +155,11 @@ class _ResetPasswordCardWidgetState extends State<ResetPasswordCardWidget> {
                 builder: (context, authProvider, child) {
                   if (authProvider.errorMessage != null &&
                       authProvider.errorMessage!.isNotEmpty) {
+                    // Translate error message
+                    final errorMsg = ErrorMessageHelper.getUserFriendlyMessage(
+                      authProvider.errorMessage!,
+                      context: context,
+                    );
                     return Padding(
                       padding: const EdgeInsets.only(top: 16),
                       child: Container(
@@ -171,7 +181,7 @@ class _ResetPasswordCardWidgetState extends State<ResetPasswordCardWidget> {
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                authProvider.errorMessage!,
+                                errorMsg,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: AppColors.error,

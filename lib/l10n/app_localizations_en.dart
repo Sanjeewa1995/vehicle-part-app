@@ -1051,4 +1051,188 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deletingAccount => 'Deleting account...';
+
+  @override
+  String get createAccount => 'Create Account';
+
+  @override
+  String get fillInYourDetailsToGetStarted =>
+      'Fill in your details to get started';
+
+  @override
+  String get enterYourFirstName => 'Enter your first name';
+
+  @override
+  String get enterYourLastName => 'Enter your last name';
+
+  @override
+  String get youExampleCom => 'you@example.com';
+
+  @override
+  String get phonePlaceholder => '+1 (555) 123-4567';
+
+  @override
+  String get createAStrongPassword => 'Create a strong password';
+
+  @override
+  String get confirmYourPassword => 'Confirm your password';
+
+  @override
+  String get iAgreeToTheTermsOfServiceAndPrivacyPolicy =>
+      'I agree to the Terms of Service and Privacy Policy';
+
+  @override
+  String get youMustAcceptTheTermsAndConditions =>
+      'You must accept the terms and conditions';
+
+  @override
+  String fieldIsRequired(String fieldName) {
+    return '$fieldName is required';
+  }
+
+  @override
+  String fieldMustBeAtLeast2Characters(String fieldName) {
+    return '$fieldName must be at least 2 characters';
+  }
+
+  @override
+  String fieldMustBeLessThan50Characters(String fieldName) {
+    return '$fieldName must be less than 50 characters';
+  }
+
+  @override
+  String get passwordMustBeAtLeast6Characters =>
+      'Password must be at least 6 characters';
+
+  @override
+  String get passwordMustBeAtLeast4Characters =>
+      'Password must be at least 4 characters';
+
+  @override
+  String get welcomeToAutoZone => 'Welcome to AUTO-ZONE!';
+
+  @override
+  String helloNameYourAccountHasBeenCreatedSuccessfully(String name) {
+    return 'Hello $name! Your account has been created successfully.';
+  }
+
+  @override
+  String get resetPassword => 'Reset Password';
+
+  @override
+  String get noWorriesWellSendYouAVerificationCodeToResetYourPassword =>
+      'No worries — we\'ll send you a verification code to reset your password.';
+
+  @override
+  String get contactNumber => 'Contact Number';
+
+  @override
+  String get enterYourContactNumber => 'Enter your contact number';
+
+  @override
+  String get sendVerificationCode => 'Send Verification Code';
+
+  @override
+  String get enterYourContactNumberToReceiveAVerificationCode =>
+      'Enter your contact number to receive a verification code';
+
+  @override
+  String get setNewPassword => 'Set New Password';
+
+  @override
+  String get createAStrongPasswordFor => 'Create a strong password for';
+
+  @override
+  String get enterYourNewPasswordMakeSureItsStrongAndSecure =>
+      'Enter your new password. Make sure it\'s strong and secure.';
+
+  @override
+  String get updatePassword => 'Update Password';
+
+  @override
+  String get passwordReset => 'Password Reset!';
+
+  @override
+  String get yourPasswordHasBeenSuccessfullyReset =>
+      'Your password has been successfully reset.';
+
+  @override
+  String get youCanNowSignInWithYourNewPassword =>
+      'You can now sign in with your new password.';
+
+  @override
+  String get dontHaveAnAccount => 'Don\'t have an account?';
+
+  @override
+  String get signUp => 'Sign Up';
+
+  @override
+  String get alreadyHaveAnAccount => 'Already have an account?';
+
+  @override
+  String get rememberYourPassword => 'Remember your password?';
+
+  @override
+  String get emailIsRequired => 'Email is required';
+
+  @override
+  String get pleaseEnterAValidEmailAddress =>
+      'Please enter a valid email address';
+
+  @override
+  String get phoneNumberIsRequired => 'Phone number is required';
+
+  @override
+  String get pleaseEnterAValidPhoneNumber =>
+      'Please enter a valid phone number';
+
+  @override
+  String get anUnexpectedErrorOccurred =>
+      'An unexpected error occurred. Please try again.';
+
+  @override
+  String get invalidPhoneNumberOrPassword =>
+      'Invalid phone number or password. Please check your credentials and try again.';
+
+  @override
+  String get connectionTimeout =>
+      'Connection timeout. Please check your internet connection and try again.';
+
+  @override
+  String get networkError =>
+      'Network error. Please check your internet connection and try again.';
+
+  @override
+  String get serverError => 'Server error. Please try again later.';
+
+  @override
+  String get theRequestedResourceWasNotFound =>
+      'The requested resource was not found.';
+
+  @override
+  String get youDoNotHavePermissionToPerformThisAction =>
+      'You do not have permission to perform this action.';
+
+  @override
+  String get invalidInput =>
+      'Invalid input. Please check your information and try again.';
+
+  @override
+  String get pleaseFillInAllRequiredFields =>
+      'Please fill in all required fields.';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get pleaseEnterTheComplete6DigitCode =>
+      'Please enter the complete 6-digit code';
+
+  @override
+  String weveSentA6DigitCodeToContact(String contact) {
+    return 'We\'ve sent a 6-digit code to $contact. If you don\'t receive a code, the contact number might not be registered.';
+  }
+
+  @override
+  String get enterThe6DigitCodeSentTo => 'Enter the 6-digit code sent to';
 }

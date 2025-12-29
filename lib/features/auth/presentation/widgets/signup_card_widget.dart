@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/error_message_helper.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../shared/widgets/app_text_field.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../providers/auth_provider.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class SignUpCardWidget extends StatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -36,40 +38,44 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
   bool _acceptTerms = false;
 
   String? _validateName(String? value, String fieldName) {
+    final l10n = AppLocalizations.of(context)!;
     if (value == null || value.trim().isEmpty) {
-      return '$fieldName is required';
+      return l10n.fieldIsRequired(fieldName);
     }
     if (value.trim().length < 2) {
-      return '$fieldName must be at least 2 characters';
+      return l10n.fieldMustBeAtLeast2Characters(fieldName);
     }
     if (value.trim().length > 50) {
-      return '$fieldName must be less than 50 characters';
+      return l10n.fieldMustBeLessThan50Characters(fieldName);
     }
     return null;
   }
 
   String? _validatePassword(String? value) {
+    final l10n = AppLocalizations.of(context)!;
     if (value == null || value.isEmpty) {
-      return 'Password is required';
+      return l10n.passwordRequired;
     }
     if (value.length < 6) {
-      return 'Password must be at least 6 characters';
+      return l10n.passwordMustBeAtLeast6Characters;
     }
     return null;
   }
 
   String? _validateConfirmPassword(String? value) {
+    final l10n = AppLocalizations.of(context)!;
     if (value == null || value.isEmpty) {
-      return 'Please confirm your password';
+      return l10n.pleaseConfirmPassword;
     }
     if (value != widget.passwordController.text) {
-      return "Passwords don't match";
+      return l10n.passwordsDoNotMatch;
     }
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.background,
@@ -91,7 +97,7 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
             children: [
               // Welcome Text
               Text(
-                'Create Account',
+                l10n.createAccount,
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -100,7 +106,7 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Fill in your details to get started',
+                l10n.fillInYourDetailsToGetStarted,
                 style: TextStyle(
                   fontSize: 14,
                   color: AppColors.textSecondary,
@@ -111,11 +117,14 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
               // First Name Field
               AppTextField(
                 controller: widget.firstNameController,
-                label: 'First Name',
-                hint: 'Enter your first name',
+                label: l10n.firstName,
+                hint: l10n.enterYourFirstName,
                 type: AppTextFieldType.text,
                 prefixIcon: Icons.person_outline,
-                validator: (value) => _validateName(value, 'First name'),
+                validator: (value) {
+                  final localizations = AppLocalizations.of(context)!;
+                  return _validateName(value, localizations.firstName);
+                },
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 20),
@@ -123,11 +132,14 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
               // Last Name Field
               AppTextField(
                 controller: widget.lastNameController,
-                label: 'Last Name',
-                hint: 'Enter your last name',
+                label: l10n.lastName,
+                hint: l10n.enterYourLastName,
                 type: AppTextFieldType.text,
                 prefixIcon: Icons.person_outline,
-                validator: (value) => _validateName(value, 'Last name'),
+                validator: (value) {
+                  final localizations = AppLocalizations.of(context)!;
+                  return _validateName(value, localizations.lastName);
+                },
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 20),
@@ -135,10 +147,10 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
               // Email Field
               AppTextField(
                 controller: widget.emailController,
-                label: 'Email Address',
-                hint: 'you@example.com',
+                label: l10n.emailAddress,
+                hint: l10n.youExampleCom,
                 type: AppTextFieldType.email,
-                validator: Validators.validateEmail,
+                validator: Validators.emailValidator(context),
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 20),
@@ -146,10 +158,10 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
               // Phone Field
               AppTextField(
                 controller: widget.phoneController,
-                label: 'Phone Number',
-                hint: '+1 (555) 123-4567',
+                label: l10n.phoneNumber,
+                hint: l10n.phonePlaceholder,
                 type: AppTextFieldType.phone,
-                validator: Validators.validatePhoneNumber,
+                validator: Validators.phoneNumberValidator(context),
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 20),
@@ -157,8 +169,8 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
               // Password Field
               AppTextField(
                 controller: widget.passwordController,
-                label: 'Password',
-                hint: 'Create a strong password',
+                label: l10n.password,
+                hint: l10n.createAStrongPassword,
                 type: AppTextFieldType.password,
                 validator: _validatePassword,
                 textInputAction: TextInputAction.next,
@@ -168,8 +180,8 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
               // Confirm Password Field
               AppTextField(
                 controller: widget.confirmPasswordController,
-                label: 'Confirm Password',
-                hint: 'Confirm your password',
+                label: l10n.confirmNewPassword,
+                hint: l10n.confirmYourPassword,
                 type: AppTextFieldType.password,
                 validator: _validateConfirmPassword,
                 textInputAction: TextInputAction.done,
@@ -178,8 +190,8 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
                     widget.onSignUp();
                   } else if (!_acceptTerms) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('You must accept the terms and conditions'),
+                      SnackBar(
+                        content: Text(l10n.youMustAcceptTheTermsAndConditions),
                         backgroundColor: AppColors.error,
                       ),
                     );
@@ -205,7 +217,7 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 12),
                       child: Text(
-                        'I agree to the Terms of Service and Privacy Policy',
+                        l10n.iAgreeToTheTermsOfServiceAndPrivacyPolicy,
                         style: TextStyle(
                           fontSize: 14,
                           color: AppColors.textSecondary,
@@ -221,7 +233,7 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
               Consumer<AuthProvider>(
                 builder: (context, authProvider, child) {
                   return AppButton(
-                    text: 'Create Account',
+                    text: l10n.createAccount,
                     onPressed: (authProvider.status == AuthStatus.loading || !_acceptTerms)
                         ? null
                         : widget.onSignUp,
@@ -236,6 +248,11 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
                 builder: (context, authProvider, child) {
                   if (authProvider.errorMessage != null &&
                       authProvider.errorMessage!.isNotEmpty) {
+                    // Translate error message
+                    final errorMsg = ErrorMessageHelper.getUserFriendlyMessage(
+                      authProvider.errorMessage!,
+                      context: context,
+                    );
                     return Padding(
                       padding: const EdgeInsets.only(top: 16),
                       child: Container(
@@ -257,7 +274,7 @@ class _SignUpCardWidgetState extends State<SignUpCardWidget> {
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                authProvider.errorMessage!,
+                                errorMsg,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: AppColors.error,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../widgets/reset_password_header_widget.dart';
 import '../widgets/reset_password_card_widget.dart';
 import '../widgets/reset_password_login_link_widget.dart';
@@ -78,6 +79,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
       );
 
       if (mounted && success) {
+        final l10n = AppLocalizations.of(context)!;
         // Show success dialog and navigate to login
         showDialog(
           context: context,
@@ -104,7 +106,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Password Reset!',
+                    l10n.passwordReset,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -119,7 +121,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Your password has been successfully reset.',
+                  l10n.yourPasswordHasBeenSuccessfullyReset,
                   style: TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
@@ -127,7 +129,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'You can now sign in with your new password.',
+                  l10n.youCanNowSignInWithYourNewPassword,
                   style: TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
@@ -148,7 +150,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
                   ),
                 ),
                 child: Text(
-                  'Sign In',
+                  l10n.signIn,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

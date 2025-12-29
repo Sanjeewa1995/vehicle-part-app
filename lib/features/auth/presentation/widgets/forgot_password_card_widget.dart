@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/error_message_helper.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../shared/widgets/app_text_field.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../providers/auth_provider.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class ForgotPasswordCardWidget extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -20,6 +22,7 @@ class ForgotPasswordCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.background,
@@ -41,7 +44,7 @@ class ForgotPasswordCardWidget extends StatelessWidget {
             children: [
               // Header Text
               Text(
-                'Reset Password',
+                l10n.resetPassword,
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -50,7 +53,7 @@ class ForgotPasswordCardWidget extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'No worries — we\'ll send you a verification code to reset your password.',
+                l10n.noWorriesWellSendYouAVerificationCodeToResetYourPassword,
                 style: TextStyle(
                   fontSize: 14,
                   color: AppColors.textSecondary,
@@ -61,11 +64,11 @@ class ForgotPasswordCardWidget extends StatelessWidget {
               // Contact Number Field
               AppTextField(
                 controller: contactController,
-                label: 'Contact Number',
-                hint: 'Enter your contact number',
+                label: l10n.contactNumber,
+                hint: l10n.enterYourContactNumber,
                 type: AppTextFieldType.phone,
                 prefixIcon: Icons.phone_outlined,
-                validator: Validators.validatePhoneNumber,
+                validator: Validators.phoneNumberValidator(context),
                 textInputAction: TextInputAction.done,
                 onSubmitted: (_) => onSendCode(),
               ),
@@ -75,7 +78,7 @@ class ForgotPasswordCardWidget extends StatelessWidget {
               Consumer<AuthProvider>(
                 builder: (context, authProvider, child) {
                   return AppButton(
-                    text: 'Send Verification Code',
+                    text: l10n.sendVerificationCode,
                     onPressed: authProvider.status == AuthStatus.loading
                         ? null
                         : onSendCode,
@@ -90,6 +93,11 @@ class ForgotPasswordCardWidget extends StatelessWidget {
                 builder: (context, authProvider, child) {
                   if (authProvider.errorMessage != null &&
                       authProvider.errorMessage!.isNotEmpty) {
+                    // Translate error message
+                    final errorMsg = ErrorMessageHelper.getUserFriendlyMessage(
+                      authProvider.errorMessage!,
+                      context: context,
+                    );
                     return Padding(
                       padding: const EdgeInsets.only(top: 16),
                       child: Container(
@@ -111,7 +119,7 @@ class ForgotPasswordCardWidget extends StatelessWidget {
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                authProvider.errorMessage!,
+                                errorMsg,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: AppColors.error,

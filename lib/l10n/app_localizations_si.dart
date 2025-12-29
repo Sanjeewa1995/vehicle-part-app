@@ -247,7 +247,7 @@ class AppLocalizationsSi extends AppLocalizations {
 
   @override
   String get findAnswersAndLearn =>
-      'පිළිතුරු සොයාගෙන M-AUTO-ZONE භාවිතා කරන්නේ කෙසේදැයි ඉගෙන ගන්න';
+      'පිළිතුරු සොයාගෙන AUTO-ZONE භාවිතා කරන්නේ කෙසේදැයි ඉගෙන ගන්න';
 
   @override
   String get howToRequestSparePart => 'උපකරණ කොටසක් ඉල්ලන්නේ කෙසේද';
@@ -1052,4 +1052,187 @@ class AppLocalizationsSi extends AppLocalizations {
 
   @override
   String get deletingAccount => 'ගිණුම මකමින්...';
+
+  @override
+  String get createAccount => 'ගිණුම සාදන්න';
+
+  @override
+  String get fillInYourDetailsToGetStarted => 'ආරම්භ කිරීමට ඔබේ විස්තර පුරවන්න';
+
+  @override
+  String get enterYourFirstName => 'ඔබේ මුල් නම ඇතුළත් කරන්න';
+
+  @override
+  String get enterYourLastName => 'ඔබේ අවසාන නම ඇතුළත් කරන්න';
+
+  @override
+  String get youExampleCom => 'you@example.com';
+
+  @override
+  String get phonePlaceholder => '+1 (555) 123-4567';
+
+  @override
+  String get createAStrongPassword => 'ශක්තිමත් මුරපදයක් සාදන්න';
+
+  @override
+  String get confirmYourPassword => 'ඔබේ මුරපදය තහවුරු කරන්න';
+
+  @override
+  String get iAgreeToTheTermsOfServiceAndPrivacyPolicy =>
+      'මම සේවා කොන්දේසි සහ රහස්‍යතා ප්‍රතිපත්තියට එකඟ වෙමි';
+
+  @override
+  String get youMustAcceptTheTermsAndConditions =>
+      'ඔබ කොන්දේසි සහ නියමයන් පිළිගත යුතුය';
+
+  @override
+  String fieldIsRequired(String fieldName) {
+    return '$fieldName අවශ්‍යයි';
+  }
+
+  @override
+  String fieldMustBeAtLeast2Characters(String fieldName) {
+    return '$fieldName අවම වශයෙන් අක්ෂර 2 ක් විය යුතුය';
+  }
+
+  @override
+  String fieldMustBeLessThan50Characters(String fieldName) {
+    return '$fieldName අක්ෂර 50 ට වඩා අඩු විය යුතුය';
+  }
+
+  @override
+  String get passwordMustBeAtLeast6Characters =>
+      'මුරපදය අවම වශයෙන් අක්ෂර 6 ක් විය යුතුය';
+
+  @override
+  String get passwordMustBeAtLeast4Characters =>
+      'මුරපදය අවම වශයෙන් අක්ෂර 4 ක් විය යුතුය';
+
+  @override
+  String get welcomeToAutoZone => 'AUTO-ZONE වෙත සාදරයෙන් පිළිගනිමු!';
+
+  @override
+  String helloNameYourAccountHasBeenCreatedSuccessfully(String name) {
+    return 'ආයුබෝවන් $name! ඔබේ ගිණුම සාර්ථකව සාදන ලදී.';
+  }
+
+  @override
+  String get resetPassword => 'මුරපදය යළි සැකසීම';
+
+  @override
+  String get noWorriesWellSendYouAVerificationCodeToResetYourPassword =>
+      'කරදර නොවන්න — ඔබේ මුරපදය යළි සැකසීමට අපි ඔබට සත්‍යාපන කේතයක් එවන්නෙමු.';
+
+  @override
+  String get contactNumber => 'සම්බන්ධතා අංකය';
+
+  @override
+  String get enterYourContactNumber => 'ඔබේ සම්බන්ධතා අංකය ඇතුළත් කරන්න';
+
+  @override
+  String get sendVerificationCode => 'සත්‍යාපන කේතය යවන්න';
+
+  @override
+  String get enterYourContactNumberToReceiveAVerificationCode =>
+      'සත්‍යාපන කේතයක් ලබා ගැනීමට ඔබේ සම්බන්ධතා අංකය ඇතුළත් කරන්න';
+
+  @override
+  String get setNewPassword => 'නව මුරපදය සැකසීම';
+
+  @override
+  String get createAStrongPasswordFor => 'සඳහා ශක්තිමත් මුරපදයක් සාදන්න';
+
+  @override
+  String get enterYourNewPasswordMakeSureItsStrongAndSecure =>
+      'ඔබේ නව මුරපදය ඇතුළත් කරන්න. එය ශක්තිමත් සහ ආරක්ෂිත බවට වග බලා ගන්න.';
+
+  @override
+  String get updatePassword => 'මුරපදය යාවත්කාලීන කරන්න';
+
+  @override
+  String get passwordReset => 'මුරපදය යළි සැකසීම!';
+
+  @override
+  String get yourPasswordHasBeenSuccessfullyReset =>
+      'ඔබේ මුරපදය සාර්ථකව යළි සැකසීමට ලක් කරන ලදී.';
+
+  @override
+  String get youCanNowSignInWithYourNewPassword =>
+      'ඔබට දැන් ඔබේ නව මුරපදය සමඟ පිවිසිය හැකිය.';
+
+  @override
+  String get dontHaveAnAccount => 'ගිණුමක් නැතද?';
+
+  @override
+  String get signUp => 'ලියාපදිංචි වන්න';
+
+  @override
+  String get alreadyHaveAnAccount => 'දැනටමත් ගිණුමක් තිබේද?';
+
+  @override
+  String get rememberYourPassword => 'ඔබේ මුරපදය මතකද?';
+
+  @override
+  String get emailIsRequired => 'ඊමේල් අවශ්‍යයි';
+
+  @override
+  String get pleaseEnterAValidEmailAddress =>
+      'කරුණාකර වලංගු ඊමේල් ලිපිනයක් ඇතුළත් කරන්න';
+
+  @override
+  String get phoneNumberIsRequired => 'දුරකථන අංකය අවශ්‍යයි';
+
+  @override
+  String get pleaseEnterAValidPhoneNumber =>
+      'කරුණාකර වලංගු දුරකථන අංකයක් ඇතුළත් කරන්න';
+
+  @override
+  String get anUnexpectedErrorOccurred =>
+      'අනපේක්ෂිත දෝෂයක් සිදු විය. කරුණාකර නැවත උත්සාහ කරන්න.';
+
+  @override
+  String get invalidPhoneNumberOrPassword =>
+      'වලංගු නොවන දුරකථන අංකය හෝ මුරපදය. කරුණාකර ඔබේ අක්තපත්‍ර පරීක්ෂා කර නැවත උත්සාහ කරන්න.';
+
+  @override
+  String get connectionTimeout =>
+      'සම්බන්ධතා කල් ඉකුත් වීම. කරුණාකර ඔබේ අන්තර්ජාල සම්බන්ධතාව පරීක්ෂා කර නැවත උත්සාහ කරන්න.';
+
+  @override
+  String get networkError =>
+      'ජාල දෝෂය. කරුණාකර ඔබේ අන්තර්ජාල සම්බන්ධතාව පරීක්ෂා කර නැවත උත්සාහ කරන්න.';
+
+  @override
+  String get serverError => 'සේවාදායක දෝෂය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.';
+
+  @override
+  String get theRequestedResourceWasNotFound => 'ඉල්ලූම් කළ සම්පත් හමු නොවීය.';
+
+  @override
+  String get youDoNotHavePermissionToPerformThisAction =>
+      'මෙම ක්‍රියාව සිදු කිරීමට ඔබට අවසරයක් නැත.';
+
+  @override
+  String get invalidInput =>
+      'වලංගු නොවන ආදානය. කරුණාකර ඔබේ තොරතුරු පරීක්ෂා කර නැවත උත්සාහ කරන්න.';
+
+  @override
+  String get pleaseFillInAllRequiredFields =>
+      'කරුණාකර සියලුම අවශ්‍ය ක්ෂේත්‍ර පුරවන්න.';
+
+  @override
+  String get somethingWentWrong => 'යමක් වැරදී ඇත. කරුණාකර නැවත උත්සාහ කරන්න.';
+
+  @override
+  String get pleaseEnterTheComplete6DigitCode =>
+      'කරුණාකර සම්පූර්ණ 6-ඉලක්කම් කේතය ඇතුළත් කරන්න';
+
+  @override
+  String weveSentA6DigitCodeToContact(String contact) {
+    return 'අපි $contact වෙත 6-ඉලක්කම් කේතයක් යවා ඇත. ඔබට කේතයක් නොලැබුනේ නම්, සම්බන්ධතා අංකය ලියාපදිංචි නොවී තිබිය හැකිය.';
+  }
+
+  @override
+  String get enterThe6DigitCodeSentTo =>
+      'වෙත යවන ලද 6-ඉලක්කම් කේතය ඇතුළත් කරන්න';
 }

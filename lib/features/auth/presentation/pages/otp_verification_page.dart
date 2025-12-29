@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../widgets/otp_verification_header_widget.dart';
 import '../widgets/otp_verification_card_widget.dart';
 import '../providers/auth_provider.dart';
@@ -81,9 +82,10 @@ class _OTPVerificationPageState extends State<OTPVerificationPage>
     final success = await authProvider.forgotPassword(widget.contact);
 
     if (mounted && success) {
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('A new OTP has been sent to your contact number.'),
+        SnackBar(
+          content: Text(l10n.weveSentA6DigitCodeToContact(widget.contact)),
           backgroundColor: AppColors.success,
         ),
       );

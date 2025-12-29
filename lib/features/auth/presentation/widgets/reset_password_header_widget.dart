@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class ResetPasswordHeaderWidget extends StatelessWidget {
   final String contact;
@@ -11,6 +12,7 @@ class ResetPasswordHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         // Lock Icon with Gradient
@@ -43,7 +45,7 @@ class ResetPasswordHeaderWidget extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         Text(
-          'Set New Password',
+          l10n.setNewPassword,
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
@@ -53,7 +55,7 @@ class ResetPasswordHeaderWidget extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'Create a strong password for',
+          l10n.createAStrongPasswordFor,
           style: TextStyle(
             fontSize: 16,
             color: AppColors.textSecondary,

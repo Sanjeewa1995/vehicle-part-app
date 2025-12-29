@@ -2067,6 +2067,312 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Deleting account...'**
   String get deletingAccount;
+
+  /// Create account title
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get createAccount;
+
+  /// Sign up subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in your details to get started'**
+  String get fillInYourDetailsToGetStarted;
+
+  /// First name hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your first name'**
+  String get enterYourFirstName;
+
+  /// Last name hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your last name'**
+  String get enterYourLastName;
+
+  /// Email placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'you@example.com'**
+  String get youExampleCom;
+
+  /// Phone number placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'+1 (555) 123-4567'**
+  String get phonePlaceholder;
+
+  /// Password hint
+  ///
+  /// In en, this message translates to:
+  /// **'Create a strong password'**
+  String get createAStrongPassword;
+
+  /// Confirm password hint
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your password'**
+  String get confirmYourPassword;
+
+  /// Terms and conditions checkbox text
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the Terms of Service and Privacy Policy'**
+  String get iAgreeToTheTermsOfServiceAndPrivacyPolicy;
+
+  /// Terms acceptance error
+  ///
+  /// In en, this message translates to:
+  /// **'You must accept the terms and conditions'**
+  String get youMustAcceptTheTermsAndConditions;
+
+  /// Field required error
+  ///
+  /// In en, this message translates to:
+  /// **'{fieldName} is required'**
+  String fieldIsRequired(String fieldName);
+
+  /// Field minimum length error
+  ///
+  /// In en, this message translates to:
+  /// **'{fieldName} must be at least 2 characters'**
+  String fieldMustBeAtLeast2Characters(String fieldName);
+
+  /// Field maximum length error
+  ///
+  /// In en, this message translates to:
+  /// **'{fieldName} must be less than 50 characters'**
+  String fieldMustBeLessThan50Characters(String fieldName);
+
+  /// Password minimum length error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get passwordMustBeAtLeast6Characters;
+
+  /// Password minimum length error for reset
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 4 characters'**
+  String get passwordMustBeAtLeast4Characters;
+
+  /// Welcome message after sign up
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to AUTO-ZONE!'**
+  String get welcomeToAutoZone;
+
+  /// Sign up success message
+  ///
+  /// In en, this message translates to:
+  /// **'Hello {name}! Your account has been created successfully.'**
+  String helloNameYourAccountHasBeenCreatedSuccessfully(String name);
+
+  /// Reset password title
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPassword;
+
+  /// Forgot password description
+  ///
+  /// In en, this message translates to:
+  /// **'No worries — we\'ll send you a verification code to reset your password.'**
+  String get noWorriesWellSendYouAVerificationCodeToResetYourPassword;
+
+  /// Contact number field label
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Number'**
+  String get contactNumber;
+
+  /// Contact number hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your contact number'**
+  String get enterYourContactNumber;
+
+  /// Send verification code button
+  ///
+  /// In en, this message translates to:
+  /// **'Send Verification Code'**
+  String get sendVerificationCode;
+
+  /// Forgot password header description
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your contact number to receive a verification code'**
+  String get enterYourContactNumberToReceiveAVerificationCode;
+
+  /// Reset password header title
+  ///
+  /// In en, this message translates to:
+  /// **'Set New Password'**
+  String get setNewPassword;
+
+  /// Reset password header description
+  ///
+  /// In en, this message translates to:
+  /// **'Create a strong password for'**
+  String get createAStrongPasswordFor;
+
+  /// Reset password card description
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your new password. Make sure it\'s strong and secure.'**
+  String get enterYourNewPasswordMakeSureItsStrongAndSecure;
+
+  /// Update password button
+  ///
+  /// In en, this message translates to:
+  /// **'Update Password'**
+  String get updatePassword;
+
+  /// Password reset success dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Password Reset!'**
+  String get passwordReset;
+
+  /// Password reset success message
+  ///
+  /// In en, this message translates to:
+  /// **'Your password has been successfully reset.'**
+  String get yourPasswordHasBeenSuccessfullyReset;
+
+  /// Password reset success instruction
+  ///
+  /// In en, this message translates to:
+  /// **'You can now sign in with your new password.'**
+  String get youCanNowSignInWithYourNewPassword;
+
+  /// Sign up link text
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAnAccount;
+
+  /// Sign up button text
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUp;
+
+  /// Login link text for sign up page
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get alreadyHaveAnAccount;
+
+  /// Login link text for forgot/reset password pages
+  ///
+  /// In en, this message translates to:
+  /// **'Remember your password?'**
+  String get rememberYourPassword;
+
+  /// Email validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get emailIsRequired;
+
+  /// Email format validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get pleaseEnterAValidEmailAddress;
+
+  /// Phone number validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get phoneNumberIsRequired;
+
+  /// Phone number format validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid phone number'**
+  String get pleaseEnterAValidPhoneNumber;
+
+  /// Generic error message
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred. Please try again.'**
+  String get anUnexpectedErrorOccurred;
+
+  /// Invalid credentials error
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid phone number or password. Please check your credentials and try again.'**
+  String get invalidPhoneNumberOrPassword;
+
+  /// Connection timeout error
+  ///
+  /// In en, this message translates to:
+  /// **'Connection timeout. Please check your internet connection and try again.'**
+  String get connectionTimeout;
+
+  /// Network error message
+  ///
+  /// In en, this message translates to:
+  /// **'Network error. Please check your internet connection and try again.'**
+  String get networkError;
+
+  /// Server error message
+  ///
+  /// In en, this message translates to:
+  /// **'Server error. Please try again later.'**
+  String get serverError;
+
+  /// 404 error message
+  ///
+  /// In en, this message translates to:
+  /// **'The requested resource was not found.'**
+  String get theRequestedResourceWasNotFound;
+
+  /// 403 error message
+  ///
+  /// In en, this message translates to:
+  /// **'You do not have permission to perform this action.'**
+  String get youDoNotHavePermissionToPerformThisAction;
+
+  /// Invalid input error
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid input. Please check your information and try again.'**
+  String get invalidInput;
+
+  /// Required fields error
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in all required fields.'**
+  String get pleaseFillInAllRequiredFields;
+
+  /// Generic error fallback
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get somethingWentWrong;
+
+  /// OTP validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the complete 6-digit code'**
+  String get pleaseEnterTheComplete6DigitCode;
+
+  /// OTP sent message
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ve sent a 6-digit code to {contact}. If you don\'t receive a code, the contact number might not be registered.'**
+  String weveSentA6DigitCodeToContact(String contact);
+
+  /// OTP header description
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code sent to'**
+  String get enterThe6DigitCodeSentTo;
 }
 
 class _AppLocalizationsDelegate

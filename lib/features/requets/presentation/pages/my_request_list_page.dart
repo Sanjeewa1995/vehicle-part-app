@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import 'package:vehicle_part_app/core/di/service_locator.dart';
+import 'package:vehicle_part_app/core/utils/error_message_helper.dart';
 import 'package:vehicle_part_app/shared/widgets/bottom_app_bar_v2_floating.dart';
 import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../providers/request_list_provider.dart';
@@ -81,6 +82,7 @@ class _MyRequestListState extends State<MyRequestList> {
             if (provider.status == RequestListStatus.error &&
                 provider.requests.isEmpty) {
               final l10n = AppLocalizations.of(context)!;
+              // ErrorStateWidget will translate the error message
               return ErrorStateWidget(
                 errorMessage: provider.errorMessage ?? l10n.failedToLoadRequestDetails,
               );

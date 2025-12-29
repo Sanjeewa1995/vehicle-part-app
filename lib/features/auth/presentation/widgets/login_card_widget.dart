@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/error_message_helper.dart';
 import '../../../../shared/widgets/app_text_field.dart';
 import '../../../../shared/widgets/app_button.dart';
 import 'package:vehicle_part_app/l10n/app_localizations.dart';
@@ -23,10 +24,10 @@ class LoginCardWidget extends StatelessWidget {
 
   String? _validatePhone(String? value, AppLocalizations l10n) {
     if (value == null || value.isEmpty) {
-      return 'Phone number is required';
+      return l10n.phoneNumberIsRequired;
     }
     if (value.length < 9) {
-      return 'Please enter a valid phone number';
+      return l10n.pleaseEnterAValidPhoneNumber;
     }
     return null;
   }
@@ -85,8 +86,8 @@ class LoginCardWidget extends StatelessWidget {
               // Phone Field
               AppTextField(
                 controller: phoneController,
-                label: 'Phone Number',
-                hint: 'Enter your phone number',
+                label: l10n.phoneNumber,
+                hint: l10n.enterYourContactNumber,
                 type: AppTextFieldType.phone,
                 validator: (value) => _validatePhone(value, l10n),
                 textInputAction: TextInputAction.next,
@@ -145,6 +146,11 @@ class LoginCardWidget extends StatelessWidget {
                 builder: (context, authProvider, child) {
                   if (authProvider.errorMessage != null &&
                       authProvider.errorMessage!.isNotEmpty) {
+                    // Translate error message
+                    final errorMsg = ErrorMessageHelper.getUserFriendlyMessage(
+                      authProvider.errorMessage!,
+                      context: context,
+                    );
                     return Padding(
                       padding: const EdgeInsets.only(top: 16),
                       child: Container(
@@ -166,7 +172,7 @@ class LoginCardWidget extends StatelessWidget {
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                authProvider.errorMessage!,
+                                errorMsg,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: AppColors.error,

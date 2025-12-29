@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/error_message_helper.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../providers/auth_provider.dart';
 
@@ -138,21 +140,31 @@ class _OTPVerificationCardWidgetState
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Header Text
-            Text(
-              'Enter Verification Code',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'We\'ve sent a 6-digit code to ${widget.contact}. If you don\'t receive a code, the contact number might not be registered.',
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColors.textSecondary,
-              ),
+            Builder(
+              builder: (context) {
+                final l10n = AppLocalizations.of(context)!;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      l10n.enterThe6DigitCodeSentTo,
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      l10n.weveSentA6DigitCodeToContact(widget.contact),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
             const SizedBox(height: 32),
 
@@ -217,8 +229,9 @@ class _OTPVerificationCardWidgetState
             // Verify Button
             Consumer<AuthProvider>(
               builder: (context, authProvider, child) {
+                final l10n = AppLocalizations.of(context)!;
                 return AppButton(
-                  text: 'Verify Code',
+                  text: l10n.sendVerificationCode, // Using existing key
                   onPressed: (authProvider.status == AuthStatus.loading ||
                           !_isOTPComplete())
                       ? null
@@ -226,7 +239,7 @@ class _OTPVerificationCardWidgetState
                           final otp = _getOTP();
                           if (otp.length != 6) {
                             setState(() {
-                              _apiError = 'Please enter the complete 6-digit code';
+                              _apiError = l10n.pleaseEnterTheComplete6DigitCode;
                             });
                             return;
                           }
@@ -243,6 +256,11 @@ class _OTPVerificationCardWidgetState
               builder: (context, authProvider, child) {
                 final error = _apiError ?? authProvider.errorMessage;
                 if (error != null && error.isNotEmpty) {
+                  // Translate error message
+                  final errorMsg = ErrorMessageHelper.getUserFriendlyMessage(
+                    error,
+                    context: context,
+                  );
                   return Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: Container(
@@ -264,7 +282,7 @@ class _OTPVerificationCardWidgetState
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              error,
+                              errorMsg,
                               style: TextStyle(
                                 fontSize: 14,
                                 color: AppColors.error,
@@ -283,42 +301,47 @@ class _OTPVerificationCardWidgetState
             const SizedBox(height: 24),
 
             // Resend Section
-            Column(
-              children: [
-                Text(
-                  'Didn\'t receive the code?',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                if (_resendCooldown > 0)
-                  Text(
-                    'Resend code in $_resendCooldown seconds',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.textTertiary,
-                    ),
-                  )
-                else
-                  TextButton(
-                    onPressed: () {
-                      _handleResend();
-                    },
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                    ),
-                    child: Text(
-                      'Resend Code',
+            Builder(
+              builder: (context) {
+                final l10n = AppLocalizations.of(context)!;
+                return Column(
+                  children: [
+                    Text(
+                      l10n.rememberYourPassword, // Placeholder - could add specific key later
                       style: TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.primary,
+                        color: AppColors.textSecondary,
                       ),
                     ),
-                  ),
-              ],
+                    const SizedBox(height: 8),
+                    if (_resendCooldown > 0)
+                      Text(
+                        'Resend code in $_resendCooldown seconds', // TODO: Add translation key with placeholder
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppColors.textTertiary,
+                        ),
+                      )
+                    else
+                      TextButton(
+                        onPressed: () {
+                          _handleResend();
+                        },
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                        ),
+                        child: Text(
+                          l10n.sendVerificationCode,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ),
+                  ],
+                );
+              },
             ),
           ],
         ),

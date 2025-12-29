@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../widgets/signup_header_widget.dart';
 import '../widgets/signup_card_widget.dart';
 import '../widgets/signup_login_link_widget.dart';
@@ -83,15 +84,17 @@ class _SignUpPageState extends State<SignUpPage>
 
       if (mounted) {
         if (success) {
+          final l10n = AppLocalizations.of(context)!;
           // Show success dialog
           showDialog(
             context: context,
             barrierDismissible: false,
             builder: (context) => AlertDialog(
-              title: const Text('Welcome to AUTO-ZONE!'),
+              title: Text(l10n.welcomeToAutoZone),
               content: Text(
-                'Hello ${_firstNameController.text.trim()}! '
-                'Your account has been created successfully.',
+                l10n.helloNameYourAccountHasBeenCreatedSuccessfully(
+                  _firstNameController.text.trim(),
+                ),
               ),
               actions: [
                 TextButton(
@@ -102,7 +105,7 @@ class _SignUpPageState extends State<SignUpPage>
                   style: TextButton.styleFrom(
                     foregroundColor: AppColors.primary,
                   ),
-                  child: const Text('Continue'),
+                  child: Text(l10n.continueButton),
                 ),
               ],
             ),

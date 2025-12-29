@@ -18,7 +18,7 @@ class PasswordField extends StatelessWidget {
       label: 'PASSWORD',
       hint: '••••••••',
       type: AppTextFieldType.password,
-      validator: Validators.validatePassword,
+      validator: Validators.passwordValidator(context),
     );
   }
 }

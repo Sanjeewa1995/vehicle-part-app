@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
+import 'package:vehicle_part_app/core/utils/error_message_helper.dart';
+import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../providers/auth_provider.dart';
 import 'email_field.dart';
 import 'password_field.dart';
@@ -73,27 +75,32 @@ class AuthCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       // Card header
-                      Column(
-                        children: [
-                          Text(
-                            'Sign In',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.textPrimary,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Welcome back — let\'s get you on the road.',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: AppColors.textSecondary,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                      Builder(
+                        builder: (context) {
+                          final l10n = AppLocalizations.of(context)!;
+                          return Column(
+                            children: [
+                              Text(
+                                l10n.signIn,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.textPrimary,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                l10n.signInToContinue,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.textSecondary,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          );
+                        },
                       ),
 
                       const SizedBox(height: 32),
@@ -104,21 +111,26 @@ class AuthCard extends StatelessWidget {
                       PasswordField(controller: passwordController),
 
                       // Forgot password
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {
-                            context.go('/forgot-password');
-                          },
-                          child: Text(
-                            'Forgot Password?',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.primary,
+                      Builder(
+                        builder: (context) {
+                          final l10n = AppLocalizations.of(context)!;
+                          return Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () {
+                                context.go('/forgot-password');
+                              },
+                              child: Text(
+                                l10n.forgotPassword,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.primary,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
 
                       // API Error
@@ -126,10 +138,15 @@ class AuthCard extends StatelessWidget {
                         builder: (context, authProvider, child) {
                           final error = apiError ?? authProvider.errorMessage;
                           if (error != null && error.isNotEmpty) {
+                            // Translate error message
+                            final errorMsg = ErrorMessageHelper.getUserFriendlyMessage(
+                              error,
+                              context: context,
+                            );
                             return Padding(
                               padding: const EdgeInsets.only(top: 8),
                               child: Text(
-                                error,
+                                errorMsg,
                                 style: const TextStyle(
                                   fontSize: 14,
                                   color: AppColors.error,
@@ -170,11 +187,12 @@ class AuthCard extends StatelessWidget {
   }
 
   Widget _buildFooter(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Don\'t have an account? ',
+          l10n.dontHaveAnAccount,
           style: TextStyle(
             fontSize: 18,
             color: AppColors.textSecondary,
@@ -192,7 +210,7 @@ class AuthCard extends StatelessWidget {
             context.go('/signup');
           },
           child: Text(
-            'Sign Up',
+            l10n.signUp,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

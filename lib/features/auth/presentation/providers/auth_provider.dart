@@ -153,7 +153,7 @@ class AuthProvider extends ChangeNotifier {
       return success;
     } catch (e) {
       _status = AuthStatus.error;
-      _errorMessage = e.toString().replaceAll('Exception: ', '');
+      _errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       notifyListeners();
       return false;
     }

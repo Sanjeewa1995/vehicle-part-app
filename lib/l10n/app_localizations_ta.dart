@@ -1070,4 +1070,191 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get deletingAccount => 'கணக்கை நீக்குகிறது...';
+
+  @override
+  String get createAccount => 'கணக்கை உருவாக்க';
+
+  @override
+  String get fillInYourDetailsToGetStarted =>
+      'தொடங்க உங்கள் விவரங்களை நிரப்பவும்';
+
+  @override
+  String get enterYourFirstName => 'உங்கள் முதல் பெயரை உள்ளிடவும்';
+
+  @override
+  String get enterYourLastName => 'உங்கள் கடைசி பெயரை உள்ளிடவும்';
+
+  @override
+  String get youExampleCom => 'you@example.com';
+
+  @override
+  String get phonePlaceholder => '+1 (555) 123-4567';
+
+  @override
+  String get createAStrongPassword => 'வலுவான கடவுச்சொல்லை உருவாக்கவும்';
+
+  @override
+  String get confirmYourPassword => 'உங்கள் கடவுச்சொல்லை உறுதிப்படுத்தவும்';
+
+  @override
+  String get iAgreeToTheTermsOfServiceAndPrivacyPolicy =>
+      'நான் சேவை விதிமுறைகள் மற்றும் தனியுரிமைக் கொள்கைக்கு ஒப்புக்கொள்கிறேன்';
+
+  @override
+  String get youMustAcceptTheTermsAndConditions =>
+      'நீங்கள் விதிமுறைகள் மற்றும் நிபந்தனைகளை ஏற்க வேண்டும்';
+
+  @override
+  String fieldIsRequired(String fieldName) {
+    return '$fieldName தேவை';
+  }
+
+  @override
+  String fieldMustBeAtLeast2Characters(String fieldName) {
+    return '$fieldName குறைந்தது 2 எழுத்துக்கள் இருக்க வேண்டும்';
+  }
+
+  @override
+  String fieldMustBeLessThan50Characters(String fieldName) {
+    return '$fieldName 50 எழுத்துக்களுக்கும் குறைவாக இருக்க வேண்டும்';
+  }
+
+  @override
+  String get passwordMustBeAtLeast6Characters =>
+      'கடவுச்சொல் குறைந்தது 6 எழுத்துக்கள் இருக்க வேண்டும்';
+
+  @override
+  String get passwordMustBeAtLeast4Characters =>
+      'கடவுச்சொல் குறைந்தது 4 எழுத்துக்கள் இருக்க வேண்டும்';
+
+  @override
+  String get welcomeToAutoZone => 'AUTO-ZONE க்கு வரவேற்கிறோம்!';
+
+  @override
+  String helloNameYourAccountHasBeenCreatedSuccessfully(String name) {
+    return 'வணக்கம் $name! உங்கள் கணக்கு வெற்றிகரமாக உருவாக்கப்பட்டது.';
+  }
+
+  @override
+  String get resetPassword => 'கடவுச்சொல்லை மீட்டமை';
+
+  @override
+  String get noWorriesWellSendYouAVerificationCodeToResetYourPassword =>
+      'கவலைப்பட வேண்டாம் — உங்கள் கடவுச்சொல்லை மீட்டமைக்க நாங்கள் உங்களுக்கு சரிபார்ப்பு குறியீட்டை அனுப்புவோம்.';
+
+  @override
+  String get contactNumber => 'தொடர்பு எண்';
+
+  @override
+  String get enterYourContactNumber => 'உங்கள் தொடர்பு எண்ணை உள்ளிடவும்';
+
+  @override
+  String get sendVerificationCode => 'சரிபார்ப்பு குறியீட்டை அனுப்ப';
+
+  @override
+  String get enterYourContactNumberToReceiveAVerificationCode =>
+      'சரிபார்ப்பு குறியீட்டைப் பெற உங்கள் தொடர்பு எண்ணை உள்ளிடவும்';
+
+  @override
+  String get setNewPassword => 'புதிய கடவுச்சொல்லை அமை';
+
+  @override
+  String get createAStrongPasswordFor =>
+      'க்கு வலுவான கடவுச்சொல்லை உருவாக்கவும்';
+
+  @override
+  String get enterYourNewPasswordMakeSureItsStrongAndSecure =>
+      'உங்கள் புதிய கடவுச்சொல்லை உள்ளிடவும். அது வலுவான மற்றும் பாதுகாப்பானது என்பதை உறுதிப்படுத்தவும்.';
+
+  @override
+  String get updatePassword => 'கடவுச்சொல்லை புதுப்பிக்க';
+
+  @override
+  String get passwordReset => 'கடவுச்சொல் மீட்டமைக்கப்பட்டது!';
+
+  @override
+  String get yourPasswordHasBeenSuccessfullyReset =>
+      'உங்கள் கடவுச்சொல் வெற்றிகரமாக மீட்டமைக்கப்பட்டது.';
+
+  @override
+  String get youCanNowSignInWithYourNewPassword =>
+      'நீங்கள் இப்போது உங்கள் புதிய கடவுச்சொல்லுடன் உள்நுழையலாம்.';
+
+  @override
+  String get dontHaveAnAccount => 'கணக்கு இல்லையா?';
+
+  @override
+  String get signUp => 'பதிவு செய்';
+
+  @override
+  String get alreadyHaveAnAccount => 'ஏற்கனவே கணக்கு உள்ளதா?';
+
+  @override
+  String get rememberYourPassword => 'உங்கள் கடவுச்சொல் நினைவில் உள்ளதா?';
+
+  @override
+  String get emailIsRequired => 'மின்னஞ்சல் தேவை';
+
+  @override
+  String get pleaseEnterAValidEmailAddress =>
+      'தயவுசெய்து சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்';
+
+  @override
+  String get phoneNumberIsRequired => 'தொலைபேசி எண் தேவை';
+
+  @override
+  String get pleaseEnterAValidPhoneNumber =>
+      'தயவுசெய்து சரியான தொலைபேசி எண்ணை உள்ளிடவும்';
+
+  @override
+  String get anUnexpectedErrorOccurred =>
+      'எதிர்பாராத பிழை ஏற்பட்டது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get invalidPhoneNumberOrPassword =>
+      'தவறான தொலைபேசி எண் அல்லது கடவுச்சொல். தயவுசெய்து உங்கள் அறிமுகங்களை சரிபார்த்து மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get connectionTimeout =>
+      'இணைப்பு நேரம் முடிந்தது. தயவுசெய்து உங்கள் இணைய இணைப்பை சரிபார்த்து மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get networkError =>
+      'நெட்வொர்க் பிழை. தயவுசெய்து உங்கள் இணைய இணைப்பை சரிபார்த்து மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get serverError =>
+      'சேவையக பிழை. தயவுசெய்து பின்னர் மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get theRequestedResourceWasNotFound => 'கோரப்பட்ட வளம் கிடைக்கவில்லை.';
+
+  @override
+  String get youDoNotHavePermissionToPerformThisAction =>
+      'இந்த செயலைச் செய்ய உங்களுக்கு அனுமதி இல்லை.';
+
+  @override
+  String get invalidInput =>
+      'தவறான உள்ளீடு. தயவுசெய்து உங்கள் தகவலை சரிபார்த்து மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get pleaseFillInAllRequiredFields =>
+      'தயவுசெய்து அனைத்து தேவையான புலங்களையும் நிரப்பவும்.';
+
+  @override
+  String get somethingWentWrong =>
+      'ஏதோ தவறு நடந்தது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get pleaseEnterTheComplete6DigitCode =>
+      'தயவுசெய்து முழு 6-இலக்க குறியீட்டை உள்ளிடவும்';
+
+  @override
+  String weveSentA6DigitCodeToContact(String contact) {
+    return 'நாங்கள் $contact க்கு 6-இலக்க குறியீட்டை அனுப்பியுள்ளோம். நீங்கள் குறியீட்டைப் பெறவில்லை என்றால், தொடர்பு எண் பதிவுசெய்யப்படாமல் இருக்கலாம்.';
+  }
+
+  @override
+  String get enterThe6DigitCodeSentTo =>
+      'அனுப்பப்பட்ட 6-இலக்க குறியீட்டை உள்ளிடவும்';
 }

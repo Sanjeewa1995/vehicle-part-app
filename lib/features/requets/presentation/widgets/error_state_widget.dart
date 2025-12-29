@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/utils/error_message_helper.dart';
 import '../providers/request_list_provider.dart';
 import 'package:vehicle_part_app/l10n/app_localizations.dart';
 
@@ -43,7 +44,11 @@ class ErrorStateWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    errorMessage,
+                    // Translate error message if it's a technical error, otherwise use as-is (already localized)
+                    ErrorMessageHelper.getUserFriendlyMessage(
+                      errorMessage,
+                      context: context,
+                    ),
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,

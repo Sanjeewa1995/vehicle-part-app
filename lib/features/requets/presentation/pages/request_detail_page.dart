@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
 import 'package:vehicle_part_app/core/di/service_locator.dart';
+import 'package:vehicle_part_app/core/utils/error_message_helper.dart';
 import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../providers/request_detail_provider.dart';
 import '../../domain/entities/vehicle_part_request.dart';
@@ -164,7 +165,12 @@ class RequestDetailPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              provider.errorMessage ?? l10n.failedToLoadRequestDetails,
+              provider.errorMessage != null
+                  ? ErrorMessageHelper.getUserFriendlyMessage(
+                      provider.errorMessage!,
+                      context: context,
+                    )
+                  : l10n.failedToLoadRequestDetails,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
@@ -858,11 +864,15 @@ class _DeleteDialogContentState extends State<_DeleteDialogContent> {
                     } else if (widget.provider.status == RequestDetailStatus.error) {
                       // Show error message
                       if (widget.parentContext.mounted) {
+                        final errorMsg = widget.provider.errorMessage != null
+                            ? ErrorMessageHelper.getUserFriendlyMessage(
+                                widget.provider.errorMessage!,
+                                context: widget.parentContext,
+                              )
+                            : l10n.failedToDeleteRequest;
                         ScaffoldMessenger.of(widget.parentContext).showSnackBar(
                           SnackBar(
-                            content: Text(
-                              widget.provider.errorMessage ?? l10n.failedToDeleteRequest,
-                            ),
+                            content: Text(errorMsg),
                             backgroundColor: AppColors.error,
                           ),
                         );

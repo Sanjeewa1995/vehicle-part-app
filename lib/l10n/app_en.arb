@@ -1413,5 +1413,234 @@
   "deletingAccount": "Deleting account...",
   "@deletingAccount": {
     "description": "Deleting account loading message"
+  },
+  "createAccount": "Create Account",
+  "@createAccount": {
+    "description": "Create account title"
+  },
+  "fillInYourDetailsToGetStarted": "Fill in your details to get started",
+  "@fillInYourDetailsToGetStarted": {
+    "description": "Sign up subtitle"
+  },
+  "enterYourFirstName": "Enter your first name",
+  "@enterYourFirstName": {
+    "description": "First name hint"
+  },
+  "enterYourLastName": "Enter your last name",
+  "@enterYourLastName": {
+    "description": "Last name hint"
+  },
+  "youExampleCom": "you@example.com",
+  "@youExampleCom": {
+    "description": "Email placeholder"
+  },
+  "phonePlaceholder": "+1 (555) 123-4567",
+  "@phonePlaceholder": {
+    "description": "Phone number placeholder"
+  },
+  "createAStrongPassword": "Create a strong password",
+  "@createAStrongPassword": {
+    "description": "Password hint"
+  },
+  "confirmYourPassword": "Confirm your password",
+  "@confirmYourPassword": {
+    "description": "Confirm password hint"
+  },
+  "iAgreeToTheTermsOfServiceAndPrivacyPolicy": "I agree to the Terms of Service and Privacy Policy",
+  "@iAgreeToTheTermsOfServiceAndPrivacyPolicy": {
+    "description": "Terms and conditions checkbox text"
+  },
+  "youMustAcceptTheTermsAndConditions": "You must accept the terms and conditions",
+  "@youMustAcceptTheTermsAndConditions": {
+    "description": "Terms acceptance error"
+  },
+  "fieldIsRequired": "{fieldName} is required",
+  "@fieldIsRequired": {
+    "description": "Field required error",
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldMustBeAtLeast2Characters": "{fieldName} must be at least 2 characters",
+  "@fieldMustBeAtLeast2Characters": {
+    "description": "Field minimum length error",
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldMustBeLessThan50Characters": "{fieldName} must be less than 50 characters",
+  "@fieldMustBeLessThan50Characters": {
+    "description": "Field maximum length error",
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "passwordMustBeAtLeast6Characters": "Password must be at least 6 characters",
+  "@passwordMustBeAtLeast6Characters": {
+    "description": "Password minimum length error"
+  },
+  "passwordMustBeAtLeast4Characters": "Password must be at least 4 characters",
+  "@passwordMustBeAtLeast4Characters": {
+    "description": "Password minimum length error for reset"
+  },
+  "welcomeToAutoZone": "Welcome to AUTO-ZONE!",
+  "@welcomeToAutoZone": {
+    "description": "Welcome message after sign up"
+  },
+  "helloNameYourAccountHasBeenCreatedSuccessfully": "Hello {name}! Your account has been created successfully.",
+  "@helloNameYourAccountHasBeenCreatedSuccessfully": {
+    "description": "Sign up success message",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "resetPassword": "Reset Password",
+  "@resetPassword": {
+    "description": "Reset password title"
+  },
+  "noWorriesWellSendYouAVerificationCodeToResetYourPassword": "No worries — we'll send you a verification code to reset your password.",
+  "@noWorriesWellSendYouAVerificationCodeToResetYourPassword": {
+    "description": "Forgot password description"
+  },
+  "contactNumber": "Contact Number",
+  "@contactNumber": {
+    "description": "Contact number field label"
+  },
+  "enterYourContactNumber": "Enter your contact number",
+  "@enterYourContactNumber": {
+    "description": "Contact number hint"
+  },
+  "sendVerificationCode": "Send Verification Code",
+  "@sendVerificationCode": {
+    "description": "Send verification code button"
+  },
+  "enterYourContactNumberToReceiveAVerificationCode": "Enter your contact number to receive a verification code",
+  "@enterYourContactNumberToReceiveAVerificationCode": {
+    "description": "Forgot password header description"
+  },
+  "setNewPassword": "Set New Password",
+  "@setNewPassword": {
+    "description": "Reset password header title"
+  },
+  "createAStrongPasswordFor": "Create a strong password for",
+  "@createAStrongPasswordFor": {
+    "description": "Reset password header description"
+  },
+  "enterYourNewPasswordMakeSureItsStrongAndSecure": "Enter your new password. Make sure it's strong and secure.",
+  "@enterYourNewPasswordMakeSureItsStrongAndSecure": {
+    "description": "Reset password card description"
+  },
+  "updatePassword": "Update Password",
+  "@updatePassword": {
+    "description": "Update password button"
+  },
+  "passwordReset": "Password Reset!",
+  "@passwordReset": {
+    "description": "Password reset success dialog title"
+  },
+  "yourPasswordHasBeenSuccessfullyReset": "Your password has been successfully reset.",
+  "@yourPasswordHasBeenSuccessfullyReset": {
+    "description": "Password reset success message"
+  },
+  "youCanNowSignInWithYourNewPassword": "You can now sign in with your new password.",
+  "@youCanNowSignInWithYourNewPassword": {
+    "description": "Password reset success instruction"
+  },
+  "dontHaveAnAccount": "Don't have an account?",
+  "@dontHaveAnAccount": {
+    "description": "Sign up link text"
+  },
+  "signUp": "Sign Up",
+  "@signUp": {
+    "description": "Sign up button text"
+  },
+  "alreadyHaveAnAccount": "Already have an account?",
+  "@alreadyHaveAnAccount": {
+    "description": "Login link text for sign up page"
+  },
+  "rememberYourPassword": "Remember your password?",
+  "@rememberYourPassword": {
+    "description": "Login link text for forgot/reset password pages"
+  },
+  "emailIsRequired": "Email is required",
+  "@emailIsRequired": {
+    "description": "Email validation error"
+  },
+  "pleaseEnterAValidEmailAddress": "Please enter a valid email address",
+  "@pleaseEnterAValidEmailAddress": {
+    "description": "Email format validation error"
+  },
+  "phoneNumberIsRequired": "Phone number is required",
+  "@phoneNumberIsRequired": {
+    "description": "Phone number validation error"
+  },
+  "pleaseEnterAValidPhoneNumber": "Please enter a valid phone number",
+  "@pleaseEnterAValidPhoneNumber": {
+    "description": "Phone number format validation error"
+  },
+  "anUnexpectedErrorOccurred": "An unexpected error occurred. Please try again.",
+  "@anUnexpectedErrorOccurred": {
+    "description": "Generic error message"
+  },
+  "invalidPhoneNumberOrPassword": "Invalid phone number or password. Please check your credentials and try again.",
+  "@invalidPhoneNumberOrPassword": {
+    "description": "Invalid credentials error"
+  },
+  "connectionTimeout": "Connection timeout. Please check your internet connection and try again.",
+  "@connectionTimeout": {
+    "description": "Connection timeout error"
+  },
+  "networkError": "Network error. Please check your internet connection and try again.",
+  "@networkError": {
+    "description": "Network error message"
+  },
+  "serverError": "Server error. Please try again later.",
+  "@serverError": {
+    "description": "Server error message"
+  },
+  "theRequestedResourceWasNotFound": "The requested resource was not found.",
+  "@theRequestedResourceWasNotFound": {
+    "description": "404 error message"
+  },
+  "youDoNotHavePermissionToPerformThisAction": "You do not have permission to perform this action.",
+  "@youDoNotHavePermissionToPerformThisAction": {
+    "description": "403 error message"
+  },
+  "invalidInput": "Invalid input. Please check your information and try again.",
+  "@invalidInput": {
+    "description": "Invalid input error"
+  },
+  "pleaseFillInAllRequiredFields": "Please fill in all required fields.",
+  "@pleaseFillInAllRequiredFields": {
+    "description": "Required fields error"
+  },
+  "somethingWentWrong": "Something went wrong. Please try again.",
+  "@somethingWentWrong": {
+    "description": "Generic error fallback"
+  },
+  "pleaseEnterTheComplete6DigitCode": "Please enter the complete 6-digit code",
+  "@pleaseEnterTheComplete6DigitCode": {
+    "description": "OTP validation error"
+  },
+  "weveSentA6DigitCodeToContact": "We've sent a 6-digit code to {contact}. If you don't receive a code, the contact number might not be registered.",
+  "@weveSentA6DigitCodeToContact": {
+    "description": "OTP sent message",
+    "placeholders": {
+      "contact": {
+        "type": "String"
+      }
+    }
+  },
+  "enterThe6DigitCodeSentTo": "Enter the 6-digit code sent to",
+  "@enterThe6DigitCodeSentTo": {
+    "description": "OTP header description"
   }
 }

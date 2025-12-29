@@ -8,6 +8,7 @@ import 'package:vehicle_part_app/core/di/service_locator.dart';
 import 'package:vehicle_part_app/core/services/image_compression_service.dart';
 import 'package:vehicle_part_app/core/services/video_compression_service.dart';
 import 'package:vehicle_part_app/core/theme/app_colors.dart';
+import 'package:vehicle_part_app/core/utils/error_message_helper.dart';
 import 'package:vehicle_part_app/shared/widgets/loading_indicator.dart';
 import 'package:vehicle_part_app/l10n/app_localizations.dart';
 import '../providers/create_request_provider.dart';
@@ -1080,9 +1081,16 @@ class _AddRequestPageState extends State<AddRequestPage> {
       } else if (provider.hasError) {
         if (mounted) {
           final l10n = AppLocalizations.of(context)!;
+          // Translate error message if it exists, otherwise use localized fallback
+          final errorMsg = provider.errorMessage != null
+              ? ErrorMessageHelper.getUserFriendlyMessage(
+                  provider.errorMessage,
+                  context: context,
+                )
+              : l10n.failedToSubmitRequest;
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(provider.errorMessage ?? l10n.failedToSubmitRequest),
+              content: Text(errorMsg),
               backgroundColor: AppColors.error,
             ),
           );
