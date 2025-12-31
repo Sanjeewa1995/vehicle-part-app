@@ -2,7 +2,7 @@ name: vehicle_part_app
 description: "A Flutter application for vehicle parts management."
 publish_to: 'none'
 
-version: 1.0.2+12
+version: 1.0.4+14
 
 environment:
   sdk: ^3.8.1

@@ -34,6 +34,22 @@ class _OTPVerificationCardWidgetState
   @override
   void initState() {
     super.initState();
+    // Add focus listeners to update UI
+    for (var focusNode in _focusNodes) {
+      focusNode.addListener(() {
+        if (mounted) {
+          setState(() {});
+        }
+      });
+    }
+    // Add text listeners to update UI
+    for (var controller in _otpControllers) {
+      controller.addListener(() {
+        if (mounted) {
+          setState(() {});
+        }
+      });
+    }
     // Auto-focus first field
     Future.delayed(const Duration(milliseconds: 300), () {
       _focusNodes[0].requestFocus();
@@ -169,60 +185,81 @@ class _OTPVerificationCardWidgetState
             const SizedBox(height: 32),
 
             // OTP Input Fields
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(6, (index) {
-                return SizedBox(
-                  width: 44,
-                  height: 56,
-                  child: TextField(
-                    controller: _otpControllers[index],
-                    focusNode: _focusNodes[index],
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.number,
-                    maxLength: 1,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
-                    ),
-                    decoration: InputDecoration(
-                      counterText: '',
-                      filled: true,
-                      fillColor: AppColors.backgroundSecondary,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
+            LayoutBuilder(
+              builder: (context, constraints) {
+                // Calculate available width minus padding (48 total: 24 on each side)
+                final availableWidth = constraints.maxWidth;
+                // Reserve space for spacing between boxes (5 gaps * 8px = 40px)
+                final spacing = 8.0;
+                final totalSpacing = spacing * 5;
+                // Calculate box width to fit 6 boxes with spacing
+                final boxWidth = ((availableWidth - totalSpacing) / 6).clamp(45.0, 52.0);
+                
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(6, (index) {
+                    final isFocused = _focusNodes[index].hasFocus;
+                    final hasValue = _otpControllers[index].text.isNotEmpty;
+                    return Container(
+                      width: boxWidth,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
                           color: _apiError != null
                               ? AppColors.error
-                              : AppColors.border,
+                              : isFocused
+                                  ? AppColors.primary
+                                  : hasValue
+                                      ? AppColors.primary.withValues(alpha: 0.5)
+                                      : AppColors.border,
+                          width: isFocused ? 2.5 : 1.5,
                         ),
+                        color: isFocused
+                            ? AppColors.primary.withValues(alpha: 0.05)
+                            : AppColors.backgroundSecondary,
+                        boxShadow: isFocused
+                            ? [
+                                BoxShadow(
+                                  color: AppColors.primary.withValues(alpha: 0.2),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ]
+                            : null,
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: _apiError != null
-                              ? AppColors.error
-                              : AppColors.border,
+                      child: TextField(
+                        controller: _otpControllers[index],
+                        focusNode: _focusNodes[index],
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        style: TextStyle(
+                          fontSize: boxWidth > 48 ? 32 : 28,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                          letterSpacing: 0,
+                          height: 1.2,
                         ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.primary,
-                          width: 2,
+                        decoration: InputDecoration(
+                          counterText: '',
+                          filled: false,
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.zero,
                         ),
+                        onChanged: (value) {
+                          _onOTPChanged(index, value);
+                          setState(() {
+                            _apiError = null;
+                          });
+                        },
                       ),
-                    ),
-                    onChanged: (value) {
-                      _onOTPChanged(index, value);
-                      setState(() {
-                        _apiError = null;
-                      });
-                    },
-                  ),
+                    );
+                  }),
                 );
-              }),
+              },
             ),
             const SizedBox(height: 24),
 

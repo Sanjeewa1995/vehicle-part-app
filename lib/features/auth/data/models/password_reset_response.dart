@@ -4,10 +4,12 @@ part 'password_reset_response.g.dart';
 
 @JsonSerializable()
 class PasswordResetResponse {
+  @JsonKey(defaultValue: false)
   final bool success;
+  @JsonKey(defaultValue: '')
   final String message;
   final PasswordResetData? data;
-  @JsonKey(name: 'status_code')
+  @JsonKey(name: 'status_code', defaultValue: 0)
   final int statusCode;
 
   const PasswordResetResponse({
@@ -25,8 +27,9 @@ class PasswordResetResponse {
 
 @JsonSerializable()
 class PasswordResetData {
+  @JsonKey(defaultValue: '')
   final String email;
-  @JsonKey(name: 'expires_in')
+  @JsonKey(name: 'expires_in', defaultValue: '')
   final String expiresIn;
 
   const PasswordResetData({

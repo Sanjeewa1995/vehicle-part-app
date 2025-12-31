@@ -9,12 +9,12 @@ part of 'password_reset_response.dart';
 PasswordResetResponse _$PasswordResetResponseFromJson(
   Map<String, dynamic> json,
 ) => PasswordResetResponse(
-  success: json['success'] as bool,
-  message: json['message'] as String,
+  success: json['success'] as bool? ?? false,
+  message: json['message'] as String? ?? '',
   data: json['data'] == null
       ? null
       : PasswordResetData.fromJson(json['data'] as Map<String, dynamic>),
-  statusCode: (json['status_code'] as num).toInt(),
+  statusCode: (json['status_code'] as num?)?.toInt() ?? 0,
 );
 
 Map<String, dynamic> _$PasswordResetResponseToJson(
@@ -28,8 +28,8 @@ Map<String, dynamic> _$PasswordResetResponseToJson(
 
 PasswordResetData _$PasswordResetDataFromJson(Map<String, dynamic> json) =>
     PasswordResetData(
-      email: json['email'] as String,
-      expiresIn: json['expires_in'] as String,
+      email: json['email'] as String? ?? '',
+      expiresIn: json['expires_in'] as String? ?? '',
     );
 
 Map<String, dynamic> _$PasswordResetDataToJson(PasswordResetData instance) =>
