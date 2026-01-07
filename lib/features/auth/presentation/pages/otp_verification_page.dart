@@ -61,34 +61,57 @@ class _OTPVerificationPageState extends State<OTPVerificationPage>
 
   Future<void> _handleVerifyOTP(String otp) async {
     final authProvider = context.read<AuthProvider>();
+    final l10n = AppLocalizations.of(context)!;
 
     final success = await authProvider.verifyOTP(
       widget.contact,
       otp,
     );
 
-    if (mounted && success) {
-      // Navigate to reset password page
-      context.go('/reset-password', extra: {
-        'contact': widget.contact,
-        'otp': otp,
-      });
+    if (mounted) {
+      if (success) {
+        // Navigate to reset password page
+        context.go('/reset-password', extra: {
+          'contact': widget.contact,
+          'otp': otp,
+        });
+      } else {
+        // Show error message from provider
+        final errorMessage = authProvider.errorMessage ?? l10n.somethingWentWrong;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errorMessage),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
     }
   }
 
   Future<void> _handleResendOTP() async {
     final authProvider = context.read<AuthProvider>();
+    final l10n = AppLocalizations.of(context)!;
 
     final success = await authProvider.forgotPassword(widget.contact);
 
-    if (mounted && success) {
-      final l10n = AppLocalizations.of(context)!;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l10n.weveSentA6DigitCodeToContact(widget.contact)),
-          backgroundColor: AppColors.success,
-        ),
-      );
+    if (mounted) {
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(l10n.weveSentA6DigitCodeToContact(widget.contact)),
+            backgroundColor: AppColors.success,
+          ),
+        );
+      } else {
+        // Show error message from provider
+        final errorMessage = authProvider.errorMessage ?? l10n.somethingWentWrong;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errorMessage),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
     }
   }
 

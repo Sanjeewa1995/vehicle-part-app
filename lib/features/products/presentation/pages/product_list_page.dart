@@ -19,6 +19,14 @@ class ProductListPage extends StatefulWidget {
 }
 
 class _ProductListPageState extends State<ProductListPage> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -102,9 +110,28 @@ class _ProductListPageState extends State<ProductListPage> {
     return RefreshIndicator(
       onRefresh: () => provider.refresh(),
       child: ListView.builder(
+        controller: _scrollController
+          ..addListener(() {
+            if (_scrollController.position.pixels >=
+                _scrollController.position.maxScrollExtent * 0.8) {
+              if (provider.hasMore && !provider.isLoading) {
+                provider.loadProducts();
+              }
+            }
+          }),
         padding: const EdgeInsets.all(24),
-        itemCount: provider.products.length,
+        itemCount: provider.products.length + (provider.hasMore ? 1 : 0),
         itemBuilder: (context, index) {
+          if (index == provider.products.length) {
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: CircularProgressIndicator(
+                  color: AppColors.primary,
+                ),
+              ),
+            );
+          }
           return ProductCardWidget(product: provider.products[index]);
         },
       ),

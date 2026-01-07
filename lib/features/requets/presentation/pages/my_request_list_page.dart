@@ -20,6 +20,13 @@ class MyRequestList extends StatefulWidget {
 }
 
 class _MyRequestListState extends State<MyRequestList> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,9 +129,28 @@ class _MyRequestListState extends State<MyRequestList> {
     return RefreshIndicator(
       onRefresh: () => provider.refresh(),
       child: ListView.builder(
+        controller: _scrollController
+          ..addListener(() {
+            if (_scrollController.position.pixels >=
+                _scrollController.position.maxScrollExtent * 0.8) {
+              if (provider.hasMore && !provider.isLoading) {
+                provider.loadRequests();
+              }
+            }
+          }),
         padding: const EdgeInsets.all(24),
-        itemCount: provider.requests.length,
+        itemCount: provider.requests.length + (provider.hasMore ? 1 : 0),
         itemBuilder: (context, index) {
+          if (index == provider.requests.length) {
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: CircularProgressIndicator(
+                  color: AppColors.primary,
+                ),
+              ),
+            );
+          }
           return RequestCardWidget(request: provider.requests[index]);
         },
       ),

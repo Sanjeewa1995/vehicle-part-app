@@ -95,7 +95,11 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final request = PasswordResetRequest(phone: phone);
       final response = await remoteDataSource.forgotPassword(request);
-      return response.success;
+      if (response.success) {
+        return true;
+      } else {
+        throw Exception(ErrorMessageHelper.getUserFriendlyMessage(response.message));
+      }
     } catch (e) {
       if (e is Exception) {
         rethrow;
@@ -109,7 +113,11 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final request = VerifyOTPRequest(phone: phone, otp: otp);
       final response = await remoteDataSource.verifyOTP(request);
-      return response.success;
+      if (response.success) {
+        return true;
+      } else {
+        throw Exception(ErrorMessageHelper.getUserFriendlyMessage(response.message));
+      }
     } catch (e) {
       if (e is Exception) {
         rethrow;
@@ -133,7 +141,11 @@ class AuthRepositoryImpl implements AuthRepository {
         newPasswordConfirm: newPasswordConfirm,
       );
       final response = await remoteDataSource.resetPassword(request);
-      return response.success;
+      if (response.success) {
+        return true;
+      } else {
+        throw Exception(ErrorMessageHelper.getUserFriendlyMessage(response.message));
+      }
     } catch (e) {
       if (e is Exception) {
         rethrow;
