@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/usecases/login_usecase.dart';
@@ -75,6 +76,9 @@ class AuthProvider extends ChangeNotifier {
       _status = AuthStatus.loading;
       _errorMessage = null;
       notifyListeners();
+      
+      // Add timeout wrapper to prevent infinite loading
+      // Use 45 seconds total timeout (30s API timeout + 15s buffer)
       _user = await registerUseCase(
         firstName: firstName,
         lastName: lastName,
@@ -82,12 +86,19 @@ class AuthProvider extends ChangeNotifier {
         phone: phone,
         password: password,
         confirmPassword: confirmPassword,
+      ).timeout(
+        const Duration(seconds: 45),
+        onTimeout: () {
+          throw Exception('Connection timeout. Please check your internet connection and try again.');
+        },
       );
+      
       _status = AuthStatus.authenticated;
       _errorMessage = null;
       notifyListeners();
       return true;
     } catch (e) {
+      // Always reset loading state, even if there's an error
       _status = AuthStatus.error;
       _errorMessage = ErrorMessageHelper.getUserFriendlyMessage(e);
       notifyListeners();

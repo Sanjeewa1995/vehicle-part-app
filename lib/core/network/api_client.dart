@@ -177,6 +177,17 @@ class ApiClient {
       final responseData = e.response?.data;
       String errorMessage = e.message ?? 'An error occurred';
       
+      // Handle specific DioException types
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout ||
+          e.type == DioExceptionType.sendTimeout) {
+        errorMessage = 'Connection timeout. Please check your internet connection and try again.';
+      } else if (e.type == DioExceptionType.connectionError) {
+        errorMessage = 'No internet connection. Please check your network settings.';
+      } else if (e.type == DioExceptionType.badResponse && statusCode == null) {
+        errorMessage = 'Server error. Please try again later.';
+      }
+      
       // Try to extract more detailed error message from response
       if (responseData is Map<String, dynamic>) {
         // Extract error message from common API error format

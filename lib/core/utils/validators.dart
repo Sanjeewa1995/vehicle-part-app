@@ -43,11 +43,47 @@ class Validators {
     if (value == null || value.isEmpty) {
       return l10n?.phoneNumberIsRequired ?? 'Phone number is required';
     }
-    final phoneRegex = RegExp(r'^\+?[0-9]{10,15}$');
-    if (!phoneRegex.hasMatch(value)) {
-      return l10n?.pleaseEnterAValidPhoneNumber ?? 'Please enter a valid phone number';
+    
+    // Remove spaces, dashes, and plus signs for validation
+    final cleanedPhone = value.replaceAll(RegExp(r'[\s\-+]'), '');
+    
+    // Sri Lankan phone number validation
+    // Mobile: 07X-XXXXXXX (10 digits starting with 07)
+    // Landline: 0XX-XXXXXXX (9-10 digits starting with 0, not 07)
+    
+    // Check if it starts with 0
+    if (!cleanedPhone.startsWith('0')) {
+      return l10n?.pleaseEnterAValidSriLankanPhoneNumber ?? 
+          'Enter a valid Sri Lankan phone number. Mobile: 07X-XXXXXXX or Landline: 0XX-XXXXXXX';
     }
-    return null;
+    
+    // Check if it's all digits
+    if (!RegExp(r'^[0-9]+$').hasMatch(cleanedPhone)) {
+      return l10n?.pleaseEnterAValidSriLankanPhoneNumber ?? 
+          'Enter a valid Sri Lankan phone number. Mobile: 07X-XXXXXXX or Landline: 0XX-XXXXXXX';
+    }
+    
+    // Mobile number validation: Must start with 07 and be exactly 10 digits
+    if (cleanedPhone.startsWith('07')) {
+      if (cleanedPhone.length == 10) {
+        // Valid mobile number format: 07X-XXXXXXX
+        return null;
+      } else {
+        return l10n?.pleaseEnterAValidSriLankanPhoneNumber ?? 
+            'Enter a valid Sri Lankan phone number. Mobile: 07X-XXXXXXX or Landline: 0XX-XXXXXXX';
+      }
+    }
+    
+    // Landline validation: Starts with 0 (but not 07), length 9-10 digits
+    // Common formats: 011-XXXXXXX (Colombo, 10 digits), 081-XXXXXXX (Kandy, 10 digits), etc.
+    if (cleanedPhone.startsWith('0') && cleanedPhone.length >= 9 && cleanedPhone.length <= 10) {
+      // Valid landline format
+      return null;
+    }
+    
+    // If none of the above match, return error
+    return l10n?.pleaseEnterAValidSriLankanPhoneNumber ?? 
+        'Enter a valid Sri Lankan phone number. Mobile: 07X-XXXXXXX or Landline: 0XX-XXXXXXX';
   }
 
   /// Returns a validator function bound to the given context for email validation

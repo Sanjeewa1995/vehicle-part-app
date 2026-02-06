@@ -1088,7 +1088,7 @@ class AppLocalizationsTa extends AppLocalizations {
   String get youExampleCom => 'you@example.com';
 
   @override
-  String get phonePlaceholder => '+1 (555) 123-4567';
+  String get phonePlaceholder => '07X-XXXXXXX';
 
   @override
   String get createAStrongPassword => 'வலுவான கடவுச்சொல்லை உருவாக்கவும்';
@@ -1205,6 +1205,10 @@ class AppLocalizationsTa extends AppLocalizations {
   @override
   String get pleaseEnterAValidPhoneNumber =>
       'தயவுசெய்து சரியான தொலைபேசி எண்ணை உள்ளிடவும்';
+
+  @override
+  String get pleaseEnterAValidSriLankanPhoneNumber =>
+      'சரியான இலங்கை தொலைபேசி எண்ணை உள்ளிடவும். மொபைல்: 07X-XXXXXXX அல்லது நிலையான: 0XX-XXXXXXX';
 
   @override
   String get anUnexpectedErrorOccurred =>

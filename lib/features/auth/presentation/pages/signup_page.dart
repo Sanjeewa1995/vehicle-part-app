@@ -73,16 +73,18 @@ class _SignUpPageState extends State<SignUpPage>
     if (_formKey.currentState!.validate()) {
       final authProvider = context.read<AuthProvider>();
       
-      final success = await authProvider.register(
-        firstName: _firstNameController.text.trim(),
-        lastName: _lastNameController.text.trim(),
-        email: _emailController.text.trim(),
-        phone: _phoneController.text.trim(),
-        password: _passwordController.text,
-        confirmPassword: _confirmPasswordController.text,
-      );
+      try {
+        final success = await authProvider.register(
+          firstName: _firstNameController.text.trim(),
+          lastName: _lastNameController.text.trim(),
+          email: _emailController.text.trim(),
+          phone: _phoneController.text.trim(),
+          password: _passwordController.text,
+          confirmPassword: _confirmPasswordController.text,
+        );
 
-      if (mounted) {
+        if (!mounted) return;
+
         if (success) {
           final l10n = AppLocalizations.of(context)!;
           // Show success dialog
@@ -108,6 +110,19 @@ class _SignUpPageState extends State<SignUpPage>
                   child: Text(l10n.continueButton),
                 ),
               ],
+            ),
+          );
+        }
+        // Error message is already displayed by SignUpCardWidget via AuthProvider
+      } catch (e) {
+        // This should not happen as AuthProvider handles errors,
+        // but adding as a safety net
+        if (mounted) {
+          final l10n = AppLocalizations.of(context)!;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l10n.somethingWentWrong),
+              backgroundColor: AppColors.error,
             ),
           );
         }

@@ -1434,7 +1434,7 @@
   "@youExampleCom": {
     "description": "Email placeholder"
   },
-  "phonePlaceholder": "+1 (555) 123-4567",
+  "phonePlaceholder": "07X-XXXXXXX",
   "@phonePlaceholder": {
     "description": "Phone number placeholder"
   },
@@ -1585,6 +1585,10 @@
   "pleaseEnterAValidPhoneNumber": "Please enter a valid phone number",
   "@pleaseEnterAValidPhoneNumber": {
     "description": "Phone number format validation error"
+  },
+  "pleaseEnterAValidSriLankanPhoneNumber": "Enter a valid Sri Lankan phone number. Mobile: 07X-XXXXXXX or Landline: 0XX-XXXXXXX",
+  "@pleaseEnterAValidSriLankanPhoneNumber": {
+    "description": "Sri Lankan phone number validation error"
   },
   "anUnexpectedErrorOccurred": "An unexpected error occurred. Please try again.",
   "@anUnexpectedErrorOccurred": {

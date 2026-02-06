@@ -300,6 +300,13 @@ class ErrorMessageHelper {
       return l10n.phoneNumberIsRequired;
     }
     
+    if (lowerError.contains('sri lankan phone number') ||
+        lowerError.contains('valid sri lankan phone') ||
+        lowerError.contains('07x-xxxxxxx') ||
+        lowerError.contains('0xx-xxxxxxx')) {
+      return l10n.pleaseEnterAValidSriLankanPhoneNumber;
+    }
+    
     if (lowerError.contains('please enter a valid phone number') ||
         lowerError.contains('invalid phone number') ||
         lowerError.contains('invalid phone') ||
@@ -337,7 +344,8 @@ class ErrorMessageHelper {
     // Network/Connection errors
     if (lowerError.contains('connection timeout') ||
         lowerError.contains('timeout') ||
-        lowerError.contains('request timeout')) {
+        lowerError.contains('request timeout') ||
+        lowerError.contains('check your internet connection')) {
       return l10n.connectionTimeout;
     }
     
@@ -345,7 +353,9 @@ class ErrorMessageHelper {
         lowerError.contains('no internet') ||
         lowerError.contains('connection failed') ||
         lowerError.contains('no connection') ||
-        lowerError.contains('internet connection')) {
+        lowerError.contains('internet connection') ||
+        lowerError.contains('no internet connection') ||
+        lowerError.contains('check your network settings')) {
       return l10n.networkError;
     }
     

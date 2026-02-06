@@ -2101,7 +2101,7 @@ abstract class AppLocalizations {
   /// Phone number placeholder
   ///
   /// In en, this message translates to:
-  /// **'+1 (555) 123-4567'**
+  /// **'07X-XXXXXXX'**
   String get phonePlaceholder;
 
   /// Password hint
@@ -2295,6 +2295,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter a valid phone number'**
   String get pleaseEnterAValidPhoneNumber;
+
+  /// Sri Lankan phone number validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid Sri Lankan phone number. Mobile: 07X-XXXXXXX or Landline: 0XX-XXXXXXX'**
+  String get pleaseEnterAValidSriLankanPhoneNumber;
 
   /// Generic error message
   ///

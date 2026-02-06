@@ -1069,7 +1069,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get youExampleCom => 'you@example.com';
 
   @override
-  String get phonePlaceholder => '+1 (555) 123-4567';
+  String get phonePlaceholder => '07X-XXXXXXX';
 
   @override
   String get createAStrongPassword => 'Create a strong password';
@@ -1185,6 +1185,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get pleaseEnterAValidPhoneNumber =>
       'Please enter a valid phone number';
+
+  @override
+  String get pleaseEnterAValidSriLankanPhoneNumber =>
+      'Enter a valid Sri Lankan phone number. Mobile: 07X-XXXXXXX or Landline: 0XX-XXXXXXX';
 
   @override
   String get anUnexpectedErrorOccurred =>

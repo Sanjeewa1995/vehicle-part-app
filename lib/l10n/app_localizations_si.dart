@@ -1069,7 +1069,7 @@ class AppLocalizationsSi extends AppLocalizations {
   String get youExampleCom => 'you@example.com';
 
   @override
-  String get phonePlaceholder => '+1 (555) 123-4567';
+  String get phonePlaceholder => '07X-XXXXXXX';
 
   @override
   String get createAStrongPassword => 'ශක්තිමත් මුරපදයක් සාදන්න';
@@ -1185,6 +1185,10 @@ class AppLocalizationsSi extends AppLocalizations {
   @override
   String get pleaseEnterAValidPhoneNumber =>
       'කරුණාකර වලංගු දුරකථන අංකයක් ඇතුළත් කරන්න';
+
+  @override
+  String get pleaseEnterAValidSriLankanPhoneNumber =>
+      'වලංගු ශ්‍රී ලංකා දුරකථන අංකයක් ඇතුළත් කරන්න. ජංගම: 07X-XXXXXXX හෝ භූමි: 0XX-XXXXXXX';
 
   @override
   String get anUnexpectedErrorOccurred =>
