@@ -200,7 +200,13 @@ class ApiClient {
               // Handle field-specific errors
               final fieldErrors = errors.entries
                   .where((e) => e.key != 'non_field_errors')
-                  .map((e) => '${e.key}: ${e.value}')
+                  .map((e) {
+                    final value = e.value;
+                    if (value is List && value.isNotEmpty) {
+                      return '${e.key}: ${value.first}';
+                    }
+                    return '${e.key}: $value';
+                  })
                   .toList();
               if (fieldErrors.isNotEmpty && extractedMessage == null) {
                 errorMessage = fieldErrors.join(', ');
@@ -210,6 +216,14 @@ class ApiClient {
         }
       } else if (responseData is String) {
         errorMessage = responseData;
+      }
+      
+      // For validation errors (400, 422), preserve the original error message
+      // without converting it to generic messages, as these are usually user-friendly
+      if (statusCode == 400 || statusCode == 422) {
+        // Always preserve the original error message for validation errors
+        // These are typically user-friendly messages from the API
+        throw Exception(errorMessage);
       }
       
       // Build technical error message for parsing

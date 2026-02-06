@@ -19,6 +19,24 @@ class ErrorMessageHelper {
         .replaceAll('Error: ', '')
         .trim();
 
+    // Early return: If the message is already user-friendly and doesn't contain HTTP status codes,
+    // return it as-is without any conversion (but allow field-specific errors to be processed)
+    if (!errorString.contains('HTTP ') && 
+        !errorString.contains(':') && // Field-specific errors need processing
+        !isTechnicalError(errorString) &&
+        errorString.length > 0 &&
+        errorString.length < 200) { // Reasonable length for user messages
+      // Check if it's a specific error message (not generic)
+      final lowerError = errorString.toLowerCase();
+      if (!lowerError.contains('invalid input') &&
+          !lowerError.contains('validation error') &&
+          !lowerError.contains('invalid data') &&
+          !lowerError.contains('an error occurred') &&
+          !lowerError.contains('something went wrong')) {
+        return errorString;
+      }
+    }
+
     // Handle HTTP status codes and technical error formats
     if (errorString.contains('HTTP ')) {
       return _parseHttpError(errorString, l10n);
@@ -67,9 +85,16 @@ class ErrorMessageHelper {
       return l10n?.youDoNotHavePermissionToPerformThisAction ?? 'You do not have permission to perform this action.';
     }
 
-    // Handle field-specific errors
+    // Handle field-specific errors (like "new_password: Password must contain at least one letter")
     if (errorString.contains(':')) {
-      return _parseFieldErrors(errorString);
+      final parsedFieldError = _parseFieldErrors(errorString);
+      // If the parsed error is user-friendly (not technical), return it directly
+      if (!isTechnicalError(parsedFieldError) && 
+          !parsedFieldError.toLowerCase().contains('invalid input') &&
+          parsedFieldError.length < 200) {
+        return parsedFieldError;
+      }
+      return parsedFieldError;
     }
 
     // Try to translate common English error messages first (even if they're user-friendly)
@@ -80,7 +105,7 @@ class ErrorMessageHelper {
     }
 
     // If it's already a user-friendly message (doesn't contain technical terms), return as is
-    if (!_isTechnicalError(errorString)) {
+    if (!isTechnicalError(errorString)) {
       return errorString;
     }
 
@@ -117,7 +142,7 @@ class ErrorMessageHelper {
         return l10n?.serverError ?? 'Server error. Please try again later.';
       default:
         // If message is still technical, return generic message
-        if (_isTechnicalError(message)) {
+        if (isTechnicalError(message)) {
           return l10n?.somethingWentWrong ?? 'Something went wrong. Please try again.';
         }
         return message.isEmpty ? (l10n?.somethingWentWrong ?? 'Something went wrong. Please try again.') : message;
@@ -158,8 +183,12 @@ class ErrorMessageHelper {
       return l10n?.invalidPhoneNumberOrPassword ?? 'Invalid phone number or password. Please check your credentials and try again.';
     }
 
-    if (message.toLowerCase().contains('validation') ||
-        message.toLowerCase().contains('invalid')) {
+    // Only convert to generic message if it's a technical/unspecific error
+    // Don't convert specific error messages like "Invalid OTP" or "OTP expired"
+    if (message.toLowerCase() == 'invalid' ||
+        message.toLowerCase() == 'validation error' ||
+        message.toLowerCase() == 'invalid input' ||
+        (message.toLowerCase().contains('validation') && message.toLowerCase().contains('error'))) {
       return l10n?.invalidInput ?? 'Invalid input. Please check your information and try again.';
     }
 
@@ -169,10 +198,11 @@ class ErrorMessageHelper {
     }
 
     // If message is still technical, return generic message
-    if (_isTechnicalError(message)) {
+    if (isTechnicalError(message)) {
       return l10n?.invalidInput ?? 'Invalid input. Please check your information and try again.';
     }
 
+    // Return the original message if it's user-friendly
     return message.isEmpty ? (l10n?.invalidInput ?? 'Invalid input. Please check your information and try again.') : message;
   }
 
@@ -222,7 +252,7 @@ class ErrorMessageHelper {
   }
 
   /// Checks if an error message contains technical terms
-  static bool _isTechnicalError(String message) {
+  static bool isTechnicalError(String message) {
     final technicalTerms = [
       'HTTP',
       'status code',

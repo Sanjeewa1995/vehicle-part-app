@@ -103,11 +103,107 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         ApiConstants.passwordResetConfirm,
         data: request.toJson(),
       );
-      return ResetPasswordResponse.fromJson(response.data);
-    } on AppException {
-      rethrow;
+      
+      final responseData = response.data;
+      if (responseData is Map<String, dynamic>) {
+        final success = responseData['success'] as bool?;
+        if (success == false) {
+          // Extract error message from common API error format
+          String? errorMessage = responseData['message'] as String?;
+
+          if (errorMessage == null || errorMessage.isEmpty) {
+            final errors = responseData['errors'] as Map<String, dynamic>?;
+            if (errors != null) {
+              final nonFieldErrors = errors['non_field_errors'] as List?;
+              if (nonFieldErrors != null && nonFieldErrors.isNotEmpty) {
+                final firstError = nonFieldErrors.first;
+                errorMessage = firstError is String ? firstError : firstError.toString();
+              } else {
+                // Handle field-specific errors
+                final fieldErrors = errors.entries
+                    .where((e) => e.key != 'non_field_errors')
+                    .map((e) {
+                      final value = e.value;
+                      if (value is List && value.isNotEmpty) {
+                        return '${e.key}: ${value.first}';
+                      }
+                      return '${e.key}: $value';
+                    })
+                    .toList();
+                if (fieldErrors.isNotEmpty) {
+                  errorMessage = fieldErrors.join(', ');
+                }
+              }
+            }
+          }
+
+          if (errorMessage == null || errorMessage.isEmpty) {
+            errorMessage = responseData['error'] as String?;
+          }
+
+          throw Exception(errorMessage ?? 'Invalid input. Please check your information and try again.');
+        }
+      }
+
+      return ResetPasswordResponse.fromJson(responseData);
     } on DioException catch (e) {
-      throw Exception(e.message);
+      // Extract actual error message from response data before it gets converted
+      final responseData = e.response?.data;
+      String? errorMessage;
+      
+      if (responseData is Map<String, dynamic>) {
+        // Try to extract the actual error message
+        errorMessage = responseData['message'] as String?;
+        
+        if (errorMessage == null || errorMessage.isEmpty) {
+          final errors = responseData['errors'] as Map<String, dynamic>?;
+          if (errors != null) {
+            final nonFieldErrors = errors['non_field_errors'] as List?;
+            if (nonFieldErrors != null && nonFieldErrors.isNotEmpty) {
+              final firstError = nonFieldErrors.first;
+              errorMessage = firstError is String ? firstError : firstError.toString();
+            } else {
+              // Handle field-specific errors
+              final fieldErrors = errors.entries
+                  .where((e) => e.key != 'non_field_errors')
+                  .map((e) {
+                    final value = e.value;
+                    if (value is List && value.isNotEmpty) {
+                      return '${e.key}: ${value.first}';
+                    }
+                    return '${e.key}: $value';
+                  })
+                  .toList();
+              if (fieldErrors.isNotEmpty) {
+                errorMessage = fieldErrors.join(', ');
+              }
+            }
+          }
+        }
+        
+        if (errorMessage == null || errorMessage.isEmpty) {
+          errorMessage = responseData['error'] as String?;
+        }
+        
+        if (errorMessage == null || errorMessage.isEmpty) {
+          errorMessage = responseData['detail'] as String?;
+        }
+      }
+      
+      // If we extracted a specific error message, throw it directly without conversion
+      if (errorMessage != null && errorMessage.isNotEmpty) {
+        throw Exception(errorMessage);
+      }
+      
+      // Fallback to original exception message
+      throw Exception(e.message ?? 'An error occurred');
+    } catch (e) {
+      // apiClient.post converts DioException to Exception for 400/422 errors
+      // and preserves the original error message, so we can just rethrow it
+      if (e is Exception) {
+        rethrow;
+      }
+      throw Exception(e.toString());
     }
   }
 
@@ -170,11 +266,107 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         ApiConstants.changePassword,
         data: request.toJson(),
       );
-      return ChangePasswordResponse.fromJson(response.data);
+      
+      final responseData = response.data;
+      if (responseData is Map<String, dynamic>) {
+        final success = responseData['success'] as bool?;
+        if (success == false) {
+          // Extract error message from common API error format
+          String? errorMessage = responseData['message'] as String?;
+
+          if (errorMessage == null || errorMessage.isEmpty) {
+            final errors = responseData['errors'] as Map<String, dynamic>?;
+            if (errors != null) {
+              final nonFieldErrors = errors['non_field_errors'] as List?;
+              if (nonFieldErrors != null && nonFieldErrors.isNotEmpty) {
+                final firstError = nonFieldErrors.first;
+                errorMessage = firstError is String ? firstError : firstError.toString();
+              } else {
+                // Handle field-specific errors
+                final fieldErrors = errors.entries
+                    .where((e) => e.key != 'non_field_errors')
+                    .map((e) {
+                      final value = e.value;
+                      if (value is List && value.isNotEmpty) {
+                        return '${e.key}: ${value.first}';
+                      }
+                      return '${e.key}: $value';
+                    })
+                    .toList();
+                if (fieldErrors.isNotEmpty) {
+                  errorMessage = fieldErrors.join(', ');
+                }
+              }
+            }
+          }
+
+          if (errorMessage == null || errorMessage.isEmpty) {
+            errorMessage = responseData['error'] as String?;
+          }
+
+          throw Exception(errorMessage ?? 'Invalid input. Please check your information and try again.');
+        }
+      }
+
+      return ChangePasswordResponse.fromJson(responseData);
+    } on DioException catch (e) {
+      // Extract actual error message from response data before it gets converted
+      final responseData = e.response?.data;
+      String? errorMessage;
+      
+      if (responseData is Map<String, dynamic>) {
+        // Try to extract the actual error message
+        errorMessage = responseData['message'] as String?;
+        
+        if (errorMessage == null || errorMessage.isEmpty) {
+          final errors = responseData['errors'] as Map<String, dynamic>?;
+          if (errors != null) {
+            final nonFieldErrors = errors['non_field_errors'] as List?;
+            if (nonFieldErrors != null && nonFieldErrors.isNotEmpty) {
+              final firstError = nonFieldErrors.first;
+              errorMessage = firstError is String ? firstError : firstError.toString();
+            } else {
+              // Handle field-specific errors
+              final fieldErrors = errors.entries
+                  .where((e) => e.key != 'non_field_errors')
+                  .map((e) {
+                    final value = e.value;
+                    if (value is List && value.isNotEmpty) {
+                      return '${e.key}: ${value.first}';
+                    }
+                    return '${e.key}: $value';
+                  })
+                  .toList();
+              if (fieldErrors.isNotEmpty) {
+                errorMessage = fieldErrors.join(', ');
+              }
+            }
+          }
+        }
+        
+        if (errorMessage == null || errorMessage.isEmpty) {
+          errorMessage = responseData['error'] as String?;
+        }
+        
+        if (errorMessage == null || errorMessage.isEmpty) {
+          errorMessage = responseData['detail'] as String?;
+        }
+      }
+      
+      // If we extracted a specific error message, throw it directly without conversion
+      if (errorMessage != null && errorMessage.isNotEmpty) {
+        throw Exception(errorMessage);
+      }
+      
+      // Fallback to original exception message
+      throw Exception(e.message ?? 'An error occurred');
     } on AppException {
       rethrow;
-    } on DioException catch (e) {
-      throw Exception(e.message);
+    } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
+      throw Exception(e.toString());
     }
   }
 
